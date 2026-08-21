@@ -20,10 +20,10 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="بن عباس کیئر" />
   
-  <!-- Google Fonts: Noto Nastaliq Urdu, Outfit & Inter -->
+  <!-- Google Fonts: Noto Sans Arabic, Noto Nastaliq Urdu, Gulzar & Outfit -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Gulzar&family=Noto+Nastaliq+Urdu:wght@400;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Gulzar&family=Noto+Nastaliq+Urdu:wght@400;600;700;800&family=Noto+Sans+Arabic:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -55,7 +55,7 @@
             }
           },
           fontFamily: {
-            urdu: ['"Noto Nastaliq Urdu"', 'Gulzar', 'serif'],
+            urdu: ['"Noto Sans Arabic"', '"Noto Nastaliq Urdu"', 'Gulzar', 'sans-serif'],
             latin: ['"Outfit"', 'sans-serif'],
           }
         }
@@ -79,19 +79,29 @@
       background: #0f766e;
     }
 
-    .urdu-text {
-      font-family: 'Noto Nastaliq Urdu', serif;
-      line-height: 2.1;
-    }
-    .latin-text {
-      font-family: 'Outfit', sans-serif;
-      line-height: 1.5;
+    /* Flawless, Crystal-Clear Urdu Typography Without Any Overlapping */
+    [dir="rtl"], html[dir="rtl"] body {
+      font-family: 'Noto Sans Arabic', 'Segoe UI', Tahoma, Arial, sans-serif;
+      letter-spacing: 0px !important;
+      word-spacing: 0px !important;
     }
 
-    [dir="rtl"] .urdu-font {
-      font-family: 'Noto Nastaliq Urdu', serif;
-      line-height: 2.2;
+    [dir="rtl"] h1, [dir="rtl"] h2, [dir="rtl"] h3, [dir="rtl"] h4, [dir="rtl"] h5, [dir="rtl"] h6 {
+      font-family: 'Noto Sans Arabic', sans-serif !important;
+      line-height: 1.6 !important;
+      padding-top: 0.2rem;
+      padding-bottom: 0.2rem;
     }
+
+    [dir="rtl"] p, [dir="rtl"] span, [dir="rtl"] div, [dir="rtl"] button, [dir="rtl"] a, [dir="rtl"] li, [dir="rtl"] td, [dir="rtl"] th, [dir="rtl"] input, [dir="rtl"] select, [dir="rtl"] textarea {
+      line-height: 1.75;
+    }
+
+    .urdu-heading {
+      font-family: 'Noto Nastaliq Urdu', 'Gulzar', 'Noto Sans Arabic', serif;
+      line-height: 2.2 !important;
+    }
+
     [dir="ltr"] .latin-font {
       font-family: 'Outfit', sans-serif;
     }
@@ -104,6 +114,16 @@
     .pulse-glow {
       animation: pulse-glow 2s infinite ease-in-out;
     }
+
+    /* Splash loader animation */
+    @keyframes splashBarAnim {
+      0% { width: 0%; }
+      50% { width: 75%; }
+      100% { width: 100%; }
+    }
+    .splash-bar {
+      animation: splashBarAnim 1.6s ease-in-out forwards;
+    }
   </style>
 </head>
 
@@ -114,6 +134,49 @@
   :class="lang === 'ur' ? 'font-urdu' : 'font-latin'"
   class="bg-slate-50 text-slate-800 antialiased selection:bg-brand-500 selection:text-white pb-20 md:pb-0"
 >
+
+  <!-- INTRO ANIMATED SPLASH SCREEN (ایپ اوپننگ اینیمیشن لوگو) -->
+  <div 
+    x-show="showSplashScreen" 
+    x-transition:leave="transition-all ease-out duration-700" 
+    x-transition:leave-start="opacity-100 scale-100" 
+    x-transition:leave-end="opacity-0 scale-105 pointer-events-none"
+    class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-gradient-to-br from-slate-950 via-teal-950 to-emerald-950 text-white"
+    style="z-index: 9999;"
+  >
+    <!-- Glowing background circles -->
+    <div class="absolute w-80 h-80 bg-emerald-500/25 rounded-full blur-3xl animate-pulse"></div>
+    <div class="absolute w-60 h-60 bg-amber-500/15 rounded-full blur-2xl animate-ping opacity-30"></div>
+
+    <div class="relative z-10 flex flex-col items-center text-center p-6 max-w-sm">
+      
+      <!-- Animated Logo Container -->
+      <div class="relative w-28 h-28 mb-5">
+        <div class="absolute inset-0 rounded-3xl bg-teal-400/30 animate-ping"></div>
+        <div class="relative w-full h-full rounded-3xl bg-gradient-to-tr from-brand-600 to-emerald-400 p-1.5 shadow-2xl flex items-center justify-center border-2 border-emerald-400/50 shadow-emerald-500/40">
+          <img src="icon-512.png" alt="Bin Abbas Home Care Logo" class="w-full h-full object-contain rounded-2xl animate-bounce" />
+        </div>
+      </div>
+
+      <!-- App Name with shine -->
+      <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight mb-1">
+        <span class="text-brand-400">بن عباس</span> ہوم کیئر
+      </h2>
+      <p class="text-xs text-teal-200 font-semibold tracking-wider uppercase mb-6" dir="ltr">
+        Bin Abbas Home Care • Handyman Services
+      </p>
+
+      <!-- Animated Progress Loader -->
+      <div class="w-52 h-1.5 bg-white/20 rounded-full overflow-hidden mb-3">
+        <div class="h-full bg-gradient-to-r from-amber-400 via-teal-400 to-emerald-400 rounded-full splash-bar"></div>
+      </div>
+
+      <span class="text-xs text-slate-300 animate-pulse font-medium">
+        خوش آمدید... ایپ لوڈ ہو رہی ہے
+      </span>
+
+    </div>
+  </div>
 
   <!-- TOP EMERGENCY & NOTICE BAR -->
   <div class="bg-gradient-to-r from-emerald-800 via-teal-900 to-emerald-950 text-white text-xs md:text-sm py-2 px-4 shadow-sm border-b border-teal-700/40">
@@ -144,21 +207,19 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between items-center h-20">
         
-        <!-- Logo & Branding -->
+        <!-- Logo & Branding (Prominent Official App Logo) -->
         <div class="flex items-center gap-3 cursor-pointer" @click="currentView = 'home'; window.scrollTo({top:0, behavior:'smooth'})">
-          <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-brand-600 via-teal-500 to-emerald-400 flex items-center justify-center text-white shadow-md shadow-brand-500/20">
-            <i data-lucide="wrench" class="w-6 h-6"></i>
-          </div>
+          <img src="icon-192.png" alt="بن عباس ہوم کیئر لوگو" class="w-12 h-12 rounded-2xl shadow-md border border-teal-500/20 object-contain hover:scale-105 transition-transform flex-shrink-0" />
           <div>
             <div class="flex items-center gap-2">
-              <h1 class="text-xl md:text-2xl font-bold tracking-tight text-slate-900">
+              <h1 class="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 leading-tight">
                 <span class="text-brand-600">بن عباس</span> ہوم کیئر
               </h1>
-              <span class="hidden sm:inline-block text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 bg-brand-100 text-brand-700 rounded-md">
+              <span class="hidden md:inline-block text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 bg-brand-100 text-brand-700 rounded-md">
                 Verified Handyman
               </span>
             </div>
-            <p class="text-xs text-slate-500" x-text="t('tagline')"></p>
+            <p class="text-xs text-slate-500 font-medium" x-text="t('tagline')"></p>
           </div>
         </div>
 
@@ -747,9 +808,7 @@
         <!-- About Col -->
         <div class="space-y-4">
           <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-xl bg-brand-600 flex items-center justify-center text-white">
-              <i data-lucide="wrench" class="w-5 h-5"></i>
-            </div>
+            <img src="icon-192.png" alt="بن عباس ہوم کیئر" class="w-10 h-10 rounded-xl shadow-sm border border-teal-500/30 object-contain" />
             <h3 class="text-xl font-bold text-white">بن عباس ہوم کیئر</h3>
           </div>
           <p class="text-xs text-slate-400 leading-relaxed" x-text="t('footer_desc')"></p>
@@ -1465,8 +1524,14 @@
         deferredPrompt: null,
         canInstallApp: false,
         showInstallBanner: false,
+        showSplashScreen: true,
 
         initApp() {
+          // Hide splash screen after intro animation
+          setTimeout(() => {
+            this.showSplashScreen = false;
+          }, 1800);
+
           const savedOrders = localStorage.getItem('bahc_orders');
           if (savedOrders) {
             try {
@@ -1496,7 +1561,7 @@
           if (!isStandalone) {
             setTimeout(() => {
               this.showInstallBanner = true;
-            }, 2000);
+            }, 2500);
           }
 
           this.$nextTick(() => {
