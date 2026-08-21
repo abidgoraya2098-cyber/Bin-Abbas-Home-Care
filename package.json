@@ -1,0 +1,21 @@
+{
+  "name": "bin-abbas-home-care",
+  "version": "1.0.0",
+  "description": "Bin Abbas Home Care - Home Maintenance & Handyman Booking Platform",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve ."
+  },
+  "keywords": [
+    "home-care",
+    "handyman",
+    "electrician",
+    "plumber",
+    "ac-repair",
+    "pakistan",
+    "urdu",
+    "home-services"
+  ],
+  "author": "Abid Abbas Goraya",
+  "license": "MIT"
+}

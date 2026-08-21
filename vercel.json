@@ -1,0 +1,21 @@
+{
+  "version": 2,
+  "cleanUrls": true,
+  "routes": [
+    {
+      "src": "/favicon.ico",
+      "dest": "/favicon.svg"
+    },
+    {
+      "src": "/logo.png",
+      "dest": "/logo.svg"
+    },
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ]
+}

@@ -1,0 +1,1546 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>بن عباس ہوم کیئر | Bin Abbas Home Care - قابل اعتماد کاریگر سروسز</title>
+  <!-- Favicons & Meta (Eliminates 404 on Vercel) -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="apple-touch-icon" href="favicon.svg" />
+  <meta name="theme-color" content="#0d9488" />
+  <meta property="og:title" content="بن عباس ہوم کیئر | Bin Abbas Home Care" />
+  <meta property="og:description" content="گھریلو مرمت اور دیکھ بھال کی سروسز - الیکٹریشن، پلمبر، کارپینٹر، اے سی ریپیرنگ" />
+  <meta property="og:image" content="logo.svg" />
+  
+  <!-- Google Fonts: Noto Nastaliq Urdu, Outfit & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gulzar&family=Noto+Nastaliq+Urdu:wght@400;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Alpine.js for lightweight, reactive interaction -->
+  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0fdf9',
+              100: '#ccfbef',
+              200: '#9af5df',
+              500: '#0d9488',
+              600: '#0f766e',
+              700: '#115e59',
+              800: '#134e4a',
+              900: '#042f2e',
+            },
+            accent: {
+              500: '#f59e0b',
+              600: '#d97706',
+              700: '#b45309',
+            }
+          },
+          fontFamily: {
+            urdu: ['"Noto Nastaliq Urdu"', 'Gulzar', 'serif'],
+            latin: ['"Outfit"', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #0d9488;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #0f766e;
+    }
+
+    .urdu-text {
+      font-family: 'Noto Nastaliq Urdu', serif;
+      line-height: 2.1;
+    }
+    .latin-text {
+      font-family: 'Outfit', sans-serif;
+      line-height: 1.5;
+    }
+
+    [dir="rtl"] .urdu-font {
+      font-family: 'Noto Nastaliq Urdu', serif;
+      line-height: 2.2;
+    }
+    [dir="ltr"] .latin-font {
+      font-family: 'Outfit', sans-serif;
+    }
+
+    /* Badge animation */
+    @keyframes pulse-glow {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.8; transform: scale(1.05); }
+    }
+    .pulse-glow {
+      animation: pulse-glow 2s infinite ease-in-out;
+    }
+  </style>
+</head>
+
+<body 
+  x-data="homeCareApp()" 
+  x-init="initApp()" 
+  :dir="lang === 'ur' ? 'rtl' : 'ltr'" 
+  :class="lang === 'ur' ? 'font-urdu' : 'font-latin'"
+  class="bg-slate-50 text-slate-800 antialiased selection:bg-brand-500 selection:text-white pb-20 md:pb-0"
+>
+
+  <!-- TOP EMERGENCY & NOTICE BAR -->
+  <div class="bg-gradient-to-r from-emerald-800 via-teal-900 to-emerald-950 text-white text-xs md:text-sm py-2 px-4 shadow-sm border-b border-teal-700/40">
+    <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
+      <div class="flex items-center gap-2">
+        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-500 text-slate-950 pulse-glow">
+          <i data-lucide="zap" class="w-3.5 h-3.5 inline mr-1"></i>
+          <span x-text="t('urgent_badge')"></span>
+        </span>
+        <span class="opacity-95 font-medium" x-text="t('top_banner_text')"></span>
+      </div>
+      <div class="flex items-center gap-4 text-xs">
+        <a :href="'tel:' + businessPhone" class="flex items-center gap-1.5 hover:text-amber-300 transition-colors font-medium">
+          <i data-lucide="phone-call" class="w-3.5 h-3.5 text-amber-400"></i>
+          <span dir="ltr" x-text="businessPhoneDisplay"></span>
+        </a>
+        <span class="text-teal-500">|</span>
+        <div class="flex items-center gap-1.5 text-teal-200">
+          <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-400"></i>
+          <span x-text="t('warranty_pill')"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NAVBAR -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-20">
+        
+        <!-- Logo & Branding -->
+        <div class="flex items-center gap-3 cursor-pointer" @click="currentView = 'home'; window.scrollTo({top:0, behavior:'smooth'})">
+          <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-brand-600 via-teal-500 to-emerald-400 flex items-center justify-center text-white shadow-md shadow-brand-500/20">
+            <i data-lucide="wrench" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h1 class="text-xl md:text-2xl font-bold tracking-tight text-slate-900">
+                <span class="text-brand-600">بن عباس</span> ہوم کیئر
+              </h1>
+              <span class="hidden sm:inline-block text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 bg-brand-100 text-brand-700 rounded-md">
+                Verified Handyman
+              </span>
+            </div>
+            <p class="text-xs text-slate-500" x-text="t('tagline')"></p>
+          </div>
+        </div>
+
+        <!-- Desktop Navigation Links -->
+        <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-700">
+          <button @click="currentView = 'home'" :class="currentView === 'home' ? 'text-brand-600 font-bold' : 'hover:text-brand-600'" class="transition-colors" x-text="t('nav_home')"></button>
+          <a href="#services" @click="currentView = 'home'" class="hover:text-brand-600 transition-colors" x-text="t('nav_services')"></a>
+          <a href="#rate-card" @click="currentView = 'home'" class="hover:text-brand-600 transition-colors" x-text="t('nav_rates')"></a>
+          <a href="#technicians" @click="currentView = 'home'" class="hover:text-brand-600 transition-colors" x-text="t('nav_technicians')"></a>
+          <button @click="openTrackerModal()" class="hover:text-brand-600 flex items-center gap-1.5 text-slate-700 font-medium">
+            <i data-lucide="search" class="w-4 h-4 text-brand-600"></i>
+            <span x-text="t('nav_track')"></span>
+          </button>
+          <button @click="currentView = 'admin'" :class="currentView === 'admin' ? 'text-brand-600 font-bold' : 'text-slate-500 hover:text-slate-900'" class="flex items-center gap-1 text-xs px-2.5 py-1 rounded-lg border border-slate-200 hover:bg-slate-50">
+            <i data-lucide="user-cog" class="w-3.5 h-3.5"></i>
+            <span x-text="t('nav_admin')"></span>
+          </button>
+        </nav>
+
+        <!-- Right Action Buttons (Language Switch & Quick Booking) -->
+        <div class="flex items-center gap-3">
+          <!-- Language Toggle Button -->
+          <button 
+            @click="toggleLanguage()"
+            class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 hover:border-brand-500 text-xs font-semibold text-slate-700 hover:text-brand-600 bg-slate-50 hover:bg-white transition-all shadow-sm"
+          >
+            <i data-lucide="languages" class="w-4 h-4 text-brand-600"></i>
+            <span x-text="lang === 'ur' ? 'English' : 'اردو'"></span>
+          </button>
+
+          <!-- Book Now CTA Button -->
+          <button 
+            @click="openBookingModal()"
+            class="relative inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-brand-600 to-teal-600 hover:from-brand-700 hover:to-teal-700 text-white font-semibold text-sm shadow-lg shadow-brand-600/25 transition-all transform hover:-translate-y-0.5 active:translate-y-0"
+          >
+            <i data-lucide="calendar-plus" class="w-4 h-4"></i>
+            <span x-text="t('btn_book_now')"></span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT CONTAINER -->
+  <main>
+
+    <!-- ==================== HOME VIEW ==================== -->
+    <div x-show="currentView === 'home'" x-cloak>
+      
+      <!-- HERO SECTION -->
+      <section class="relative overflow-hidden bg-gradient-to-b from-teal-50/60 via-white to-slate-50 pt-10 pb-16 md:py-20 border-b border-slate-200/60">
+        <!-- Background decorative elements -->
+        <div class="absolute -top-24 -right-24 w-96 h-96 bg-brand-200/30 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute top-1/2 -left-24 w-80 h-80 bg-amber-200/20 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            
+            <!-- Left/Right (Urdu RTL) Hero Text -->
+            <div class="lg:col-span-7 space-y-6 text-center lg:text-start">
+              
+              <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-100/80 border border-brand-200 text-brand-800 text-xs sm:text-sm font-semibold shadow-xs">
+                <span class="w-2 h-2 rounded-full bg-brand-600 animate-ping"></span>
+                <span x-text="t('hero_badge')"></span>
+              </div>
+
+              <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-tight md:leading-normal">
+                <span x-text="t('hero_title_1')"></span>
+                <span class="block mt-2 bg-gradient-to-r from-brand-600 via-teal-600 to-emerald-600 bg-clip-text text-transparent" x-text="t('hero_title_highlight')"></span>
+              </h1>
+
+              <p class="text-base sm:text-lg text-slate-600 max-w-2xl mx-auto lg:mx-0" x-text="t('hero_desc')"></p>
+
+              <!-- Quick Search / Category Selector -->
+              <div class="pt-2 max-w-xl mx-auto lg:mx-0">
+                <div class="relative flex items-center bg-white p-2 rounded-2xl shadow-lg border border-slate-200 focus-within:border-brand-500 focus-within:ring-2 focus-within:ring-brand-200 transition-all">
+                  <div class="p-2 text-brand-600">
+                    <i data-lucide="search" class="w-5 h-5"></i>
+                  </div>
+                  <input 
+                    type="text" 
+                    x-model="searchQuery"
+                    @input="scrollToServices()"
+                    @keydown.enter="scrollToServices()"
+                    :placeholder="t('search_placeholder')"
+                    class="w-full px-3 py-2 bg-transparent text-sm md:text-base outline-none text-slate-800 placeholder-slate-400"
+                  />
+                  <button 
+                    @click="scrollToServices()"
+                    class="px-5 py-2.5 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition-colors"
+                  >
+                    <span x-text="t('search_btn')"></span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Quick CTAs & Contact Pills -->
+              <div class="flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-2">
+                <button 
+                  @click="openBookingModal()" 
+                  class="flex items-center gap-2 px-6 py-3.5 bg-brand-600 hover:bg-brand-700 text-white rounded-xl font-bold shadow-md hover:shadow-lg transition-all"
+                >
+                  <i data-lucide="check-circle-2" class="w-5 h-5"></i>
+                  <span x-text="t('cta_instant_booking')"></span>
+                </button>
+
+                <a 
+                  :href="getWhatsAppLink('اسلام علیکم! مجھے بن عباس ہوم کیئر سے کاریگر بک کروانا ہے۔')" 
+                  target="_blank"
+                  class="flex items-center gap-2 px-5 py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold shadow-md hover:shadow-lg transition-all"
+                >
+                  <i data-lucide="message-circle" class="w-5 h-5 text-emerald-200"></i>
+                  <span x-text="t('cta_whatsapp')"></span>
+                </a>
+
+                <a 
+                  :href="'tel:' + businessPhone" 
+                  class="flex items-center gap-2 px-5 py-3.5 bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 rounded-xl font-semibold transition-all"
+                >
+                  <i data-lucide="phone" class="w-5 h-5 text-brand-600"></i>
+                  <span x-text="t('cta_call')"></span>
+                </a>
+              </div>
+
+              <!-- Key Trust Stats -->
+              <div class="grid grid-cols-3 gap-4 pt-6 border-t border-slate-200/80">
+                <div class="text-center lg:text-start">
+                  <div class="text-2xl font-bold text-slate-900">4,500+</div>
+                  <div class="text-xs text-slate-500 font-medium" x-text="t('stat_happy_homes')"></div>
+                </div>
+                <div class="text-center lg:text-start">
+                  <div class="text-2xl font-bold text-brand-600">100%</div>
+                  <div class="text-xs text-slate-500 font-medium" x-text="t('stat_verified')"></div>
+                </div>
+                <div class="text-center lg:text-start">
+                  <div class="text-2xl font-bold text-amber-600">30-60 <span class="text-xs font-normal">منٹ</span></div>
+                  <div class="text-xs text-slate-500 font-medium" x-text="t('stat_fast_arrival')"></div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Right Hero Visual / Quick Category Cards -->
+            <div class="lg:col-span-5">
+              <div class="relative bg-white rounded-3xl p-6 sm:p-8 shadow-2xl border border-slate-200/80">
+                
+                <div class="flex items-center justify-between pb-4 mb-4 border-b border-slate-100">
+                  <div>
+                    <h3 class="font-bold text-slate-900 text-base" x-text="t('popular_services_title')"></h3>
+                    <p class="text-xs text-slate-500" x-text="t('popular_services_sub')"></p>
+                  </div>
+                  <span class="px-2.5 py-1 bg-emerald-100 text-emerald-700 text-xs font-bold rounded-lg flex items-center gap-1">
+                    <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+                    7 Days Warranty
+                  </span>
+                </div>
+
+                <!-- Fast category grid items -->
+                <div class="grid grid-cols-2 gap-3">
+                  <template x-for="cat in categories.slice(0, 4)" :key="cat.id">
+                    <div 
+                      @click="selectServiceForBooking(cat)"
+                      class="group p-3.5 rounded-2xl border border-slate-100 hover:border-brand-500 bg-slate-50 hover:bg-brand-50/50 cursor-pointer transition-all duration-200 transform hover:-translate-y-0.5 shadow-xs"
+                    >
+                      <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-brand-600 shadow-xs group-hover:scale-110 transition-transform">
+                          <i :data-lucide="cat.icon" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                          <div class="text-xs font-bold text-slate-800 group-hover:text-brand-700" x-text="lang === 'ur' ? cat.titleUrdu : cat.titleEn"></div>
+                          <div class="text-[11px] text-slate-500" x-text="'شروع: ' + cat.startingPrice"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </template>
+                </div>
+
+                <!-- Emergency service callout inside card -->
+                <div class="mt-5 p-4 rounded-2xl bg-gradient-to-r from-amber-500 to-amber-600 text-white shadow-md flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center">
+                      <i data-lucide="siren" class="w-6 h-6 animate-bounce"></i>
+                    </div>
+                    <div>
+                      <div class="text-sm font-bold" x-text="t('emergency_callout_title')"></div>
+                      <div class="text-xs text-amber-100" x-text="t('emergency_callout_desc')"></div>
+                    </div>
+                  </div>
+                  <button 
+                    @click="openBookingModal({ urgent: true })"
+                    class="px-3.5 py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-xl shadow-xs transition-colors"
+                  >
+                    <span x-text="t('btn_urgent_call')"></span>
+                  </button>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== ALL SERVICES SECTION ==================== -->
+      <section id="services" class="py-16 md:py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
+            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-100 text-brand-700 text-xs font-bold">
+              <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+              <span x-text="t('services_badge')"></span>
+            </div>
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900" x-text="t('services_title')"></h2>
+            <p class="text-slate-600 text-sm sm:text-base" x-text="t('services_subtitle')"></p>
+          </div>
+
+          <!-- Services Grid -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <template x-for="cat in filteredCategories" :key="cat.id">
+              <div class="bg-slate-50 hover:bg-white rounded-3xl p-6 border border-slate-200/80 hover:border-brand-500 hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
+                <div>
+                  <div class="flex items-center justify-between mb-4">
+                    <div class="w-14 h-14 rounded-2xl bg-white group-hover:bg-brand-600 flex items-center justify-center text-brand-600 group-hover:text-white shadow-sm transition-colors duration-300">
+                      <i :data-lucide="cat.icon" class="w-7 h-7"></i>
+                    </div>
+                    <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-brand-100 text-brand-700" x-text="cat.startingPrice"></span>
+                  </div>
+
+                  <h3 class="text-lg font-bold text-slate-900 group-hover:text-brand-600 transition-colors mb-2" x-text="lang === 'ur' ? cat.titleUrdu : cat.titleEn"></h3>
+                  
+                  <p class="text-xs text-slate-500 mb-4 line-clamp-2" x-text="lang === 'ur' ? cat.descUrdu : cat.descEn"></p>
+
+                  <!-- Included sub-items list -->
+                  <ul class="space-y-1.5 mb-6 text-xs text-slate-600">
+                    <template x-for="item in (lang === 'ur' ? cat.tasksUrdu : cat.tasksEn)" :key="item">
+                      <li class="flex items-center gap-1.5">
+                        <i data-lucide="check" class="w-3.5 h-3.5 text-brand-600 flex-shrink-0"></i>
+                        <span x-text="item"></span>
+                      </li>
+                    </template>
+                  </ul>
+                </div>
+
+                <div class="pt-4 border-t border-slate-200 flex items-center gap-2">
+                  <button 
+                    @click="selectServiceForBooking(cat)"
+                    class="flex-1 py-2.5 px-3 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-bold transition-colors flex items-center justify-center gap-1.5"
+                  >
+                    <i data-lucide="calendar" class="w-4 h-4"></i>
+                    <span x-text="t('btn_book_service')"></span>
+                  </button>
+
+                  <a 
+                    :href="getWhatsAppLink('میں ' + (lang === 'ur' ? cat.titleUrdu : cat.titleEn) + ' کے بارے میں معلومات اور کاریگر کی بکنگ چاہتا ہوں۔')"
+                    target="_blank"
+                    class="p-2.5 bg-emerald-100 hover:bg-emerald-200 text-emerald-700 rounded-xl transition-colors"
+                    title="WhatsApp"
+                  >
+                    <i data-lucide="message-circle" class="w-4 h-4"></i>
+                  </a>
+                </div>
+              </div>
+            </template>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ==================== TRANSPARENT RATE CARD ==================== -->
+      <section id="rate-card" class="py-16 bg-slate-100 border-y border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div class="text-center max-w-3xl mx-auto mb-12 space-y-2">
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900" x-text="t('rates_title')"></h2>
+            <p class="text-slate-600 text-xs sm:text-sm" x-text="t('rates_subtitle')"></p>
+          </div>
+
+          <!-- Rate List Tabs & Table -->
+          <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-md border border-slate-200">
+            <div class="overflow-x-auto">
+              <table class="w-full text-start text-xs sm:text-sm">
+                <thead>
+                  <tr class="border-b-2 border-slate-200 text-slate-700 font-bold bg-slate-50/50">
+                    <th class="py-3.5 px-4 text-start" x-text="t('table_service')"></th>
+                    <th class="py-3.5 px-4 text-start" x-text="t('table_job_type')"></th>
+                    <th class="py-3.5 px-4 text-start" x-text="t('table_standard_rate')"></th>
+                    <th class="py-3.5 px-4 text-start" x-text="t('table_est_time')"></th>
+                    <th class="py-3.5 px-4 text-center" x-text="t('table_action')"></th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                  <template x-for="item in rateTableData" :key="item.id">
+                    <tr class="hover:bg-brand-50/40 transition-colors">
+                      <td class="py-3 px-4 font-bold text-slate-900 flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-brand-500"></span>
+                        <span x-text="lang === 'ur' ? item.categoryUrdu : item.categoryEn"></span>
+                      </td>
+                      <td class="py-3 px-4 text-slate-700" x-text="lang === 'ur' ? item.jobUrdu : item.jobEn"></td>
+                      <td class="py-3 px-4 font-extrabold text-brand-700" x-text="item.price"></td>
+                      <td class="py-3 px-4 text-slate-500" x-text="lang === 'ur' ? item.timeUrdu : item.timeEn"></td>
+                      <td class="py-3 px-4 text-center">
+                        <button 
+                          @click="openBookingModal({ service: item.categoryUrdu, job: item.jobUrdu, price: item.price })"
+                          class="px-3 py-1 bg-brand-100 hover:bg-brand-600 hover:text-white text-brand-700 rounded-lg text-xs font-semibold transition-colors"
+                          x-text="t('btn_book_this')"
+                        ></button>
+                      </td>
+                    </tr>
+                  </template>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="mt-6 pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between text-xs text-slate-500 gap-2">
+              <div class="flex items-center gap-2">
+                <i data-lucide="info" class="w-4 h-4 text-brand-600"></i>
+                <span x-text="t('rate_note')"></span>
+              </div>
+              <div class="font-semibold text-slate-700" x-text="t('inspection_policy')"></div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ==================== VERIFIED TECHNICIANS / HANDYMEN ==================== -->
+      <section id="technicians" class="py-16 md:py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div class="text-center max-w-3xl mx-auto mb-16 space-y-2">
+            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 text-xs font-bold">
+              <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+              <span>100% Background Checked</span>
+            </div>
+            <h2 class="text-3xl font-extrabold text-slate-900" x-text="t('technicians_title')"></h2>
+            <p class="text-slate-600 text-sm" x-text="t('technicians_subtitle')"></p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <template x-for="tech in technicians" :key="tech.id">
+              <div class="bg-slate-50 rounded-3xl p-6 border border-slate-200/80 hover:shadow-lg transition-all flex flex-col justify-between">
+                <div>
+                  <div class="flex items-center gap-4 mb-4">
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-brand-600 to-teal-400 text-white font-bold text-2xl flex items-center justify-center shadow-md">
+                      <span x-text="tech.name.charAt(0)"></span>
+                    </div>
+                    <div>
+                      <div class="flex items-center gap-1.5">
+                        <h4 class="font-bold text-slate-900 text-base" x-text="tech.name"></h4>
+                        <i data-lucide="check-circle" class="w-4 h-4 text-emerald-500 fill-emerald-50" title="Verified CNIC"></i>
+                      </div>
+                      <p class="text-xs font-semibold text-brand-600" x-text="lang === 'ur' ? tech.specialtyUrdu : tech.specialtyEn"></p>
+                      <div class="flex items-center gap-2 mt-1 text-xs text-slate-500">
+                        <span class="flex items-center gap-1 text-amber-500 font-bold">
+                          <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400"></i>
+                          <span x-text="tech.rating"></span>
+                        </span>
+                        <span>•</span>
+                        <span x-text="tech.experience + ' سال کا تجربہ'"></span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="p-3 bg-white rounded-xl border border-slate-100 text-xs text-slate-600 space-y-1 mb-4">
+                    <div class="flex justify-between">
+                      <span class="text-slate-400">مکمل شدہ کام:</span>
+                      <span class="font-bold text-slate-800" x-text="tech.completedJobs + ' گھر'"></span>
+                    </div>
+                    <div class="flex justify-between">
+                      <span class="text-slate-400">شناختی کارڈ و پولیس تصدیق:</span>
+                      <span class="font-semibold text-emerald-600">تصدیق شدہ ✓</span>
+                    </div>
+                  </div>
+                </div>
+
+                <button 
+                  @click="openBookingModal({ preferredTech: tech.name, service: tech.specialtyUrdu })"
+                  class="w-full py-2.5 bg-slate-900 hover:bg-brand-600 text-white rounded-xl text-xs font-bold transition-colors flex items-center justify-center gap-1.5"
+                >
+                  <i data-lucide="user-check" class="w-4 h-4"></i>
+                  <span x-text="'یہ کاریگر منتخب کریں'"></span>
+                </button>
+              </div>
+            </template>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ==================== WHY CHOOSE US ==================== -->
+      <section class="py-16 bg-gradient-to-br from-brand-900 via-teal-950 to-slate-950 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div class="text-center max-w-2xl mx-auto mb-12">
+            <h2 class="text-2xl sm:text-3xl font-extrabold" x-text="t('why_us_title')"></h2>
+            <p class="text-teal-200 text-xs sm:text-sm mt-2" x-text="t('why_us_sub')"></p>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            
+            <div class="p-6 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-sm">
+              <div class="w-12 h-12 rounded-2xl bg-brand-500/20 text-brand-400 flex items-center justify-center mb-4">
+                <i data-lucide="shield-check" class="w-6 h-6"></i>
+              </div>
+              <h3 class="font-bold text-base mb-2" x-text="t('why_1_title')"></h3>
+              <p class="text-xs text-slate-300 leading-relaxed" x-text="t('why_1_desc')"></p>
+            </div>
+
+            <div class="p-6 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-sm">
+              <div class="w-12 h-12 rounded-2xl bg-amber-500/20 text-amber-400 flex items-center justify-center mb-4">
+                <i data-lucide="badge-dollar-sign" class="w-6 h-6"></i>
+              </div>
+              <h3 class="font-bold text-base mb-2" x-text="t('why_2_title')"></h3>
+              <p class="text-xs text-slate-300 leading-relaxed" x-text="t('why_2_desc')"></p>
+            </div>
+
+            <div class="p-6 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-sm">
+              <div class="w-12 h-12 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center mb-4">
+                <i data-lucide="clock" class="w-6 h-6"></i>
+              </div>
+              <h3 class="font-bold text-base mb-2" x-text="t('why_3_title')"></h3>
+              <p class="text-xs text-slate-300 leading-relaxed" x-text="t('why_3_desc')"></p>
+            </div>
+
+            <div class="p-6 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-sm">
+              <div class="w-12 h-12 rounded-2xl bg-purple-500/20 text-purple-400 flex items-center justify-center mb-4">
+                <i data-lucide="award" class="w-6 h-6"></i>
+              </div>
+              <h3 class="font-bold text-base mb-2" x-text="t('why_4_title')"></h3>
+              <p class="text-xs text-slate-300 leading-relaxed" x-text="t('why_4_desc')"></p>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- ==================== ADMIN DASHBOARD VIEW ==================== -->
+    <div x-show="currentView === 'admin'" x-cloak class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      
+      <div class="flex flex-wrap items-center justify-between gap-4 mb-8 pb-4 border-b border-slate-200">
+        <div>
+          <div class="flex items-center gap-2">
+            <h2 class="text-2xl font-bold text-slate-900">ایڈمن کنٹرول پورٹل (Admin Panel)</h2>
+            <span class="px-2.5 py-0.5 bg-brand-100 text-brand-800 text-xs font-bold rounded-md">Live Orders</span>
+          </div>
+          <p class="text-xs text-slate-500">تمام نئے آرڈرز، کاریگروں کی تفویض اور اسٹیٹس کا انتظام کریں۔</p>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button @click="currentView = 'home'" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-xl transition-colors">
+            ← واپس ویب سائٹ
+          </button>
+        </div>
+      </div>
+
+      <!-- Admin Stats Summary -->
+      <div class="grid grid-cols-1 sm:grid-cols-4 gap-4 mb-8">
+        <div class="p-5 bg-white rounded-2xl border border-slate-200 shadow-sm">
+          <div class="text-xs text-slate-500 font-medium">کل بکنگز</div>
+          <div class="text-2xl font-bold text-slate-900 mt-1" x-text="orders.length"></div>
+        </div>
+        <div class="p-5 bg-white rounded-2xl border border-slate-200 shadow-sm">
+          <div class="text-xs text-amber-600 font-medium">زیر التواء (Pending)</div>
+          <div class="text-2xl font-bold text-amber-600 mt-1" x-text="orders.filter(o => o.status === 'pending').length"></div>
+        </div>
+        <div class="p-5 bg-white rounded-2xl border border-slate-200 shadow-sm">
+          <div class="text-xs text-brand-600 font-medium">جاری کام (In Progress)</div>
+          <div class="text-2xl font-bold text-brand-600 mt-1" x-text="orders.filter(o => o.status === 'in_progress').length"></div>
+        </div>
+        <div class="p-5 bg-white rounded-2xl border border-slate-200 shadow-sm">
+          <div class="text-xs text-emerald-600 font-medium">مکمل شدہ (Completed)</div>
+          <div class="text-2xl font-bold text-emerald-600 mt-1" x-text="orders.filter(o => o.status === 'completed').length"></div>
+        </div>
+      </div>
+
+      <!-- Admin Orders Table -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+        <div class="p-4 bg-slate-50 border-b border-slate-200 font-bold text-sm text-slate-800 flex justify-between items-center">
+          <span>حالیہ سروس آرڈرز</span>
+          <span class="text-xs text-slate-500 font-normal">کل: <span x-text="orders.length"></span> آرڈرز</span>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-start text-xs">
+            <thead class="bg-slate-100/60 text-slate-600 border-b border-slate-200 font-semibold">
+              <tr>
+                <th class="p-3 text-start">آرڈر ID</th>
+                <th class="p-3 text-start">کسٹمر کا نام و فون</th>
+                <th class="p-3 text-start">سروس و مسئلہ</th>
+                <th class="p-3 text-start">پتہ / علاقہ</th>
+                <th class="p-3 text-start">نامزد کاریگر</th>
+                <th class="p-3 text-start">اسٹیٹس</th>
+                <th class="p-3 text-center">ایکشن</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100">
+              <template x-for="order in orders" :key="order.id">
+                <tr class="hover:bg-slate-50/80 transition-colors">
+                  <td class="p-3 font-mono font-bold text-brand-700" x-text="order.id"></td>
+                  <td class="p-3">
+                    <div class="font-bold text-slate-900" x-text="order.customerName"></div>
+                    <div class="text-slate-500" dir="ltr" x-text="order.phone"></div>
+                  </td>
+                  <td class="p-3">
+                    <span class="font-semibold text-slate-800" x-text="order.service"></span>
+                    <div class="text-slate-500 text-[11px] truncate max-w-xs" x-text="order.details"></div>
+                  </td>
+                  <td class="p-3 text-slate-600" x-text="order.address"></td>
+                  <td class="p-3">
+                    <select 
+                      x-model="order.assignedTech" 
+                      @change="saveOrders()"
+                      class="text-xs p-1.5 rounded-lg border border-slate-200 bg-white"
+                    >
+                      <option value="">-- کاریگر تفویض کریں --</option>
+                      <template x-for="t in technicians" :key="t.name">
+                        <option :value="t.name" x-text="t.name + ' (' + t.specialtyUrdu + ')'"></option>
+                      </template>
+                    </select>
+                  </td>
+                  <td class="p-3">
+                    <select 
+                      x-model="order.status" 
+                      @change="saveOrders()"
+                      :class="{
+                        'bg-amber-100 text-amber-800': order.status === 'pending',
+                        'bg-blue-100 text-blue-800': order.status === 'in_progress',
+                        'bg-emerald-100 text-emerald-800': order.status === 'completed'
+                      }"
+                      class="text-xs font-semibold p-1.5 rounded-lg border border-transparent"
+                    >
+                      <option value="pending">زیر التواء (Pending)</option>
+                      <option value="in_progress">کام جاری (In Progress)</option>
+                      <option value="completed">مکمل ہو گیا (Completed)</option>
+                    </select>
+                  </td>
+                  <td class="p-3 text-center">
+                    <div class="flex items-center justify-center gap-1.5">
+                      <a 
+                        :href="'https://wa.me/' + order.phone.replace(/[^0-9]/g, '') + '?text=' + encodeURIComponent('محترم ' + order.customerName + ' صاحب! بن عباس ہوم کیئر کی جانب سے آپ کا آرڈر نمبر ' + order.id + ' موصول ہو چکا ہے۔')"
+                        target="_blank"
+                        class="p-1.5 bg-emerald-50 text-emerald-600 hover:bg-emerald-600 hover:text-white rounded-lg transition-colors"
+                        title="WhatsApp Customer"
+                      >
+                        <i data-lucide="message-circle" class="w-3.5 h-3.5"></i>
+                      </a>
+                      <button 
+                        @click="viewOrderDetails(order)"
+                        class="p-1.5 bg-brand-50 text-brand-600 hover:bg-brand-600 hover:text-white rounded-lg transition-colors"
+                        title="View Details"
+                      >
+                        <i data-lucide="eye" class="w-3.5 h-3.5"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </template>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="bg-slate-900 text-slate-300 pt-16 pb-12 border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+        
+        <!-- About Col -->
+        <div class="space-y-4">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-brand-600 flex items-center justify-center text-white">
+              <i data-lucide="wrench" class="w-5 h-5"></i>
+            </div>
+            <h3 class="text-xl font-bold text-white">بن عباس ہوم کیئر</h3>
+          </div>
+          <p class="text-xs text-slate-400 leading-relaxed" x-text="t('footer_desc')"></p>
+          <div class="flex items-center gap-2 text-xs text-emerald-400 font-semibold">
+            <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+            <span>رجسٹرڈ و مستند کاریگر سروسز</span>
+          </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="space-y-3">
+          <h4 class="text-sm font-bold text-white uppercase tracking-wider" x-text="t('footer_links_title')"></h4>
+          <ul class="space-y-2 text-xs">
+            <li><a href="#services" class="hover:text-brand-400 transition-colors" x-text="t('nav_services')"></a></li>
+            <li><a href="#rate-card" class="hover:text-brand-400 transition-colors" x-text="t('nav_rates')"></a></li>
+            <li><a href="#technicians" class="hover:text-brand-400 transition-colors" x-text="t('nav_technicians')"></a></li>
+            <li><button @click="openTrackerModal()" class="hover:text-brand-400 transition-colors" x-text="t('nav_track')"></button></li>
+          </ul>
+        </div>
+
+        <!-- Working Hours & Areas -->
+        <div class="space-y-3">
+          <h4 class="text-sm font-bold text-white uppercase tracking-wider" x-text="t('footer_coverage_title')"></h4>
+          <p class="text-xs text-slate-400" x-text="t('footer_hours')"></p>
+          <div class="p-3 rounded-xl bg-slate-800/80 border border-slate-700/60 text-xs text-slate-300">
+            <div class="font-semibold text-white mb-1">سروس کے علاقے:</div>
+            <p class="text-slate-400">تمام اہم ٹاؤنز، سوسائٹیز اور رہائشی کالونیاں۔</p>
+          </div>
+        </div>
+
+        <!-- Direct Contact -->
+        <div class="space-y-3">
+          <h4 class="text-sm font-bold text-white uppercase tracking-wider" x-text="t('footer_contact_title')"></h4>
+          <div class="space-y-2 text-xs">
+            <div class="flex items-center gap-2">
+              <i data-lucide="phone" class="w-4 h-4 text-brand-400"></i>
+              <span dir="ltr" x-text="businessPhoneDisplay"></span>
+            </div>
+            <div class="flex items-center gap-2">
+              <i data-lucide="message-circle" class="w-4 h-4 text-emerald-400"></i>
+              <span>فوری WhatsApp سپورٹ 24/7</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <i data-lucide="map-pin" class="w-4 h-4 text-amber-400"></i>
+              <span>پاکستان (ڈور اسٹیپ فوری سروس)</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="pt-8 border-t border-slate-800 flex flex-wrap justify-between items-center gap-4 text-xs text-slate-500">
+        <div>
+          © 2026 بن عباس ہوم کیئر (Bin Abbas Home Care). تمام حقوق محفوظ ہیں۔
+        </div>
+        <div class="flex items-center gap-4">
+          <button @click="currentView = 'admin'" class="hover:text-slate-300">ایڈمن لاگ ان</button>
+          <span>•</span>
+          <button @click="toggleLanguage()" class="hover:text-slate-300" x-text="lang === 'ur' ? 'Switch to English' : 'اردو میں دیکھیں'"></button>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== MULTI-STEP BOOKING MODAL ==================== -->
+  <div 
+    x-show="isBookingModalOpen" 
+    x-cloak 
+    class="fixed inset-0 z-50 overflow-y-auto bg-slate-900/70 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6"
+    @keydown.escape.window="isBookingModalOpen = false"
+  >
+    <div 
+      @click.outside="isBookingModalOpen = false"
+      class="bg-white rounded-3xl shadow-2xl border border-slate-200 max-w-xl w-full overflow-hidden transform transition-all"
+    >
+      
+      <!-- Modal Header with Progress -->
+      <div class="bg-gradient-to-r from-brand-700 to-teal-800 text-white p-6 relative">
+        <button 
+          @click="isBookingModalOpen = false" 
+          class="absolute top-5 left-5 text-white/80 hover:text-white p-1 rounded-full bg-black/10 hover:bg-black/20"
+        >
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+        <div class="text-xs font-semibold text-teal-200 uppercase tracking-wider mb-1" x-text="t('modal_booking_title')"></div>
+        <h3 class="text-xl font-bold" x-text="bookingForm.category ? bookingForm.category : 'کاریگر کی بکنگ'"></h3>
+        
+        <!-- Step Indicators -->
+        <div class="flex items-center gap-2 mt-4">
+          <div class="flex-1 h-1.5 rounded-full" :class="bookingStep >= 1 ? 'bg-amber-400' : 'bg-white/20'"></div>
+          <div class="flex-1 h-1.5 rounded-full" :class="bookingStep >= 2 ? 'bg-amber-400' : 'bg-white/20'"></div>
+          <div class="flex-1 h-1.5 rounded-full" :class="bookingStep >= 3 ? 'bg-amber-400' : 'bg-white/20'"></div>
+        </div>
+      </div>
+
+      <!-- Modal Body (Steps) -->
+      <div class="p-6 sm:p-8 space-y-6">
+        
+        <!-- STEP 1: Choose Service & Details -->
+        <div x-show="bookingStep === 1" class="space-y-4">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">سروس کا شعبہ منتخب کریں *</label>
+            <select 
+              x-model="bookingForm.category" 
+              class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-brand-500 focus:ring-2 focus:ring-brand-200 outline-none text-sm font-medium text-slate-800"
+            >
+              <option value="">-- سروس منتخب کریں --</option>
+              <template x-for="c in categories" :key="c.id">
+                <option :value="c.titleUrdu" x-text="c.titleUrdu + ' (' + c.startingPrice + ')'"></option>
+              </template>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">مسئلہ / کام کی نوعیت بیان کریں *</label>
+            <textarea 
+              x-model="bookingForm.details"
+              rows="3" 
+              placeholder="مثال: پنکھا نہیں چل رہا، پانی کا پائپ لیک ہے، یا اے سی سروس کروانا ہے..."
+              class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-brand-500 focus:ring-2 focus:ring-brand-200 outline-none text-sm text-slate-800"
+            ></textarea>
+          </div>
+
+          <!-- Urgency selector -->
+          <div class="p-3 rounded-2xl bg-amber-50 border border-amber-200 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <input type="checkbox" id="urgentCheck" x-model="bookingForm.isUrgent" class="w-4 h-4 text-brand-600 rounded">
+              <label for="urgentCheck" class="text-xs font-bold text-slate-800 cursor-pointer">
+                ہنگامی فوری سروس (Urgent Service - 60 منٹ میں کاریگر)
+              </label>
+            </div>
+            <span class="text-[11px] font-bold text-amber-700">+فوری ترجیح</span>
+          </div>
+
+          <div class="pt-4 flex justify-end">
+            <button 
+              @click="if(bookingForm.category) bookingStep = 2; else alert('براہِ کرم پہلے سروس منتخب کریں۔');" 
+              class="px-6 py-2.5 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-bold transition-colors flex items-center gap-1.5"
+            >
+              <span>اگلا مرحلہ (وقت اور پتہ)</span>
+              <i data-lucide="arrow-left" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- STEP 2: Date, Time & Address -->
+        <div x-show="bookingStep === 2" class="space-y-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1">تاریخ منتخب کریں *</label>
+              <input 
+                type="date" 
+                x-model="bookingForm.date"
+                class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm outline-none focus:border-brand-500"
+              />
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-700 mb-1">مناسب وقت *</label>
+              <select 
+                x-model="bookingForm.timeSlot"
+                class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm outline-none focus:border-brand-500"
+              >
+                <option value="صبح 9:00 تا 12:00">صبح (09:00 تا 12:00)</option>
+                <option value="دوپہر 12:00 تا 03:00">دوپہر (12:00 تا 03:00)</option>
+                <option value="شام 03:00 تا 06:00">شام (03:00 تا 06:00)</option>
+                <option value="رات 06:00 تا 09:00">رات (06:00 تا 09:00)</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">آپ کا نام *</label>
+            <input 
+              type="text" 
+              x-model="bookingForm.customerName"
+              placeholder="مثال: علی احمد / محمد عثمان"
+              class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm outline-none focus:border-brand-500"
+            />
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">موبائل فون نمبر *</label>
+            <input 
+              type="tel" 
+              dir="ltr"
+              x-model="bookingForm.phone"
+              placeholder="03001234567"
+              class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm outline-none focus:border-brand-500"
+            />
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">مکمل پتہ اور گلی / مکان نمبر *</label>
+            <input 
+              type="text" 
+              x-model="bookingForm.address"
+              placeholder="مکان نمبر، گلی، بلاک، سوسائٹی کا نام"
+              class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm outline-none focus:border-brand-500"
+            />
+          </div>
+
+          <div class="pt-4 flex justify-between items-center">
+            <button 
+              @click="bookingStep = 1" 
+              class="px-4 py-2 text-xs font-semibold text-slate-600 hover:text-slate-900"
+            >
+              ← واپس
+            </button>
+            <button 
+              @click="if(bookingForm.customerName && bookingForm.phone && bookingForm.address) bookingStep = 3; else alert('براہِ کرم تمام فیلڈز مکمل کریں۔');" 
+              class="px-6 py-2.5 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-bold transition-colors"
+            >
+              تفصیلات کا جائزہ لیں
+            </button>
+          </div>
+        </div>
+
+        <!-- STEP 3: Review & Submit -->
+        <div x-show="bookingStep === 3" class="space-y-4">
+          <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2 text-xs">
+            <div class="flex justify-between border-b border-slate-200 pb-2">
+              <span class="text-slate-500">منتخب سروس:</span>
+              <span class="font-bold text-slate-900" x-text="bookingForm.category"></span>
+            </div>
+            <div class="flex justify-between border-b border-slate-200 pb-2">
+              <span class="text-slate-500">کسٹمر کا نام:</span>
+              <span class="font-semibold text-slate-800" x-text="bookingForm.customerName"></span>
+            </div>
+            <div class="flex justify-between border-b border-slate-200 pb-2">
+              <span class="text-slate-500">فون نمبر:</span>
+              <span class="font-mono text-slate-800" dir="ltr" x-text="bookingForm.phone"></span>
+            </div>
+            <div class="flex justify-between border-b border-slate-200 pb-2">
+              <span class="text-slate-500">پتہ:</span>
+              <span class="text-slate-800" x-text="bookingForm.address"></span>
+            </div>
+            <div class="flex justify-between border-b border-slate-200 pb-2">
+              <span class="text-slate-500">تاریخ و وقت:</span>
+              <span class="text-slate-800" x-text="bookingForm.date + ' | ' + bookingForm.timeSlot"></span>
+            </div>
+            <div class="flex justify-between pt-1 font-bold text-brand-700">
+              <span>ابتدائی انسپیکشن فیس:</span>
+              <span>روپے 300/- (اگر کام کروائیں تو فیس میں ایڈجسٹ ہو جائے گی)</span>
+            </div>
+          </div>
+
+          <div class="pt-4 flex justify-between items-center">
+            <button 
+              @click="bookingStep = 2" 
+              class="px-4 py-2 text-xs font-semibold text-slate-600 hover:text-slate-900"
+            >
+              ← ترمیم کریں
+            </button>
+            <button 
+              @click="submitBooking()" 
+              class="px-6 py-3 bg-gradient-to-r from-brand-600 to-emerald-600 hover:from-brand-700 hover:to-emerald-700 text-white rounded-xl text-xs font-extrabold shadow-lg shadow-brand-600/30 transition-all"
+            >
+              بکنگ کنفرم کریں ✓
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== ORDER TRACKER MODAL ==================== -->
+  <div 
+    x-show="isTrackerModalOpen" 
+    x-cloak 
+    class="fixed inset-0 z-50 overflow-y-auto bg-slate-900/70 backdrop-blur-sm flex items-center justify-center p-4"
+    @keydown.escape.window="isTrackerModalOpen = false"
+  >
+    <div 
+      @click.outside="isTrackerModalOpen = false"
+      class="bg-white rounded-3xl shadow-2xl border border-slate-200 max-w-lg w-full p-6 sm:p-8"
+    >
+      <div class="flex justify-between items-center pb-4 border-b border-slate-100 mb-6">
+        <div>
+          <h3 class="text-lg font-bold text-slate-900" x-text="t('tracker_title')"></h3>
+          <p class="text-xs text-slate-500" x-text="t('tracker_sub')"></p>
+        </div>
+        <button @click="isTrackerModalOpen = false" class="text-slate-400 hover:text-slate-700">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <div class="flex gap-2 mb-6">
+        <input 
+          type="text" 
+          x-model="trackingIdInput"
+          placeholder="آرڈر نمبر درج کریں (مثال: BAHC-1001)"
+          class="flex-1 px-4 py-2.5 rounded-xl border border-slate-200 text-sm outline-none focus:border-brand-500"
+        />
+        <button 
+          @click="searchOrder()"
+          class="px-5 py-2.5 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-bold transition-colors"
+        >
+          تلاش کریں
+        </button>
+      </div>
+
+      <!-- Found Order Details -->
+      <template x-if="trackedOrder">
+        <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-4">
+          <div class="flex justify-between items-center">
+            <div>
+              <span class="text-xs text-slate-400">آرڈر ID:</span>
+              <span class="font-mono font-bold text-brand-700 text-sm" x-text="trackedOrder.id"></span>
+            </div>
+            <span 
+              class="px-3 py-1 rounded-full text-xs font-bold"
+              :class="{
+                'bg-amber-100 text-amber-800': trackedOrder.status === 'pending',
+                'bg-blue-100 text-blue-800': trackedOrder.status === 'in_progress',
+                'bg-emerald-100 text-emerald-800': trackedOrder.status === 'completed'
+              }"
+              x-text="trackedOrder.status === 'pending' ? 'درخواست موصول' : (trackedOrder.status === 'in_progress' ? 'کاریگر روانہ / کام جاری' : 'کام مکمل ہو گیا')"
+            ></span>
+          </div>
+
+          <div class="space-y-1 text-xs text-slate-600">
+            <div><strong>سروس:</strong> <span x-text="trackedOrder.service"></span></div>
+            <div><strong>کسٹمر:</strong> <span x-text="trackedOrder.customerName"></span></div>
+            <div><strong>نامزد کاریگر:</strong> <span class="text-brand-700 font-semibold" x-text="trackedOrder.assignedTech || 'انتظامیہ تفویض کر رہی ہے...'"></span></div>
+          </div>
+
+          <!-- Milestones Progress -->
+          <div class="pt-3 border-t border-slate-200">
+            <div class="flex justify-between text-[11px] font-semibold text-slate-500 mb-2">
+              <span :class="{'text-brand-700 font-bold': true}">1. بکنگ موصول</span>
+              <span :class="{'text-brand-700 font-bold': trackedOrder.status === 'in_progress' || trackedOrder.status === 'completed'}">2. کاریگر روانہ</span>
+              <span :class="{'text-brand-700 font-bold': trackedOrder.status === 'completed'}">3. کام مکمل</span>
+            </div>
+            <div class="h-2 rounded-full bg-slate-200 overflow-hidden flex">
+              <div 
+                class="h-full bg-brand-600 transition-all duration-500"
+                :style="'width: ' + (trackedOrder.status === 'pending' ? '33%' : (trackedOrder.status === 'in_progress' ? '66%' : '100%'))"
+              ></div>
+            </div>
+          </div>
+        </div>
+      </template>
+
+      <template x-if="trackingSearched && !trackedOrder">
+        <div class="p-4 rounded-xl bg-red-50 text-red-700 text-xs text-center">
+          کوئی آرڈر نہیں ملا۔ براہ کرم صحیح آرڈر نمبر درج کریں۔
+        </div>
+      </template>
+
+    </div>
+  </div>
+
+  <!-- FLOATING QUICK WHATSAPP & PHONE (MOBILE) -->
+  <div class="fixed bottom-4 left-4 right-4 md:hidden z-30 flex items-center gap-2">
+    <a 
+      :href="getWhatsAppLink('اسلام علیکم! مجھے فوری کاریگر کی ضرورت ہے۔')" 
+      target="_blank"
+      class="flex-1 py-3 bg-emerald-600 text-white rounded-2xl font-bold text-xs shadow-xl flex items-center justify-center gap-2"
+    >
+      <i data-lucide="message-circle" class="w-4 h-4"></i>
+      <span>WhatsApp آرڈر</span>
+    </a>
+    <button 
+      @click="openBookingModal()"
+      class="flex-1 py-3 bg-brand-600 text-white rounded-2xl font-bold text-xs shadow-xl flex items-center justify-center gap-2"
+    >
+      <i data-lucide="calendar-plus" class="w-4 h-4"></i>
+      <span>کاریگر بک کریں</span>
+    </button>
+  </div>
+
+  <!-- APPLICATION LOGIC SCRIPT -->
+  <script>
+    function homeCareApp() {
+      return {
+        lang: 'ur',
+        currentView: 'home',
+        searchQuery: '',
+        isBookingModalOpen: false,
+        isTrackerModalOpen: false,
+        bookingStep: 1,
+        businessPhone: '+923001234567',
+        businessPhoneDisplay: '0300-1234567',
+        
+        trackingIdInput: '',
+        trackedOrder: null,
+        trackingSearched: false,
+
+        bookingForm: {
+          category: '',
+          details: '',
+          isUrgent: false,
+          date: new Date().toISOString().split('T')[0],
+          timeSlot: 'صبح 9:00 تا 12:00',
+          customerName: '',
+          phone: '',
+          address: '',
+          assignedTech: ''
+        },
+
+        // 8 Core Household Handyman Service Categories
+        categories: [
+          {
+            id: 'electrician',
+            icon: 'zap',
+            titleUrdu: 'بجلی کا کام (الیکٹریشن)',
+            titleEn: 'Electrician Services',
+            descUrdu: 'فین انسٹالیشن، وائرنگ فالٹ، یو پی ایس و سولر سیٹ اپ، شارٹ سرکٹ کی فوری مرمت۔',
+            descEn: 'Fan installation, wiring repair, UPS & inverter fault fix, switchboards & breakers.',
+            startingPrice: 'روپے 400 سے شروع',
+            tasksUrdu: ['پنکھا و بریکر انسٹالیشن', 'شارٹ سرکٹ فالٹ ٹریسنگ', 'یو پی ایس و سولر وائرنگ', 'ایل ای ڈی لائٹس و سوئچ بورڈ'],
+            tasksEn: ['Fan & Breaker Installation', 'Short Circuit Fault Repair', 'UPS & Solar Inverter Wiring', 'LED Lights & Switchboards']
+          },
+          {
+            id: 'plumbing',
+            icon: 'droplets',
+            titleUrdu: 'پلمبنگ و سینیٹری',
+            titleEn: 'Plumbing & Sanitary',
+            descUrdu: 'پانی کی موٹر ریپیرنگ، گیزر فٹنگ، لیکج فالٹ، نلکے اور واش روم سینیٹری کا مکمل کام۔',
+            descEn: 'Water pump repair, geyser installation, leak fixes, mixer taps & bathroom sanitary.',
+            startingPrice: 'روپے 500 سے شروع',
+            tasksUrdu: ['پانی کی موٹر و پمپ ریپیرنگ', 'گیزر انسٹالیشن و صفائی', 'پائپ لائن لیکیج مرمت', 'کموڈ، سنک اور شاور فٹنگ'],
+            tasksEn: ['Water Pump & Motor Repair', 'Geyser Fitting & Service', 'Pipeline Leak Repair', 'Commode & Basin Fixing']
+          },
+          {
+            id: 'ac-repair',
+            icon: 'wind',
+            titleUrdu: 'اے سی و ریفریجریٹر ریپیرنگ',
+            titleEn: 'AC & Refrigeration',
+            descUrdu: 'اے سی جنرل سروس (Master Service)، گیس چارجنگ، انورٹر فالٹ، فریج و واشنگ مشین مرمت۔',
+            descEn: 'Inverter AC master service, gas top-up, compressor fixes, fridge & washer repairs.',
+            startingPrice: 'روپے 1,200 سے شروع',
+            tasksUrdu: ['اے سی ماسٹر واش سروس', 'گیس لیکج چیک و چارجنگ', 'فریج و ڈیپ فریزر فالٹ', 'انورٹر پی سی بی بورڈ ریپیر'],
+            tasksEn: ['AC Master Chemical Wash', 'Gas Leakage & Refill', 'Refrigerator Cooling Fault', 'Inverter PCB Board Repair']
+          },
+          {
+            id: 'carpenter',
+            icon: 'hammer',
+            titleUrdu: 'کارپینٹری و لکڑی کا کام',
+            titleEn: 'Carpentry & Woodwork',
+            descUrdu: 'دروازوں کے لاک مرمت، الماری کے قبضے و دراز، بیڈ و صوفہ ریپیر، کچن کیبنٹ فکسنگ۔',
+            descEn: 'Door locks, wardrobe hinges, sofa & bed repairs, wooden kitchen cabinets.',
+            startingPrice: 'روپے 600 سے شروع',
+            tasksUrdu: ['دروازہ لاک و ہینڈل مرمت', 'الماری دراز چینلز و قبضے', 'فرنیچر پالش و مرمت', 'کچن کیبنٹ ڈیزائن و فکس'],
+            tasksEn: ['Door Lock & Handle Fitting', 'Wardrobe Hinges & Drawers', 'Furniture Polish & Fixes', 'Kitchen Cabinet Setup']
+          },
+          {
+            id: 'painter',
+            icon: 'paint-brush',
+            titleUrdu: 'پینٹنگ و رنگ روغن',
+            titleEn: 'Painting & Renovation',
+            descUrdu: 'گھر کا اندرونی و بیرونی رنگ روغن، ڈسٹیمپر، ویدر شیٹ، لکڑی پالش اور واٹر پروفنگ۔',
+            descEn: 'Interior & exterior wall paint, weather sheet, wood polish and damp waterproofing.',
+            startingPrice: 'مفت تخمینہ',
+            tasksUrdu: ['اندرونی و بیرونی پینٹ', 'سیم اور نمی (Damp) کا مستقل علاج', 'لکڑی کا پالش و ڈیکو پینٹ', 'وال پیپر انسٹالیشن'],
+            tasksEn: ['Interior & Exterior Wall Paint', 'Anti-Dampness Waterproofing', 'Wood Polish & Deco Paint', 'Wallpaper Pasting']
+          },
+          {
+            id: 'cleaning',
+            icon: 'sparkles',
+            titleUrdu: 'ڈیپ ہوم کلیننگ و اسپرے',
+            titleEn: 'Deep Cleaning & Pest Spray',
+            descUrdu: 'مکمل گھر کی ڈیپ کلیننگ، واش روم ٹائلز صفائی، پانی کی ٹینکی کی صفائی، کیڑے مار اسپرے۔',
+            descEn: 'Complete home deep cleaning, water tank wash, sofa shampooing & pest control spray.',
+            startingPrice: 'روپے 1,500 سے شروع',
+            tasksUrdu: ['پانی کی زیرِ زمین و چھت کی ٹینکی', 'واش روم و کچن ڈیپ کلین', 'صوفہ و کارپٹ واش', 'فیومیگیشن (Pest Control)'],
+            tasksEn: ['Overhead & Underground Tank Wash', 'Bathroom & Kitchen Scrub', 'Sofa & Carpet Shampoo', 'Fumigation & Termite Spray']
+          },
+          {
+            id: 'mason',
+            icon: 'brick-wall',
+            titleUrdu: 'مستری و ٹائل کا کام',
+            titleEn: 'Masonry & Tiles Work',
+            descUrdu: 'فرش کی ٹائلیں لگانا، دراڑوں کی مرمت، پلستر، چھت کی لپائی اور کچن شیلف۔',
+            descEn: 'Floor & wall tile fixing, crack repairs, plastering, roof repairs and kitchen slab.',
+            startingPrice: 'روپے 800 سے شروع',
+            tasksUrdu: ['ٹائل و ماربل فکسنگ', 'پلستر اور سیمنٹ ریپیر', 'چھت کی واٹر پروفنگ', 'کچن شیلف و توڑ پھوڑ'],
+            tasksEn: ['Tiles & Marble Fixing', 'Plaster & Cement Work', 'Roof Seepage Repair', 'Kitchen Granite Slab']
+          },
+          {
+            id: 'cctv',
+            icon: 'video',
+            titleUrdu: 'سیکیورٹی کیمرے و سی سی ٹی وی',
+            titleEn: 'CCTV & Security Setup',
+            descUrdu: 'ہوم سیکیورٹی کیمرے، ڈی وی آر سیٹ اپ، موبائل پر لائیو ویڈیو ویو، ڈور بیل انٹرکام۔',
+            descEn: 'HD security camera installation, DVR configuration, mobile view & intercom.',
+            startingPrice: 'روپے 1,000 سے شروع',
+            tasksUrdu: ['ایچ ڈی کیمرہ فٹنگ', 'ڈی وی آر و ہارڈ ڈرائیو سیٹ اپ', 'موبائل لائیو کنکشن', 'وائرلیس ڈور بیل'],
+            tasksEn: ['HD Camera Installation', 'DVR & Mobile Live Stream', 'Security Alarm Wiring', 'Video Intercom Setup']
+          }
+        ],
+
+        // Transparent Rate Card Table
+        rateTableData: [
+          { id: 1, categoryUrdu: 'بجلی کا کام', categoryEn: 'Electrician', jobUrdu: 'سیلنگ فین انسٹالیشن / اتار چڑھاؤ', jobEn: 'Ceiling Fan Installation', price: 'روپے 400', timeUrdu: '30 منٹ', timeEn: '30 Mins' },
+          { id: 2, categoryUrdu: 'بجلی کا کام', categoryEn: 'Electrician', jobUrdu: 'شارٹ سرکٹ فالٹ ٹریسنگ و مرمت', jobEn: 'Short Circuit Fault Repair', price: 'روپے 600 - 1000', timeUrdu: '45 منٹ', timeEn: '45 Mins' },
+          { id: 3, categoryUrdu: 'پلمبنگ', categoryEn: 'Plumbing', jobUrdu: 'پانی کی موٹر پمپ انسٹالیشن / مرمت', jobEn: 'Water Pump Repair & Fitting', price: 'روپے 800', timeUrdu: '1 گھنٹہ', timeEn: '1 Hour' },
+          { id: 4, categoryUrdu: 'پلمبنگ', categoryEn: 'Plumbing', jobUrdu: 'مکسر نلکا یا شاور سیٹ کی فٹنگ', jobEn: 'Mixer Tap & Shower Fitting', price: 'روپے 500', timeUrdu: '30 منٹ', timeEn: '30 Mins' },
+          { id: 5, categoryUrdu: 'اے سی ریپیرنگ', categoryEn: 'AC Repair', jobUrdu: 'انورٹر اے سی ماسٹر کیمیکل سروس', jobEn: 'Inverter AC Chemical Service', price: 'روپے 1,500', timeUrdu: '1 گھنٹہ', timeEn: '1 Hour' },
+          { id: 6, categoryUrdu: 'اے سی ریپیرنگ', categoryEn: 'AC Repair', jobUrdu: 'اے سی گیس چارجنگ (R410/R32/R22)', jobEn: 'AC Full Gas Charging', price: 'روپے 4,500 - 6,500', timeUrdu: '1 گھنٹہ', timeEn: '1 Hour' },
+          { id: 7, categoryUrdu: 'کارپینٹر', categoryEn: 'Carpenter', jobUrdu: 'دروازے کا مرکزی لاک / ہینڈل فٹنگ', jobEn: 'Door Main Lock & Handle Fix', price: 'روپے 600', timeUrdu: '40 منٹ', timeEn: '40 Mins' },
+          { id: 8, categoryUrdu: 'صفائی سروس', categoryEn: 'Cleaning', jobUrdu: 'پانی کی ٹینکی کی مکمل کیمیائی صفائی', jobEn: 'Water Tank Complete Cleaning', price: 'روپے 1,500 - 2,500', timeUrdu: '2 گھنٹے', timeEn: '2 Hours' }
+        ],
+
+        // Verified Technicians
+        technicians: [
+          { id: 1, name: 'محمد راشد', specialtyUrdu: 'سینئر الیکٹریشن و سولر ایکسپرٹ', specialtyEn: 'Senior Electrician & Solar Expert', experience: '8', rating: '4.9', completedJobs: '840+' },
+          { id: 2, name: 'طارق محمود', specialtyUrdu: 'ماسٹر پلمبر و سینیٹری اسپیشلسٹ', specialtyEn: 'Master Plumber & Sanitary Specialist', experience: '11', rating: '4.95', completedJobs: '1,120+' },
+          { id: 3, name: 'وقاص علی', specialtyUrdu: 'ایچ وی اے سی و اے سی ٹیکنیشن', specialtyEn: 'HVAC & AC Technician', experience: '7', rating: '4.85', completedJobs: '690+' }
+        ],
+
+        // Real-time Orders (with pre-populated active ones)
+        orders: [
+          {
+            id: 'BAHC-1001',
+            customerName: 'کامران حسن',
+            phone: '03214567890',
+            service: 'بجلی کا کام (الیکٹریشن)',
+            details: 'مین بریکر بار بار ٹرپ ہو رہا ہے اور 2 پنکھے بند ہیں۔',
+            address: 'مکان نمبر 42، بلاک بی، ماڈل ٹاؤن',
+            date: '2026-08-21',
+            timeSlot: 'دوپہر 12:00 تا 03:00',
+            assignedTech: 'محمد راشد',
+            status: 'in_progress'
+          },
+          {
+            id: 'BAHC-1002',
+            customerName: 'فرحان علی',
+            phone: '03009876543',
+            service: 'اے سی و ریفریجریٹر ریپیرنگ',
+            details: 'ڈیڑھ ٹن انورٹر اے سی کولنگ نہیں کر رہا، گیس چیک کرنی ہے۔',
+            address: 'فلیٹ 402، گلشن اپارٹمنٹس',
+            date: '2026-08-21',
+            timeSlot: 'شام 03:00 تا 06:00',
+            assignedTech: 'وقاص علی',
+            status: 'pending'
+          }
+        ],
+
+        // Translations
+        translations: {
+          ur: {
+            urgent_badge: 'ہنگامی فوری کاریگر',
+            top_banner_text: 'گھر کے ہر کام کے لیے تصدیق شدہ کاریگر صرف ایک کال کی دوری پر!',
+            warranty_pill: '7 دن کی کام کی وارنٹی',
+            tagline: 'گھریلو مرمت و کاریگر سروسز',
+            nav_home: 'ہوم',
+            nav_services: 'خدمات',
+            nav_rates: 'ریٹ لسٹ',
+            nav_technicians: 'ہمارے کاریگر',
+            nav_track: 'آرڈر ٹریک کریں',
+            nav_admin: 'ایڈمن پینل',
+            btn_book_now: 'کاریگر بک کریں',
+            hero_badge: 'قابلِ اعتماد اور آزمودہ ہوم سروسز',
+            hero_title_1: 'گھر کا چھوٹا بڑا کام؟',
+            hero_title_highlight: 'بن عباس ہوم کیئر کے پاس ہے ہر کاریگر!',
+            hero_desc: 'الیکٹریشن، پلمبر، کارپینٹر، اے سی سروس، پینٹنگ، صفائی اور دیگر تمام گھریلو کاموں کے لیے ماہر، بااعتماد اور تصدیق شدہ کاریگر آپ کی دہلیز پر۔',
+            search_placeholder: 'کس کام کے لیے کاریگر چاہیے؟ (مثلاً پنکھا، موٹر، اے سی، پلمبر...)',
+            search_btn: 'فوری بکنگ',
+            cta_instant_booking: 'آن لائن کاریگر بک کریں',
+            cta_whatsapp: 'واٹس ایپ پر رابطہ',
+            cta_call: 'فوری کال کریں',
+            stat_happy_homes: 'مطمئن گھرانے',
+            stat_verified: 'تصدیق شدہ عملہ',
+            stat_fast_arrival: 'آمد کا وقت',
+            popular_services_title: 'مقبول خدمات اور ریٹس',
+            popular_services_sub: 'چند کلکس میں تصدیق شدہ کاریگر حاضر',
+            emergency_callout_title: 'ایمرجنسی سروس درکار ہے؟',
+            emergency_callout_desc: 'شارٹ سرکٹ یا پائپ پھٹنے کی صورت میں فوری ترجیحی سروس۔',
+            btn_urgent_call: 'ہنگامی مدد',
+            services_badge: 'ہماری تمام خدمات',
+            services_title: 'گھریلو مرمت اور دیکھ بھال کی مکمل سروسز',
+            services_subtitle: 'شفاف قیمتیں، ماہر کاریگر اور کام کی مکمل تسلی',
+            btn_book_service: 'یہ سروس بک کریں',
+            rates_title: 'شفاف اور معیاری ریٹ کارڈ (Rate List)',
+            rates_subtitle: 'کوئی پوشیدہ یا اضافی چارجز نہیں، منصفانہ اور طے شدہ قیمتیں',
+            table_service: 'شعبہ',
+            table_job_type: 'کام کی تفصیل',
+            table_standard_rate: 'معیاری ریٹ',
+            table_est_time: 'تخمینہ وقت',
+            table_action: 'بکنگ',
+            btn_book_this: 'بک کریں',
+            rate_note: 'نوٹ: میٹریل اور اسپیئر پارٹس کے اخراجات کسٹمر کے ذمہ ہوں گے یا اصل بل پر فراہم کیے جائیں گے۔',
+            inspection_policy: 'انسپیکشن فیس کام ہونے کی صورت میں فائنل بل سے منہا ہو جائے گی۔',
+            technicians_title: 'ہمارے تصدیق شدہ اور تجربہ کار کاریگر',
+            technicians_subtitle: 'ہر کاریگر کی پولیس اور نادرا شناختی تصدیق شدہ ہے تاکہ آپ کا گھر مکمل محفوظ رہے',
+            why_us_title: 'بن عباس ہوم کیئر کا انتخاب کیوں کریں؟',
+            why_us_sub: 'ہم معیار، حفاظت اور بروقت کام کی ضمانت دیتے ہیں',
+            why_1_title: '100% تصدیق شدہ کاریگر',
+            why_1_desc: 'ہر کاریگر کا شناختی ریکارڈ اور تجربہ باقاعدہ جانچا جاتا ہے۔',
+            why_2_title: 'شفاف اور طے شدہ ریٹس',
+            why_2_desc: 'کام سے پہلے تخمینہ لاگت بتائی جاتی ہے، کوئی اوور چارجنگ نہیں۔',
+            why_3_title: 'تیز ترین ایمرجنسی رسپانس',
+            why_3_desc: 'شہر کے اندر 30 سے 60 منٹ میں فوری کاریگر کی فراہمی۔',
+            why_4_title: '7 دن کی سروس وارنٹی',
+            why_4_desc: 'اگر کام میں کوئی خرابی رہ جائے تو ہم مفت دوبارہ درست کریں گے۔',
+            footer_desc: 'بن عباس ہوم کیئر آپ کے گھر کے چھوٹے بڑے تمام فنی کاموں (الیکٹریشن، پلمبر، کارپینٹر، اے سی ریپیر، پینٹر، ڈیپ کلیننگ) کا سب سے قابل اعتماد پلیٹ فارم ہے۔',
+            footer_links_title: 'فوری لنکس',
+            footer_coverage_title: 'اوقاتِ کار اور کوریج',
+            footer_hours: 'صبح 8:00 بجے تا رات 10:00 بجے (ہنگامی سروس 24 گھنٹے دستیاب)',
+            footer_contact_title: 'رابطہ کریں',
+            modal_booking_title: 'کاریگر بکنگ فارم',
+            tracker_title: 'آرڈر کی لائیو ٹریکنگ',
+            tracker_sub: 'اپنا آرڈر نمبر درج کر کے کاریگر کی پوزیشن معلوم کریں'
+          },
+          en: {
+            urgent_badge: 'Emergency Handyman',
+            top_banner_text: 'Verified technicians for all household tasks just a call away!',
+            warranty_pill: '7-Day Work Warranty',
+            tagline: 'Home Maintenance & Handyman Services',
+            nav_home: 'Home',
+            nav_services: 'Services',
+            nav_rates: 'Rate Card',
+            nav_technicians: 'Our Handymen',
+            nav_track: 'Track Order',
+            nav_admin: 'Admin Portal',
+            btn_book_now: 'Book Handyman',
+            hero_badge: 'Trusted & Reliable Home Services',
+            hero_title_1: 'Need Repairs at Home?',
+            hero_title_highlight: 'Bin Abbas Home Care Has Every Skilled Handyman!',
+            hero_desc: 'Electricians, plumbers, carpenters, AC repair, painters, cleaning & masonry workers at your doorstep with 100% verified trust.',
+            search_placeholder: 'What repair do you need? (e.g., fan, water motor, AC repair...)',
+            search_btn: 'Book Fast',
+            cta_instant_booking: 'Book Online Now',
+            cta_whatsapp: 'WhatsApp Support',
+            cta_call: 'Call Directly',
+            stat_happy_homes: 'Satisfied Homes',
+            stat_verified: 'Verified Handymen',
+            stat_fast_arrival: 'Arrival Window',
+            popular_services_title: 'Popular Services & Rates',
+            popular_services_sub: 'Book top-rated technicians in minutes',
+            emergency_callout_title: 'Emergency Repairs Needed?',
+            emergency_callout_desc: 'Immediate dispatch for short circuits or water leakages.',
+            btn_urgent_call: 'Urgent Help',
+            services_badge: 'All Categories',
+            services_title: 'Complete Household Maintenance & Repair Services',
+            services_subtitle: 'Transparent prices, background-checked handymen & guaranteed satisfaction',
+            btn_book_service: 'Book This Service',
+            rates_title: 'Transparent Standard Rate Card',
+            rates_subtitle: 'No hidden fees or unexpected charges, fair fixed rates',
+            table_service: 'Service',
+            table_job_type: 'Job Description',
+            table_standard_rate: 'Standard Rate',
+            table_est_time: 'Est. Time',
+            table_action: 'Action',
+            btn_book_this: 'Book',
+            rate_note: 'Note: Material and replacement spare parts costs are separate or billed at actuals.',
+            inspection_policy: 'Inspection fee is adjusted into the final bill upon job confirmation.',
+            technicians_title: 'Our Background-Checked Technicians',
+            technicians_subtitle: 'Every technician is CNIC & police verified for complete safety of your home',
+            why_us_title: 'Why Choose Bin Abbas Home Care?',
+            why_us_sub: 'We ensure quality, reliability and punctual delivery',
+            why_1_title: '100% Verified Workers',
+            why_1_desc: 'Every worker undergoes strict identity and skill checks.',
+            why_2_title: 'Transparent Fixed Rates',
+            why_2_desc: 'Upfront cost estimations with zero hidden surcharges.',
+            why_3_title: 'Fast Emergency Response',
+            why_3_desc: 'Technician dispatch within 30 to 60 minutes.',
+            why_4_title: '7-Day Service Warranty',
+            why_4_desc: 'Free re-visit if any issue persists within 7 days.',
+            footer_desc: 'Bin Abbas Home Care is your trusted one-stop solution for electrician, plumbing, AC, carpentry, painting and home maintenance.',
+            footer_links_title: 'Quick Links',
+            footer_coverage_title: 'Working Hours & Coverage',
+            footer_hours: '08:00 AM - 10:00 PM (24/7 Emergency Dispatch)',
+            footer_contact_title: 'Contact Us',
+            modal_booking_title: 'Handyman Booking Form',
+            tracker_title: 'Live Order Tracker',
+            tracker_sub: 'Enter your booking ID to check status and technician'
+          }
+        },
+
+        initApp() {
+          const savedOrders = localStorage.getItem('bahc_orders');
+          if (savedOrders) {
+            try {
+              this.orders = JSON.parse(savedOrders);
+            } catch (e) {}
+          }
+          this.$nextTick(() => {
+            if (window.lucide) {
+              lucide.createIcons();
+            }
+          });
+        },
+
+        t(key) {
+          return (this.translations[this.lang] && this.translations[this.lang][key]) || key;
+        },
+
+        toggleLanguage() {
+          this.lang = this.lang === 'ur' ? 'en' : 'ur';
+          this.$nextTick(() => {
+            if (window.lucide) lucide.createIcons();
+          });
+        },
+
+        get filteredCategories() {
+          if (!this.searchQuery.trim()) return this.categories;
+          const q = this.searchQuery.toLowerCase();
+          return this.categories.filter(c => 
+            c.titleUrdu.toLowerCase().includes(q) ||
+            c.titleEn.toLowerCase().includes(q) ||
+            c.descUrdu.toLowerCase().includes(q) ||
+            c.descEn.toLowerCase().includes(q) ||
+            c.tasksUrdu.some(t => t.toLowerCase().includes(q)) ||
+            c.tasksEn.some(t => t.toLowerCase().includes(q))
+          );
+        },
+
+        selectServiceForBooking(category) {
+          this.bookingForm.category = category.titleUrdu;
+          this.bookingForm.details = 'مجھے ' + category.titleUrdu + ' کے لیے کاریگر چاہیے';
+          this.openBookingModal();
+        },
+
+        openBookingModal(prefills = {}) {
+          if (prefills.service) this.bookingForm.category = prefills.service;
+          if (prefills.job) this.bookingForm.details = prefills.job;
+          if (prefills.urgent) this.bookingForm.isUrgent = true;
+          if (prefills.preferredTech) this.bookingForm.assignedTech = prefills.preferredTech;
+          
+          this.bookingStep = 1;
+          this.isBookingModalOpen = true;
+          this.$nextTick(() => {
+            if (window.lucide) lucide.createIcons();
+          });
+        },
+
+        submitBooking() {
+          const newId = 'BAHC-' + Math.floor(1000 + Math.random() * 9000);
+          const newOrder = {
+            id: newId,
+            customerName: this.bookingForm.customerName,
+            phone: this.bookingForm.phone,
+            service: this.bookingForm.category,
+            details: this.bookingForm.details + (this.bookingForm.isUrgent ? ' (ہنگامی فوری سروس)' : ''),
+            address: this.bookingForm.address,
+            date: this.bookingForm.date,
+            timeSlot: this.bookingForm.timeSlot,
+            assignedTech: this.bookingForm.assignedTech || 'انتظامیہ تفویض کر رہی ہے...',
+            status: 'pending',
+            createdAt: new Date().toLocaleString()
+          };
+
+          this.orders.unshift(newOrder);
+          this.saveOrders();
+
+          this.isBookingModalOpen = false;
+          
+          // Open tracking modal with new ID
+          this.trackingIdInput = newId;
+          this.searchOrder();
+          this.isTrackerModalOpen = true;
+
+          alert('شکریہ! آپ کا آرڈر کامیابی سے درج ہو چکا ہے۔ آپ کا آرڈر نمبر ' + newId + ' ہے۔ ہمارا نمائندہ اور کاریگر جلد آپ سے رابطہ کرے گا۔');
+          
+          // Reset Form
+          this.bookingForm = {
+            category: '',
+            details: '',
+            isUrgent: false,
+            date: new Date().toISOString().split('T')[0],
+            timeSlot: 'صبح 9:00 تا 12:00',
+            customerName: '',
+            phone: '',
+            address: '',
+            assignedTech: ''
+          };
+        },
+
+        saveOrders() {
+          localStorage.setItem('bahc_orders', JSON.stringify(this.orders));
+        },
+
+        openTrackerModal() {
+          this.isTrackerModalOpen = true;
+          this.$nextTick(() => {
+            if (window.lucide) lucide.createIcons();
+          });
+        },
+
+        searchOrder() {
+          this.trackingSearched = true;
+          const cleanId = this.trackingIdInput.trim().toUpperCase();
+          this.trackedOrder = this.orders.find(o => o.id === cleanId || o.phone.includes(cleanId));
+          this.$nextTick(() => {
+            if (window.lucide) lucide.createIcons();
+          });
+        },
+
+        getWhatsAppLink(text) {
+          return 'https://wa.me/' + this.businessPhone.replace(/[^0-9]/g, '') + '?text=' + encodeURIComponent(text);
+        },
+
+        viewOrderDetails(order) {
+          this.trackingIdInput = order.id;
+          this.searchOrder();
+          this.isTrackerModalOpen = true;
+        },
+
+        scrollToServices() {
+          const el = document.getElementById('services');
+          if (el) {
+            el.scrollIntoView({ behavior: 'smooth' });
+          }
+        }
+      }
+    }
+  </script>
+</body>
+</html>

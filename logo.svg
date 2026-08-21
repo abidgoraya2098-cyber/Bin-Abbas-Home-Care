@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 120" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bahcGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f766e" />
+      <stop offset="50%" stop-color="#0d9488" />
+      <stop offset="100%" stop-color="#10b981" />
+    </linearGradient>
+    <linearGradient id="amberGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f59e0b" />
+      <stop offset="100%" stop-color="#d97706" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#0f766e" flood-opacity="0.25" />
+    </filter>
+  </defs>
+
+  <!-- Logo Icon Container -->
+  <g transform="translate(10, 10)" filter="url(#shadow)">
+    <rect width="100" height="100" rx="26" fill="url(#bahcGrad)" />
+    
+    <!-- House Roof -->
+    <path d="M 50 24 L 22 48 L 30 48 L 30 76 L 70 76 L 70 48 L 78 48 Z" fill="#ffffff" opacity="0.95" />
+    
+    <!-- Chimney / Badge -->
+    <rect x="62" y="28" width="6" height="12" fill="#ffffff" opacity="0.9" rx="1" />
+    
+    <!-- Wrench Tool across center -->
+    <path d="M 40 46 C 43 43 47 43 50 45 L 64 59 C 66 61 66 64 64 66 C 62 68 59 68 57 66 L 43 52 C 41 49 41 46 40 46 Z" fill="url(#amberGrad)" />
+    <circle cx="43" cy="46" r="3" fill="#ffffff" />
+    
+    <!-- Checkmark Badge -->
+    <circle cx="74" cy="74" r="12" fill="#10b981" stroke="#ffffff" stroke-width="2.5" />
+    <path d="M 69 74 L 73 78 L 80 70" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+  </g>
+
+  <!-- Text: Urdu & English Brand Name -->
+  <g transform="translate(130, 20)">
+    <!-- Urdu Name -->
+    <text x="0" y="42" font-family="'Noto Nastaliq Urdu', 'Segoe UI', Arial, sans-serif" font-size="34" font-weight="bold" fill="#0f172a">
+      <tspan fill="#0d9488">بن عباس</tspan> ہوم کیئر
+    </text>
+    
+    <!-- English Subtitle -->
+    <text x="2" y="72" font-family="'Outfit', 'Inter', sans-serif" font-size="14" font-weight="700" letter-spacing="1.5" fill="#64748b">
+      BIN ABBAS HOME CARE &bull; HANDYMAN SERVICES
+    </text>
+  </g>
+</svg>
