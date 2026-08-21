@@ -6,11 +6,12 @@
   <title>بن عباس ہوم کیئر | Bin Abbas Home Care - قابل اعتماد کاریگر سروسز</title>
   <!-- Favicons & Meta (Eliminates 404 on Vercel) -->
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-  <link rel="apple-touch-icon" href="favicon.svg" />
+  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
   <meta name="theme-color" content="#0d9488" />
   <meta property="og:title" content="بن عباس ہوم کیئر | Bin Abbas Home Care" />
   <meta property="og:description" content="گھریلو مرمت اور دیکھ بھال کی سروسز - الیکٹریشن، پلمبر، کارپینٹر، اے سی ریپیرنگ" />
-  <meta property="og:image" content="logo.svg" />
+  <meta property="og:image" content="icon-512.png" />
 
   <!-- PWA & Mobile Web App Installation -->
   <link rel="manifest" href="manifest.json" />
@@ -1120,6 +1121,45 @@
       <i data-lucide="calendar-plus" class="w-4 h-4"></i>
       <span>کاریگر بک کریں</span>
     </button>
+  <!-- CHROME NATIVE INSTALL POPUP BANNER -->
+  <div 
+    x-show="showInstallBanner" 
+    x-transition:enter="transition ease-out duration-300 transform"
+    x-transition:enter-start="translate-y-full opacity-0"
+    x-transition:enter-end="translate-y-0 opacity-100"
+    x-transition:leave="transition ease-in duration-200 transform"
+    x-transition:leave-start="translate-y-0 opacity-100"
+    x-transition:leave-end="translate-y-full opacity-0"
+    x-cloak
+    class="fixed bottom-20 md:bottom-6 left-4 right-4 md:left-auto md:right-6 md:max-w-md z-40 bg-slate-900/95 text-white rounded-3xl p-4 shadow-2xl border border-teal-500/40 backdrop-blur-md"
+  >
+    <div class="flex items-center gap-3.5">
+      <img src="icon-192.png" alt="Bin Abbas Home Care" class="w-14 h-14 rounded-2xl shadow-md border border-white/20 flex-shrink-0" />
+      <div class="flex-1 min-w-0">
+        <div class="flex items-center justify-between">
+          <h4 class="font-bold text-sm text-white truncate">بن عباس ہوم کیئر</h4>
+          <button @click="showInstallBanner = false" class="text-slate-400 hover:text-white p-1">
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+        </div>
+        <p class="text-[11px] text-slate-300 line-clamp-1">گوگل کروم موبائل ایپ ڈاؤن لوڈ کریں</p>
+        <div class="flex items-center gap-2 mt-2">
+          <button 
+            @click="installPWA()"
+            class="flex-1 py-2 px-3 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 rounded-xl font-bold text-xs shadow-md flex items-center justify-center gap-1.5 transition-all"
+          >
+            <i data-lucide="download" class="w-3.5 h-3.5"></i>
+            <span>انسٹال کریں (Install)</span>
+          </button>
+          <button 
+            @click="showInstallBanner = false"
+            class="py-2 px-3 bg-white/10 hover:bg-white/20 text-slate-300 rounded-xl text-xs font-semibold"
+          >
+            بعد میں
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- APPLICATION LOGIC SCRIPT -->
@@ -1424,6 +1464,7 @@
 
         deferredPrompt: null,
         canInstallApp: false,
+        showInstallBanner: false,
 
         initApp() {
           const savedOrders = localStorage.getItem('bahc_orders');
@@ -1447,7 +1488,16 @@
             e.preventDefault();
             this.deferredPrompt = e;
             this.canInstallApp = true;
+            this.showInstallBanner = true;
           });
+
+          // Show install banner on mobile after 2 seconds if not installed
+          const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+          if (!isStandalone) {
+            setTimeout(() => {
+              this.showInstallBanner = true;
+            }, 2000);
+          }
 
           this.$nextTick(() => {
             if (window.lucide) {

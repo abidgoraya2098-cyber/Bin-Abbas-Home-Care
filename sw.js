@@ -1,10 +1,14 @@
-const CACHE_NAME = 'bahc-pwa-cache-v1';
+const CACHE_NAME = 'bahc-pwa-cache-v2';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',
   '/manifest.json',
   '/favicon.svg',
   '/logo.svg',
+  '/icon-192.png',
+  '/icon-512.png',
+  '/maskable-icon-512.png',
+  '/apple-touch-icon.png',
   '/vercel.json'
 ];
 
@@ -31,10 +35,18 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
-  // Network first, falling back to cache
   event.respondWith(
-    fetch(event.request).catch(() => {
-      return caches.match(event.request);
+    caches.match(event.request).then((cachedResponse) => {
+      if (cachedResponse) {
+        return cachedResponse;
+      }
+      return fetch(event.request).then((networkResponse) => {
+        return networkResponse;
+      });
+    }).catch(() => {
+      if (event.request.mode === 'navigate') {
+        return caches.match('/index.html');
+      }
     })
   );
 });
