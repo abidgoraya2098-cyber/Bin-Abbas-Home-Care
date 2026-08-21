@@ -11,6 +11,13 @@
   <meta property="og:title" content="بن عباس ہوم کیئر | Bin Abbas Home Care" />
   <meta property="og:description" content="گھریلو مرمت اور دیکھ بھال کی سروسز - الیکٹریشن، پلمبر، کارپینٹر، اے سی ریپیرنگ" />
   <meta property="og:image" content="logo.svg" />
+
+  <!-- PWA & Mobile Web App Installation -->
+  <link rel="manifest" href="manifest.json" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="بن عباس کیئر" />
   
   <!-- Google Fonts: Noto Nastaliq Urdu, Outfit & Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -170,8 +177,19 @@
           </button>
         </nav>
 
-        <!-- Right Action Buttons (Language Switch & Quick Booking) -->
-        <div class="flex items-center gap-3">
+        <!-- Right Action Buttons (Install App, Language Switch & Quick Booking) -->
+        <div class="flex items-center gap-2 sm:gap-3">
+          
+          <!-- PWA Mobile / Desktop Install Button -->
+          <button 
+            @click="installPWA()"
+            class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-400 hover:bg-amber-500 text-slate-950 font-bold text-xs shadow-sm transition-all"
+            title="Install App on Phone"
+          >
+            <i data-lucide="smartphone" class="w-3.5 h-3.5"></i>
+            <span x-text="lang === 'ur' ? 'ایپ انسٹال کریں' : 'Install App'"></span>
+          </button>
+
           <!-- Language Toggle Button -->
           <button 
             @click="toggleLanguage()"
@@ -184,7 +202,7 @@
           <!-- Book Now CTA Button -->
           <button 
             @click="openBookingModal()"
-            class="relative inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-brand-600 to-teal-600 hover:from-brand-700 hover:to-teal-700 text-white font-semibold text-sm shadow-lg shadow-brand-600/25 transition-all transform hover:-translate-y-0.5 active:translate-y-0"
+            class="relative inline-flex items-center justify-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl bg-gradient-to-r from-brand-600 to-teal-600 hover:from-brand-700 hover:to-teal-700 text-white font-semibold text-xs sm:text-sm shadow-lg shadow-brand-600/25 transition-all transform hover:-translate-y-0.5 active:translate-y-0"
           >
             <i data-lucide="calendar-plus" class="w-4 h-4"></i>
             <span x-text="t('btn_book_now')"></span>
@@ -1404,6 +1422,9 @@
           }
         },
 
+        deferredPrompt: null,
+        canInstallApp: false,
+
         initApp() {
           const savedOrders = localStorage.getItem('bahc_orders');
           if (savedOrders) {
@@ -1411,6 +1432,23 @@
               this.orders = JSON.parse(savedOrders);
             } catch (e) {}
           }
+
+          // Register Service Worker for PWA
+          if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+              navigator.serviceWorker.register('/sw.js').catch((err) => {
+                console.log('SW registration note:', err);
+              });
+            });
+          }
+
+          // Capture PWA install prompt
+          window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            this.deferredPrompt = e;
+            this.canInstallApp = true;
+          });
+
           this.$nextTick(() => {
             if (window.lucide) {
               lucide.createIcons();
@@ -1537,6 +1575,31 @@
           const el = document.getElementById('services');
           if (el) {
             el.scrollIntoView({ behavior: 'smooth' });
+          }
+        },
+
+        installPWA() {
+          if (this.deferredPrompt) {
+            this.deferredPrompt.prompt();
+            this.deferredPrompt.userChoice.then((choiceResult) => {
+              if (choiceResult.outcome === 'accepted') {
+                this.canInstallApp = false;
+              }
+              this.deferredPrompt = null;
+            });
+          } else {
+            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+            if (isIOS) {
+              alert(this.lang === 'ur'
+                ? 'ایپل / آئی فون پر انسٹال کرنے کے لیے: نیچے دیے گئے "Share" بٹن پر ٹیپ کریں اور "Add to Home Screen" منتخب کریں۔'
+                : 'To install on iPhone/iPad: Tap the Share button in Safari and select "Add to Home Screen".'
+              );
+            } else {
+              alert(this.lang === 'ur'
+                ? 'اینڈرائیڈ پر انسٹال کرنے کے لیے: کروم براؤزر کے اوپر دائیں کونے میں تین نقطوں (⋮) پر کلک کریں اور "Install app" یا "Add to Home Screen" منتخب کریں۔'
+                : 'To install on Android: Tap the 3 dots menu (⋮) in Chrome and select "Install app" or "Add to Home screen".'
+              );
+            }
           }
         }
       }
