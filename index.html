@@ -3,14 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>بن عباس ہوم کیئر | Bin Abbas Home Care - قابل اعتماد کاریگر سروسز</title>
+  <title>بن عباس ہوم کیئر | Bin Abbas Home Care - گھریلو مرمت، تزئین و آرائش، سامان کے ریٹس اور کاریگر سروسز</title>
+  
   <!-- Favicons & Meta (Eliminates 404 on Vercel) -->
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
   <link rel="apple-touch-icon" href="apple-touch-icon.png" />
   <meta name="theme-color" content="#0d9488" />
   <meta property="og:title" content="بن عباس ہوم کیئر | Bin Abbas Home Care" />
-  <meta property="og:description" content="گھریلو مرمت اور دیکھ بھال کی سروسز - الیکٹریشن، پلمبر، کارپینٹر، اے سی ریپیرنگ" />
+  <meta property="og:description" content="گھریلو مرمت، تزئین و آرائش، سینیٹری و پینٹ سامان کے مارکیٹ ریٹس اور تصدیق شدہ کاریگر" />
   <meta property="og:image" content="icon-512.png" />
 
   <!-- PWA & Mobile Web App Installation -->
@@ -135,7 +136,7 @@
   class="bg-slate-50 text-slate-800 antialiased selection:bg-brand-500 selection:text-white pb-20 md:pb-0"
 >
 
-  <!-- INTRO ANIMATED SPLASH SCREEN (ایپ اوپننگ اینیمیشن لوگو) -->
+  <!-- ==================== INTRO ANIMATED SPLASH SCREEN ==================== -->
   <div 
     x-show="showSplashScreen" 
     x-transition:leave="transition-all ease-out duration-700" 
@@ -163,7 +164,7 @@
         <span class="text-brand-400">بن عباس</span> ہوم کیئر
       </h2>
       <p class="text-xs text-teal-200 font-semibold tracking-wider uppercase mb-6" dir="ltr">
-        Bin Abbas Home Care • Handyman Services
+        Bin Abbas Home Care • Handyman & Materials
       </p>
 
       <!-- Animated Progress Loader -->
@@ -178,7 +179,7 @@
     </div>
   </div>
 
-  <!-- TOP EMERGENCY & NOTICE BAR -->
+  <!-- TOP EMERGENCY & HIGHLIGHTS BAR -->
   <div class="bg-gradient-to-r from-emerald-800 via-teal-900 to-emerald-950 text-white text-xs md:text-sm py-2 px-4 shadow-sm border-b border-teal-700/40">
     <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
       <div class="flex items-center gap-2">
@@ -188,16 +189,16 @@
         </span>
         <span class="opacity-95 font-medium" x-text="t('top_banner_text')"></span>
       </div>
-      <div class="flex items-center gap-4 text-xs">
+      <div class="flex items-center gap-3 text-xs">
+        <button @click="currentView = 'join-karigar'" class="text-amber-300 hover:text-amber-200 font-bold underline flex items-center gap-1">
+          <i data-lucide="user-plus" class="w-3.5 h-3.5"></i>
+          <span>کاریگر روزگار پورٹل</span>
+        </button>
+        <span class="text-teal-500">|</span>
         <a :href="'tel:' + businessPhone" class="flex items-center gap-1.5 hover:text-amber-300 transition-colors font-medium">
           <i data-lucide="phone-call" class="w-3.5 h-3.5 text-amber-400"></i>
           <span dir="ltr" x-text="businessPhoneDisplay"></span>
         </a>
-        <span class="text-teal-500">|</span>
-        <div class="flex items-center gap-1.5 text-teal-200">
-          <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-400"></i>
-          <span x-text="t('warranty_pill')"></span>
-        </div>
       </div>
     </div>
   </div>
@@ -224,15 +225,32 @@
         </div>
 
         <!-- Desktop Navigation Links -->
-        <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-700">
+        <nav class="hidden lg:flex items-center gap-5 text-xs sm:text-sm font-semibold text-slate-700">
           <button @click="currentView = 'home'" :class="currentView === 'home' ? 'text-brand-600 font-bold' : 'hover:text-brand-600'" class="transition-colors" x-text="t('nav_home')"></button>
+          
+          <button @click="currentView = 'market-rates'" :class="currentView === 'market-rates' ? 'text-brand-600 font-bold bg-brand-50 px-2.5 py-1 rounded-lg' : 'hover:text-brand-600'" class="transition-colors flex items-center gap-1">
+            <i data-lucide="shopping-cart" class="w-3.5 h-3.5 text-amber-500"></i>
+            <span x-text="t('nav_market_rates')"></span>
+          </button>
+
+          <button @click="currentView = 'estimator'" :class="currentView === 'estimator' ? 'text-brand-600 font-bold bg-brand-50 px-2.5 py-1 rounded-lg' : 'hover:text-brand-600'" class="transition-colors flex items-center gap-1">
+            <i data-lucide="calculator" class="w-3.5 h-3.5 text-emerald-500"></i>
+            <span x-text="t('nav_estimator')"></span>
+          </button>
+
+          <button @click="currentView = 'join-karigar'" :class="currentView === 'join-karigar' ? 'text-amber-700 font-bold bg-amber-50 px-2.5 py-1 rounded-lg' : 'hover:text-amber-600'" class="transition-colors flex items-center gap-1">
+            <i data-lucide="briefcase" class="w-3.5 h-3.5 text-amber-600"></i>
+            <span x-text="t('nav_join_karigar')"></span>
+          </button>
+
           <a href="#services" @click="currentView = 'home'" class="hover:text-brand-600 transition-colors" x-text="t('nav_services')"></a>
           <a href="#rate-card" @click="currentView = 'home'" class="hover:text-brand-600 transition-colors" x-text="t('nav_rates')"></a>
-          <a href="#technicians" @click="currentView = 'home'" class="hover:text-brand-600 transition-colors" x-text="t('nav_technicians')"></a>
-          <button @click="openTrackerModal()" class="hover:text-brand-600 flex items-center gap-1.5 text-slate-700 font-medium">
-            <i data-lucide="search" class="w-4 h-4 text-brand-600"></i>
+          
+          <button @click="openTrackerModal()" class="hover:text-brand-600 flex items-center gap-1 text-slate-700 font-semibold">
+            <i data-lucide="search" class="w-3.5 h-3.5 text-brand-600"></i>
             <span x-text="t('nav_track')"></span>
           </button>
+
           <button @click="currentView = 'admin'" :class="currentView === 'admin' ? 'text-brand-600 font-bold' : 'text-slate-500 hover:text-slate-900'" class="flex items-center gap-1 text-xs px-2.5 py-1 rounded-lg border border-slate-200 hover:bg-slate-50">
             <i data-lucide="user-cog" class="w-3.5 h-3.5"></i>
             <span x-text="t('nav_admin')"></span>
@@ -275,10 +293,10 @@
     </div>
   </header>
 
-  <!-- MAIN CONTENT CONTAINER -->
+  <!-- ==================== MAIN CONTENT CONTAINER ==================== -->
   <main>
 
-    <!-- ==================== HOME VIEW ==================== -->
+    <!-- ==================== VIEW 1: HOME VIEW ==================== -->
     <div x-show="currentView === 'home'" x-cloak>
       
       <!-- HERO SECTION -->
@@ -290,7 +308,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             
-            <!-- Left/Right (Urdu RTL) Hero Text -->
+            <!-- Hero Text -->
             <div class="lg:col-span-7 space-y-6 text-center lg:text-start">
               
               <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-100/80 border border-brand-200 text-brand-800 text-xs sm:text-sm font-semibold shadow-xs">
@@ -305,7 +323,7 @@
 
               <p class="text-base sm:text-lg text-slate-600 max-w-2xl mx-auto lg:mx-0" x-text="t('hero_desc')"></p>
 
-              <!-- Quick Search / Category Selector -->
+              <!-- Quick Search -->
               <div class="pt-2 max-w-xl mx-auto lg:mx-0">
                 <div class="relative flex items-center bg-white p-2 rounded-2xl shadow-lg border border-slate-200 focus-within:border-brand-500 focus-within:ring-2 focus-within:ring-brand-200 transition-all">
                   <div class="p-2 text-brand-600">
@@ -328,7 +346,7 @@
                 </div>
               </div>
 
-              <!-- Quick CTAs & Contact Pills -->
+              <!-- Quick CTAs & Feature Pills -->
               <div class="flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-2">
                 <button 
                   @click="openBookingModal()" 
@@ -338,28 +356,27 @@
                   <span x-text="t('cta_instant_booking')"></span>
                 </button>
 
-                <a 
-                  :href="getWhatsAppLink('اسلام علیکم! مجھے بن عباس ہوم کیئر سے کاریگر بک کروانا ہے۔')" 
-                  target="_blank"
-                  class="flex items-center gap-2 px-5 py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold shadow-md hover:shadow-lg transition-all"
+                <button 
+                  @click="currentView = 'market-rates'" 
+                  class="flex items-center gap-2 px-5 py-3.5 bg-amber-500 hover:bg-amber-600 text-slate-950 rounded-xl font-bold shadow-md hover:shadow-lg transition-all"
                 >
-                  <i data-lucide="message-circle" class="w-5 h-5 text-emerald-200"></i>
-                  <span x-text="t('cta_whatsapp')"></span>
-                </a>
+                  <i data-lucide="tag" class="w-5 h-5"></i>
+                  <span>سامان کے موجودہ ریٹس</span>
+                </button>
 
-                <a 
-                  :href="'tel:' + businessPhone" 
+                <button 
+                  @click="currentView = 'estimator'" 
                   class="flex items-center gap-2 px-5 py-3.5 bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 rounded-xl font-semibold transition-all"
                 >
-                  <i data-lucide="phone" class="w-5 h-5 text-brand-600"></i>
-                  <span x-text="t('cta_call')"></span>
-                </a>
+                  <i data-lucide="calculator" class="w-5 h-5 text-brand-600"></i>
+                  <span>لاگت کیلکولیٹر</span>
+                </button>
               </div>
 
               <!-- Key Trust Stats -->
               <div class="grid grid-cols-3 gap-4 pt-6 border-t border-slate-200/80">
                 <div class="text-center lg:text-start">
-                  <div class="text-2xl font-bold text-slate-900">4,500+</div>
+                  <div class="text-2xl font-bold text-slate-900">4,800+</div>
                   <div class="text-xs text-slate-500 font-medium" x-text="t('stat_happy_homes')"></div>
                 </div>
                 <div class="text-center lg:text-start">
@@ -374,7 +391,7 @@
 
             </div>
 
-            <!-- Right Hero Visual / Quick Category Cards -->
+            <!-- Right Hero Visual / Category Cards -->
             <div class="lg:col-span-5">
               <div class="relative bg-white rounded-3xl p-6 sm:p-8 shadow-2xl border border-slate-200/80">
                 
@@ -448,8 +465,8 @@
             <p class="text-slate-600 text-sm sm:text-base" x-text="t('services_subtitle')"></p>
           </div>
 
-          <!-- Services Grid -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <!-- Services Grid (9 Comprehensive Handyman Categories including Gas Stove & Renovation) -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <template x-for="cat in filteredCategories" :key="cat.id">
               <div class="bg-slate-50 hover:bg-white rounded-3xl p-6 border border-slate-200/80 hover:border-brand-500 hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
                 <div>
@@ -621,65 +638,385 @@
         </div>
       </section>
 
-      <!-- ==================== WHY CHOOSE US ==================== -->
-      <section class="py-16 bg-gradient-to-br from-brand-900 via-teal-950 to-slate-950 text-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
-          <div class="text-center max-w-2xl mx-auto mb-12">
-            <h2 class="text-2xl sm:text-3xl font-extrabold" x-text="t('why_us_title')"></h2>
-            <p class="text-teal-200 text-xs sm:text-sm mt-2" x-text="t('why_us_sub')"></p>
-          </div>
-
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            
-            <div class="p-6 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-sm">
-              <div class="w-12 h-12 rounded-2xl bg-brand-500/20 text-brand-400 flex items-center justify-center mb-4">
-                <i data-lucide="shield-check" class="w-6 h-6"></i>
-              </div>
-              <h3 class="font-bold text-base mb-2" x-text="t('why_1_title')"></h3>
-              <p class="text-xs text-slate-300 leading-relaxed" x-text="t('why_1_desc')"></p>
-            </div>
-
-            <div class="p-6 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-sm">
-              <div class="w-12 h-12 rounded-2xl bg-amber-500/20 text-amber-400 flex items-center justify-center mb-4">
-                <i data-lucide="badge-dollar-sign" class="w-6 h-6"></i>
-              </div>
-              <h3 class="font-bold text-base mb-2" x-text="t('why_2_title')"></h3>
-              <p class="text-xs text-slate-300 leading-relaxed" x-text="t('why_2_desc')"></p>
-            </div>
-
-            <div class="p-6 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-sm">
-              <div class="w-12 h-12 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center mb-4">
-                <i data-lucide="clock" class="w-6 h-6"></i>
-              </div>
-              <h3 class="font-bold text-base mb-2" x-text="t('why_3_title')"></h3>
-              <p class="text-xs text-slate-300 leading-relaxed" x-text="t('why_3_desc')"></p>
-            </div>
-
-            <div class="p-6 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-sm">
-              <div class="w-12 h-12 rounded-2xl bg-purple-500/20 text-purple-400 flex items-center justify-center mb-4">
-                <i data-lucide="award" class="w-6 h-6"></i>
-              </div>
-              <h3 class="font-bold text-base mb-2" x-text="t('why_4_title')"></h3>
-              <p class="text-xs text-slate-300 leading-relaxed" x-text="t('why_4_desc')"></p>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
     </div>
 
-    <!-- ==================== ADMIN DASHBOARD VIEW ==================== -->
+    <!-- ==================== VIEW 2: HARDWARE & MATERIAL MARKET RATES ==================== -->
+    <div x-show="currentView === 'market-rates'" x-cloak class="py-12 bg-slate-50 min-h-screen">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="flex flex-wrap items-center justify-between gap-4 mb-8 pb-4 border-b border-slate-200">
+          <div>
+            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 text-amber-800 text-xs font-bold mb-2">
+              <i data-lucide="tag" class="w-3.5 h-3.5"></i>
+              <span>موجودہ مارکیٹ ریٹس 2026</span>
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900">گھریلو سامان اور میٹریل ریٹ کارڈ</h2>
+            <p class="text-xs sm:text-sm text-slate-600 mt-1">سینیٹری، پینٹ، بجلی اور گیس چولہا سامان کی موجودہ اوسط مارکیٹ قیمتیں دیکھ کر اپنے بجٹ کا اندازہ لگائیں۔</p>
+          </div>
+
+          <button @click="currentView = 'home'" class="px-4 py-2 bg-white border border-slate-200 text-slate-700 text-xs font-semibold rounded-xl hover:bg-slate-100 transition-colors">
+            ← واپس ہوم پیج
+          </button>
+        </div>
+
+        <!-- Filter tabs for Material Categories -->
+        <div class="flex flex-wrap gap-2 mb-8">
+          <button 
+            @click="selectedMaterialCat = 'all'" 
+            :class="selectedMaterialCat === 'all' ? 'bg-brand-600 text-white shadow-md' : 'bg-white text-slate-700 hover:bg-slate-100 border border-slate-200'"
+            class="px-4 py-2 rounded-xl text-xs font-bold transition-all"
+          >
+            تمام سامان (All)
+          </button>
+          <button 
+            @click="selectedMaterialCat = 'sanitary'" 
+            :class="selectedMaterialCat === 'sanitary' ? 'bg-brand-600 text-white shadow-md' : 'bg-white text-slate-700 hover:bg-slate-100 border border-slate-200'"
+            class="px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5"
+          >
+            <i data-lucide="droplets" class="w-3.5 h-3.5"></i>
+            <span>سینیٹری و پلمبنگ</span>
+          </button>
+          <button 
+            @click="selectedMaterialCat = 'paint'" 
+            :class="selectedMaterialCat === 'paint' ? 'bg-brand-600 text-white shadow-md' : 'bg-white text-slate-700 hover:bg-slate-100 border border-slate-200'"
+            class="px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5"
+          >
+            <i data-lucide="paint-brush" class="w-3.5 h-3.5"></i>
+            <span>رنگ و پینٹ میٹریل</span>
+          </button>
+          <button 
+            @click="selectedMaterialCat = 'electric'" 
+            :class="selectedMaterialCat === 'electric' ? 'bg-brand-600 text-white shadow-md' : 'bg-white text-slate-700 hover:bg-slate-100 border border-slate-200'"
+            class="px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5"
+          >
+            <i data-lucide="zap" class="w-3.5 h-3.5"></i>
+            <span>بجلی و الیکٹرک وائرنگ</span>
+          </button>
+          <button 
+            @click="selectedMaterialCat = 'gas'" 
+            :class="selectedMaterialCat === 'gas' ? 'bg-brand-600 text-white shadow-md' : 'bg-white text-slate-700 hover:bg-slate-100 border border-slate-200'"
+            class="px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5"
+          >
+            <i data-lucide="flame" class="w-3.5 h-3.5"></i>
+            <span>گیس چولہا و کچن سامان</span>
+          </button>
+        </div>
+
+        <!-- Materials Table / Cards Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <template x-for="item in filteredMaterials" :key="item.id">
+            <div class="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-3">
+                  <span 
+                    class="text-[11px] font-bold px-2.5 py-0.5 rounded-full"
+                    :class="{
+                      'bg-blue-100 text-blue-800': item.category === 'sanitary',
+                      'bg-amber-100 text-amber-800': item.category === 'paint',
+                      'bg-emerald-100 text-emerald-800': item.category === 'electric',
+                      'bg-rose-100 text-rose-800': item.category === 'gas'
+                    }"
+                    x-text="item.categoryLabel"
+                  ></span>
+                  <span class="text-xs font-semibold text-slate-400" x-text="item.unit"></span>
+                </div>
+
+                <h4 class="text-base font-bold text-slate-900 mb-1" x-text="item.nameUrdu"></h4>
+                <p class="text-xs text-slate-500 mb-3" x-text="item.description"></p>
+
+                <div class="p-3 bg-slate-50 rounded-2xl border border-slate-100 mb-4">
+                  <div class="text-xs text-slate-400 font-medium">مارکیٹ تخمینہ قیمت:</div>
+                  <div class="text-lg font-extrabold text-brand-700" x-text="item.priceRange"></div>
+                  <div class="text-[11px] text-slate-500 mt-0.5" x-text="'معیار: ' + item.brand"></div>
+                </div>
+              </div>
+
+              <div class="pt-2 border-t border-slate-100 flex items-center justify-between">
+                <button 
+                  @click="openBookingModal({ service: item.categoryLabel, job: item.nameUrdu + ' انسٹالیشن / فٹنگ' })"
+                  class="w-full py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-bold transition-colors flex items-center justify-center gap-1"
+                >
+                  <i data-lucide="wrench" class="w-3.5 h-3.5"></i>
+                  <span>اس سامان کے لیے کاریگر بک کریں</span>
+                </button>
+              </div>
+            </div>
+          </template>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ==================== VIEW 3: SMART RENOVATION BUDGET ESTIMATOR ==================== -->
+    <div x-show="currentView === 'estimator'" x-cloak class="py-12 bg-slate-50 min-h-screen">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center mb-8 space-y-2">
+          <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold">
+            <i data-lucide="calculator" class="w-3.5 h-3.5"></i>
+            <span>Instant Budget Estimator</span>
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900">گھریلو مرمت و تزئین و آرائش بجٹ کیلکولیٹر</h2>
+          <p class="text-xs sm:text-sm text-slate-600">اپنے کام کا انتخاب کریں اور فوری میٹریل + کاریگر مزدوری کا تخمینہ جانیں</p>
+        </div>
+
+        <div class="bg-white rounded-3xl p-6 sm:p-10 shadow-xl border border-slate-200 space-y-8">
+          
+          <!-- Estimator Inputs -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            
+            <!-- Rooms Paint Counter -->
+            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-sm font-bold text-slate-800 flex items-center gap-2">
+                  <i data-lucide="paint-brush" class="w-4 h-4 text-brand-600"></i>
+                  <span>پینٹ کروانے والے کمرے:</span>
+                </span>
+                <span class="text-base font-bold text-brand-700" x-text="calcRooms + ' کمرے'"></span>
+              </div>
+              <input type="range" min="0" max="10" x-model="calcRooms" class="w-full accent-brand-600">
+              <div class="flex justify-between text-[11px] text-slate-400 mt-1">
+                <span>0</span>
+                <span>5 کمرے</span>
+                <span>10 کمرے</span>
+              </div>
+            </div>
+
+            <!-- Fans & Electrical Points -->
+            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-sm font-bold text-slate-800 flex items-center gap-2">
+                  <i data-lucide="zap" class="w-4 h-4 text-amber-500"></i>
+                  <span>پنکھے / سوئچ بورڈز فٹنگ:</span>
+                </span>
+                <span class="text-base font-bold text-amber-600" x-text="calcFans + ' پوائنٹس'"></span>
+              </div>
+              <input type="range" min="0" max="15" x-model="calcFans" class="w-full accent-amber-500">
+              <div class="flex justify-between text-[11px] text-slate-400 mt-1">
+                <span>0</span>
+                <span>8 پوائنٹس</span>
+                <span>15 پوائنٹس</span>
+              </div>
+            </div>
+
+            <!-- Plumbing & Washroom Units -->
+            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-sm font-bold text-slate-800 flex items-center gap-2">
+                  <i data-lucide="droplets" class="w-4 h-4 text-blue-500"></i>
+                  <span>واش روم / سینیٹری مرمت:</span>
+                </span>
+                <span class="text-base font-bold text-blue-600" x-text="calcWashrooms + ' واش رومز'"></span>
+              </div>
+              <input type="range" min="0" max="6" x-model="calcWashrooms" class="w-full accent-blue-500">
+              <div class="flex justify-between text-[11px] text-slate-400 mt-1">
+                <span>0</span>
+                <span>3 واش روم</span>
+                <span>6 واش روم</span>
+              </div>
+            </div>
+
+            <!-- Gas Stove & Appliances Service -->
+            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-sm font-bold text-slate-800 flex items-center gap-2">
+                  <i data-lucide="flame" class="w-4 h-4 text-rose-500"></i>
+                  <span>گیس چولہا و گیزر سروس:</span>
+                </span>
+                <span class="text-base font-bold text-rose-600" x-text="calcGasStoves + ' یونٹس'"></span>
+              </div>
+              <input type="range" min="0" max="4" x-model="calcGasStoves" class="w-full accent-rose-500">
+              <div class="flex justify-between text-[11px] text-slate-400 mt-1">
+                <span>0</span>
+                <span>2 یونٹس</span>
+                <span>4 یونٹس</span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Calculation Summary Box -->
+          <div class="p-6 rounded-3xl bg-gradient-to-br from-brand-900 to-teal-950 text-white space-y-4 shadow-xl">
+            <h4 class="text-base font-bold text-amber-300 border-b border-white/10 pb-2">کل متوقع تخمینہ لاگت کا خلاصہ (Estimated Summary)</h4>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div class="p-4 rounded-2xl bg-white/10 backdrop-blur-sm">
+                <div class="text-xs text-slate-300">تخمینہ میٹریل لاگت:</div>
+                <div class="text-xl font-extrabold text-white mt-1" x-text="'روپے ' + estimatedMaterialCost().toLocaleString() + '/-'"></div>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-white/10 backdrop-blur-sm">
+                <div class="text-xs text-slate-300">تخمینہ کاریگر مزدوری:</div>
+                <div class="text-xl font-extrabold text-white mt-1" x-text="'روپے ' + estimatedLaborCost().toLocaleString() + '/-'"></div>
+              </div>
+
+              <div class="p-4 rounded-2xl bg-amber-500/20 border border-amber-400/30 backdrop-blur-sm">
+                <div class="text-xs text-amber-300 font-bold">کل متوقع بجٹ:</div>
+                <div class="text-2xl font-black text-amber-300 mt-1" x-text="'روپے ' + (estimatedMaterialCost() + estimatedLaborCost()).toLocaleString() + '/-'"></div>
+              </div>
+            </div>
+
+            <div class="pt-2 flex flex-wrap items-center justify-between gap-4">
+              <p class="text-xs text-slate-300">یہ تخمینہ اوسط مارکیٹ ریٹس پر مبنی ہے۔ حتمی لاگت سائٹ معائنے کے بعد طے ہوگی۔</p>
+              
+              <button 
+                @click="openBookingModal({ service: 'مرمت و تزئین و آرائش', job: calcRooms + ' کمرے پینٹ، ' + calcFans + ' الیکٹرک، ' + calcWashrooms + ' پلمبنگ، ' + calcGasStoves + ' گیس' })"
+                class="px-6 py-3 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 font-extrabold text-xs rounded-xl shadow-lg transition-all"
+              >
+                اس تخمینہ پر کاریگر بک کریں ✓
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ==================== VIEW 4: JOIN AS KARIGAR / EMPLOYMENT PORTAL ==================== -->
+    <div x-show="currentView === 'join-karigar'" x-cloak class="py-12 bg-slate-50 min-h-screen">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center mb-8 space-y-2">
+          <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 text-amber-800 text-xs font-bold">
+            <i data-lucide="briefcase" class="w-3.5 h-3.5"></i>
+            <span>روزگار کا بہترین موقع</span>
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900">کاریگر رجسٹریشن پورٹل (Join Our Verified Network)</h2>
+          <p class="text-xs sm:text-sm text-slate-600">اگر آپ الیکٹریشن، پلمبر، پینٹر، کارپینٹر یا گیس چولہا مستری ہیں تو بن عباس ہوم کیئر کے ساتھ رجسٹریشن کروائیں اور عزت دار روزگار حاصل کریں۔</p>
+        </div>
+
+        <div class="bg-white rounded-3xl p-6 sm:p-10 shadow-xl border border-slate-200">
+          
+          <form @submit.prevent="submitKarigarRegistration()" class="space-y-4">
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1">کاریگر کا پورا نام *</label>
+                <input 
+                  type="text" 
+                  x-model="karigarForm.name"
+                  required
+                  placeholder="مثال: محمد اسلم / رشید احمد"
+                  class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm outline-none focus:border-brand-500"
+                />
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1">موبائل فون / WhatsApp نمبر *</label>
+                <input 
+                  type="tel" 
+                  dir="ltr"
+                  x-model="karigarForm.phone"
+                  required
+                  placeholder="03001234567"
+                  class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm outline-none focus:border-brand-500"
+                />
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1">کام کا شعبہ / ہنر *</label>
+                <select 
+                  x-model="karigarForm.trade" 
+                  required
+                  class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm outline-none focus:border-brand-500 bg-white"
+                >
+                  <option value="">-- ہنر منتخب کریں --</option>
+                  <option value="الیکٹریشن (Electrician)">الیکٹریشن (بجلی و وائرنگ)</option>
+                  <option value="پلمبر (Plumber)">پلمبر (پانی و سینیٹری)</option>
+                  <option value="رنگ ساز و پینٹر (Painter)">رنگ ساز و پینٹنگ</option>
+                  <option value="گیس چولہا و گیزر مستری (Gas Stove & Geyser)">گیس چولہا و گیزر مستری</option>
+                  <option value="کارپینٹر و فرنیچر (Carpenter)">کارپینٹر و لکڑی کا کام</option>
+                  <option value="اے سی و فریج ٹیکنیشن (AC & Fridge)">اے سی و ریفریجریٹر ٹیکنیشن</option>
+                  <option value="مستری و ٹائل فکسر (Mason)">مستری و ٹائل فکسر</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1">تجربہ (سال) *</label>
+                <input 
+                  type="number" 
+                  min="1"
+                  max="40"
+                  x-model="karigarForm.experience"
+                  required
+                  placeholder="مثال: 5 سال"
+                  class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm outline-none focus:border-brand-500"
+                />
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1">شناختی کارڈ (CNIC) نمبر *</label>
+                <input 
+                  type="text" 
+                  dir="ltr"
+                  x-model="karigarForm.cnic"
+                  required
+                  placeholder="35201-xxxxxxx-x"
+                  class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm outline-none focus:border-brand-500"
+                />
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1">شہر اور رہائشی علاقہ *</label>
+                <input 
+                  type="text" 
+                  x-model="karigarForm.area"
+                  required
+                  placeholder="علاقہ، سوسائٹی، یا شہر کا نام"
+                  class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm outline-none focus:border-brand-500"
+                />
+              </div>
+            </div>
+
+            <div class="p-4 rounded-2xl bg-amber-50 border border-amber-200 text-xs text-slate-700 space-y-2">
+              <div class="font-bold text-amber-900 flex items-center gap-1.5">
+                <i data-lucide="shield-check" class="w-4 h-4 text-emerald-600"></i>
+                <span>شرائط و فوائد:</span>
+              </div>
+              <p>• بن عباس ہوم کیئر کے ذریعے روزانہ کام اور مناسب معاوضہ ملے گا۔</p>
+              <p>• شناختی کارڈ اور پولیس تصدیق کے بعد فوری ویریفائیڈ بیج دیا جائے گا۔</p>
+            </div>
+
+            <div class="pt-4 flex justify-between items-center">
+              <button 
+                type="button" 
+                @click="currentView = 'home'" 
+                class="px-4 py-2 text-xs font-semibold text-slate-600 hover:text-slate-900"
+              >
+                ← واپس
+              </button>
+
+              <button 
+                type="submit" 
+                class="px-8 py-3 bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-700 hover:to-teal-800 text-white rounded-xl text-xs font-extrabold shadow-lg shadow-emerald-600/30 transition-all flex items-center gap-2"
+              >
+                <i data-lucide="send" class="w-4 h-4"></i>
+                <span>رجسٹریشن جمع کروائیں</span>
+              </button>
+            </div>
+
+          </form>
+
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ==================== VIEW 5: ADMIN DASHBOARD VIEW ==================== -->
     <div x-show="currentView === 'admin'" x-cloak class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       
       <div class="flex flex-wrap items-center justify-between gap-4 mb-8 pb-4 border-b border-slate-200">
         <div>
           <div class="flex items-center gap-2">
             <h2 class="text-2xl font-bold text-slate-900">ایڈمن کنٹرول پورٹل (Admin Panel)</h2>
-            <span class="px-2.5 py-0.5 bg-brand-100 text-brand-800 text-xs font-bold rounded-md">Live Orders</span>
+            <span class="px-2.5 py-0.5 bg-brand-100 text-brand-800 text-xs font-bold rounded-md">Live Management</span>
           </div>
-          <p class="text-xs text-slate-500">تمام نئے آرڈرز، کاریگروں کی تفویض اور اسٹیٹس کا انتظام کریں۔</p>
+          <p class="text-xs text-slate-500">تمام موصولہ آرڈرز، کاریگر تفویض اور نئی کاریگر درخواستوں کا انتظام کریں۔</p>
         </div>
 
         <div class="flex items-center gap-2">
@@ -689,30 +1026,29 @@
         </div>
       </div>
 
-      <!-- Admin Stats Summary -->
-      <div class="grid grid-cols-1 sm:grid-cols-4 gap-4 mb-8">
-        <div class="p-5 bg-white rounded-2xl border border-slate-200 shadow-sm">
-          <div class="text-xs text-slate-500 font-medium">کل بکنگز</div>
-          <div class="text-2xl font-bold text-slate-900 mt-1" x-text="orders.length"></div>
-        </div>
-        <div class="p-5 bg-white rounded-2xl border border-slate-200 shadow-sm">
-          <div class="text-xs text-amber-600 font-medium">زیر التواء (Pending)</div>
-          <div class="text-2xl font-bold text-amber-600 mt-1" x-text="orders.filter(o => o.status === 'pending').length"></div>
-        </div>
-        <div class="p-5 bg-white rounded-2xl border border-slate-200 shadow-sm">
-          <div class="text-xs text-brand-600 font-medium">جاری کام (In Progress)</div>
-          <div class="text-2xl font-bold text-brand-600 mt-1" x-text="orders.filter(o => o.status === 'in_progress').length"></div>
-        </div>
-        <div class="p-5 bg-white rounded-2xl border border-slate-200 shadow-sm">
-          <div class="text-xs text-emerald-600 font-medium">مکمل شدہ (Completed)</div>
-          <div class="text-2xl font-bold text-emerald-600 mt-1" x-text="orders.filter(o => o.status === 'completed').length"></div>
-        </div>
+      <!-- Admin Tabs -->
+      <div class="flex gap-2 mb-6 border-b border-slate-200 pb-2">
+        <button 
+          @click="adminTab = 'orders'"
+          :class="adminTab === 'orders' ? 'bg-brand-600 text-white' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'"
+          class="px-4 py-2 rounded-xl text-xs font-bold transition-all"
+        >
+          سروس آرڈرز (<span x-text="orders.length"></span>)
+        </button>
+        <button 
+          @click="adminTab = 'karigars'"
+          :class="adminTab === 'karigars' ? 'bg-brand-600 text-white' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'"
+          class="px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5"
+        >
+          <i data-lucide="user-check" class="w-3.5 h-3.5"></i>
+          <span>کاریگر رجسٹریشنز (<span x-text="karigarApplications.length"></span>)</span>
+        </button>
       </div>
 
-      <!-- Admin Orders Table -->
-      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+      <!-- Tab 1: Orders Table -->
+      <div x-show="adminTab === 'orders'" class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
         <div class="p-4 bg-slate-50 border-b border-slate-200 font-bold text-sm text-slate-800 flex justify-between items-center">
-          <span>حالیہ سروس آرڈرز</span>
+          <span>حالیہ کسٹمر بکنگز</span>
           <span class="text-xs text-slate-500 font-normal">کل: <span x-text="orders.length"></span> آرڈرز</span>
         </div>
 
@@ -722,8 +1058,8 @@
               <tr>
                 <th class="p-3 text-start">آرڈر ID</th>
                 <th class="p-3 text-start">کسٹمر کا نام و فون</th>
-                <th class="p-3 text-start">سروس و مسئلہ</th>
-                <th class="p-3 text-start">پتہ / علاقہ</th>
+                <th class="p-3 text-start">سروس و تفصیل</th>
+                <th class="p-3 text-start">پتہ</th>
                 <th class="p-3 text-start">نامزد کاریگر</th>
                 <th class="p-3 text-start">اسٹیٹس</th>
                 <th class="p-3 text-center">ایکشن</th>
@@ -796,6 +1132,52 @@
         </div>
       </div>
 
+      <!-- Tab 2: Karigar Applications Table -->
+      <div x-show="adminTab === 'karigars'" class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+        <div class="p-4 bg-slate-50 border-b border-slate-200 font-bold text-sm text-slate-800 flex justify-between items-center">
+          <span>نئی کاریگر روزگار رجسٹریشنز</span>
+          <span class="text-xs text-slate-500 font-normal">کل: <span x-text="karigarApplications.length"></span> درخواستیں</span>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-start text-xs">
+            <thead class="bg-slate-100/60 text-slate-600 border-b border-slate-200 font-semibold">
+              <tr>
+                <th class="p-3 text-start">کاریگر کا نام</th>
+                <th class="p-3 text-start">فون نمبر</th>
+                <th class="p-3 text-start">ہنر / شعبہ</th>
+                <th class="p-3 text-start">تجربہ</th>
+                <th class="p-3 text-start">شناختی کارڈ (CNIC)</th>
+                <th class="p-3 text-start">شہر / علاقہ</th>
+                <th class="p-3 text-center">رابطہ</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100">
+              <template x-for="app in karigarApplications" :key="app.id">
+                <tr class="hover:bg-slate-50/80 transition-colors">
+                  <td class="p-3 font-bold text-slate-900" x-text="app.name"></td>
+                  <td class="p-3 font-mono text-slate-700" dir="ltr" x-text="app.phone"></td>
+                  <td class="p-3 font-semibold text-brand-700" x-text="app.trade"></td>
+                  <td class="p-3 text-slate-600" x-text="app.experience + ' سال'"></td>
+                  <td class="p-3 font-mono text-slate-600" dir="ltr" x-text="app.cnic"></td>
+                  <td class="p-3 text-slate-600" x-text="app.area"></td>
+                  <td class="p-3 text-center">
+                    <a 
+                      :href="'https://wa.me/' + app.phone.replace(/[^0-9]/g, '') + '?text=' + encodeURIComponent('محترم ' + app.name + ' صاحب! بن عباس ہوم کیئر کے ساتھ بطور ' + app.trade + ' رجسٹریشن کے لیے آپ سے رابطہ کیا جا رہا ہے۔')"
+                      target="_blank"
+                      class="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold inline-flex items-center gap-1"
+                    >
+                      <i data-lucide="message-circle" class="w-3 h-3"></i>
+                      <span>WhatsApp</span>
+                    </a>
+                  </td>
+                </tr>
+              </template>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
     </div>
 
   </main>
@@ -814,7 +1196,7 @@
           <p class="text-xs text-slate-400 leading-relaxed" x-text="t('footer_desc')"></p>
           <div class="flex items-center gap-2 text-xs text-emerald-400 font-semibold">
             <i data-lucide="check-circle-2" class="w-4 h-4"></i>
-            <span>رجسٹرڈ و مستند کاریگر سروسز</span>
+            <span>رجسٹرڈ، مستند کاریگر و میٹریل مارکیٹ</span>
           </div>
         </div>
 
@@ -822,10 +1204,11 @@
         <div class="space-y-3">
           <h4 class="text-sm font-bold text-white uppercase tracking-wider" x-text="t('footer_links_title')"></h4>
           <ul class="space-y-2 text-xs">
-            <li><a href="#services" class="hover:text-brand-400 transition-colors" x-text="t('nav_services')"></a></li>
-            <li><a href="#rate-card" class="hover:text-brand-400 transition-colors" x-text="t('nav_rates')"></a></li>
-            <li><a href="#technicians" class="hover:text-brand-400 transition-colors" x-text="t('nav_technicians')"></a></li>
-            <li><button @click="openTrackerModal()" class="hover:text-brand-400 transition-colors" x-text="t('nav_track')"></button></li>
+            <li><button @click="currentView = 'market-rates'" class="hover:text-brand-400 transition-colors">سامان کے موجودہ ریٹس</button></li>
+            <li><button @click="currentView = 'estimator'" class="hover:text-brand-400 transition-colors">لاگت بجٹ کیلکولیٹر</button></li>
+            <li><button @click="currentView = 'join-karigar'" class="hover:text-brand-400 transition-colors">کاریگر روزگار پورٹل</button></li>
+            <li><a href="#services" @click="currentView = 'home'" class="hover:text-brand-400 transition-colors" x-text="t('nav_services')"></a></li>
+            <li><a href="#rate-card" @click="currentView = 'home'" class="hover:text-brand-400 transition-colors" x-text="t('nav_rates')"></a></li>
           </ul>
         </div>
 
@@ -835,7 +1218,7 @@
           <p class="text-xs text-slate-400" x-text="t('footer_hours')"></p>
           <div class="p-3 rounded-xl bg-slate-800/80 border border-slate-700/60 text-xs text-slate-300">
             <div class="font-semibold text-white mb-1">سروس کے علاقے:</div>
-            <p class="text-slate-400">تمام اہم ٹاؤنز، سوسائٹیز اور رہائشی کالونیاں۔</p>
+            <p class="text-slate-400">تمام رہائشی سوسائٹیز، ٹاؤنز اور مارکیٹیں</p>
           </div>
         </div>
 
@@ -849,11 +1232,11 @@
             </div>
             <div class="flex items-center gap-2">
               <i data-lucide="message-circle" class="w-4 h-4 text-emerald-400"></i>
-              <span>فوری WhatsApp سپورٹ 24/7</span>
+              <span>فوری WhatsApp آرڈر 24/7</span>
             </div>
             <div class="flex items-center gap-2">
               <i data-lucide="map-pin" class="w-4 h-4 text-amber-400"></i>
-              <span>پاکستان (ڈور اسٹیپ فوری سروس)</span>
+              <span>پاکستان (ڈور اسٹیپ ایکسپریس سروس)</span>
             </div>
           </div>
         </div>
@@ -927,7 +1310,7 @@
             <textarea 
               x-model="bookingForm.details"
               rows="3" 
-              placeholder="مثال: پنکھا نہیں چل رہا، پانی کا پائپ لیک ہے، یا اے سی سروس کروانا ہے..."
+              placeholder="مثال: گیس چولہے کا شعلہ کم ہے، پنکھا نہیں چل رہا، پانی کا پائپ لیک ہے، یا پینٹ کروانا ہے..."
               class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-brand-500 focus:ring-2 focus:ring-brand-200 outline-none text-sm text-slate-800"
             ></textarea>
           </div>
@@ -1180,6 +1563,8 @@
       <i data-lucide="calendar-plus" class="w-4 h-4"></i>
       <span>کاریگر بک کریں</span>
     </button>
+  </div>
+
   <!-- CHROME NATIVE INSTALL POPUP BANNER -->
   <div 
     x-show="showInstallBanner" 
@@ -1227,6 +1612,7 @@
       return {
         lang: 'ur',
         currentView: 'home',
+        adminTab: 'orders',
         searchQuery: '',
         isBookingModalOpen: false,
         isTrackerModalOpen: false,
@@ -1237,6 +1623,17 @@
         trackingIdInput: '',
         trackedOrder: null,
         trackingSearched: false,
+
+        selectedMaterialCat: 'all',
+        calcRooms: 2,
+        calcFans: 4,
+        calcWashrooms: 1,
+        calcGasStoves: 1,
+
+        deferredPrompt: null,
+        canInstallApp: false,
+        showInstallBanner: false,
+        showSplashScreen: true,
 
         bookingForm: {
           category: '',
@@ -1250,7 +1647,16 @@
           assignedTech: ''
         },
 
-        // 8 Core Household Handyman Service Categories
+        karigarForm: {
+          name: '',
+          phone: '',
+          trade: '',
+          experience: '',
+          cnic: '',
+          area: ''
+        },
+
+        // 9 Major Service Categories (including Gas Stove Repair & Renovation)
         categories: [
           {
             id: 'electrician',
@@ -1273,6 +1679,17 @@
             startingPrice: 'روپے 500 سے شروع',
             tasksUrdu: ['پانی کی موٹر و پمپ ریپیرنگ', 'گیزر انسٹالیشن و صفائی', 'پائپ لائن لیکیج مرمت', 'کموڈ، سنک اور شاور فٹنگ'],
             tasksEn: ['Water Pump & Motor Repair', 'Geyser Fitting & Service', 'Pipeline Leak Repair', 'Commode & Basin Fixing']
+          },
+          {
+            id: 'gas-stove',
+            icon: 'flame',
+            titleUrdu: 'گیس چولہا، ہوب و گیزر مرمت',
+            titleEn: 'Gas Stove & Geyser Repair',
+            descUrdu: 'چولہے کے شعلے کی صفائی، آٹومیٹک اگنیشن، گیس لیکیج چیک، ککنگ رینج و گیزر برنر مرمت۔',
+            descEn: 'Gas stove flame cleaning, automatic hob ignition, gas leakage check, cooking range & geyser.',
+            startingPrice: 'روپے 400 سے شروع',
+            tasksUrdu: ['چولہا برنر صفائی (نیلی آگ شعلہ)', 'آٹومیٹک گلاس ہوب / چولہا ریپیر', 'فوری گیس لیکیج ٹیسٹ و پائپ فٹنگ', 'ککنگ رینج، اوون و گیزر مرمت'],
+            tasksEn: ['Burner Cleaning & Blue Flame Fix', 'Auto Ignition Hob Repair', 'Gas Leakage Test & Pipe Fitting', 'Cooking Range, Oven & Geyser']
           },
           {
             id: 'ac-repair',
@@ -1299,8 +1716,8 @@
           {
             id: 'painter',
             icon: 'paint-brush',
-            titleUrdu: 'پینٹنگ و رنگ روغن',
-            titleEn: 'Painting & Renovation',
+            titleUrdu: 'پینٹنگ، ڈیکور و رنگ روغن',
+            titleEn: 'Painting & Wall Renovation',
             descUrdu: 'گھر کا اندرونی و بیرونی رنگ روغن، ڈسٹیمپر، ویدر شیٹ، لکڑی پالش اور واٹر پروفنگ۔',
             descEn: 'Interior & exterior wall paint, weather sheet, wood polish and damp waterproofing.',
             startingPrice: 'مفت تخمینہ',
@@ -1342,26 +1759,55 @@
           }
         ],
 
+        // Live Market Rates for Household Hardware & Materials
+        materials: [
+          // Sanitary & Plumbing
+          { id: 1, category: 'sanitary', categoryLabel: 'سینیٹری و پلمبنگ', nameUrdu: 'ماسٹر وال مکسر نلکا سیٹ', priceRange: 'روپے 4,500 - 6,800', unit: 'فی سیٹ', brand: 'Master / Faisal Sanitary', description: 'باتھ روم بیسن و شاور مکسر، مکمل براس باڈی مع 5 سال وارنٹی' },
+          { id: 2, category: 'sanitary', categoryLabel: 'سینیٹری و پلمبنگ', nameUrdu: 'مسلم شاور سیٹ (اسٹیل و پائپ)', priceRange: 'روپے 1,200 - 1,800', unit: 'فی سیٹ', brand: 'Heavy Duty Stainless Steel', description: 'پریشر شاور گن مع 1.2 میٹر ہائی پریشر فلیکسیبل پائپ' },
+          { id: 3, category: 'sanitary', categoryLabel: 'سینیٹری و پلمبنگ', nameUrdu: 'کموڈ سیٹ ون پیس (Commode)', priceRange: 'روپے 14,000 - 22,000', unit: 'فی پیس', brand: 'Porta / Sonex Ceramic', description: 'سافٹ کلوز سیٹ کور، ڈوئل فلش سسٹم، ہائی کوالٹی گلیزڈ سیرامک' },
+          { id: 4, category: 'sanitary', categoryLabel: 'سینیٹری و پلمبنگ', nameUrdu: 'پی پی آر سی پائپ (Master PPRC 25mm)', priceRange: 'روپے 180 - 240', unit: 'فی میٹر', brand: 'Master / Popular PPRC', description: 'گرم اور ٹھنڈے پانی کے لیے آزمودہ ہائی پریشر پائپ' },
+          { id: 5, category: 'sanitary', categoryLabel: 'سینیٹری و پلمبنگ', nameUrdu: 'پی وی سی سیوریج پائپ (4 انچ)', priceRange: 'روپے 350 - 480', unit: 'فی فٹ', brand: 'Popular / Beta PVC', description: 'ڈرینیج اور سیوریج لائن کے لیے ہیوی گیج پائپ' },
+          
+          // Paints & Renovation
+          { id: 6, category: 'paint', categoryLabel: 'رنگ و پینٹ میٹریل', nameUrdu: 'برجر ویدر کوٹ پینٹ بکٹ (16 لیٹر)', priceRange: 'روپے 14,500 - 18,000', unit: 'فی بالٹی (Drum)', brand: 'Berger / Nippon Paints', description: 'گھر کے بیرونی حصے کے لیے واٹر پروف، اینٹی فنگل ویدر شیٹ' },
+          { id: 7, category: 'paint', categoryLabel: 'رنگ و پینٹ میٹریل', nameUrdu: 'اندرونی ڈسٹیمپر پینٹ بکٹ (14 لیٹر)', priceRange: 'روپے 5,500 - 7,500', unit: 'فی بالٹی', brand: 'Diamond / Brighto', description: 'کمروں اور ہال کے لیے میٹ فنش، دیرپا چمکدار وال پینٹ' },
+          { id: 8, category: 'paint', categoryLabel: 'رنگ و پینٹ میٹریل', nameUrdu: 'وال پٹین بیگ (Wall Putty 20kg)', priceRange: 'روپے 1,200 - 1,600', unit: 'فی بیگ', brand: 'Nippon / Kansai Putty', description: 'دیواروں کو ہموار، کریک فری اور پینٹ کے لیے تیار کرنے والی پٹین' },
+          { id: 9, category: 'paint', categoryLabel: 'رنگ و پینٹ میٹریل', nameUrdu: 'سیم و نمی واٹر پروفنگ کیمیکل (10L)', priceRange: 'روپے 4,200 - 5,800', unit: 'فی کین', brand: 'Sika / Bond Chemical', description: 'دیواروں سے پینٹ اکھڑنے اور نمی کا مستقل علاج' },
+          
+          // Electric & Wiring
+          { id: 10, category: 'electric', categoryLabel: 'بجلی و الیکٹرک وائرنگ', nameUrdu: 'پاکستان کیبلز وائر 7/29 (90 میٹر کوائل)', priceRange: 'روپے 13,500 - 16,500', unit: 'فی کوائل', brand: 'Pakistan Cables 99.9% Copper', description: 'پاور پلگ، اے سی اور مین لائن کے لیے اصل کاپر وائر' },
+          { id: 11, category: 'electric', categoryLabel: 'بجلی و الیکٹرک وائرنگ', nameUrdu: 'سرکٹ بریکر سنگل پول (16A / 32A)', priceRange: 'روپے 550 - 900', unit: 'فی پیس', brand: 'Schneider / Terasaki', description: 'شارٹ سرکٹ اور اوورلوڈ سے حفاظت کے لیے اٹومیٹک بریکر' },
+          { id: 12, category: 'electric', categoryLabel: 'بجلی و الیکٹرک وائرنگ', nameUrdu: 'پیانو سوئچ بورڈ فین ڈمر و ساکٹ (8 Gang)', priceRange: 'روپے 1,400 - 2,200', unit: 'فی بورڈ', brand: 'Clipsal / Panasonic Style', description: 'خوبصورت ڈیزائن، فائر پروف میٹریل، سلور کانٹیکٹ سوئچ' },
+          { id: 13, category: 'electric', categoryLabel: 'بجلی و الیکٹرک وائرنگ', nameUrdu: 'ایل ای ڈی ایس ایم ڈی ڈاؤن لائٹ (12 واٹ)', priceRange: 'روپے 350 - 600', unit: 'فی لائٹ', brand: 'Philips / Orient LED', description: 'کم بجلی خرچ، زیادہ روشنی، 1 سال ریپلیسمنٹ وارنٹی' },
+
+          // Gas & Kitchen Accessories
+          { id: 14, category: 'gas', categoryLabel: 'گیس چولہا و کچن سامان', nameUrdu: 'اوریجنل ہائی پریشر گیس پائپ (Orange/Steel)', priceRange: 'روپے 120 - 180', unit: 'فی گز / فٹ', brand: 'Heavy Duty Reinforced Rubber', description: 'لیکیج فری، آگ سے محفوظ، چولہے اور سلنڈر کے لیے پائپ' },
+          { id: 15, category: 'gas', categoryLabel: 'گیس چولہا و کچن سامان', nameUrdu: 'گیس سیفٹی ریگولیٹر (Low/High Pressure)', priceRange: 'روپے 850 - 1,400', unit: 'فی پیس', brand: 'Brass Valve Safety Regulator', description: 'سلنڈر اور گیس کے پریشر کو کنٹرول کرنے والا پائیدار ریگولیٹر' },
+          { id: 16, category: 'gas', categoryLabel: 'گیس چولہا و کچن سامان', nameUrdu: 'چولہا براس برنر سیٹ (2 پیس)', priceRange: 'روپے 950 - 1,600', unit: 'فی جوڑی', brand: 'Heavy Cast Iron / Brass Top', description: 'پیلی آگ ختم کر کے فل پریشر نیلی آگ دینے والے برنرز' },
+          { id: 17, category: 'gas', categoryLabel: 'گیس چولہا و کچن سامان', nameUrdu: 'آٹومیٹک پیزو لائیٹر و چولہا نوزل', priceRange: 'روپے 350 - 600', unit: 'فی سیٹ', brand: 'Universal Gas Stove Spares', description: 'بغیر ماچس کے چولہا جلانے والا اسمارٹ اگنیشن اسپیئر پارٹ' }
+        ],
+
         // Transparent Rate Card Table
         rateTableData: [
-          { id: 1, categoryUrdu: 'بجلی کا کام', categoryEn: 'Electrician', jobUrdu: 'سیلنگ فین انسٹالیشن / اتار چڑھاؤ', jobEn: 'Ceiling Fan Installation', price: 'روپے 400', timeUrdu: '30 منٹ', timeEn: '30 Mins' },
-          { id: 2, categoryUrdu: 'بجلی کا کام', categoryEn: 'Electrician', jobUrdu: 'شارٹ سرکٹ فالٹ ٹریسنگ و مرمت', jobEn: 'Short Circuit Fault Repair', price: 'روپے 600 - 1000', timeUrdu: '45 منٹ', timeEn: '45 Mins' },
-          { id: 3, categoryUrdu: 'پلمبنگ', categoryEn: 'Plumbing', jobUrdu: 'پانی کی موٹر پمپ انسٹالیشن / مرمت', jobEn: 'Water Pump Repair & Fitting', price: 'روپے 800', timeUrdu: '1 گھنٹہ', timeEn: '1 Hour' },
-          { id: 4, categoryUrdu: 'پلمبنگ', categoryEn: 'Plumbing', jobUrdu: 'مکسر نلکا یا شاور سیٹ کی فٹنگ', jobEn: 'Mixer Tap & Shower Fitting', price: 'روپے 500', timeUrdu: '30 منٹ', timeEn: '30 Mins' },
-          { id: 5, categoryUrdu: 'اے سی ریپیرنگ', categoryEn: 'AC Repair', jobUrdu: 'انورٹر اے سی ماسٹر کیمیکل سروس', jobEn: 'Inverter AC Chemical Service', price: 'روپے 1,500', timeUrdu: '1 گھنٹہ', timeEn: '1 Hour' },
-          { id: 6, categoryUrdu: 'اے سی ریپیرنگ', categoryEn: 'AC Repair', jobUrdu: 'اے سی گیس چارجنگ (R410/R32/R22)', jobEn: 'AC Full Gas Charging', price: 'روپے 4,500 - 6,500', timeUrdu: '1 گھنٹہ', timeEn: '1 Hour' },
-          { id: 7, categoryUrdu: 'کارپینٹر', categoryEn: 'Carpenter', jobUrdu: 'دروازے کا مرکزی لاک / ہینڈل فٹنگ', jobEn: 'Door Main Lock & Handle Fix', price: 'روپے 600', timeUrdu: '40 منٹ', timeEn: '40 Mins' },
-          { id: 8, categoryUrdu: 'صفائی سروس', categoryEn: 'Cleaning', jobUrdu: 'پانی کی ٹینکی کی مکمل کیمیائی صفائی', jobEn: 'Water Tank Complete Cleaning', price: 'روپے 1,500 - 2,500', timeUrdu: '2 گھنٹے', timeEn: '2 Hours' }
+          { id: 1, categoryUrdu: 'گیس چولہا مرمت', categoryEn: 'Gas Stove Repair', jobUrdu: 'چولہا شعلہ صفائی و نوزل سروس', jobEn: 'Stove Burner Flame & Nozzle Service', price: 'روپے 400', timeUrdu: '30 منٹ', timeEn: '30 Mins' },
+          { id: 2, categoryUrdu: 'گیس چولہا مرمت', categoryEn: 'Gas Stove Repair', jobUrdu: 'آٹومیٹک گلاس ہوب / چولہا ریپیر', jobEn: 'Auto Ignition Hob Repair', price: 'روپے 600', timeUrdu: '45 منٹ', timeEn: '45 Mins' },
+          { id: 3, categoryUrdu: 'بجلی کا کام', categoryEn: 'Electrician', jobUrdu: 'سیلنگ فین انسٹالیشن / اتار چڑھاؤ', jobEn: 'Ceiling Fan Installation', price: 'روپے 400', timeUrdu: '30 منٹ', timeEn: '30 Mins' },
+          { id: 4, categoryUrdu: 'بجلی کا کام', categoryEn: 'Electrician', jobUrdu: 'شارٹ سرکٹ فالٹ ٹریسنگ و مرمت', jobEn: 'Short Circuit Fault Repair', price: 'روپے 600 - 1000', timeUrdu: '45 منٹ', timeEn: '45 Mins' },
+          { id: 5, categoryUrdu: 'پلمبنگ', categoryEn: 'Plumbing', jobUrdu: 'پانی کی موٹر پمپ انسٹالیشن / مرمت', jobEn: 'Water Pump Repair & Fitting', price: 'روپے 800', timeUrdu: '1 گھنٹہ', timeEn: '1 Hour' },
+          { id: 6, categoryUrdu: 'پلمبنگ', categoryEn: 'Plumbing', jobUrdu: 'مکسر نلکا یا شاور سیٹ کی فٹنگ', jobEn: 'Mixer Tap & Shower Fitting', price: 'روپے 500', timeUrdu: '30 منٹ', timeEn: '30 Mins' },
+          { id: 7, categoryUrdu: 'اے سی ریپیرنگ', categoryEn: 'AC Repair', jobUrdu: 'انورٹر اے سی ماسٹر کیمیکل سروس', jobEn: 'Inverter AC Chemical Service', price: 'روپے 1,500', timeUrdu: '1 گھنٹہ', timeEn: '1 Hour' },
+          { id: 8, categoryUrdu: 'کارپینٹر', categoryEn: 'Carpenter', jobUrdu: 'دروازے کا مرکزی لاک / ہینڈل فٹنگ', jobEn: 'Door Main Lock & Handle Fix', price: 'روپے 600', timeUrdu: '40 منٹ', timeEn: '40 Mins' }
         ],
 
         // Verified Technicians
         technicians: [
           { id: 1, name: 'محمد راشد', specialtyUrdu: 'سینئر الیکٹریشن و سولر ایکسپرٹ', specialtyEn: 'Senior Electrician & Solar Expert', experience: '8', rating: '4.9', completedJobs: '840+' },
           { id: 2, name: 'طارق محمود', specialtyUrdu: 'ماسٹر پلمبر و سینیٹری اسپیشلسٹ', specialtyEn: 'Master Plumber & Sanitary Specialist', experience: '11', rating: '4.95', completedJobs: '1,120+' },
-          { id: 3, name: 'وقاص علی', specialtyUrdu: 'ایچ وی اے سی و اے سی ٹیکنیشن', specialtyEn: 'HVAC & AC Technician', experience: '7', rating: '4.85', completedJobs: '690+' }
+          { id: 3, name: 'استاد فیاض احمد', specialtyUrdu: 'گیس چولہا، ہوب و گیزر ماسٹر', specialtyEn: 'Gas Stove & Geyser Specialist', experience: '14', rating: '4.9', completedJobs: '950+' },
+          { id: 4, name: 'وقاص علی', specialtyUrdu: 'ایچ وی اے سی و اے سی ٹیکنیشن', specialtyEn: 'HVAC & AC Technician', experience: '7', rating: '4.85', completedJobs: '690+' }
         ],
 
-        // Real-time Orders (with pre-populated active ones)
+        // Real-time Orders
         orders: [
           {
             id: 'BAHC-1001',
@@ -1370,7 +1816,7 @@
             service: 'بجلی کا کام (الیکٹریشن)',
             details: 'مین بریکر بار بار ٹرپ ہو رہا ہے اور 2 پنکھے بند ہیں۔',
             address: 'مکان نمبر 42، بلاک بی، ماڈل ٹاؤن',
-            date: '2026-08-21',
+            date: '2026-08-22',
             timeSlot: 'دوپہر 12:00 تا 03:00',
             assignedTech: 'محمد راشد',
             status: 'in_progress'
@@ -1379,14 +1825,20 @@
             id: 'BAHC-1002',
             customerName: 'فرحان علی',
             phone: '03009876543',
-            service: 'اے سی و ریفریجریٹر ریپیرنگ',
-            details: 'ڈیڑھ ٹن انورٹر اے سی کولنگ نہیں کر رہا، گیس چیک کرنی ہے۔',
+            service: 'گیس چولہا، ہوب و گیزر مرمت',
+            details: 'چولہے سے کالی آگ نکل رہی ہے اور برنر کا شعلہ کم ہے۔',
             address: 'فلیٹ 402، گلشن اپارٹمنٹس',
-            date: '2026-08-21',
+            date: '2026-08-22',
             timeSlot: 'شام 03:00 تا 06:00',
-            assignedTech: 'وقاص علی',
+            assignedTech: 'استاد فیاض احمد',
             status: 'pending'
           }
+        ],
+
+        // Karigar Applications
+        karigarApplications: [
+          { id: 1, name: 'محمد سلیمان', phone: '03123456789', trade: 'رنگ ساز و پینٹر (Painter)', experience: '9', cnic: '35201-1234567-1', area: 'لاہور، جوہر ٹاؤن' },
+          { id: 2, name: 'عبدالرحمٰن', phone: '03456789012', trade: 'پلمبر (Plumber)', experience: '6', cnic: '35202-9876543-3', area: 'لاہور، کینٹ' }
         ],
 
         // Translations
@@ -1395,20 +1847,22 @@
             urgent_badge: 'ہنگامی فوری کاریگر',
             top_banner_text: 'گھر کے ہر کام کے لیے تصدیق شدہ کاریگر صرف ایک کال کی دوری پر!',
             warranty_pill: '7 دن کی کام کی وارنٹی',
-            tagline: 'گھریلو مرمت و کاریگر سروسز',
+            tagline: 'گھریلو مرمت، سامان و کاریگر سروسز',
             nav_home: 'ہوم',
             nav_services: 'خدمات',
+            nav_market_rates: 'سامان کے ریٹس',
+            nav_estimator: 'لاگت کیلکولیٹر',
+            nav_join_karigar: 'کاریگر روزگار',
             nav_rates: 'ریٹ لسٹ',
-            nav_technicians: 'ہمارے کاریگر',
             nav_track: 'آرڈر ٹریک کریں',
-            nav_admin: 'ایڈمن پینل',
+            nav_admin: 'ایڈمن پورٹل',
             btn_book_now: 'کاریگر بک کریں',
             hero_badge: 'قابلِ اعتماد اور آزمودہ ہوم سروسز',
-            hero_title_1: 'گھر کا چھوٹا بڑا کام؟',
-            hero_title_highlight: 'بن عباس ہوم کیئر کے پاس ہے ہر کاریگر!',
-            hero_desc: 'الیکٹریشن، پلمبر، کارپینٹر، اے سی سروس، پینٹنگ، صفائی اور دیگر تمام گھریلو کاموں کے لیے ماہر، بااعتماد اور تصدیق شدہ کاریگر آپ کی دہلیز پر۔',
-            search_placeholder: 'کس کام کے لیے کاریگر چاہیے؟ (مثلاً پنکھا، موٹر، اے سی، پلمبر...)',
-            search_btn: 'فوری بکنگ',
+            hero_title_1: 'گھر کا چھوٹا بڑا کام یا تزئین و آرائش؟',
+            hero_title_highlight: 'بن عباس ہوم کیئر کے پاس ہے ہر کاریگر اور سامان کی معلومات!',
+            hero_desc: 'الیکٹریشن، پلمبر، کارپینٹر، گیس چولہا مستری، رنگ ساز پینٹر اور سینیٹری سامان کی شفاف معلومات ایک ہی جگہ۔',
+            search_placeholder: 'کس کام کے لیے کاریگر چاہیے؟ (مثلاً گیس چولہا، پنکھا، پلمبر، پینٹ...)',
+            search_btn: 'فوری تلاش',
             cta_instant_booking: 'آن لائن کاریگر بک کریں',
             cta_whatsapp: 'واٹس ایپ پر رابطہ',
             cta_call: 'فوری کال کریں',
@@ -1418,7 +1872,7 @@
             popular_services_title: 'مقبول خدمات اور ریٹس',
             popular_services_sub: 'چند کلکس میں تصدیق شدہ کاریگر حاضر',
             emergency_callout_title: 'ایمرجنسی سروس درکار ہے؟',
-            emergency_callout_desc: 'شارٹ سرکٹ یا پائپ پھٹنے کی صورت میں فوری ترجیحی سروس۔',
+            emergency_callout_desc: 'گیس لیکیج، شارٹ سرکٹ یا پائپ پھٹنے کی صورت میں فوری سروس۔',
             btn_urgent_call: 'ہنگامی مدد',
             services_badge: 'ہماری تمام خدمات',
             services_title: 'گھریلو مرمت اور دیکھ بھال کی مکمل سروسز',
@@ -1432,21 +1886,11 @@
             table_est_time: 'تخمینہ وقت',
             table_action: 'بکنگ',
             btn_book_this: 'بک کریں',
-            rate_note: 'نوٹ: میٹریل اور اسپیئر پارٹس کے اخراجات کسٹمر کے ذمہ ہوں گے یا اصل بل پر فراہم کیے جائیں گے۔',
+            rate_note: 'نوٹ: میٹریل اور اسپیئر پارٹس کے اخراجات کسٹمر کے ذمہ ہوں گے یا اصل مارکیٹ بل پر فراہم کیے جائیں گے۔',
             inspection_policy: 'انسپیکشن فیس کام ہونے کی صورت میں فائنل بل سے منہا ہو جائے گی۔',
             technicians_title: 'ہمارے تصدیق شدہ اور تجربہ کار کاریگر',
-            technicians_subtitle: 'ہر کاریگر کی پولیس اور نادرا شناختی تصدیق شدہ ہے تاکہ آپ کا گھر مکمل محفوظ رہے',
-            why_us_title: 'بن عباس ہوم کیئر کا انتخاب کیوں کریں؟',
-            why_us_sub: 'ہم معیار، حفاظت اور بروقت کام کی ضمانت دیتے ہیں',
-            why_1_title: '100% تصدیق شدہ کاریگر',
-            why_1_desc: 'ہر کاریگر کا شناختی ریکارڈ اور تجربہ باقاعدہ جانچا جاتا ہے۔',
-            why_2_title: 'شفاف اور طے شدہ ریٹس',
-            why_2_desc: 'کام سے پہلے تخمینہ لاگت بتائی جاتی ہے، کوئی اوور چارجنگ نہیں۔',
-            why_3_title: 'تیز ترین ایمرجنسی رسپانس',
-            why_3_desc: 'شہر کے اندر 30 سے 60 منٹ میں فوری کاریگر کی فراہمی۔',
-            why_4_title: '7 دن کی سروس وارنٹی',
-            why_4_desc: 'اگر کام میں کوئی خرابی رہ جائے تو ہم مفت دوبارہ درست کریں گے۔',
-            footer_desc: 'بن عباس ہوم کیئر آپ کے گھر کے چھوٹے بڑے تمام فنی کاموں (الیکٹریشن، پلمبر، کارپینٹر، اے سی ریپیر، پینٹر، ڈیپ کلیننگ) کا سب سے قابل اعتماد پلیٹ فارم ہے۔',
+            technicians_subtitle: 'ہر کاریگر کی نادرا شناختی تصدیق شدہ ہے تاکہ آپ کا گھر مکمل محفوظ رہے',
+            footer_desc: 'بن عباس ہوم کیئر آپ کے گھر کے تمام فنی کاموں (الیکٹریشن، پلمبر، گیس چولہا، پینٹر، کارپینٹر، سینیٹری) اور میٹریل ریٹس کا سب سے قابل اعتماد پلیٹ فارم ہے۔',
             footer_links_title: 'فوری لنکس',
             footer_coverage_title: 'اوقاتِ کار اور کوریج',
             footer_hours: 'صبح 8:00 بجے تا رات 10:00 بجے (ہنگامی سروس 24 گھنٹے دستیاب)',
@@ -1457,22 +1901,24 @@
           },
           en: {
             urgent_badge: 'Emergency Handyman',
-            top_banner_text: 'Verified technicians for all household tasks just a call away!',
+            top_banner_text: 'Verified technicians for household repairs and material rates just a call away!',
             warranty_pill: '7-Day Work Warranty',
-            tagline: 'Home Maintenance & Handyman Services',
+            tagline: 'Home Maintenance, Materials & Handyman Services',
             nav_home: 'Home',
             nav_services: 'Services',
+            nav_market_rates: 'Material Rates',
+            nav_estimator: 'Cost Calculator',
+            nav_join_karigar: 'Join as Karigar',
             nav_rates: 'Rate Card',
-            nav_technicians: 'Our Handymen',
             nav_track: 'Track Order',
             nav_admin: 'Admin Portal',
             btn_book_now: 'Book Handyman',
             hero_badge: 'Trusted & Reliable Home Services',
-            hero_title_1: 'Need Repairs at Home?',
-            hero_title_highlight: 'Bin Abbas Home Care Has Every Skilled Handyman!',
-            hero_desc: 'Electricians, plumbers, carpenters, AC repair, painters, cleaning & masonry workers at your doorstep with 100% verified trust.',
-            search_placeholder: 'What repair do you need? (e.g., fan, water motor, AC repair...)',
-            search_btn: 'Book Fast',
+            hero_title_1: 'Need Home Repairs or Renovation?',
+            hero_title_highlight: 'Bin Abbas Home Care Has Skilled Handymen & Material Info!',
+            hero_desc: 'Electricians, plumbers, gas stove technicians, painters, carpenters and live hardware rates at your fingertips.',
+            search_placeholder: 'What repair do you need? (e.g., gas stove, fan, plumber, paint...)',
+            search_btn: 'Search Fast',
             cta_instant_booking: 'Book Online Now',
             cta_whatsapp: 'WhatsApp Support',
             cta_call: 'Call Directly',
@@ -1482,7 +1928,7 @@
             popular_services_title: 'Popular Services & Rates',
             popular_services_sub: 'Book top-rated technicians in minutes',
             emergency_callout_title: 'Emergency Repairs Needed?',
-            emergency_callout_desc: 'Immediate dispatch for short circuits or water leakages.',
+            emergency_callout_desc: 'Immediate dispatch for gas leaks, short circuits or water leakages.',
             btn_urgent_call: 'Urgent Help',
             services_badge: 'All Categories',
             services_title: 'Complete Household Maintenance & Repair Services',
@@ -1500,17 +1946,7 @@
             inspection_policy: 'Inspection fee is adjusted into the final bill upon job confirmation.',
             technicians_title: 'Our Background-Checked Technicians',
             technicians_subtitle: 'Every technician is CNIC & police verified for complete safety of your home',
-            why_us_title: 'Why Choose Bin Abbas Home Care?',
-            why_us_sub: 'We ensure quality, reliability and punctual delivery',
-            why_1_title: '100% Verified Workers',
-            why_1_desc: 'Every worker undergoes strict identity and skill checks.',
-            why_2_title: 'Transparent Fixed Rates',
-            why_2_desc: 'Upfront cost estimations with zero hidden surcharges.',
-            why_3_title: 'Fast Emergency Response',
-            why_3_desc: 'Technician dispatch within 30 to 60 minutes.',
-            why_4_title: '7-Day Service Warranty',
-            why_4_desc: 'Free re-visit if any issue persists within 7 days.',
-            footer_desc: 'Bin Abbas Home Care is your trusted one-stop solution for electrician, plumbing, AC, carpentry, painting and home maintenance.',
+            footer_desc: 'Bin Abbas Home Care is your trusted one-stop solution for electrician, plumbing, gas stove, carpentry, painting and hardware rates.',
             footer_links_title: 'Quick Links',
             footer_coverage_title: 'Working Hours & Coverage',
             footer_hours: '08:00 AM - 10:00 PM (24/7 Emergency Dispatch)',
@@ -1521,13 +1957,8 @@
           }
         },
 
-        deferredPrompt: null,
-        canInstallApp: false,
-        showInstallBanner: false,
-        showSplashScreen: true,
-
         initApp() {
-          // Hide splash screen after intro animation
+          // Hide splash screen smoothly after 1.8 seconds
           setTimeout(() => {
             this.showSplashScreen = false;
           }, 1800);
@@ -1536,6 +1967,13 @@
           if (savedOrders) {
             try {
               this.orders = JSON.parse(savedOrders);
+            } catch (e) {}
+          }
+
+          const savedKarigars = localStorage.getItem('bahc_karigars');
+          if (savedKarigars) {
+            try {
+              this.karigarApplications = JSON.parse(savedKarigars);
             } catch (e) {}
           }
 
@@ -1556,7 +1994,7 @@
             this.showInstallBanner = true;
           });
 
-          // Show install banner on mobile after 2 seconds if not installed
+          // Show install banner on mobile after 2.5 seconds if not installed
           const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
           if (!isStandalone) {
             setTimeout(() => {
@@ -1593,6 +2031,27 @@
             c.tasksUrdu.some(t => t.toLowerCase().includes(q)) ||
             c.tasksEn.some(t => t.toLowerCase().includes(q))
           );
+        },
+
+        get filteredMaterials() {
+          if (this.selectedMaterialCat === 'all') return this.materials;
+          return this.materials.filter(m => m.category === this.selectedMaterialCat);
+        },
+
+        estimatedMaterialCost() {
+          const paint = this.calcRooms * 7000;
+          const electric = this.calcFans * 900;
+          const sanitary = this.calcWashrooms * 5500;
+          const gas = this.calcGasStoves * 1200;
+          return paint + electric + sanitary + gas;
+        },
+
+        estimatedLaborCost() {
+          const paint = this.calcRooms * 3500;
+          const electric = this.calcFans * 400;
+          const sanitary = this.calcWashrooms * 2000;
+          const gas = this.calcGasStoves * 500;
+          return paint + electric + sanitary + gas;
         },
 
         selectServiceForBooking(category) {
@@ -1656,6 +2115,35 @@
           };
         },
 
+        submitKarigarRegistration() {
+          const newApp = {
+            id: Date.now(),
+            name: this.karigarForm.name,
+            phone: this.karigarForm.phone,
+            trade: this.karigarForm.trade,
+            experience: this.karigarForm.experience,
+            cnic: this.karigarForm.cnic,
+            area: this.karigarForm.area,
+            createdAt: new Date().toLocaleDateString()
+          };
+
+          this.karigarApplications.unshift(newApp);
+          localStorage.setItem('bahc_karigars', JSON.stringify(this.karigarApplications));
+
+          alert('محترم ' + this.karigarForm.name + ' صاحب! بن عباس ہوم کیئر کے ساتھ آپ کی رجسٹریشن کامیابی سے درج ہو گئی ہے۔ ہمارا نمائندہ جلد آپ کے موبائل نمبر پر تصدیق کے لیے رابطہ کرے گا۔');
+          
+          this.karigarForm = {
+            name: '',
+            phone: '',
+            trade: '',
+            experience: '',
+            cnic: '',
+            area: ''
+          };
+
+          this.currentView = 'home';
+        },
+
         saveOrders() {
           localStorage.setItem('bahc_orders', JSON.stringify(this.orders));
         },
@@ -1687,10 +2175,13 @@
         },
 
         scrollToServices() {
-          const el = document.getElementById('services');
-          if (el) {
-            el.scrollIntoView({ behavior: 'smooth' });
-          }
+          this.currentView = 'home';
+          this.$nextTick(() => {
+            const el = document.getElementById('services');
+            if (el) {
+              el.scrollIntoView({ behavior: 'smooth' });
+            }
+          });
         },
 
         installPWA() {
@@ -1699,6 +2190,7 @@
             this.deferredPrompt.userChoice.then((choiceResult) => {
               if (choiceResult.outcome === 'accepted') {
                 this.canInstallApp = false;
+                this.showInstallBanner = false;
               }
               this.deferredPrompt = null;
             });
