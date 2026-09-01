@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>بن عباس ہوم کیئر | Bin Abbas Home Care - گھریلو مرمت، تزئین و آرائش، سامان کے ریٹس اور کاریگر سروسز</title>
+  <title>بن عباس ہوم کیئر | Bin Abbas Home Care - گھریلو مرمت، تزئین و آرائش، سوسائٹیز کوریج، سامان کے ریٹس اور کاریگر سروسز</title>
   
   <!-- Favicons & Meta (Eliminates 404 on Vercel) -->
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
@@ -11,7 +11,7 @@
   <link rel="apple-touch-icon" href="apple-touch-icon.png" />
   <meta name="theme-color" content="#0d9488" />
   <meta property="og:title" content="بن عباس ہوم کیئر | Bin Abbas Home Care" />
-  <meta property="og:description" content="گھریلو مرمت، تزئین و آرائش، سینیٹری و پینٹ سامان کے مارکیٹ ریٹس اور تصدیق شدہ کاریگر" />
+  <meta property="og:description" content="گھریلو مرمت، تزئین و آرائش، تمام سوسائٹیز میں 30 منٹ سروس اور تصدیق شدہ کاریگر" />
   <meta property="og:image" content="icon-512.png" />
 
   <!-- PWA & Mobile Web App Installation -->
@@ -205,6 +205,11 @@
         <span class="opacity-95 font-medium" x-text="t('top_banner_text')"></span>
       </div>
       <div class="flex items-center gap-3 text-xs">
+        <button @click="openSocietiesModal()" class="text-amber-300 hover:text-amber-200 font-bold underline flex items-center gap-1">
+          <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
+          <span>سروس سوسائٹیز (30 منٹ)</span>
+        </button>
+        <span class="text-teal-500">|</span>
         <button @click="currentView = 'join-karigar'" class="text-amber-300 hover:text-amber-200 font-bold underline flex items-center gap-1">
           <i data-lucide="user-plus" class="w-3.5 h-3.5"></i>
           <span>کاریگر روزگار پورٹل</span>
@@ -240,20 +245,26 @@
         </div>
 
         <!-- Desktop Navigation Links -->
-        <nav class="hidden lg:flex items-center gap-4 text-xs sm:text-sm font-semibold text-slate-700">
+        <nav class="hidden lg:flex items-center gap-3.5 text-xs sm:text-sm font-semibold text-slate-700">
           <button @click="currentView = 'home'" :class="currentView === 'home' ? 'text-brand-600 font-bold' : 'hover:text-brand-600'" class="transition-colors" x-text="t('nav_home')"></button>
           
-          <button @click="currentView = 'market-rates'" :class="currentView === 'market-rates' ? 'text-brand-600 font-bold bg-brand-50 px-2 py-1 rounded-lg' : 'hover:text-brand-600'" class="transition-colors flex items-center gap-1">
+          <!-- Societies Button in Navbar -->
+          <button @click="openSocietiesModal()" class="hover:text-brand-600 transition-colors flex items-center gap-1 text-emerald-700 font-bold bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200 shadow-xs">
+            <i data-lucide="map-pin" class="w-3.5 h-3.5 text-emerald-600"></i>
+            <span>سوسائٹیز و کوریج</span>
+          </button>
+
+          <button @click="currentView = 'market-rates'" :class="currentView === 'market-rates' ? 'text-brand-600 font-bold bg-brand-50 px-2.5 py-1 rounded-lg' : 'hover:text-brand-600'" class="transition-colors flex items-center gap-1">
             <i data-lucide="shopping-cart" class="w-3.5 h-3.5 text-amber-500"></i>
             <span x-text="t('nav_market_rates')"></span>
           </button>
 
-          <button @click="currentView = 'estimator'" :class="currentView === 'estimator' ? 'text-brand-600 font-bold bg-brand-50 px-2 py-1 rounded-lg' : 'hover:text-brand-600'" class="transition-colors flex items-center gap-1">
+          <button @click="currentView = 'estimator'" :class="currentView === 'estimator' ? 'text-brand-600 font-bold bg-brand-50 px-2.5 py-1 rounded-lg' : 'hover:text-brand-600'" class="transition-colors flex items-center gap-1">
             <i data-lucide="calculator" class="w-3.5 h-3.5 text-emerald-500"></i>
             <span x-text="t('nav_estimator')"></span>
           </button>
 
-          <button @click="currentView = 'join-karigar'" :class="currentView === 'join-karigar' ? 'text-amber-700 font-bold bg-amber-50 px-2 py-1 rounded-lg' : 'hover:text-amber-600'" class="transition-colors flex items-center gap-1">
+          <button @click="currentView = 'join-karigar'" :class="currentView === 'join-karigar' ? 'text-amber-700 font-bold bg-amber-50 px-2.5 py-1 rounded-lg' : 'hover:text-amber-600'" class="transition-colors flex items-center gap-1">
             <i data-lucide="briefcase" class="w-3.5 h-3.5 text-amber-600"></i>
             <span x-text="t('nav_join_karigar')"></span>
           </button>
@@ -270,7 +281,7 @@
             <span x-text="t('nav_track')"></span>
           </button>
 
-          <button @click="currentView = 'admin'" :class="currentView === 'admin' ? 'text-brand-600 font-bold' : 'text-slate-500 hover:text-slate-900'" class="flex items-center gap-1 text-xs px-2 py-1 rounded-lg border border-slate-200 hover:bg-slate-50">
+          <button @click="currentView = 'admin'" :class="currentView === 'admin' ? 'text-brand-600 font-bold' : 'text-slate-500 hover:text-slate-900'" class="flex items-center gap-1 text-xs px-2.5 py-1 rounded-lg border border-slate-200 hover:bg-slate-50">
             <i data-lucide="user-cog" class="w-3.5 h-3.5"></i>
             <span x-text="t('nav_admin')"></span>
           </button>
@@ -365,6 +376,31 @@
                 </div>
               </div>
 
+              <!-- ==================== SOCIETIES & COVERAGE AREAS SELECTOR BAR ==================== -->
+              <div class="pt-1 max-w-2xl mx-auto lg:mx-0">
+                <div class="flex items-center justify-between text-xs text-slate-700 font-bold mb-2">
+                  <span class="flex items-center gap-1.5 text-slate-800">
+                    <i data-lucide="map-pin" class="w-4 h-4 text-emerald-600"></i>
+                    <span>سروس سوسائٹیز (30 سے 45 منٹ میں آمد):</span>
+                  </span>
+                  <button @click="openSocietiesModal()" class="text-brand-600 hover:text-brand-700 underline text-xs font-bold flex items-center gap-0.5">
+                    <span>تمام سوسائٹیز دیکھیں</span>
+                    <i data-lucide="chevron-left" class="w-3.5 h-3.5"></i>
+                  </button>
+                </div>
+                <div class="flex flex-wrap gap-1.5 justify-center lg:justify-start">
+                  <template x-for="soc in popularSocieties" :key="soc">
+                    <button 
+                      @click="selectSociety(soc)"
+                      class="px-3 py-1.5 bg-white hover:bg-brand-50 border border-slate-200 hover:border-brand-500 rounded-xl text-xs font-semibold text-slate-700 hover:text-brand-700 transition-all shadow-xs flex items-center gap-1.5 transform hover:-translate-y-0.5"
+                    >
+                      <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                      <span x-text="soc"></span>
+                    </button>
+                  </template>
+                </div>
+              </div>
+
               <!-- Quick CTAs & Feature Pills -->
               <div class="flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-2">
                 <button 
@@ -373,6 +409,14 @@
                 >
                   <i data-lucide="check-circle-2" class="w-5 h-5"></i>
                   <span x-text="t('cta_instant_booking')"></span>
+                </button>
+
+                <button 
+                  @click="openSocietiesModal()" 
+                  class="flex items-center gap-2 px-5 py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold shadow-md hover:shadow-lg transition-all"
+                >
+                  <i data-lucide="building-2" class="w-5 h-5"></i>
+                  <span>سوسائٹیز لسٹ</span>
                 </button>
 
                 <button 
@@ -471,7 +515,54 @@
         </div>
       </section>
 
-      <!-- ==================== NEW SECTION: SEASONAL DISCOUNT PACKAGES ==================== -->
+      <!-- ==================== NEW SECTION: SOCIETIES & SERVICE COVERAGE ==================== -->
+      <section id="societies-coverage" class="py-16 bg-white border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div class="text-center max-w-3xl mx-auto mb-12 space-y-2">
+            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold">
+              <i data-lucide="map-pin" class="w-3.5 h-3.5 text-emerald-600"></i>
+              <span>فوری ایکسپریس کوریج (Fast Dispatch)</span>
+            </div>
+            <h2 class="text-3xl font-extrabold text-slate-900">ہمارے سروس کے علاقے اور سوسائٹیز</h2>
+            <p class="text-slate-600 text-sm">تمام معروف رہائشی سوسائٹیز اور ٹاؤنز میں 30 تا 45 منٹ میں ماہر کاریگر کی آمد</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <template x-for="zone in societyZones" :key="zone.title">
+              <div class="p-6 rounded-3xl bg-slate-50 border border-slate-200 hover:border-brand-500 hover:shadow-lg transition-all flex flex-col justify-between">
+                <div>
+                  <div class="flex items-center gap-2 mb-3">
+                    <div class="w-10 h-10 rounded-xl bg-brand-100 text-brand-700 flex items-center justify-center font-bold">
+                      <i :data-lucide="zone.icon" class="w-5 h-5"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-900 text-base" x-text="zone.title"></h3>
+                  </div>
+
+                  <ul class="space-y-1.5 mb-6 text-xs text-slate-600">
+                    <template x-for="s in zone.societies" :key="s">
+                      <li class="flex items-center gap-1.5 cursor-pointer hover:text-brand-700 font-medium" @click="selectSociety(s)">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                        <span x-text="s"></span>
+                      </li>
+                    </template>
+                  </ul>
+                </div>
+
+                <button 
+                  @click="openSocietiesModal()"
+                  class="w-full py-2 bg-white hover:bg-brand-600 hover:text-white text-brand-700 border border-slate-200 rounded-xl text-xs font-bold transition-all shadow-xs"
+                >
+                  اس زون کے کاریگر دیکھیں
+                </button>
+              </div>
+            </template>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ==================== SEASONAL DISCOUNT PACKAGES ==================== -->
       <section id="packages" class="py-16 bg-gradient-to-b from-slate-50 to-teal-50/50 border-b border-slate-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
@@ -671,7 +762,7 @@
         </div>
       </section>
 
-      <!-- ==================== NEW SECTION: CUSTOMER REVIEWS & FEEDBACK ==================== -->
+      <!-- ==================== CUSTOMER REVIEWS & FEEDBACK ==================== -->
       <section class="py-16 bg-white border-t border-slate-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
@@ -1275,7 +1366,7 @@
           <p class="text-xs text-slate-400 leading-relaxed" x-text="t('footer_desc')"></p>
           <div class="flex items-center gap-2 text-xs text-emerald-400 font-semibold">
             <i data-lucide="check-circle-2" class="w-4 h-4"></i>
-            <span>رجسٹرڈ، مستند کاریگر و میٹریل مارکیٹ</span>
+            <span>رجسٹرڈ، مستند کاریگر و سوسائٹیز کوریج</span>
           </div>
         </div>
 
@@ -1283,11 +1374,11 @@
         <div class="space-y-3">
           <h4 class="text-sm font-bold text-white uppercase tracking-wider" x-text="t('footer_links_title')"></h4>
           <ul class="space-y-2 text-xs">
+            <li><button @click="openSocietiesModal()" class="hover:text-brand-400 transition-colors">سروس کوریج سوسائٹیز</button></li>
             <li><button @click="currentView = 'market-rates'" class="hover:text-brand-400 transition-colors">سامان کے موجودہ ریٹس</button></li>
             <li><button @click="currentView = 'estimator'" class="hover:text-brand-400 transition-colors">لاگت بجٹ کیلکولیٹر</button></li>
             <li><button @click="currentView = 'join-karigar'" class="hover:text-brand-400 transition-colors">کاریگر روزگار پورٹل</button></li>
             <li><a href="#services" @click="currentView = 'home'" class="hover:text-brand-400 transition-colors" x-text="t('nav_services')"></a></li>
-            <li><a href="#rate-card" @click="currentView = 'home'" class="hover:text-brand-400 transition-colors" x-text="t('nav_rates')"></a></li>
           </ul>
         </div>
 
@@ -1297,7 +1388,7 @@
           <p class="text-xs text-slate-400" x-text="t('footer_hours')"></p>
           <div class="p-3 rounded-xl bg-slate-800/80 border border-slate-700/60 text-xs text-slate-300">
             <div class="font-semibold text-white mb-1">سروس کے علاقے:</div>
-            <p class="text-slate-400">تمام رہائشی سوسائٹیز، ٹاؤنز اور مارکیٹیں</p>
+            <p class="text-slate-400">تمام رہائشی سوسائٹیز، ٹاؤنز اور مارکیٹیں (30 تا 45 منٹ سروس)</p>
           </div>
         </div>
 
@@ -1334,6 +1425,61 @@
       </div>
     </div>
   </footer>
+
+  <!-- ==================== SOCIETIES & COVERAGE MODAL ==================== -->
+  <div 
+    x-show="isSocietiesModalOpen" 
+    x-cloak 
+    class="fixed inset-0 z-50 overflow-y-auto bg-slate-900/75 backdrop-blur-sm flex items-center justify-center p-4"
+    @keydown.escape.window="isSocietiesModalOpen = false"
+  >
+    <div 
+      @click.outside="isSocietiesModalOpen = false"
+      class="bg-white rounded-3xl shadow-2xl border border-slate-200 max-w-2xl w-full overflow-hidden"
+    >
+      <div class="bg-gradient-to-r from-brand-700 to-teal-800 text-white p-6 relative">
+        <button @click="isSocietiesModalOpen = false" class="absolute top-5 left-5 text-white/80 hover:text-white p-1 rounded-full bg-black/10">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+        <div class="text-xs font-semibold text-teal-200 uppercase tracking-wider mb-1">سروس کوریج نیٹ ورک</div>
+        <h3 class="text-xl font-bold">تمام کورڈ سوسائٹیز اور رہائشی علاقے</h3>
+        <p class="text-xs text-teal-100 mt-1">کسی بھی سوسائٹی پر کلک کریں اور 30 سے 45 منٹ میں کاریگر اپنے گھر بلائیں</p>
+      </div>
+
+      <div class="p-6 max-h-[70vh] overflow-y-auto space-y-6">
+        
+        <template x-for="zone in societyZones" :key="zone.title">
+          <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+            <h4 class="font-bold text-slate-900 text-sm mb-3 flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+              <span x-text="zone.title"></span>
+              <span class="text-[11px] font-normal text-slate-500">(30 تا 45 منٹ میں آمد)</span>
+            </h4>
+            <div class="flex flex-wrap gap-2">
+              <template x-for="s in zone.societies" :key="s">
+                <button 
+                  @click="isSocietiesModalOpen = false; selectSociety(s)"
+                  class="px-3 py-1.5 bg-white hover:bg-brand-600 hover:text-white border border-slate-200 rounded-xl text-xs font-semibold text-slate-700 transition-all flex items-center gap-1 shadow-xs"
+                >
+                  <i data-lucide="map-pin" class="w-3 h-3 text-brand-600"></i>
+                  <span x-text="s"></span>
+                </button>
+              </template>
+            </div>
+          </div>
+        </template>
+
+      </div>
+
+      <div class="p-4 bg-slate-50 border-t border-slate-200 flex justify-between items-center text-xs">
+        <span class="text-slate-500">اگر آپ کی سوسائٹی لسٹ میں نہیں تو کال کر کے تصدیق کریں۔</span>
+        <a :href="'tel:' + businessPhone" class="px-4 py-2 bg-brand-600 text-white font-bold rounded-xl flex items-center gap-1">
+          <i data-lucide="phone-call" class="w-3.5 h-3.5"></i>
+          <span>کال پر معلوم کریں</span>
+        </a>
+      </div>
+    </div>
+  </div>
 
   <!-- ==================== MULTI-STEP BOOKING MODAL WITH PHOTO & LOCATION ==================== -->
   <div 
@@ -1456,7 +1602,7 @@
           </div>
         </div>
 
-        <!-- STEP 2: Date, Time & Address with GPS Location -->
+        <!-- STEP 2: Date, Time & Address with Society & GPS Location -->
         <div x-show="bookingStep === 2" class="space-y-4">
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
@@ -1504,7 +1650,7 @@
 
           <div>
             <div class="flex items-center justify-between mb-1">
-              <label class="block text-xs font-bold text-slate-700">مکمل پتہ اور گلی / مکان نمبر *</label>
+              <label class="block text-xs font-bold text-slate-700">سوسائٹی اور پتہ *</label>
               <button 
                 type="button" 
                 @click="detectGPSLocation()"
@@ -1517,7 +1663,7 @@
             <input 
               type="text" 
               x-model="bookingForm.address"
-              placeholder="مکان نمبر، گلی، بلاک، سوسائٹی کا نام"
+              placeholder="سوسائٹی، فیز، گلی اور مکان نمبر"
               class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm outline-none focus:border-brand-500"
             />
           </div>
@@ -1554,8 +1700,8 @@
               <span class="font-mono text-slate-800" dir="ltr" x-text="bookingForm.phone"></span>
             </div>
             <div class="flex justify-between border-b border-slate-200 pb-2">
-              <span class="text-slate-500">پتہ:</span>
-              <span class="text-slate-800" x-text="bookingForm.address"></span>
+              <span class="text-slate-500">پتہ / سوسائٹی:</span>
+              <span class="text-slate-800 font-semibold" x-text="bookingForm.address"></span>
             </div>
             <div class="flex justify-between border-b border-slate-200 pb-2">
               <span class="text-slate-500">تاریخ و وقت:</span>
@@ -1939,6 +2085,7 @@
         isTrackerModalOpen: false,
         isInvoiceModalOpen: false,
         isKarigarCardModalOpen: false,
+        isSocietiesModalOpen: false,
         bookingStep: 1,
         businessPhone: '+923001234567',
         businessPhoneDisplay: '0300-1234567',
@@ -1965,6 +2112,42 @@
 
         activeInvoice: {},
         activeKarigar: {},
+
+        // Popular Societies
+        popularSocieties: [
+          'ڈی ایچ اے (DHA)',
+          'بحریہ ٹاؤن (Bahria Town)',
+          'ماڈل ٹاؤن (Model Town)',
+          'گلبرگ (Gulberg)',
+          'جوہر ٹاؤن (Johar Town)',
+          'واپڈا ٹاؤن (Wapda Town)',
+          'کینٹ و عسکری (Cantt & Askari)',
+          'لیک سٹی و ویلنشیا (Lake City)'
+        ],
+
+        // Categorized Society Zones
+        societyZones: [
+          {
+            title: 'لاہور کینٹ و ڈی ایچ اے',
+            icon: 'shield',
+            societies: ['DHA Phase 1 to 9', 'Askari 1 to 11', 'Cantt & Sarwar Town', 'Cavalry Ground', 'PAF Society', 'State Life Phase 1 & 2']
+          },
+          {
+            title: 'جنوبی لاہور و رائیونڈ روڈ',
+            icon: 'building-2',
+            societies: ['بحریہ ٹاؤن (Bahria Town)', 'Bahria Orchard', 'Lake City', 'Valencia Housing', 'WAPDA Town', 'Audit & Accounts Society']
+          },
+          {
+            title: 'وسطی لاہور و گلبرگ',
+            icon: 'home',
+            societies: ['Gulberg 1, 2, 3', 'Model Town (All Blocks)', 'Garden Town', 'Faisal Town', 'Johar Town Phase 1 & 2', 'Shadman & Muslim Town']
+          },
+          {
+            title: 'دیگر اہم شہر و سوسائٹیز',
+            icon: 'map',
+            societies: ['راولپنڈی و اسلام آباد (DHA / Bahria)', 'فیصل آباد (Madina Town / D-Ground)', 'ملتان (Cantt / Wapda Town)', 'سیالکوٹ و گوجرانوالہ']
+          }
+        ],
 
         bookingForm: {
           category: '',
@@ -2135,26 +2318,19 @@
 
         // Live Market Rates for Household Hardware & Materials
         materials: [
-          // Sanitary & Plumbing
           { id: 1, category: 'sanitary', categoryLabel: 'سینیٹری و پلمبنگ', nameUrdu: 'ماسٹر وال مکسر نلکا سیٹ', priceRange: 'روپے 4,500 - 6,800', unit: 'فی سیٹ', brand: 'Master / Faisal Sanitary', description: 'باتھ روم بیسن و شاور مکسر، مکمل براس باڈی مع 5 سال وارنٹی' },
           { id: 2, category: 'sanitary', categoryLabel: 'سینیٹری و پلمبنگ', nameUrdu: 'مسلم شاور سیٹ (اسٹیل و پائپ)', priceRange: 'روپے 1,200 - 1,800', unit: 'فی سیٹ', brand: 'Heavy Duty Stainless Steel', description: 'پریشر شاور گن مع 1.2 میٹر ہائی پریشر فلیکسیبل پائپ' },
           { id: 3, category: 'sanitary', categoryLabel: 'سینیٹری و پلمبنگ', nameUrdu: 'کموڈ سیٹ ون پیس (Commode)', priceRange: 'روپے 14,000 - 22,000', unit: 'فی پیس', brand: 'Porta / Sonex Ceramic', description: 'سافٹ کلوز سیٹ کور، ڈوئل فلش سسٹم، ہائی کوالٹی گلیزڈ سیرامک' },
           { id: 4, category: 'sanitary', categoryLabel: 'سینیٹری و پلمبنگ', nameUrdu: 'پی پی آر سی پائپ (Master PPRC 25mm)', priceRange: 'روپے 180 - 240', unit: 'فی میٹر', brand: 'Master / Popular PPRC', description: 'گرم اور ٹھنڈے پانی کے لیے آزمودہ ہائی پریشر پائپ' },
           { id: 5, category: 'sanitary', categoryLabel: 'سینیٹری و پلمبنگ', nameUrdu: 'پی وی سی سیوریج پائپ (4 انچ)', priceRange: 'روپے 350 - 480', unit: 'فی فٹ', brand: 'Popular / Beta PVC', description: 'ڈرینیج اور سیوریج لائن کے لیے ہیوی گیج پائپ' },
-          
-          // Paints & Renovation
           { id: 6, category: 'paint', categoryLabel: 'رنگ و پینٹ میٹریل', nameUrdu: 'برجر ویدر کوٹ پینٹ بکٹ (16 لیٹر)', priceRange: 'روپے 14,500 - 18,000', unit: 'فی بالٹی (Drum)', brand: 'Berger / Nippon Paints', description: 'گھر کے بیرونی حصے کے لیے واٹر پروف، اینٹی فنگل ویدر شیٹ' },
           { id: 7, category: 'paint', categoryLabel: 'رنگ و پینٹ میٹریل', nameUrdu: 'اندرونی ڈسٹیمپر پینٹ بکٹ (14 لیٹر)', priceRange: 'روپے 5,500 - 7,500', unit: 'فی بالٹی', brand: 'Diamond / Brighto', description: 'کمروں اور ہال کے لیے میٹ فنش، دیرپا چمکدار وال پینٹ' },
           { id: 8, category: 'paint', categoryLabel: 'رنگ و پینٹ میٹریل', nameUrdu: 'وال پٹین بیگ (Wall Putty 20kg)', priceRange: 'روپے 1,200 - 1,600', unit: 'فی بیگ', brand: 'Nippon / Kansai Putty', description: 'دیواروں کو ہموار، کریک فری اور پینٹ کے لیے تیار کرنے والی پٹین' },
           { id: 9, category: 'paint', categoryLabel: 'رنگ و پینٹ میٹریل', nameUrdu: 'سیم و نمی واٹر پروفنگ کیمیکل (10L)', priceRange: 'روپے 4,200 - 5,800', unit: 'فی کین', brand: 'Sika / Bond Chemical', description: 'دیواروں سے پینٹ اکھڑنے اور نمی کا مستقل علاج' },
-          
-          // Electric & Wiring
           { id: 10, category: 'electric', categoryLabel: 'بجلی و الیکٹرک وائرنگ', nameUrdu: 'پاکستان کیبلز وائر 7/29 (90 میٹر کوائل)', priceRange: 'روپے 13,500 - 16,500', unit: 'فی کوائل', brand: 'Pakistan Cables 99.9% Copper', description: 'پاور پلگ، اے سی اور مین لائن کے لیے اصل کاپر وائر' },
           { id: 11, category: 'electric', categoryLabel: 'بجلی و الیکٹرک وائرنگ', nameUrdu: 'سرکٹ بریکر سنگل پول (16A / 32A)', priceRange: 'روپے 550 - 900', unit: 'فی پیس', brand: 'Schneider / Terasaki', description: 'شارٹ سرکٹ اور اوورلوڈ سے حفاظت کے لیے اٹومیٹک بریکر' },
           { id: 12, category: 'electric', categoryLabel: 'بجلی و الیکٹرک وائرنگ', nameUrdu: 'پیانو سوئچ بورڈ فین ڈمر و ساکٹ (8 Gang)', priceRange: 'روپے 1,400 - 2,200', unit: 'فی بورڈ', brand: 'Clipsal / Panasonic Style', description: 'خوبصورت ڈیزائن، فائر پروف میٹریل، سلور کانٹیکٹ سوئچ' },
           { id: 13, category: 'electric', categoryLabel: 'بجلی و الیکٹرک وائرنگ', nameUrdu: 'ایل ای ڈی ایس ایم ڈی ڈاؤن لائٹ (12 واٹ)', priceRange: 'روپے 350 - 600', unit: 'فی لائٹ', brand: 'Philips / Orient LED', description: 'کم بجلی خرچ، زیادہ روشنی، 1 سال ریپلیسمنٹ وارنٹی' },
-
-          // Gas & Kitchen Accessories
           { id: 14, category: 'gas', categoryLabel: 'گیس چولہا و کچن سامان', nameUrdu: 'اوریجنل ہائی پریشر گیس پائپ (Orange/Steel)', priceRange: 'روپے 120 - 180', unit: 'فی گز / فٹ', brand: 'Heavy Duty Reinforced Rubber', description: 'لیکیج فری، آگ سے محفوظ، چولہے اور سلنڈر کے لیے پائپ' },
           { id: 15, category: 'gas', categoryLabel: 'گیس چولہا و کچن سامان', nameUrdu: 'گیس سیفٹی ریگولیٹر (Low/High Pressure)', priceRange: 'روپے 850 - 1,400', unit: 'فی پیس', brand: 'Brass Valve Safety Regulator', description: 'سلنڈر اور گیس کے پریشر کو کنٹرول کرنے والا پائیدار ریگولیٹر' },
           { id: 16, category: 'gas', categoryLabel: 'گیس چولہا و کچن سامان', nameUrdu: 'چولہا براس برنر سیٹ (2 پیس)', priceRange: 'روپے 950 - 1,600', unit: 'فی جوڑی', brand: 'Heavy Cast Iron / Brass Top', description: 'پیلی آگ ختم کر کے فل پریشر نیلی آگ دینے والے برنرز' },
@@ -2177,7 +2353,7 @@
             phone: '03214567890',
             service: 'بجلی کا کام (الیکٹریشن)',
             details: 'مین بریکر بار بار ٹرپ ہو رہا ہے اور 2 پنکھے بند ہیں۔',
-            address: 'مکان نمبر 42، بلاک بی، ماڈل ٹاؤن',
+            address: 'ڈی ایچ اے فیز 5، سیکٹر بی، لاہور',
             date: '2026-09-01',
             timeSlot: 'دوپہر 12:00 تا 03:00',
             assignedTech: 'محمد راشد',
@@ -2189,7 +2365,7 @@
             phone: '03009876543',
             service: 'گیس چولہا، ہوب و گیزر مرمت',
             details: 'چولہے سے کالی آگ نکل رہی ہے اور برنر کا شعلہ کم ہے۔',
-            address: 'فلیٹ 402، گلشن اپارٹمنٹس',
+            address: 'بحریہ ٹاؤن، سیکٹر سی، لاہور',
             date: '2026-09-01',
             timeSlot: 'شام 03:00 تا 06:00',
             assignedTech: 'استاد فیاض احمد',
@@ -2422,7 +2598,7 @@
           navigator.geolocation.getCurrentPosition(
             (pos) => {
               this.detectingLocation = false;
-              this.bookingForm.address = '📍 GPS لوکیشن: ' + pos.coords.latitude.toFixed(4) + ', ' + pos.coords.longitude.toFixed(4) + ' (قریبی علاقہ)';
+              this.bookingForm.address = '📍 GPS لوکیشن: ' + pos.coords.latitude.toFixed(4) + ', ' + pos.coords.longitude.toFixed(4) + ' (قریبی سوسائٹی)';
             },
             (err) => {
               this.detectingLocation = false;
@@ -2430,6 +2606,18 @@
             },
             { timeout: 8000 }
           );
+        },
+
+        openSocietiesModal() {
+          this.isSocietiesModalOpen = true;
+          this.$nextTick(() => {
+            if (window.lucide) lucide.createIcons();
+          });
+        },
+
+        selectSociety(socName) {
+          this.bookingForm.address = socName;
+          this.openBookingModal();
         },
 
         selectServiceForBooking(category) {
