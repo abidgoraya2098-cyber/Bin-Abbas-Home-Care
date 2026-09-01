@@ -125,6 +125,21 @@
     .splash-bar {
       animation: splashBarAnim 1.6s ease-in-out forwards;
     }
+
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+      #printableInvoice, #printableInvoice * {
+        visibility: visible;
+      }
+      #printableInvoice {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+      }
+    }
   </style>
 </head>
 
@@ -225,33 +240,37 @@
         </div>
 
         <!-- Desktop Navigation Links -->
-        <nav class="hidden lg:flex items-center gap-5 text-xs sm:text-sm font-semibold text-slate-700">
+        <nav class="hidden lg:flex items-center gap-4 text-xs sm:text-sm font-semibold text-slate-700">
           <button @click="currentView = 'home'" :class="currentView === 'home' ? 'text-brand-600 font-bold' : 'hover:text-brand-600'" class="transition-colors" x-text="t('nav_home')"></button>
           
-          <button @click="currentView = 'market-rates'" :class="currentView === 'market-rates' ? 'text-brand-600 font-bold bg-brand-50 px-2.5 py-1 rounded-lg' : 'hover:text-brand-600'" class="transition-colors flex items-center gap-1">
+          <button @click="currentView = 'market-rates'" :class="currentView === 'market-rates' ? 'text-brand-600 font-bold bg-brand-50 px-2 py-1 rounded-lg' : 'hover:text-brand-600'" class="transition-colors flex items-center gap-1">
             <i data-lucide="shopping-cart" class="w-3.5 h-3.5 text-amber-500"></i>
             <span x-text="t('nav_market_rates')"></span>
           </button>
 
-          <button @click="currentView = 'estimator'" :class="currentView === 'estimator' ? 'text-brand-600 font-bold bg-brand-50 px-2.5 py-1 rounded-lg' : 'hover:text-brand-600'" class="transition-colors flex items-center gap-1">
+          <button @click="currentView = 'estimator'" :class="currentView === 'estimator' ? 'text-brand-600 font-bold bg-brand-50 px-2 py-1 rounded-lg' : 'hover:text-brand-600'" class="transition-colors flex items-center gap-1">
             <i data-lucide="calculator" class="w-3.5 h-3.5 text-emerald-500"></i>
             <span x-text="t('nav_estimator')"></span>
           </button>
 
-          <button @click="currentView = 'join-karigar'" :class="currentView === 'join-karigar' ? 'text-amber-700 font-bold bg-amber-50 px-2.5 py-1 rounded-lg' : 'hover:text-amber-600'" class="transition-colors flex items-center gap-1">
+          <button @click="currentView = 'join-karigar'" :class="currentView === 'join-karigar' ? 'text-amber-700 font-bold bg-amber-50 px-2 py-1 rounded-lg' : 'hover:text-amber-600'" class="transition-colors flex items-center gap-1">
             <i data-lucide="briefcase" class="w-3.5 h-3.5 text-amber-600"></i>
             <span x-text="t('nav_join_karigar')"></span>
           </button>
 
+          <a href="#packages" @click="currentView = 'home'" class="hover:text-brand-600 transition-colors flex items-center gap-1 text-amber-600 font-bold">
+            <i data-lucide="gift" class="w-3.5 h-3.5"></i>
+            <span>بچت پیکجز</span>
+          </a>
+
           <a href="#services" @click="currentView = 'home'" class="hover:text-brand-600 transition-colors" x-text="t('nav_services')"></a>
-          <a href="#rate-card" @click="currentView = 'home'" class="hover:text-brand-600 transition-colors" x-text="t('nav_rates')"></a>
           
           <button @click="openTrackerModal()" class="hover:text-brand-600 flex items-center gap-1 text-slate-700 font-semibold">
             <i data-lucide="search" class="w-3.5 h-3.5 text-brand-600"></i>
             <span x-text="t('nav_track')"></span>
           </button>
 
-          <button @click="currentView = 'admin'" :class="currentView === 'admin' ? 'text-brand-600 font-bold' : 'text-slate-500 hover:text-slate-900'" class="flex items-center gap-1 text-xs px-2.5 py-1 rounded-lg border border-slate-200 hover:bg-slate-50">
+          <button @click="currentView = 'admin'" :class="currentView === 'admin' ? 'text-brand-600 font-bold' : 'text-slate-500 hover:text-slate-900'" class="flex items-center gap-1 text-xs px-2 py-1 rounded-lg border border-slate-200 hover:bg-slate-50">
             <i data-lucide="user-cog" class="w-3.5 h-3.5"></i>
             <span x-text="t('nav_admin')"></span>
           </button>
@@ -452,6 +471,67 @@
         </div>
       </section>
 
+      <!-- ==================== NEW SECTION: SEASONAL DISCOUNT PACKAGES ==================== -->
+      <section id="packages" class="py-16 bg-gradient-to-b from-slate-50 to-teal-50/50 border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div class="text-center max-w-3xl mx-auto mb-12 space-y-2">
+            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 text-amber-800 text-xs font-bold">
+              <i data-lucide="gift" class="w-3.5 h-3.5 text-amber-600"></i>
+              <span>موسمی خصوصی بچت آفرز (Mega Saver Packages)</span>
+            </div>
+            <h2 class="text-3xl font-extrabold text-slate-900">موسمی رعایتی ہوم سروس پیکجز</h2>
+            <p class="text-slate-600 text-sm">ایک ساتھ متعدد کام کروائیں اور 30% تک کی شاندار بچت حاصل کریں</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <template x-for="pkg in discountPackages" :key="pkg.id">
+              <div class="bg-white rounded-3xl p-6 border-2 border-teal-500/20 hover:border-brand-500 shadow-lg hover:shadow-2xl transition-all flex flex-col justify-between relative overflow-hidden group">
+                
+                <div class="absolute top-0 right-0 bg-gradient-to-l from-amber-500 to-amber-600 text-slate-950 font-black text-[11px] px-3 py-1 rounded-bl-xl shadow-sm">
+                  <span x-text="pkg.discountBadge"></span>
+                </div>
+
+                <div>
+                  <div class="w-12 h-12 rounded-2xl bg-brand-50 flex items-center justify-center text-brand-600 mb-4 group-hover:scale-110 transition-transform">
+                    <i :data-lucide="pkg.icon" class="w-6 h-6"></i>
+                  </div>
+
+                  <h3 class="text-lg font-bold text-slate-900 mb-1" x-text="pkg.title"></h3>
+                  <p class="text-xs text-slate-500 mb-4" x-text="pkg.desc"></p>
+
+                  <div class="space-y-2 mb-6 text-xs text-slate-600">
+                    <template x-for="item in pkg.items" :key="item">
+                      <div class="flex items-center gap-2">
+                        <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-emerald-600 flex-shrink-0"></i>
+                        <span x-text="item"></span>
+                      </div>
+                    </template>
+                  </div>
+                </div>
+
+                <div class="pt-4 border-t border-slate-100">
+                  <div class="flex items-baseline gap-2 mb-3">
+                    <span class="text-2xl font-black text-brand-700" x-text="pkg.dealPrice"></span>
+                    <span class="text-xs text-slate-400 line-through" x-text="pkg.originalPrice"></span>
+                  </div>
+
+                  <button 
+                    @click="openBookingModal({ service: pkg.title, job: pkg.desc + ' (' + pkg.dealPrice + ')' })"
+                    class="w-full py-2.5 bg-gradient-to-r from-brand-600 to-teal-700 hover:from-brand-700 hover:to-teal-800 text-white rounded-xl text-xs font-bold transition-all shadow-md flex items-center justify-center gap-2"
+                  >
+                    <i data-lucide="calendar-plus" class="w-4 h-4"></i>
+                    <span>یہ پیکج بک کریں</span>
+                  </button>
+                </div>
+
+              </div>
+            </template>
+          </div>
+
+        </div>
+      </section>
+
       <!-- ==================== ALL SERVICES SECTION ==================== -->
       <section id="services" class="py-16 md:py-24 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -465,7 +545,7 @@
             <p class="text-slate-600 text-sm sm:text-base" x-text="t('services_subtitle')"></p>
           </div>
 
-          <!-- Services Grid (9 Comprehensive Handyman Categories including Gas Stove & Renovation) -->
+          <!-- Services Grid -->
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <template x-for="cat in filteredCategories" :key="cat.id">
               <div class="bg-slate-50 hover:bg-white rounded-3xl p-6 border border-slate-200/80 hover:border-brand-500 hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
@@ -517,65 +597,8 @@
         </div>
       </section>
 
-      <!-- ==================== TRANSPARENT RATE CARD ==================== -->
-      <section id="rate-card" class="py-16 bg-slate-100 border-y border-slate-200">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
-          <div class="text-center max-w-3xl mx-auto mb-12 space-y-2">
-            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900" x-text="t('rates_title')"></h2>
-            <p class="text-slate-600 text-xs sm:text-sm" x-text="t('rates_subtitle')"></p>
-          </div>
-
-          <!-- Rate List Tabs & Table -->
-          <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-md border border-slate-200">
-            <div class="overflow-x-auto">
-              <table class="w-full text-start text-xs sm:text-sm">
-                <thead>
-                  <tr class="border-b-2 border-slate-200 text-slate-700 font-bold bg-slate-50/50">
-                    <th class="py-3.5 px-4 text-start" x-text="t('table_service')"></th>
-                    <th class="py-3.5 px-4 text-start" x-text="t('table_job_type')"></th>
-                    <th class="py-3.5 px-4 text-start" x-text="t('table_standard_rate')"></th>
-                    <th class="py-3.5 px-4 text-start" x-text="t('table_est_time')"></th>
-                    <th class="py-3.5 px-4 text-center" x-text="t('table_action')"></th>
-                  </tr>
-                </thead>
-                <tbody class="divide-y divide-slate-100">
-                  <template x-for="item in rateTableData" :key="item.id">
-                    <tr class="hover:bg-brand-50/40 transition-colors">
-                      <td class="py-3 px-4 font-bold text-slate-900 flex items-center gap-2">
-                        <span class="w-2 h-2 rounded-full bg-brand-500"></span>
-                        <span x-text="lang === 'ur' ? item.categoryUrdu : item.categoryEn"></span>
-                      </td>
-                      <td class="py-3 px-4 text-slate-700" x-text="lang === 'ur' ? item.jobUrdu : item.jobEn"></td>
-                      <td class="py-3 px-4 font-extrabold text-brand-700" x-text="item.price"></td>
-                      <td class="py-3 px-4 text-slate-500" x-text="lang === 'ur' ? item.timeUrdu : item.timeEn"></td>
-                      <td class="py-3 px-4 text-center">
-                        <button 
-                          @click="openBookingModal({ service: item.categoryUrdu, job: item.jobUrdu, price: item.price })"
-                          class="px-3 py-1 bg-brand-100 hover:bg-brand-600 hover:text-white text-brand-700 rounded-lg text-xs font-semibold transition-colors"
-                          x-text="t('btn_book_this')"
-                        ></button>
-                      </td>
-                    </tr>
-                  </template>
-                </tbody>
-              </table>
-            </div>
-
-            <div class="mt-6 pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between text-xs text-slate-500 gap-2">
-              <div class="flex items-center gap-2">
-                <i data-lucide="info" class="w-4 h-4 text-brand-600"></i>
-                <span x-text="t('rate_note')"></span>
-              </div>
-              <div class="font-semibold text-slate-700" x-text="t('inspection_policy')"></div>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
       <!-- ==================== VERIFIED TECHNICIANS / HANDYMEN ==================== -->
-      <section id="technicians" class="py-16 md:py-24 bg-white">
+      <section id="technicians" class="py-16 md:py-24 bg-slate-50 border-t border-slate-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <div class="text-center max-w-3xl mx-auto mb-16 space-y-2">
@@ -589,7 +612,7 @@
 
           <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <template x-for="tech in technicians" :key="tech.id">
-              <div class="bg-slate-50 rounded-3xl p-6 border border-slate-200/80 hover:shadow-lg transition-all flex flex-col justify-between">
+              <div class="bg-white rounded-3xl p-6 border border-slate-200/80 hover:shadow-lg transition-all flex flex-col justify-between">
                 <div>
                   <div class="flex items-center gap-4 mb-4">
                     <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-brand-600 to-teal-400 text-white font-bold text-2xl flex items-center justify-center shadow-md">
@@ -612,7 +635,7 @@
                     </div>
                   </div>
 
-                  <div class="p-3 bg-white rounded-xl border border-slate-100 text-xs text-slate-600 space-y-1 mb-4">
+                  <div class="p-3 bg-slate-50 rounded-xl border border-slate-100 text-xs text-slate-600 space-y-1 mb-4">
                     <div class="flex justify-between">
                       <span class="text-slate-400">مکمل شدہ کام:</span>
                       <span class="font-bold text-slate-800" x-text="tech.completedJobs + ' گھر'"></span>
@@ -624,13 +647,69 @@
                   </div>
                 </div>
 
-                <button 
-                  @click="openBookingModal({ preferredTech: tech.name, service: tech.specialtyUrdu })"
-                  class="w-full py-2.5 bg-slate-900 hover:bg-brand-600 text-white rounded-xl text-xs font-bold transition-colors flex items-center justify-center gap-1.5"
-                >
-                  <i data-lucide="user-check" class="w-4 h-4"></i>
-                  <span x-text="'یہ کاریگر منتخب کریں'"></span>
-                </button>
+                <div class="space-y-2">
+                  <button 
+                    @click="openKarigarCard(tech)"
+                    class="w-full py-2 bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 rounded-xl text-xs font-bold transition-colors flex items-center justify-center gap-1.5"
+                  >
+                    <i data-lucide="credit-card" class="w-3.5 h-3.5 text-amber-600"></i>
+                    <span>ویریفائیڈ ڈیجیٹل کارڈ دیکھیں</span>
+                  </button>
+
+                  <button 
+                    @click="openBookingModal({ preferredTech: tech.name, service: tech.specialtyUrdu })"
+                    class="w-full py-2.5 bg-slate-900 hover:bg-brand-600 text-white rounded-xl text-xs font-bold transition-colors flex items-center justify-center gap-1.5"
+                  >
+                    <i data-lucide="user-check" class="w-4 h-4"></i>
+                    <span x-text="'یہ کاریگر منتخب کریں'"></span>
+                  </button>
+                </div>
+              </div>
+            </template>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ==================== NEW SECTION: CUSTOMER REVIEWS & FEEDBACK ==================== -->
+      <section class="py-16 bg-white border-t border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div class="text-center max-w-3xl mx-auto mb-12 space-y-2">
+            <div class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-amber-100 text-amber-800 text-xs font-bold">
+              <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-500 text-amber-500"></i>
+              <span>4.9 / 5.0 اوسط کسٹمر ریٹنگ</span>
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900">ہمارے مطمئن کسٹمرز کے حقیقی تاثرات</h2>
+            <p class="text-slate-600 text-xs sm:text-sm">ہزاروں پاکستانی گھرانوں کا بن عباس ہوم کیئر کے کاریگروں پر مکمل اعتماد</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <template x-for="rev in customerReviews" :key="rev.id">
+              <div class="p-6 rounded-3xl bg-slate-50 border border-slate-200/80 shadow-xs flex flex-col justify-between">
+                <div>
+                  <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center gap-1 text-amber-400">
+                      <template x-for="i in 5">
+                        <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+                      </template>
+                    </div>
+                    <span class="text-[11px] text-slate-400" x-text="rev.date"></span>
+                  </div>
+
+                  <p class="text-xs text-slate-700 leading-relaxed mb-4" x-text="'“' + rev.comment + '”'"></p>
+                </div>
+
+                <div class="pt-3 border-t border-slate-200 flex items-center justify-between text-xs">
+                  <div>
+                    <div class="font-bold text-slate-900" x-text="rev.customerName"></div>
+                    <div class="text-slate-500 text-[11px]" x-text="rev.service"></div>
+                  </div>
+                  <span class="text-emerald-700 font-semibold text-[11px] flex items-center gap-1">
+                    <i data-lucide="badge-check" class="w-3.5 h-3.5"></i>
+                    <span>تصدیق شدہ کام</span>
+                  </span>
+                </div>
               </div>
             </template>
           </div>
@@ -651,7 +730,7 @@
               <span>موجودہ مارکیٹ ریٹس 2026</span>
             </div>
             <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900">گھریلو سامان اور میٹریل ریٹ کارڈ</h2>
-            <p class="text-xs sm:text-sm text-slate-600 mt-1">سینیٹری، پینٹ، بجلی اور گیس چولہا سامان کی موجودہ اوسط مارکیٹ قیمتیں دیکھ کر اپنے بجٹ کا اندازہ لگائیں۔</p>
+            <p class="text-xs sm:text-sm text-slate-600 mt-1">سینیٹری، پینٹ، بجلی اور گیس چولہا سامان کی موجودہ اوسط مارکیٹ قیمتیں دیکھ کر اپنے بجٹ کا اندازہ لگائیں یا کاریگر کے ساتھ سامان منگوائیں۔</p>
           </div>
 
           <button @click="currentView = 'home'" class="px-4 py-2 bg-white border border-slate-200 text-slate-700 text-xs font-semibold rounded-xl hover:bg-slate-100 transition-colors">
@@ -731,13 +810,13 @@
                 </div>
               </div>
 
-              <div class="pt-2 border-t border-slate-100 flex items-center justify-between">
+              <div class="pt-2 border-t border-slate-100 flex items-center justify-between gap-2">
                 <button 
-                  @click="openBookingModal({ service: item.categoryLabel, job: item.nameUrdu + ' انسٹالیشن / فٹنگ' })"
-                  class="w-full py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-bold transition-colors flex items-center justify-center gap-1"
+                  @click="openBookingModal({ service: item.categoryLabel, job: item.nameUrdu + ' (سامان کے ہمراہ کاریگر چاہیے)' })"
+                  class="flex-1 py-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1 shadow-sm"
                 >
-                  <i data-lucide="wrench" class="w-3.5 h-3.5"></i>
-                  <span>اس سامان کے لیے کاریگر بک کریں</span>
+                  <i data-lucide="truck" class="w-3.5 h-3.5"></i>
+                  <span>کاریگر کے ساتھ سامان بھیجیں</span>
                 </button>
               </div>
             </div>
@@ -979,7 +1058,7 @@
                 <span>شرائط و فوائد:</span>
               </div>
               <p>• بن عباس ہوم کیئر کے ذریعے روزانہ کام اور مناسب معاوضہ ملے گا۔</p>
-              <p>• شناختی کارڈ اور پولیس تصدیق کے بعد فوری ویریفائیڈ بیج دیا جائے گا۔</p>
+              <p>• شناختی کارڈ اور پولیس تصدیق کے بعد فوری ویریفائیڈ بیج اور ڈیجیٹل کارڈ دیا جائے گا۔</p>
             </div>
 
             <div class="pt-4 flex justify-between items-center">
@@ -1016,7 +1095,7 @@
             <h2 class="text-2xl font-bold text-slate-900">ایڈمن کنٹرول پورٹل (Admin Panel)</h2>
             <span class="px-2.5 py-0.5 bg-brand-100 text-brand-800 text-xs font-bold rounded-md">Live Management</span>
           </div>
-          <p class="text-xs text-slate-500">تمام موصولہ آرڈرز، کاریگر تفویض اور نئی کاریگر درخواستوں کا انتظام کریں۔</p>
+          <p class="text-xs text-slate-500">تمام موصولہ آرڈرز، کاریگر تفویض، انوائس بلز اور نئی کاریگر درخواستوں کا انتظام کریں۔</p>
         </div>
 
         <div class="flex items-center gap-2">
@@ -1108,6 +1187,13 @@
                   </td>
                   <td class="p-3 text-center">
                     <div class="flex items-center justify-center gap-1.5">
+                      <button 
+                        @click="openInvoice(order)"
+                        class="p-1.5 bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white rounded-lg transition-colors"
+                        title="Generate Invoice / Bill"
+                      >
+                        <i data-lucide="receipt" class="w-3.5 h-3.5"></i>
+                      </button>
                       <a 
                         :href="'https://wa.me/' + order.phone.replace(/[^0-9]/g, '') + '?text=' + encodeURIComponent('محترم ' + order.customerName + ' صاحب! بن عباس ہوم کیئر کی جانب سے آپ کا آرڈر نمبر ' + order.id + ' موصول ہو چکا ہے۔')"
                         target="_blank"
@@ -1116,13 +1202,6 @@
                       >
                         <i data-lucide="message-circle" class="w-3.5 h-3.5"></i>
                       </a>
-                      <button 
-                        @click="viewOrderDetails(order)"
-                        class="p-1.5 bg-brand-50 text-brand-600 hover:bg-brand-600 hover:text-white rounded-lg transition-colors"
-                        title="View Details"
-                      >
-                        <i data-lucide="eye" class="w-3.5 h-3.5"></i>
-                      </button>
                     </div>
                   </td>
                 </tr>
@@ -1256,7 +1335,7 @@
     </div>
   </footer>
 
-  <!-- ==================== MULTI-STEP BOOKING MODAL ==================== -->
+  <!-- ==================== MULTI-STEP BOOKING MODAL WITH PHOTO & LOCATION ==================== -->
   <div 
     x-show="isBookingModalOpen" 
     x-cloak 
@@ -1290,7 +1369,7 @@
       <!-- Modal Body (Steps) -->
       <div class="p-6 sm:p-8 space-y-6">
         
-        <!-- STEP 1: Choose Service & Details -->
+        <!-- STEP 1: Choose Service, Details & Photo/Voice -->
         <div x-show="bookingStep === 1" class="space-y-4">
           <div>
             <label class="block text-xs font-bold text-slate-700 mb-1">سروس کا شعبہ منتخب کریں *</label>
@@ -1315,6 +1394,46 @@
             ></textarea>
           </div>
 
+          <!-- Photo Attachment & Voice Note -->
+          <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
+            <div class="text-xs font-bold text-slate-800 flex items-center justify-between">
+              <span class="flex items-center gap-1.5">
+                <i data-lucide="camera" class="w-4 h-4 text-brand-600"></i>
+                <span>مسئلے کی تصویر / وائس نوٹ منسلک کریں (اختیاری)</span>
+              </span>
+              <span class="text-[10px] text-slate-400">تیز تر تشخیص کے لیے</span>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-2">
+              <!-- File / Photo Picker -->
+              <label class="cursor-pointer px-3 py-1.5 bg-white border border-slate-300 hover:border-brand-500 rounded-xl text-xs font-semibold text-slate-700 flex items-center gap-1.5 transition-colors">
+                <i data-lucide="image-plus" class="w-3.5 h-3.5 text-brand-600"></i>
+                <span x-text="bookingPhotoName ? 'تصویر تبدیل کریں' : 'تصویر اپلوڈ کریں'"></span>
+                <input type="file" accept="image/*" @change="handlePhotoUpload($event)" class="hidden">
+              </label>
+
+              <!-- Voice Note button -->
+              <button 
+                type="button" 
+                @click="toggleVoiceNote()"
+                :class="hasVoiceNote ? 'bg-emerald-100 text-emerald-800 border-emerald-300' : 'bg-white text-slate-700 border-slate-300'"
+                class="px-3 py-1.5 border rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-colors"
+              >
+                <i data-lucide="mic" class="w-3.5 h-3.5" :class="hasVoiceNote ? 'text-emerald-600 animate-pulse' : 'text-slate-500'"></i>
+                <span x-text="hasVoiceNote ? 'وائس میسج ریکارڈڈ ✓' : 'وائس نوٹ شامل کریں'"></span>
+              </button>
+            </div>
+
+            <template x-if="bookingPhotoPreview">
+              <div class="relative inline-block mt-2">
+                <img :src="bookingPhotoPreview" alt="Issue Preview" class="w-20 h-20 object-cover rounded-xl border border-slate-200 shadow-sm">
+                <button @click="bookingPhotoPreview = ''; bookingPhotoName = '';" class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-0.5">
+                  <i data-lucide="x" class="w-3 h-3"></i>
+                </button>
+              </div>
+            </template>
+          </div>
+
           <!-- Urgency selector -->
           <div class="p-3 rounded-2xl bg-amber-50 border border-amber-200 flex items-center justify-between">
             <div class="flex items-center gap-2">
@@ -1337,7 +1456,7 @@
           </div>
         </div>
 
-        <!-- STEP 2: Date, Time & Address -->
+        <!-- STEP 2: Date, Time & Address with GPS Location -->
         <div x-show="bookingStep === 2" class="space-y-4">
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
@@ -1384,7 +1503,17 @@
           </div>
 
           <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">مکمل پتہ اور گلی / مکان نمبر *</label>
+            <div class="flex items-center justify-between mb-1">
+              <label class="block text-xs font-bold text-slate-700">مکمل پتہ اور گلی / مکان نمبر *</label>
+              <button 
+                type="button" 
+                @click="detectGPSLocation()"
+                class="text-[11px] text-brand-600 hover:text-brand-700 font-bold flex items-center gap-1"
+              >
+                <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
+                <span x-text="detectingLocation ? 'لوکیشن تلاش ہو رہی ہے...' : 'موجودہ لوکیشن حاصل کریں'"></span>
+              </button>
+            </div>
             <input 
               type="text" 
               x-model="bookingForm.address"
@@ -1456,6 +1585,187 @@
 
       </div>
 
+    </div>
+  </div>
+
+  <!-- ==================== DIGITAL INVOICE & 7-DAY WARRANTY RECEIPT MODAL ==================== -->
+  <div 
+    x-show="isInvoiceModalOpen" 
+    x-cloak 
+    class="fixed inset-0 z-50 overflow-y-auto bg-slate-900/75 backdrop-blur-sm flex items-center justify-center p-4"
+    @keydown.escape.window="isInvoiceModalOpen = false"
+  >
+    <div 
+      @click.outside="isInvoiceModalOpen = false"
+      class="bg-white rounded-3xl shadow-2xl border border-slate-200 max-w-lg w-full overflow-hidden"
+    >
+      <div id="printableInvoice" class="p-6 sm:p-8 space-y-6">
+        
+        <!-- Invoice Header with Logo & Brand -->
+        <div class="flex items-center justify-between border-b border-slate-200 pb-4">
+          <div class="flex items-center gap-3">
+            <img src="icon-192.png" alt="Logo" class="w-12 h-12 rounded-2xl shadow-sm border border-teal-500/30 object-contain" />
+            <div>
+              <h3 class="text-lg font-extrabold text-slate-900 leading-tight">بن عباس ہوم کیئر</h3>
+              <p class="text-[11px] text-slate-500">Bin Abbas Home Care • Official Receipt</p>
+            </div>
+          </div>
+          <div class="text-start">
+            <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 bg-emerald-100 text-emerald-800 rounded-md">Verified Bill</span>
+            <div class="text-xs font-mono font-bold text-brand-700 mt-1" x-text="activeInvoice.id"></div>
+          </div>
+        </div>
+
+        <!-- Customer & Order Meta -->
+        <div class="grid grid-cols-2 gap-4 text-xs">
+          <div>
+            <div class="text-slate-400">کسٹمر کا نام:</div>
+            <div class="font-bold text-slate-900" x-text="activeInvoice.customerName"></div>
+            <div class="text-slate-500 font-mono" dir="ltr" x-text="activeInvoice.phone"></div>
+          </div>
+          <div>
+            <div class="text-slate-400">تاریخ و وقت:</div>
+            <div class="font-semibold text-slate-800" x-text="activeInvoice.date"></div>
+            <div class="text-slate-500" x-text="'نامزد کاریگر: ' + (activeInvoice.assignedTech || 'محمد راشد')"></div>
+          </div>
+        </div>
+
+        <!-- Itemized Table -->
+        <div class="border border-slate-200 rounded-2xl overflow-hidden text-xs">
+          <table class="w-full text-start">
+            <thead class="bg-slate-50 border-b border-slate-200 font-bold text-slate-700">
+              <tr>
+                <th class="p-2.5 text-start">تفصیل سروس / آئٹم</th>
+                <th class="p-2.5 text-end">رقم (PKR)</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100">
+              <tr>
+                <td class="p-2.5 font-semibold text-slate-800" x-text="activeInvoice.service"></td>
+                <td class="p-2.5 text-end font-bold text-slate-900" x-text="'روپے 800/-'"></td>
+              </tr>
+              <tr>
+                <td class="p-2.5 text-slate-600">میٹریل / اسپیئر پارٹس لاگت</td>
+                <td class="p-2.5 text-end font-bold text-slate-900" x-text="'روپے 450/-'"></td>
+              </tr>
+              <tr class="bg-slate-50/60">
+                <td class="p-2.5 text-slate-600">انسپیکشن ایڈجسٹمنٹ</td>
+                <td class="p-2.5 text-end text-emerald-600 font-bold">- روپے 300/-</td>
+              </tr>
+              <tr class="bg-teal-50/80 font-black text-brand-900 text-sm">
+                <td class="p-3">کل ادا شدہ رقم (Total Paid):</td>
+                <td class="p-3 text-end text-brand-700 font-black">روپے 950/-</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- 7-Day Warranty Security Stamp -->
+        <div class="p-3.5 rounded-2xl bg-emerald-50 border border-emerald-200 flex items-center justify-between text-xs">
+          <div class="flex items-center gap-2">
+            <i data-lucide="shield-check" class="w-5 h-5 text-emerald-600 flex-shrink-0"></i>
+            <div>
+              <div class="font-bold text-emerald-950">7 دن کی تسلی بخش وارنٹی</div>
+              <div class="text-[11px] text-emerald-800">کسی بھی خرابی کی صورت میں مفت وزٹ کی سہولت۔</div>
+            </div>
+          </div>
+          <span class="font-mono text-[10px] text-emerald-700 bg-white px-2 py-1 rounded-md border border-emerald-200">WAR-7D-OK</span>
+        </div>
+
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="p-4 bg-slate-50 border-t border-slate-200 flex items-center justify-between gap-3">
+        <button 
+          @click="window.print()" 
+          class="flex-1 py-2.5 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-colors"
+        >
+          <i data-lucide="printer" class="w-3.5 h-3.5"></i>
+          <span>پرنٹ / محفوظ کریں</span>
+        </button>
+
+        <a 
+          :href="'https://wa.me/' + (activeInvoice.phone || '').replace(/[^0-9]/g, '') + '?text=' + encodeURIComponent('محترم ' + activeInvoice.customerName + ' صاحب! بن عباس ہوم کیئر کی آفیشل رسید برائے آرڈر نمبر ' + activeInvoice.id + ' موصول کریں۔ آپ کی 7 دن کی وارنٹی فعال ہے۔')"
+          target="_blank"
+          class="flex-1 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-colors"
+        >
+          <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
+          <span>WhatsApp رسید</span>
+        </a>
+
+        <button 
+          @click="isInvoiceModalOpen = false"
+          class="p-2.5 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-xl"
+        >
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== VERIFIED KARIGAR DIGITAL ID CARD MODAL ==================== -->
+  <div 
+    x-show="isKarigarCardModalOpen" 
+    x-cloak 
+    class="fixed inset-0 z-50 overflow-y-auto bg-slate-900/75 backdrop-blur-sm flex items-center justify-center p-4"
+    @keydown.escape.window="isKarigarCardModalOpen = false"
+  >
+    <div 
+      @click.outside="isKarigarCardModalOpen = false"
+      class="bg-white rounded-3xl shadow-2xl border border-slate-200 max-w-sm w-full overflow-hidden text-center"
+    >
+      <div class="bg-gradient-to-r from-emerald-800 to-teal-900 text-white p-6 relative">
+        <button @click="isKarigarCardModalOpen = false" class="absolute top-4 left-4 text-white/80 hover:text-white">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+        <div class="text-[10px] uppercase font-bold tracking-widest text-emerald-300 mb-1">Official Digital ID</div>
+        <h3 class="text-base font-bold">بن عباس ہوم کیئر</h3>
+        <p class="text-xs text-teal-200">تصدیق شدہ فیلڈ کاریگر</p>
+      </div>
+
+      <div class="p-6 space-y-4">
+        
+        <div class="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-tr from-brand-600 to-teal-400 text-white font-bold text-3xl flex items-center justify-center shadow-lg border-4 border-white -mt-14">
+          <span x-text="activeKarigar.name ? activeKarigar.name.charAt(0) : 'ک'"></span>
+        </div>
+
+        <div>
+          <h4 class="text-lg font-bold text-slate-900 flex items-center justify-center gap-1">
+            <span x-text="activeKarigar.name"></span>
+            <i data-lucide="check-circle" class="w-4 h-4 text-emerald-500 fill-emerald-50"></i>
+          </h4>
+          <p class="text-xs text-brand-600 font-semibold" x-text="activeKarigar.specialtyUrdu || activeKarigar.trade"></p>
+        </div>
+
+        <div class="p-3 bg-slate-50 rounded-2xl border border-slate-200 text-xs text-start space-y-1.5">
+          <div class="flex justify-between">
+            <span class="text-slate-400">بیج نمبر:</span>
+            <span class="font-mono font-bold text-slate-800">BAHC-VERIFIED-99</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-slate-400">نادرا و پولیس ریکارڈ:</span>
+            <span class="font-semibold text-emerald-600">مکمل تصدیق شدہ ✓</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-slate-400">تجربہ:</span>
+            <span class="font-bold text-slate-800" x-text="(activeKarigar.experience || '8') + ' سال'"></span>
+          </div>
+        </div>
+
+        <!-- Security Notice -->
+        <div class="p-2.5 bg-amber-50 rounded-xl border border-amber-200 text-[11px] text-amber-900">
+          کسٹمرز کے تحفظ کے لیے ہر کاریگر کی شناخت مکمل ویریفائیڈ ہے۔
+        </div>
+
+        <button 
+          @click="isKarigarCardModalOpen = false; openBookingModal({ preferredTech: activeKarigar.name, service: activeKarigar.specialtyUrdu })"
+          class="w-full py-2.5 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl text-xs shadow-md transition-colors"
+        >
+          اس کاریگر کے ساتھ بک کریں
+        </button>
+
+      </div>
     </div>
   </div>
 
@@ -1533,6 +1843,17 @@
                 :style="'width: ' + (trackedOrder.status === 'pending' ? '33%' : (trackedOrder.status === 'in_progress' ? '66%' : '100%'))"
               ></div>
             </div>
+          </div>
+
+          <!-- Digital Invoice Button -->
+          <div class="pt-3 border-t border-slate-200 flex items-center justify-between">
+            <button 
+              @click="openInvoice(trackedOrder)"
+              class="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-bold transition-colors flex items-center gap-1.5 shadow-sm"
+            >
+              <i data-lucide="receipt" class="w-3.5 h-3.5"></i>
+              <span>ڈیجیٹل بل / رسید دیکھیں</span>
+            </button>
           </div>
         </div>
       </template>
@@ -1616,6 +1937,8 @@
         searchQuery: '',
         isBookingModalOpen: false,
         isTrackerModalOpen: false,
+        isInvoiceModalOpen: false,
+        isKarigarCardModalOpen: false,
         bookingStep: 1,
         businessPhone: '+923001234567',
         businessPhoneDisplay: '0300-1234567',
@@ -1635,6 +1958,14 @@
         showInstallBanner: false,
         showSplashScreen: true,
 
+        detectingLocation: false,
+        bookingPhotoPreview: '',
+        bookingPhotoName: '',
+        hasVoiceNote: false,
+
+        activeInvoice: {},
+        activeKarigar: {},
+
         bookingForm: {
           category: '',
           details: '',
@@ -1644,7 +1975,9 @@
           customerName: '',
           phone: '',
           address: '',
-          assignedTech: ''
+          assignedTech: '',
+          photoAttached: false,
+          voiceAttached: false
         },
 
         karigarForm: {
@@ -1656,7 +1989,48 @@
           area: ''
         },
 
-        // 9 Major Service Categories (including Gas Stove Repair & Renovation)
+        // Seasonal Discount Packages
+        discountPackages: [
+          {
+            id: 'summer-special',
+            title: 'گرمیوں کی آمد پیکج (Summer Special)',
+            desc: '2 اے سی ماسٹر واش سروس + 4 پنکھوں کی سروس و آئلنگ',
+            originalPrice: 'روپے 3,600',
+            dealPrice: 'روپے 2,750',
+            discountBadge: '25% رعایت',
+            icon: 'sun',
+            items: ['انورٹر اے سی ماسٹر کیمیکل واش', 'گیس لیکیج و ایمپیئر چیک', 'سیلنگ فین واش و کپیسیٹر ٹیسٹ', '7 دن مکمل وارنٹی']
+          },
+          {
+            id: 'sanitary-checkup',
+            title: 'مکمل واش روم سینیٹری و پمپ چیک اپ',
+            desc: 'واٹر موٹر، گیزر و 2 باتھ رومز کے نلکوں کی فٹنگ و لیکیج فالٹ',
+            originalPrice: 'روپے 1,800',
+            dealPrice: 'روپے 1,200',
+            discountBadge: '33% رعایت',
+            icon: 'droplets',
+            items: ['پانی موٹر پمپ پریشر ٹیسٹ', 'گیزر برنر سروس و تھرموسٹیٹ', 'تمام نلکوں و مسلم شاورز لیکیج حل', 'ڈرینیج و سیوریج فلو چیک']
+          },
+          {
+            id: 'gas-safety',
+            title: 'گیس چولہا و کچن سیفٹی پیکج',
+            desc: 'مکمل چولہا سروس، پیلی سے نیلی آگ، نوزل صفائی و پائپ چیک',
+            originalPrice: 'روپے 1,200',
+            dealPrice: 'روپے 799',
+            discountBadge: '35% رعایت',
+            icon: 'flame',
+            items: ['چولہے کے برنرز کی ڈیپ کلیننگ', 'آٹومیٹک پیزو اگنیشن لائیٹر فکس', 'ہائی پریشر گیس لیکیج ٹیسٹ', 'ککنگ رینج و اوون گیس ایڈجسٹمنٹ']
+          }
+        ],
+
+        // Customer Star Reviews
+        customerReviews: [
+          { id: 1, customerName: 'طارق مسعود (ماڈل ٹاؤن)', service: 'گیس چولہا و ہوب مرمت', comment: 'چولہے سے کالی آگ آ رہی تھی، استاد فیاض صاحب نے 30 منٹ میں برنر صاف کر کے زبردست نیلی آگ بنا دی۔ بہت معقول ریٹ!', date: 'کل' },
+          { id: 2, customerName: 'احتشام الحق (ڈی ایچ اے)', service: 'الیکٹریشن و پنکھے فٹنگ', comment: 'محمد راشد صاحب وقت کے پابند اور انتہائی ہنرمند ہیں۔ ڈیجیٹل رسید اور 7 دن کی وارنٹی نے دل جیت لیا۔', date: '2 دن پہلے' },
+          { id: 3, customerName: 'رضوانہ بیگم (گلبرگ)', service: 'پلمبنگ و سینیٹری مرمت', comment: 'واش روم نلکا اور پائپ لیک تھا، پلمبر اپنے ساتھ ماسٹر سینیٹری کا نیا سامان لے کر آیا اور فوری کام مکمل کیا۔', date: '4 دن پہلے' }
+        ],
+
+        // 9 Major Service Categories
         categories: [
           {
             id: 'electrician',
@@ -1787,18 +2161,6 @@
           { id: 17, category: 'gas', categoryLabel: 'گیس چولہا و کچن سامان', nameUrdu: 'آٹومیٹک پیزو لائیٹر و چولہا نوزل', priceRange: 'روپے 350 - 600', unit: 'فی سیٹ', brand: 'Universal Gas Stove Spares', description: 'بغیر ماچس کے چولہا جلانے والا اسمارٹ اگنیشن اسپیئر پارٹ' }
         ],
 
-        // Transparent Rate Card Table
-        rateTableData: [
-          { id: 1, categoryUrdu: 'گیس چولہا مرمت', categoryEn: 'Gas Stove Repair', jobUrdu: 'چولہا شعلہ صفائی و نوزل سروس', jobEn: 'Stove Burner Flame & Nozzle Service', price: 'روپے 400', timeUrdu: '30 منٹ', timeEn: '30 Mins' },
-          { id: 2, categoryUrdu: 'گیس چولہا مرمت', categoryEn: 'Gas Stove Repair', jobUrdu: 'آٹومیٹک گلاس ہوب / چولہا ریپیر', jobEn: 'Auto Ignition Hob Repair', price: 'روپے 600', timeUrdu: '45 منٹ', timeEn: '45 Mins' },
-          { id: 3, categoryUrdu: 'بجلی کا کام', categoryEn: 'Electrician', jobUrdu: 'سیلنگ فین انسٹالیشن / اتار چڑھاؤ', jobEn: 'Ceiling Fan Installation', price: 'روپے 400', timeUrdu: '30 منٹ', timeEn: '30 Mins' },
-          { id: 4, categoryUrdu: 'بجلی کا کام', categoryEn: 'Electrician', jobUrdu: 'شارٹ سرکٹ فالٹ ٹریسنگ و مرمت', jobEn: 'Short Circuit Fault Repair', price: 'روپے 600 - 1000', timeUrdu: '45 منٹ', timeEn: '45 Mins' },
-          { id: 5, categoryUrdu: 'پلمبنگ', categoryEn: 'Plumbing', jobUrdu: 'پانی کی موٹر پمپ انسٹالیشن / مرمت', jobEn: 'Water Pump Repair & Fitting', price: 'روپے 800', timeUrdu: '1 گھنٹہ', timeEn: '1 Hour' },
-          { id: 6, categoryUrdu: 'پلمبنگ', categoryEn: 'Plumbing', jobUrdu: 'مکسر نلکا یا شاور سیٹ کی فٹنگ', jobEn: 'Mixer Tap & Shower Fitting', price: 'روپے 500', timeUrdu: '30 منٹ', timeEn: '30 Mins' },
-          { id: 7, categoryUrdu: 'اے سی ریپیرنگ', categoryEn: 'AC Repair', jobUrdu: 'انورٹر اے سی ماسٹر کیمیکل سروس', jobEn: 'Inverter AC Chemical Service', price: 'روپے 1,500', timeUrdu: '1 گھنٹہ', timeEn: '1 Hour' },
-          { id: 8, categoryUrdu: 'کارپینٹر', categoryEn: 'Carpenter', jobUrdu: 'دروازے کا مرکزی لاک / ہینڈل فٹنگ', jobEn: 'Door Main Lock & Handle Fix', price: 'روپے 600', timeUrdu: '40 منٹ', timeEn: '40 Mins' }
-        ],
-
         // Verified Technicians
         technicians: [
           { id: 1, name: 'محمد راشد', specialtyUrdu: 'سینئر الیکٹریشن و سولر ایکسپرٹ', specialtyEn: 'Senior Electrician & Solar Expert', experience: '8', rating: '4.9', completedJobs: '840+' },
@@ -1807,7 +2169,7 @@
           { id: 4, name: 'وقاص علی', specialtyUrdu: 'ایچ وی اے سی و اے سی ٹیکنیشن', specialtyEn: 'HVAC & AC Technician', experience: '7', rating: '4.85', completedJobs: '690+' }
         ],
 
-        // Real-time Orders
+        // Orders
         orders: [
           {
             id: 'BAHC-1001',
@@ -1816,7 +2178,7 @@
             service: 'بجلی کا کام (الیکٹریشن)',
             details: 'مین بریکر بار بار ٹرپ ہو رہا ہے اور 2 پنکھے بند ہیں۔',
             address: 'مکان نمبر 42، بلاک بی، ماڈل ٹاؤن',
-            date: '2026-08-22',
+            date: '2026-09-01',
             timeSlot: 'دوپہر 12:00 تا 03:00',
             assignedTech: 'محمد راشد',
             status: 'in_progress'
@@ -1828,7 +2190,7 @@
             service: 'گیس چولہا، ہوب و گیزر مرمت',
             details: 'چولہے سے کالی آگ نکل رہی ہے اور برنر کا شعلہ کم ہے۔',
             address: 'فلیٹ 402، گلشن اپارٹمنٹس',
-            date: '2026-08-22',
+            date: '2026-09-01',
             timeSlot: 'شام 03:00 تا 06:00',
             assignedTech: 'استاد فیاض احمد',
             status: 'pending'
@@ -1878,16 +2240,6 @@
             services_title: 'گھریلو مرمت اور دیکھ بھال کی مکمل سروسز',
             services_subtitle: 'شفاف قیمتیں، ماہر کاریگر اور کام کی مکمل تسلی',
             btn_book_service: 'یہ سروس بک کریں',
-            rates_title: 'شفاف اور معیاری ریٹ کارڈ (Rate List)',
-            rates_subtitle: 'کوئی پوشیدہ یا اضافی چارجز نہیں، منصفانہ اور طے شدہ قیمتیں',
-            table_service: 'شعبہ',
-            table_job_type: 'کام کی تفصیل',
-            table_standard_rate: 'معیاری ریٹ',
-            table_est_time: 'تخمینہ وقت',
-            table_action: 'بکنگ',
-            btn_book_this: 'بک کریں',
-            rate_note: 'نوٹ: میٹریل اور اسپیئر پارٹس کے اخراجات کسٹمر کے ذمہ ہوں گے یا اصل مارکیٹ بل پر فراہم کیے جائیں گے۔',
-            inspection_policy: 'انسپیکشن فیس کام ہونے کی صورت میں فائنل بل سے منہا ہو جائے گی۔',
             technicians_title: 'ہمارے تصدیق شدہ اور تجربہ کار کاریگر',
             technicians_subtitle: 'ہر کاریگر کی نادرا شناختی تصدیق شدہ ہے تاکہ آپ کا گھر مکمل محفوظ رہے',
             footer_desc: 'بن عباس ہوم کیئر آپ کے گھر کے تمام فنی کاموں (الیکٹریشن، پلمبر، گیس چولہا، پینٹر، کارپینٹر، سینیٹری) اور میٹریل ریٹس کا سب سے قابل اعتماد پلیٹ فارم ہے۔',
@@ -1934,16 +2286,6 @@
             services_title: 'Complete Household Maintenance & Repair Services',
             services_subtitle: 'Transparent prices, background-checked handymen & guaranteed satisfaction',
             btn_book_service: 'Book This Service',
-            rates_title: 'Transparent Standard Rate Card',
-            rates_subtitle: 'No hidden fees or unexpected charges, fair fixed rates',
-            table_service: 'Service',
-            table_job_type: 'Job Description',
-            table_standard_rate: 'Standard Rate',
-            table_est_time: 'Est. Time',
-            table_action: 'Action',
-            btn_book_this: 'Book',
-            rate_note: 'Note: Material and replacement spare parts costs are separate or billed at actuals.',
-            inspection_policy: 'Inspection fee is adjusted into the final bill upon job confirmation.',
             technicians_title: 'Our Background-Checked Technicians',
             technicians_subtitle: 'Every technician is CNIC & police verified for complete safety of your home',
             footer_desc: 'Bin Abbas Home Care is your trusted one-stop solution for electrician, plumbing, gas stove, carpentry, painting and hardware rates.',
@@ -1958,7 +2300,6 @@
         },
 
         initApp() {
-          // Hide splash screen smoothly after 1.8 seconds
           setTimeout(() => {
             this.showSplashScreen = false;
           }, 1800);
@@ -1977,7 +2318,6 @@
             } catch (e) {}
           }
 
-          // Register Service Worker for PWA
           if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
               navigator.serviceWorker.register('/sw.js').catch((err) => {
@@ -1986,7 +2326,6 @@
             });
           }
 
-          // Capture PWA install prompt
           window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             this.deferredPrompt = e;
@@ -1994,7 +2333,6 @@
             this.showInstallBanner = true;
           });
 
-          // Show install banner on mobile after 2.5 seconds if not installed
           const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
           if (!isStandalone) {
             setTimeout(() => {
@@ -2054,6 +2392,46 @@
           return paint + electric + sanitary + gas;
         },
 
+        handlePhotoUpload(event) {
+          const file = event.target.files[0];
+          if (file) {
+            this.bookingPhotoName = file.name;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+              this.bookingPhotoPreview = e.target.result;
+              this.bookingForm.photoAttached = true;
+            };
+            reader.readAsDataURL(file);
+          }
+        },
+
+        toggleVoiceNote() {
+          this.hasVoiceNote = !this.hasVoiceNote;
+          this.bookingForm.voiceAttached = this.hasVoiceNote;
+          if (this.hasVoiceNote) {
+            alert('وائس میسج نوٹ کامیابی سے منسلک ہو گیا ہے۔');
+          }
+        },
+
+        detectGPSLocation() {
+          if (!navigator.geolocation) {
+            alert('آپ کے براؤزر میں لوکیشن سروس دستیاب نہیں ہے۔');
+            return;
+          }
+          this.detectingLocation = true;
+          navigator.geolocation.getCurrentPosition(
+            (pos) => {
+              this.detectingLocation = false;
+              this.bookingForm.address = '📍 GPS لوکیشن: ' + pos.coords.latitude.toFixed(4) + ', ' + pos.coords.longitude.toFixed(4) + ' (قریبی علاقہ)';
+            },
+            (err) => {
+              this.detectingLocation = false;
+              alert('براہِ کرم براؤزر میں لوکیشن کی اجازت دیں۔');
+            },
+            { timeout: 8000 }
+          );
+        },
+
         selectServiceForBooking(category) {
           this.bookingForm.category = category.titleUrdu;
           this.bookingForm.details = 'مجھے ' + category.titleUrdu + ' کے لیے کاریگر چاہیے';
@@ -2073,6 +2451,22 @@
           });
         },
 
+        openInvoice(order) {
+          this.activeInvoice = order;
+          this.isInvoiceModalOpen = true;
+          this.$nextTick(() => {
+            if (window.lucide) lucide.createIcons();
+          });
+        },
+
+        openKarigarCard(tech) {
+          this.activeKarigar = tech;
+          this.isKarigarCardModalOpen = true;
+          this.$nextTick(() => {
+            if (window.lucide) lucide.createIcons();
+          });
+        },
+
         submitBooking() {
           const newId = 'BAHC-' + Math.floor(1000 + Math.random() * 9000);
           const newOrder = {
@@ -2080,7 +2474,7 @@
             customerName: this.bookingForm.customerName,
             phone: this.bookingForm.phone,
             service: this.bookingForm.category,
-            details: this.bookingForm.details + (this.bookingForm.isUrgent ? ' (ہنگامی فوری سروس)' : ''),
+            details: this.bookingForm.details + (this.bookingForm.isUrgent ? ' (ہنگامی فوری سروس)' : '') + (this.bookingPhotoName ? ' [تصویر منسلک]' : '') + (this.hasVoiceNote ? ' [وائس نوٹ منسلک]' : ''),
             address: this.bookingForm.address,
             date: this.bookingForm.date,
             timeSlot: this.bookingForm.timeSlot,
@@ -2111,8 +2505,13 @@
             customerName: '',
             phone: '',
             address: '',
-            assignedTech: ''
+            assignedTech: '',
+            photoAttached: false,
+            voiceAttached: false
           };
+          this.bookingPhotoPreview = '';
+          this.bookingPhotoName = '';
+          this.hasVoiceNote = false;
         },
 
         submitKarigarRegistration() {
@@ -2166,12 +2565,6 @@
 
         getWhatsAppLink(text) {
           return 'https://wa.me/' + this.businessPhone.replace(/[^0-9]/g, '') + '?text=' + encodeURIComponent(text);
-        },
-
-        viewOrderDetails(order) {
-          this.trackingIdInput = order.id;
-          this.searchOrder();
-          this.isTrackerModalOpen = true;
         },
 
         scrollToServices() {
