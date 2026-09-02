@@ -256,7 +256,7 @@
           <span>شکایت و انصاف سیل</span>
         </button>
         <span class="text-teal-500/70 hidden sm:inline">|</span>
-        <button @click="promptAdminLogin()" class="text-amber-300 hover:text-amber-200 font-bold flex items-center gap-1 bg-black/30 px-2 py-0.5 rounded border border-amber-400/40" title="Admin Login (PIN: 5225)">
+        <button @click="promptAdminLogin()" class="text-amber-300 hover:text-amber-200 font-bold flex items-center gap-1 bg-black/30 px-2 py-0.5 rounded border border-amber-400/40" title="ایڈمن لاگ ان">
           <i data-lucide="lock" class="w-3 h-3 text-amber-400"></i>
           <span>🔐 ایڈمن لاگ ان</span>
         </button>
@@ -325,7 +325,7 @@
           </button>
 
           <!-- Discrete Admin Login Button -->
-          <button @click="promptAdminLogin()" class="flex items-center gap-1 text-xs px-2.5 py-1 rounded-lg border border-amber-300 bg-amber-50 text-amber-900 font-bold hover:bg-amber-100 shadow-xs" title="ایڈمن لاگ ان (PIN: 5225)">
+          <button @click="promptAdminLogin()" class="flex items-center gap-1 text-xs px-2.5 py-1 rounded-lg border border-amber-300 bg-amber-50 text-amber-900 font-bold hover:bg-amber-100 shadow-xs" title="ایڈمن لاگ ان">
             <i data-lucide="key" class="w-3.5 h-3.5 text-amber-600"></i>
             <span x-text="isAdminLoggedIn ? 'ایڈمن کنٹرول ✓' : 'ایڈمن لاگ ان'"></span>
           </button>
@@ -334,13 +334,23 @@
         <!-- Right Action Buttons -->
         <div class="flex items-center gap-1.5 sm:gap-2.5 flex-shrink-0">
           
+          <!-- PWA Mobile / Desktop Install Button -->
+          <button 
+            @click="installPWA()"
+            class="inline-flex items-center gap-1.5 px-3 py-1.5 sm:py-2 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-slate-950 font-black text-xs shadow-sm transition-all flex-shrink-0"
+            title="Install App on Phone"
+          >
+            <i data-lucide="download" class="w-3.5 h-3.5"></i>
+            <span>ایپ انسٹال کریں</span>
+          </button>
+
           <!-- Helpline Direct Call -->
           <a 
             :href="'tel:' + businessPhone" 
-            class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-400 hover:bg-amber-500 text-slate-950 font-black text-xs shadow-sm transition-all"
+            class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-amber-300 font-black text-xs shadow-sm transition-all border border-amber-400/30"
             title="Helpline: 0300-4800071"
           >
-            <i data-lucide="phone" class="w-3.5 h-3.5"></i>
+            <i data-lucide="phone" class="w-3.5 h-3.5 text-amber-400"></i>
             <span dir="ltr">0300-4800071</span>
           </a>
 
@@ -427,16 +437,24 @@
           </button>
 
           <button 
+            @click="installPWA(); isMobileMenuOpen = false" 
+            class="col-span-2 flex items-center justify-center gap-2 p-2.5 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 font-black text-center shadow-sm"
+          >
+            <i data-lucide="download" class="w-4 h-4"></i>
+            <span>📱 موبائل میں ایپ انسٹال کریں (Install App)</span>
+          </button>
+
+          <button 
             @click="promptAdminLogin(); isMobileMenuOpen = false" 
             class="col-span-2 flex items-center justify-center gap-2 p-2.5 rounded-xl bg-slate-900 text-amber-300 font-black text-center border border-amber-400/40"
           >
             <i data-lucide="key" class="w-4 h-4 text-amber-400"></i>
-            <span x-text="isAdminLoggedIn ? 'ایڈمن کنٹرول پینل میں داخل ہوں ✓' : '🔐 ایڈمن پینل لاگ ان (PIN: 5225)'"></span>
+            <span x-text="isAdminLoggedIn ? 'ایڈمن کنٹرول پینل میں داخل ہوں ✓' : '🔐 ایڈمن پینل لاگ ان'"></span>
           </button>
 
           <a 
             :href="'tel:' + businessPhone" 
-            class="col-span-2 flex items-center justify-center gap-2 p-2.5 rounded-xl bg-amber-400 text-slate-950 font-black text-center"
+            class="col-span-2 flex items-center justify-center gap-2 p-2.5 rounded-xl bg-emerald-600 text-white font-black text-center"
           >
             <i data-lucide="phone-call" class="w-4 h-4"></i>
             <span>ہیلپ لائن: 0300-4800071</span>
@@ -690,7 +708,7 @@
               </div>
               <h3 class="text-lg font-bold text-slate-900">کاریگر رجسٹریشن اور ایڈمن ویریفکیشن کا نظام فعال ہے</h3>
               <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                تمام فرضی کاریگروں کو ہٹا دیا گیا ہے۔ جب کوئی کاریگر <strong>کاریگر پورٹل</strong> سے درخواست جمع کرواتا ہے، تو ایڈمن (PIN: 5225) اس کے شناختی کارڈ کی تصدیق کر کے منظوری دیتا ہے جس کے بعد اس کا مصدقہ کارڈ یہاں لائیو ظاہر ہوتا ہے۔
+                تمام فرضی کاریگروں کو ہٹا دیا گیا ہے۔ جب کوئی کاریگر <strong>کاریگر پورٹل</strong> سے درخواست جمع کرواتا ہے، تو ایڈمن انتظامیہ اس کے شناختی کارڈ کی تصدیق کر کے منظوری دیتی ہے جس کے بعد اس کا مصدقہ کارڈ یہاں لائیو ظاہر ہوتا ہے۔
               </p>
               <div class="flex flex-wrap justify-center gap-3 pt-2">
                 <button @click="currentView = 'join-karigar'" class="px-5 py-2.5 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-bold shadow-xs">
@@ -946,7 +964,7 @@
               <span>کاریگر پورٹل (رائل پام سٹی و گوجرانوالہ)</span>
             </div>
             <h2 class="text-2xl sm:text-3xl font-black text-slate-900">کاریگر رجسٹریشن برائے ایڈمن منظوری</h2>
-            <p class="text-xs sm:text-sm text-slate-600">آپ کی درخواست ایڈمن پینل (PIN: 5225) میں جائے گی، جہاں تصدیق کے بعد آپ کا کارڈ لائیو ہوگا</p>
+            <p class="text-xs sm:text-sm text-slate-600">آپ کی درخواست ایڈمن پینل میں جائے گی، جہاں تصدیق کے بعد آپ کا کارڈ لائیو ہوگا</p>
           </div>
           <button @click="currentView = 'home'" class="px-4 py-2 bg-white border border-slate-200 text-slate-700 rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-xs">
             <i data-lucide="arrow-right" class="w-4 h-4"></i>
@@ -1022,14 +1040,14 @@
       </div>
     </div>
 
-    <!-- ==================== VIEW 5: SECURE ADMIN CONTROL PANEL (PASSWORD: 5225) ==================== -->
+    <!-- ==================== VIEW 5: SECURE ADMIN CONTROL PANEL ==================== -->
     <div x-show="currentView === 'admin'" x-cloak class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 min-h-screen">
       
       <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6 p-4 bg-slate-900 text-white rounded-2xl shadow-lg border border-slate-800">
         <div>
           <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-bold border border-emerald-500/30 mb-1">
             <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span>ایڈمن تصدیق شدہ سیشن (PIN: 5225)</span>
+            <span>ایڈمن تصدیق شدہ سیشن</span>
           </div>
           <h2 class="text-xl sm:text-2xl font-black text-white">ایڈمن کنٹرول پینل (رائل پام سٹی و گوجرانوالہ)</h2>
           <p class="text-xs text-slate-400">بکنگ آرڈرز، کاریگروں کی منظوری و ویریفکیشن اور شکایات و تنازعات کا حل</p>
@@ -1358,14 +1376,21 @@
             مرکزی اسٹیشن و دفتر: رائل پام سٹی / جی ٹی روڈ، گوجرانوالہ۔
           </p>
           <button @click="promptAdminLogin()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-amber-300 rounded-xl text-xs font-bold border border-amber-400/40">
-            🔐 ایڈمن پینل لاگ ان (PIN: 5225)
+            🔐 ایڈمن پینل لاگ ان
           </button>
         </div>
 
       </div>
 
-      <div class="pt-6 border-t border-slate-800 text-center text-xs text-slate-500">
-        © 2026 بن عباس ہوم کیئر (Bin Abbas Home Care) • رائل پام سٹی گوجرانوالہ۔ تمام حقوق محفوظ ہیں۔
+      <div class="pt-6 border-t border-slate-800 text-center text-xs text-slate-400 space-y-2">
+        <div>© 2026 بن عباس ہوم کیئر (Bin Abbas Home Care) • رائل پام سٹی گوجرانوالہ۔ جملہ حقوق محفوظ ہیں۔</div>
+        <div class="text-amber-400 font-bold flex flex-wrap items-center justify-center gap-1 sm:gap-2">
+          <span>ایپ ڈویلپر:</span>
+          <span class="text-white">عابد عباس علی گورائیہ</span>
+          <span class="text-slate-500">•</span>
+          <span>موبائل:</span>
+          <a href="tel:03004800071" class="text-white hover:text-amber-300 font-mono tracking-wider underline" dir="ltr">03004800071</a>
+        </div>
       </div>
     </div>
   </footer>
@@ -1463,7 +1488,7 @@
     </div>
   </div>
 
-  <!-- ==================== MODAL 3: ADMIN PASSWORD LOGIN MODAL (PIN: 5225) ==================== -->
+  <!-- ==================== MODAL 3: ADMIN PASSWORD LOGIN MODAL ==================== -->
   <div 
     x-show="isAdminLoginModalOpen" 
     x-cloak 
@@ -1480,7 +1505,7 @@
 
       <div>
         <h3 class="text-xl font-black text-slate-900">ایڈمن لاگ ان</h3>
-        <p class="text-xs text-slate-500 mt-1">کنٹرول پینل تک رسائی کے لیے 4 ہندسوں کا خفیہ پاس ورڈ درج کریں</p>
+        <p class="text-xs text-slate-500 mt-1">کنٹرول پینل تک رسائی کے لیے خفیہ پاس ورڈ درج کریں</p>
       </div>
 
       <div>
@@ -1492,7 +1517,6 @@
           placeholder="پاس ورڈ درج کریں"
           class="w-full text-center tracking-widest text-2xl font-mono py-3 rounded-xl border border-slate-300 outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-200"
         />
-        <div class="text-[11px] text-slate-400 mt-1">ایڈمن پاس ورڈ: <strong>5225</strong></div>
       </div>
 
       <div class="flex gap-2">
@@ -1841,6 +1865,47 @@
     </a>
   </div>
 
+  <!-- CHROME NATIVE INSTALL POPUP BANNER -->
+  <div 
+    x-show="showInstallBanner" 
+    x-transition:enter="transition ease-out duration-300 transform"
+    x-transition:enter-start="translate-y-full opacity-0"
+    x-transition:enter-end="translate-y-0 opacity-100"
+    x-transition:leave="transition ease-in duration-200 transform"
+    x-transition:leave-start="translate-y-0 opacity-100"
+    x-transition:leave-end="translate-y-full opacity-0"
+    x-cloak
+    class="fixed bottom-16 md:bottom-6 left-3 right-3 md:left-auto md:right-6 md:max-w-md z-40 bg-slate-900/95 text-white rounded-3xl p-4 shadow-2xl border border-teal-500/40 backdrop-blur-md"
+  >
+    <div class="flex items-center gap-3.5">
+      <img src="icon-192.png" alt="Bin Abbas Home Care" class="w-12 h-12 rounded-2xl shadow-md border border-white/20 flex-shrink-0 object-contain" />
+      <div class="flex-1 min-w-0">
+        <div class="flex items-center justify-between">
+          <h4 class="font-bold text-sm text-white truncate">بن عباس ہوم کیئر</h4>
+          <button @click="showInstallBanner = false" class="text-slate-400 hover:text-white p-1">
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+        </div>
+        <p class="text-[11px] text-slate-300 line-clamp-1">گوگل کروم موبائل ایپ ڈاؤن لوڈ کریں</p>
+        <div class="flex items-center gap-2 mt-2">
+          <button 
+            @click="installPWA()"
+            class="flex-1 py-1.5 px-3 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-slate-950 rounded-xl font-black text-xs shadow-md flex items-center justify-center gap-1.5 transition-all"
+          >
+            <i data-lucide="download" class="w-3.5 h-3.5"></i>
+            <span>انسٹال کریں (Install)</span>
+          </button>
+          <button 
+            @click="showInstallBanner = false"
+            class="py-1.5 px-3 bg-white/10 hover:bg-white/20 text-slate-300 rounded-xl text-xs font-semibold"
+          >
+            بعد میں
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- ==================== JAVASCRIPT APPLICATION LOGIC ==================== -->
   <script>
     function homeCareApp() {
@@ -1858,7 +1923,13 @@
         isCategoryDetailModalOpen: false,
         isMobileMenuOpen: false,
         
-        // Admin PIN Password Security (PIN: 5225)
+        // PWA Install State
+        deferredPrompt: null,
+        canInstallApp: false,
+        showInstallBanner: false,
+        showSplashScreen: true,
+
+        // Admin PIN Password Security
         isAdminLoggedIn: false,
         isAdminLoginModalOpen: false,
         adminPinInput: '',
@@ -2136,12 +2207,34 @@
             this.showSplashScreen = false;
           }, 1400);
 
+          if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+              navigator.serviceWorker.register('/sw.js').catch((err) => {
+                console.log('SW registration note:', err);
+              });
+            });
+          }
+
+          window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            this.deferredPrompt = e;
+            this.canInstallApp = true;
+            this.showInstallBanner = true;
+          });
+
+          const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+          if (!isStandalone) {
+            setTimeout(() => {
+              this.showInstallBanner = true;
+            }, 2500);
+          }
+
           this.$nextTick(() => {
             if (window.lucide) lucide.createIcons();
           });
         },
 
-        // Admin Login Security (Password: 5225)
+        // Admin Login Security
         promptAdminLogin() {
           if (this.isAdminLoggedIn) {
             this.currentView = 'admin';
@@ -2164,7 +2257,7 @@
               if (window.lucide) lucide.createIcons();
             });
           } else {
-            alert('غلط پاس ورڈ! براہ کرم درست پاس ورڈ (5225) درج کریں۔');
+            alert('غلط پاس ورڈ! براہِ کرم درست پاس ورڈ درج کریں۔');
           }
         },
 
@@ -2311,7 +2404,7 @@
           };
 
           this.pendingKarigars.push(newPending);
-          alert('آپ کی درخواست ایڈمن پینل کو کامیابی سے ارسال ہو گئی ہے!\n\nایڈمن (PIN: 5225) آپ کے شناختی کارڈ اور پولیس ریکارڈ کی تصدیق کے بعد کال کرے گا اور منظوری دے گا جس کے بعد آپ کا نام لائیو کاریگر لسٹ میں شامل ہو جائے گا۔');
+          alert('آپ کی درخواست ایڈمن پینل کو کامیابی سے ارسال ہو گئی ہے!\n\nایڈمن انتظامیہ آپ کے شناختی کارڈ اور پولیس ریکارڈ کی تصدیق کے بعد کال کرے گی اور منظوری دے گی جس کے بعد آپ کا نام لائیو کاریگر لسٹ میں شامل ہو جائے گا۔');
 
           this.karigarForm.name = '';
           this.karigarForm.cnic = '';
@@ -2394,6 +2487,27 @@
             const el = document.getElementById('services');
             if (el) el.scrollIntoView({ behavior: 'smooth' });
           });
+        },
+
+        // PWA Install Handler
+        installPWA() {
+          if (this.deferredPrompt) {
+            this.deferredPrompt.prompt();
+            this.deferredPrompt.userChoice.then((choiceResult) => {
+              if (choiceResult.outcome === 'accepted') {
+                this.canInstallApp = false;
+                this.showInstallBanner = false;
+              }
+              this.deferredPrompt = null;
+            });
+          } else {
+            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+            if (isIOS) {
+              alert('ایپل / آئی فون پر ایپ ڈاؤن لوڈ کرنے کے لیے: نیچے دیے گئے "Share" بٹن پر ٹیپ کریں اور "Add to Home Screen" منتخب کریں۔');
+            } else {
+              alert('اینڈرائیڈ / کروم پر ایپ ڈاؤن لوڈ کرنے کے لیے: براؤزر کے اوپر دائیں کونے میں تین نقطوں (⋮) پر کلک کریں اور "Install app" یا "Add to Home screen" منتخب کریں۔');
+            }
+          }
         }
       };
     }
