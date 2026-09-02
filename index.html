@@ -24,7 +24,9 @@
   <!-- Google Fonts: Noto Sans Arabic, Noto Nastaliq Urdu, Gulzar & Outfit -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Gulzar&family=Noto+Nastaliq+Urdu:wght@400;600;700;800&family=Noto+Sans+Arabic:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gulzar&family=Noto+Nastaliq+Urdu:wght@400;500;600;700;800&family=Noto+Sans+Arabic:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800&display=swap">
+  <!-- Jameel Noori Nastaleeq Webfont CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/urdutext/fonts@master/jameel-noori-nastaleeq.css">
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -65,9 +67,31 @@
   </script>
 
   <style>
+    /* Jameel Noori Nastaleeq Font Definition */
+    @font-face {
+      font-family: 'Jameel Noori Nastaleeq';
+      src: local('Jameel Noori Nastaleeq'), local('Jameel Noori Nastaleeq Kasheeda'),
+           url('https://cdn.jsdelivr.net/gh/urdutext/fonts@master/Jameel%20Noori%20Nastaleeq.ttf') format('truetype');
+      font-display: swap;
+    }
+
+    /* 100% Mobile Viewport Protection - Eliminates Horizontal Scroll */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+    html, body {
+      max-width: 100vw;
+      overflow-x: hidden !important;
+      position: relative;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
     /* Custom Scrollbar */
     ::-webkit-scrollbar {
-      width: 8px;
+      width: 6px;
+      height: 6px;
     }
     ::-webkit-scrollbar-track {
       background: #f1f5f9;
@@ -80,31 +104,59 @@
       background: #0f766e;
     }
 
-    /* Flawless, Crystal-Clear Urdu Typography Without Any Overlapping */
+    /* Authentic Noori Nastaliq Typography with Proper Spacing & Alignment */
     [dir="rtl"], html[dir="rtl"] body {
-      font-family: 'Noto Sans Arabic', 'Segoe UI', Tahoma, Arial, sans-serif;
+      font-family: 'Jameel Noori Nastaleeq', 'Noto Nastaliq Urdu', 'Gulzar', 'Urdu Typesetting', 'Nafees Nastaleeq', 'Noto Sans Arabic', serif;
       letter-spacing: 0px !important;
-      word-spacing: 0px !important;
+      word-spacing: 0.05em !important;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
     }
 
     [dir="rtl"] h1, [dir="rtl"] h2, [dir="rtl"] h3, [dir="rtl"] h4, [dir="rtl"] h5, [dir="rtl"] h6 {
-      font-family: 'Noto Sans Arabic', sans-serif !important;
-      line-height: 1.6 !important;
-      padding-top: 0.2rem;
-      padding-bottom: 0.2rem;
+      font-family: 'Jameel Noori Nastaleeq', 'Noto Nastaliq Urdu', 'Gulzar', serif !important;
+      line-height: 2.2 !important;
+      padding-top: 0.25rem;
+      padding-bottom: 0.25rem;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
     }
 
-    [dir="rtl"] p, [dir="rtl"] span, [dir="rtl"] div, [dir="rtl"] button, [dir="rtl"] a, [dir="rtl"] li, [dir="rtl"] td, [dir="rtl"] th, [dir="rtl"] input, [dir="rtl"] select, [dir="rtl"] textarea {
-      line-height: 1.75;
+    [dir="rtl"] p, [dir="rtl"] span, [dir="rtl"] div, [dir="rtl"] li, [dir="rtl"] td, [dir="rtl"] th {
+      line-height: 2.1;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
+
+    /* Prevent text from spilling out of buttons and input elements */
+    [dir="rtl"] button, [dir="rtl"] a, [dir="rtl"] input, [dir="rtl"] select, [dir="rtl"] textarea {
+      line-height: 1.85 !important;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      text-wrap: balance;
+    }
+
+    button, .btn {
+      max-width: 100%;
+      box-sizing: border-box;
     }
 
     .urdu-heading {
-      font-family: 'Noto Nastaliq Urdu', 'Gulzar', 'Noto Sans Arabic', serif;
-      line-height: 2.2 !important;
+      font-family: 'Jameel Noori Nastaleeq', 'Noto Nastaliq Urdu', 'Gulzar', serif;
+      line-height: 2.3 !important;
     }
 
     [dir="ltr"] .latin-font {
       font-family: 'Outfit', sans-serif;
+    }
+
+    /* Utility to hide scrollbars while keeping scroll functionality */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
     }
 
     /* Badge animation */
@@ -2013,23 +2065,32 @@
     </div>
   </div>
 
-  <!-- FLOATING QUICK WHATSAPP & PHONE (MOBILE) -->
-  <div class="fixed bottom-4 left-4 right-4 md:hidden z-30 flex items-center gap-2">
+  <!-- MOBILE STICKY BOTTOM QUICK ACTIONS (Optimized & Non-Overflowing) -->
+  <div class="fixed bottom-3 left-3 right-3 md:hidden z-30 flex items-center gap-2 bg-white/95 backdrop-blur-md p-1.5 rounded-2xl border border-slate-200/90 shadow-2xl">
     <a 
       :href="getWhatsAppLink('اسلام علیکم! مجھے فوری کاریگر کی ضرورت ہے۔')" 
       target="_blank"
-      class="flex-1 py-3 bg-emerald-600 text-white rounded-2xl font-bold text-xs shadow-xl flex items-center justify-center gap-2"
+      class="flex-1 py-2.5 px-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold text-xs shadow-md flex items-center justify-center gap-1.5 truncate text-center"
     >
-      <i data-lucide="message-circle" class="w-4 h-4"></i>
-      <span>WhatsApp آرڈر</span>
+      <i data-lucide="message-circle" class="w-4 h-4 flex-shrink-0"></i>
+      <span class="truncate">WhatsApp آرڈر</span>
     </a>
+    
     <button 
       @click="openBookingModal()"
-      class="flex-1 py-3 bg-brand-600 text-white rounded-2xl font-bold text-xs shadow-xl flex items-center justify-center gap-2"
+      class="flex-1 py-2.5 px-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl font-bold text-xs shadow-md flex items-center justify-center gap-1.5 truncate text-center"
     >
-      <i data-lucide="calendar-plus" class="w-4 h-4"></i>
-      <span>کاریگر بک کریں</span>
+      <i data-lucide="calendar-plus" class="w-4 h-4 flex-shrink-0"></i>
+      <span class="truncate">کاریگر بک کریں</span>
     </button>
+
+    <a 
+      :href="'tel:' + businessPhone" 
+      class="p-2.5 bg-amber-500 hover:bg-amber-600 text-slate-950 rounded-xl font-bold text-xs shadow-md flex items-center justify-center flex-shrink-0"
+      title="Direct Call"
+    >
+      <i data-lucide="phone-call" class="w-4 h-4"></i>
+    </a>
   </div>
 
   <!-- CHROME NATIVE INSTALL POPUP BANNER -->
@@ -2086,6 +2147,7 @@
         isInvoiceModalOpen: false,
         isKarigarCardModalOpen: false,
         isSocietiesModalOpen: false,
+        isMobileMenuOpen: false,
         bookingStep: 1,
         businessPhone: '+923001234567',
         businessPhoneDisplay: '0300-1234567',
