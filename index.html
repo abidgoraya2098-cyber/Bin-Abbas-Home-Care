@@ -213,37 +213,44 @@
     x-transition:leave-start="translate-y-0 opacity-100"
     x-transition:leave-end="-translate-y-4 opacity-0"
     x-cloak
-    class="relative z-30 bg-gradient-to-r from-amber-500 via-brand-700 to-slate-950 text-white py-2.5 px-3 sm:px-6 shadow-xl border-b-2 border-amber-300"
+    class="relative z-30 bg-gradient-to-r from-amber-600 via-slate-900 to-teal-950 text-white py-3 px-3 sm:px-6 shadow-2xl border-b-2 border-amber-400"
   >
-    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
+    <div class="max-w-7xl mx-auto flex flex-col lg:flex-row items-start lg:items-center justify-between gap-3">
       
-      <div class="flex items-center gap-3 min-w-0">
-        <div class="w-10 h-10 rounded-2xl bg-white text-slate-950 flex items-center justify-center font-black shadow-md flex-shrink-0 animate-bounce">
-          <i data-lucide="bell-ring" class="w-5 h-5 text-amber-600"></i>
+      <!-- Notification Info (NO TRUNCATION, FULL TEXT VISIBLE) -->
+      <div class="flex items-start gap-3 min-w-0 flex-1">
+        <div class="w-10 h-10 rounded-2xl bg-amber-400 text-slate-950 flex items-center justify-center font-black shadow-md flex-shrink-0 mt-0.5">
+          <i data-lucide="bell-ring" class="w-5 h-5 text-slate-950"></i>
         </div>
-        <div class="min-w-0">
-          <div class="flex items-center gap-2">
-            <span class="px-2 py-0.5 rounded-md bg-amber-400 text-slate-950 text-[10px] font-black animate-pulse">
-              🔔 نیا کام دستیاب ہے! (First-to-Respond Alert)
+        <div class="space-y-1 min-w-0 flex-1">
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="px-2.5 py-0.5 rounded-md bg-amber-400 text-slate-950 text-xs font-black">
+              🔔 نیا کام دستیاب ہے! (Job Alert)
             </span>
             <span class="text-xs font-black text-amber-200 font-mono" x-text="activeBroadcastJob?.id"></span>
           </div>
-          <p class="text-xs sm:text-sm font-black text-white truncate">
-            <span class="text-amber-300" x-text="activeBroadcastJob?.service"></span> • 
-            <span x-text="activeBroadcastJob?.address"></span> • 
-            طے شدہ بجٹ: <span class="text-amber-300 font-mono" x-text="'روپے ' + activeBroadcastJob?.agreedPrice"></span>
+
+          <p class="text-xs sm:text-sm font-black text-white leading-relaxed">
+            سروس: <span class="text-amber-300" x-text="activeBroadcastJob?.service"></span> • 
+            علاقہ: <span class="text-teal-200" x-text="activeBroadcastJob?.address"></span>
           </p>
-          <div class="text-[11px] text-teal-100 font-bold">
-            ⚡ <strong>پالیسی:</strong> جو کاریگر سب سے پہلے آمادگی ظاہر کر کے کسٹمر سے رابطہ کرے گا، اسے ترجیح دی جائے گی!
+
+          <p class="text-xs text-amber-200 font-bold leading-relaxed">
+            💰 <strong>مزدوری / رقم کا فیصلہ:</strong> کسٹمر اور کاریگر فون کال پر باہمی رضامندی سے طے کر سکتے ہیں (بغیر طے کیے بلانے پر کاریگر صرف معقول و مناسب مزدوری لینے کا پابند ہوگا)۔
+          </p>
+
+          <div class="text-[11px] text-teal-100 font-medium leading-normal">
+            ⚡ <strong>پالیسی:</strong> سب سے پہلے رابطہ کرنے والے کو ترجیح ملے گی۔ ذیادہ مزدوری مانگنے کی صورت میں ایڈمن کو شکایت ہوگی اور کاریگر کا بٹن تنبیہہ کے بعد <strong>"ریڈ زون"</strong> میں چلا جائے گا (بحالی کے لیے 50 کسٹمر اسٹارز درکار ہوں گے)۔
           </div>
         </div>
       </div>
 
-      <div class="flex items-center gap-2 flex-shrink-0 w-full md:w-auto justify-end">
+      <!-- Actions: Accept, Call, and PROMINENT CLOSE BUTTON -->
+      <div class="flex flex-wrap items-center gap-2 flex-shrink-0 w-full lg:w-auto justify-end pt-1 lg:pt-0">
         <template x-if="activeBroadcastJob?.status === 'waiting'">
           <button 
             @click="acceptBroadcastJob('محمد راشد (کاریگر - رائل پام ایکسپریس)')"
-            class="flex-1 md:flex-none px-4 py-2 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-slate-950 rounded-xl text-xs font-black shadow-lg flex items-center justify-center gap-1.5 transition-all min-h-[40px]"
+            class="flex-1 sm:flex-none px-4 py-2.5 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-slate-950 rounded-xl text-xs font-black shadow-lg flex items-center justify-center gap-1.5 transition-all min-h-[42px]"
           >
             <i data-lucide="handshake" class="w-4 h-4"></i>
             <span>میں تیار ہوں (Accept Job)</span>
@@ -251,7 +258,7 @@
         </template>
 
         <template x-if="activeBroadcastJob?.status === 'accepted'">
-          <div class="px-3 py-1.5 bg-emerald-500 text-white rounded-xl text-xs font-black flex items-center gap-1.5 shadow-md min-h-[40px]">
+          <div class="px-3.5 py-2 bg-emerald-500 text-white rounded-xl text-xs font-black flex items-center gap-1.5 shadow-md min-h-[42px]">
             <i data-lucide="check-circle" class="w-4 h-4"></i>
             <span>کاریگر تفویض ہو چکا ہے (#1 First Responder)</span>
           </div>
@@ -259,18 +266,21 @@
 
         <a 
           :href="'tel:' + (activeBroadcastJob?.customerPhone || businessPhone)"
-          class="px-3.5 py-2 bg-slate-900 hover:bg-black text-amber-300 border border-amber-400/40 rounded-xl text-xs font-black flex items-center gap-1 shadow-sm min-h-[40px]"
+          class="px-3.5 py-2.5 bg-slate-900 hover:bg-black text-amber-300 border border-amber-400/50 rounded-xl text-xs font-black flex items-center gap-1.5 shadow-sm min-h-[42px]"
           title="کسٹمر کو کال کریں"
         >
-          <i data-lucide="phone-call" class="w-3.5 h-3.5"></i>
+          <i data-lucide="phone-call" class="w-4 h-4"></i>
           <span>کسٹمر کو کال</span>
         </a>
 
+        <!-- PROMINENT CLOSE / DISMISS BUTTON -->
         <button 
           @click="showJobBroadcastBanner = false" 
-          class="p-2 text-white/70 hover:text-white rounded-lg hover:bg-white/10"
+          class="px-3.5 py-2 bg-rose-800/90 hover:bg-rose-900 text-white rounded-xl text-xs font-black flex items-center justify-center gap-1.5 border border-rose-400/50 shadow-md transition-all min-h-[42px]"
+          title="اس نوٹیفکیشن کو بند کریں"
         >
-          <i data-lucide="x" class="w-4 h-4"></i>
+          <i data-lucide="x-circle" class="w-4 h-4 text-white"></i>
+          <span>نوٹیفکیشن بند کریں [X]</span>
         </button>
       </div>
 
@@ -878,28 +888,47 @@
             <p class="text-slate-700 text-xs sm:text-sm font-bold">صرف وہ کاریگر لائیو ظاہر ہوتے ہیں جن کی نادرا شناختی کارڈ، فون او ٹی پی اور اصلی تصویر کی ایڈمن نے تصدیق کی ہو</p>
           </div>
 
-          <!-- Dynamic Active Technicians Grid -->
+          <!-- Dynamic Active Technicians Grid with Red Zone & Normal Zone System -->
           <div class="grid grid-cols-1 md:grid-cols-3 gap-5" x-show="technicians.length > 0">
             <template x-for="tech in technicians" :key="tech.id">
-              <div class="bg-white rounded-3xl p-5 border-2 border-slate-300 shadow-md hover:shadow-2xl transition-all flex flex-col justify-between">
+              <div 
+                class="rounded-3xl p-5 border-2 shadow-md hover:shadow-2xl transition-all flex flex-col justify-between"
+                :class="tech.zone === 'red' ? 'bg-rose-50/40 border-rose-500 ring-2 ring-rose-200' : 'bg-white border-slate-300'"
+              >
                 <div>
                   
-                  <!-- Top Badge: Package & Verified Status -->
+                  <!-- Top Badge: Package & Verified Status / Red Zone Alert -->
                   <div class="flex items-center justify-between gap-2 mb-3">
-                    <span 
-                      class="px-2 py-0.5 rounded-md text-[10px] font-black"
-                      :class="tech.packageTier === 'platinum' ? 'bg-purple-100 text-purple-950 border border-purple-400' : (tech.packageTier === 'gold' ? 'bg-amber-100 text-amber-950 border border-amber-400' : 'bg-slate-100 text-slate-800 border border-slate-300')"
-                      x-text="tech.packageLabel || '🥇 پلاٹینم ترجیحی کاریگر'"
-                    ></span>
-                    <span class="inline-flex items-center gap-1 text-emerald-900 text-[10px] font-black bg-emerald-100 px-2 py-0.5 rounded border border-emerald-300">
-                      <i data-lucide="shield-check" class="w-3 h-3 text-emerald-700"></i>
-                      <span>ایڈمن منظور شدہ ✓</span>
-                    </span>
+                    <template x-if="tech.zone !== 'red'">
+                      <span 
+                        class="px-2 py-0.5 rounded-md text-[10px] font-black"
+                        :class="tech.packageTier === 'platinum' ? 'bg-purple-100 text-purple-950 border border-purple-400' : (tech.packageTier === 'gold' ? 'bg-amber-100 text-amber-950 border border-amber-400' : 'bg-slate-100 text-slate-800 border border-slate-300')"
+                        x-text="tech.packageLabel || '🥇 پلاٹینم ترجیحی کاریگر'"
+                      ></span>
+                    </template>
+                    <template x-if="tech.zone === 'red'">
+                      <span class="px-2.5 py-1 rounded-lg text-[10px] font-black bg-rose-600 text-white flex items-center gap-1 shadow-xs animate-pulse">
+                        <i data-lucide="alert-triangle" class="w-3 h-3"></i>
+                        <span>🚨 ریڈ زون (وارننگ: <span x-text="tech.warningsCount || 1"></span>)</span>
+                      </span>
+                    </template>
+
+                    <template x-if="tech.zone !== 'red'">
+                      <span class="inline-flex items-center gap-1 text-emerald-900 text-[10px] font-black bg-emerald-100 px-2 py-0.5 rounded border border-emerald-300">
+                        <i data-lucide="shield-check" class="w-3 h-3 text-emerald-700"></i>
+                        <span>ایڈمن منظور شدہ ✓</span>
+                      </span>
+                    </template>
+                    <template x-if="tech.zone === 'red'">
+                      <span class="inline-flex items-center gap-1 text-rose-950 text-[10px] font-black bg-rose-200 px-2 py-0.5 rounded border border-rose-300">
+                        <span>زیادہ مزدوری شکایت</span>
+                      </span>
+                    </template>
                   </div>
 
                   <div class="flex items-center gap-3.5 mb-3">
                     <!-- Real Profile Photo / Avatar -->
-                    <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-brand-700 to-teal-500 text-white font-black text-xl flex items-center justify-center shadow-md flex-shrink-0 overflow-hidden border-2 border-teal-600/30">
+                    <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-brand-700 to-teal-500 text-white font-black text-xl flex items-center justify-center shadow-md flex-shrink-0 overflow-hidden border-2" :class="tech.zone === 'red' ? 'border-rose-500' : 'border-teal-600/30'">
                       <template x-if="tech.photo">
                         <img :src="tech.photo" :alt="tech.name" class="w-full h-full object-cover" />
                       </template>
@@ -924,6 +953,22 @@
                     </div>
                   </div>
 
+                  <!-- Red Zone 50 Stars Recovery Tracker Box -->
+                  <template x-if="tech.zone === 'red'">
+                    <div class="p-3 bg-rose-100/90 border border-rose-300 rounded-xl text-xs text-rose-950 font-bold space-y-1.5 mb-3">
+                      <div class="flex items-center justify-between text-[11px] font-black">
+                        <span class="text-rose-900">⚠️ ریڈ زون سے بحالی کا عمل:</span>
+                        <span class="font-mono text-rose-950" x-text="(tech.recoveryStarsEarned || 0) + ' / 50 اسٹارز'"></span>
+                      </div>
+                      <div class="w-full bg-rose-200 h-2.5 rounded-full overflow-hidden border border-rose-300">
+                        <div class="bg-emerald-600 h-full rounded-full transition-all duration-500" :style="'width: ' + Math.min(100, ((tech.recoveryStarsEarned || 0) / 50 * 100)) + '%'"></div>
+                      </div>
+                      <p class="text-[10px] text-rose-800 leading-tight">
+                        واپس نارمل زون میں آنے کے لیے 50 کسٹمر اسٹارز درکار ہیں۔ (1 کسٹمر = زیادہ سے زیادہ 5 اسٹارز)
+                      </p>
+                    </div>
+                  </template>
+
                   <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs text-slate-700 space-y-1 mb-4 font-bold">
                     <div class="flex justify-between">
                       <span class="text-slate-500">سروس علاقہ:</span>
@@ -934,8 +979,8 @@
                       <span class="text-emerald-800 font-mono" dir="ltr" x-text="tech.cnic || '34101-*******-1'"></span>
                     </div>
                     <div class="flex justify-between">
-                      <span class="text-slate-500">قیمت:</span>
-                      <span class="text-brand-800">باہمی گفتگو سے طے شدہ ریٹ</span>
+                      <span class="text-slate-500">مزدوری / ریٹ:</span>
+                      <span class="text-brand-800">فون کال پر باہمی طے یا معقول مزدوری</span>
                     </div>
                   </div>
                 </div>
@@ -951,10 +996,11 @@
 
                   <button 
                     @click="connectWithKarigar(tech)"
-                    class="w-full py-3 px-3 bg-slate-950 hover:bg-brand-700 text-white rounded-xl text-xs font-black transition-colors flex items-center justify-center gap-2 shadow-md min-h-[46px]"
+                    class="w-full py-3 px-3 text-white rounded-xl text-xs font-black transition-colors flex items-center justify-center gap-2 shadow-md min-h-[46px]"
+                    :class="tech.zone === 'red' ? 'bg-rose-700 hover:bg-rose-800' : 'bg-slate-950 hover:bg-brand-700'"
                   >
                     <i data-lucide="handshake" class="w-4 h-4 text-amber-300 flex-shrink-0"></i>
-                    <span>یہ کاریگر منتخب کریں و ریٹ طے کریں</span>
+                    <span x-text="tech.zone === 'red' ? 'ریڈ زون کاریگر (باہمی طے شدہ ریٹ پر رابطہ)' : 'یہ کاریگر منتخب کریں و رابطہ کریں'"></span>
                   </button>
                 </div>
               </div>
@@ -1659,9 +1705,25 @@
                   <option value="silver">🥉 سلور (بنیادی)</option>
                 </select>
 
-                <button @click="suspendKarigar(t.id)" class="px-2 py-1 bg-rose-100 hover:bg-rose-200 text-rose-900 rounded-lg text-xs font-black border border-rose-300 flex-shrink-0">
-                  معطل
-                </button>
+              <!-- Red Zone Status & Admin Actions -->
+              <div class="p-2.5 rounded-xl border mt-2" :class="t.zone === 'red' ? 'bg-rose-100 border-rose-300 text-rose-950' : 'bg-emerald-50 border-emerald-200 text-emerald-950'">
+                <div class="flex items-center justify-between text-xs font-black mb-1">
+                  <span x-text="t.zone === 'red' ? '🚨 ریڈ زون (وارننگ: ' + (t.warningsCount || 1) + ')' : '🟢 نارمل زون (فعال)'"></span>
+                  <template x-if="t.zone === 'red'">
+                    <span class="text-[10px] bg-rose-200 px-1.5 py-0.5 rounded font-mono" x-text="'بحالی: ' + (t.recoveryStarsEarned || 0) + ' / 50'"></span>
+                  </template>
+                </div>
+                <div class="flex flex-wrap items-center gap-1.5 pt-1">
+                  <button @click="issueWarningToKarigar(t)" class="px-2 py-1 bg-amber-400 hover:bg-amber-500 text-slate-950 rounded-lg text-[10px] font-black shadow-xs">
+                    ⚠️ تنبیہہ جاری کریں
+                  </button>
+                  <button x-show="t.zone !== 'red'" @click="moveToRedZone(t)" class="px-2 py-1 bg-rose-600 hover:bg-rose-700 text-white rounded-lg text-[10px] font-black shadow-xs">
+                    🚨 ریڈ زون
+                  </button>
+                  <button x-show="t.zone === 'red'" @click="restoreToNormalZone(t)" class="px-2 py-1 bg-emerald-700 hover:bg-emerald-800 text-white rounded-lg text-[10px] font-black shadow-xs">
+                    🟢 نارمل زون بحال کریں
+                  </button>
+                </div>
               </div>
             </div>
           </template>
@@ -2159,8 +2221,17 @@
       </div>
 
       <div class="p-5 sm:p-6 overflow-y-auto space-y-4 flex-1 bg-slate-50">
-        <div class="p-3.5 rounded-xl bg-rose-50 border-2 border-rose-200 text-rose-950 text-xs leading-relaxed font-bold">
-          <strong>ہمارا وعدہ:</strong> بن عباس ہوم کیئر مظلوم کسٹمر یا کاریگر کو تنہا نہیں چھوڑے گا۔ شکایت موصول ہوتے ہی 30 منٹ کے اندر انکوائری اور قانونی ازالہ شروع کیا جاتا ہے۔ کمپنی ہیلپ لائن: <span class="font-mono font-black" dir="ltr">0300-4800071</span>
+        <div class="p-3.5 rounded-xl bg-rose-50 border-2 border-rose-300 text-rose-950 text-xs leading-relaxed space-y-1.5 font-bold">
+          <div class="flex items-center gap-1.5 text-rose-900 font-black">
+            <i data-lucide="scale" class="w-4 h-4 text-rose-700"></i>
+            <span>⚖️ کمپنی پالیسی برائے معقول مزدوری و ریڈ زون (Red Zone Accountability):</span>
+          </div>
+          <ul class="space-y-1 list-disc list-inside text-[11px] text-slate-800 font-semibold">
+            <li>کسٹمر اور کاریگر فون کال پر باہمی رضامندی سے رقم طے کر سکتے ہیں۔</li>
+            <li>اگر پیشگی رقم طے کیے بغیر بلایا جائے تو کاریگر صرف جائز اور معقول مزدوری لینے کا پابند ہے۔</li>
+            <li>زیادہ مزدوری مانگنے کی صورت میں فوری شکایت کریں۔ ایک دو تنبیہات کے بعد کاریگر کو <strong>"ریڈ زون"</strong> میں شامل کر دیا جائے گا۔</li>
+            <li>ریڈ زون سے واپس نارمل زون میں آنے کے لیے کم از کم <strong>50 کسٹمر اسٹارز</strong> کی ضرورت ہوگی (1 کسٹمر = زیادہ سے زیادہ 5 سٹارز)۔</li>
+          </ul>
         </div>
 
         <div>
@@ -2199,6 +2270,7 @@
         <div>
           <label class="block text-xs font-black text-slate-800 mb-1">شکایت کی نوعیت:</label>
           <select x-model="disputeForm.issueType" class="w-full px-3 py-2 rounded-xl border-2 border-slate-300 text-xs sm:text-sm outline-none focus:border-rose-600 bg-white font-bold">
+            <option value="زیادہ مزدوری مانگنا یا من مانی رقم طلب کرنا">زیادہ مزدوری مانگنا یا من مانی رقم طلب کرنا (ریڈ زون پالیسی)</option>
             <option value="چوری یا سامان کا غائب ہونا">چوری یا سامان کا غائب ہونا</option>
             <option value="سامان یا گھر کی املاک کا نقصان">سامان یا گھر کی املاک کا نقصان</option>
             <option value="کاریگر کی بدتمیزی یا غیر معیاری کام">کاریگر کی بدتمیزی یا غیر معیاری کام</option>
@@ -2905,7 +2977,7 @@
           { id: 3, customerName: 'رضوانہ بیگم (ماڈل ٹاؤن)', service: 'پلمبنگ و سینیٹری مرمت', rating: 5, comment: 'واش روم کا نلکا اور پائپ ٹھیک کروایا۔ کاریگر نے کام تسلی سے کیا اور رسید بھی دی۔', date: '4 دن پہلے' }
         ],
 
-        // Admin-Approved Technicians with Real Verified Photos & CNIC
+        // Admin-Approved Technicians with Real Verified Photos, CNIC & Red Zone Accountability
         technicians: [
           { 
             id: 1, 
@@ -2920,6 +2992,9 @@
             photo: 'icon-192.png',
             packageTier: 'platinum',
             packageLabel: '🥇 پلاٹینم ترجیحی کاریگر',
+            zone: 'normal',
+            warningsCount: 0,
+            recoveryStarsEarned: 0,
             approved: true 
           },
           { 
@@ -2935,6 +3010,9 @@
             photo: '',
             packageTier: 'gold',
             packageLabel: '🥈 گولڈ ایکسپریس کاریگر',
+            zone: 'normal',
+            warningsCount: 0,
+            recoveryStarsEarned: 0,
             approved: true 
           },
           { 
@@ -2950,6 +3028,27 @@
             photo: '',
             packageTier: 'platinum',
             packageLabel: '🥇 پلاٹینم ترجیحی کاریگر',
+            zone: 'normal',
+            warningsCount: 0,
+            recoveryStarsEarned: 0,
+            approved: true 
+          },
+          { 
+            id: 4, 
+            name: 'بلال اختر', 
+            cnic: '34101-5544332-9',
+            specialtyUrdu: 'الیکٹریشن و موٹر وائنڈنگ', 
+            area: 'ماڈل ٹاؤن و گوجرانوالہ', 
+            experience: '6', 
+            rating: '4.2', 
+            completedJobs: '180+', 
+            phone: '03041239876',
+            photo: '',
+            packageTier: 'silver',
+            packageLabel: '🥉 سلور کاریگر',
+            zone: 'red',
+            warningsCount: 2,
+            recoveryStarsEarned: 15,
             approved: true 
           }
         ],
@@ -3459,11 +3558,29 @@
           }
 
           const customerName = this.customerUser.isLoggedIn ? this.customerUser.name : 'محترم کسٹمر';
+          const starsGiven = Math.min(5, Math.max(1, parseInt(this.feedbackForm.rating) || 5)); // زیادہ سے زیادہ 5 سٹار فی کسٹمر
+          
+          let redZoneNote = '';
+          // Check if rated technician is in Red Zone and credit recovery stars
+          const techName = this.feedbackForm.techName || '';
+          const matchedTech = this.technicians.find(t => techName && (techName.includes(t.name) || t.name.includes(techName)));
+          if (matchedTech && matchedTech.zone === 'red') {
+            matchedTech.recoveryStarsEarned = (matchedTech.recoveryStarsEarned || 0) + starsGiven;
+            if (matchedTech.recoveryStarsEarned >= 50) {
+              matchedTech.zone = 'normal';
+              matchedTech.warningsCount = 0;
+              matchedTech.recoveryStarsEarned = 0;
+              redZoneNote = '\n\n🎉 کاریگر نے مطلوبہ 50 کسٹمر ستارے مکمل کر لیے ہیں اور خودکار طور پر نارمل زون میں بحال ہو گیا ہے!';
+            } else {
+              redZoneNote = '\n\n⭐ آپ کے دیے گئے ' + starsGiven + ' اسٹارز کاریگر کی بحالی میں شامل کر دیے گئے ہیں (' + matchedTech.recoveryStarsEarned + ' / 50 ستارے مکمل)۔';
+            }
+          }
+
           const newReview = {
             id: Date.now(),
             customerName: customerName + ' (رائل پام سٹی)',
             service: this.feedbackForm.techName ? ('کاریگر: ' + this.feedbackForm.techName) : 'ہوم سروس',
-            rating: this.feedbackForm.rating,
+            rating: starsGiven,
             comment: this.feedbackForm.comments || 'کام مکمل تسلی کے مطابق ہوا اور طے شدہ رقم کاریگر کو ادا کر دی گئی۔',
             date: 'آج'
           };
@@ -3471,7 +3588,33 @@
           this.customerReviews.unshift(newReview);
           this.isFeedbackModalOpen = false;
 
-          alert('شکریہ ' + customerName + ' صاحب!\n\nآپ کے فیڈ بیک، کام کی تسلی اور رقم ادائیگی کی تصدیق کامیابی سے درج کر لی گئی ہے۔ آپ کا اعتماد ہی ہماری کامیابی ہے۔');
+          alert('شکریہ ' + customerName + ' صاحب!\n\nآپ کا فیڈ بیک، کام کی تسلی اور رقم ادائیگی کامیابی سے درج کر لی گئی ہے۔' + redZoneNote);
+        },
+
+        // ==================== RED ZONE ACCOUNTABILITY & PENALTY CONTROLS ====================
+        issueWarningToKarigar(tech) {
+          tech.warningsCount = (tech.warningsCount || 0) + 1;
+          if (tech.warningsCount >= 2) {
+            tech.zone = 'red';
+            tech.recoveryStarsEarned = 0;
+            alert('کاریگر "' + tech.name + '" کو 2 تنبیہات جاری ہو چکی ہیں!\n\nکاریگر کا بٹن باقاعدہ "ریڈ زون" میں شامل کر دیا گیا ہے۔ اب نارمل زون میں واپسی کے لیے کم از کم 50 کسٹمر اسٹارز درکار ہوں گے (زیادہ سے زیادہ 5 سٹارز فی کسٹمر)۔');
+          } else {
+            alert('کاریگر "' + tech.name + '" کو تنبیہہ نمبر 1 جاری کر دی گئی ہے۔ اگلی بار شکایت پر کاریگر کا بٹن ریڈ زون میں شامل ہو جائے گا۔');
+          }
+        },
+
+        moveToRedZone(tech) {
+          tech.zone = 'red';
+          tech.warningsCount = Math.max(2, (tech.warningsCount || 0) + 1);
+          tech.recoveryStarsEarned = 0;
+          alert('کاریگر "' + tech.name + '" کا بٹن ریڈ زون میں منتقل کر دیا گیا ہے۔\n\nنارمل زون میں واپسی کی شرط: کم از کم 50 کسٹمر اسٹارز حاصل کرنا لازمی ہے۔');
+        },
+
+        restoreToNormalZone(tech) {
+          tech.zone = 'normal';
+          tech.warningsCount = 0;
+          tech.recoveryStarsEarned = 0;
+          alert('کاریگر "' + tech.name + '" کو نارمل زون میں کامیابی سے بحال کر دیا گیا ہے۔');
         },
 
         updateKarigarTier(tech) {
