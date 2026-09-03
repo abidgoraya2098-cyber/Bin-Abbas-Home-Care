@@ -404,14 +404,6 @@
             <span>ایپ انسٹال</span>
           </button>
 
-          <!-- Book Now Quick CTA -->
-          <button 
-            @click="requestBookingDirect()"
-            class="inline-flex items-center justify-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl bg-gradient-to-r from-brand-700 to-teal-700 hover:from-brand-800 hover:to-teal-800 text-white font-black text-xs sm:text-sm shadow-md transition-all min-h-[42px] whitespace-nowrap"
-          >
-            <i data-lucide="calendar-plus" class="w-4 h-4"></i>
-            <span>ابھی بک کریں</span>
-          </button>
 
           <!-- Mobile Hamburger Menu Button -->
           <button 
@@ -2631,20 +2623,21 @@
       <!-- Direct WhatsApp Action -->
       <button 
         @click="initDirectContact('اسلام علیکم! مجھے رائل پام سٹی / گوجرانوالہ میں فوری کاریگر کی ضرورت ہے۔')"
-        class="flex-1 py-2.5 px-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-black text-xs shadow-md flex items-center justify-center gap-1 text-center min-h-[44px]"
+        class="flex-1 py-2.5 px-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-black text-xs shadow-md flex items-center justify-center gap-1.5 text-center min-h-[44px]"
       >
         <i data-lucide="message-circle" class="w-4 h-4 flex-shrink-0"></i>
         <span>WhatsApp</span>
       </button>
-      
-      <!-- Direct Booking Action -->
-      <button 
-        @click="requestBookingDirect()"
-        class="flex-1 py-2.5 px-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl font-black text-xs shadow-md flex items-center justify-center gap-1 text-center min-h-[44px]"
+
+      <!-- Direct Call Button -->
+      <a 
+        :href="'tel:' + businessPhone" 
+        class="flex-1 py-2.5 px-3 bg-amber-400 hover:bg-amber-500 text-slate-950 rounded-xl font-black text-xs shadow-md flex items-center justify-center gap-1.5 text-center min-h-[44px]"
+        title="کمپنی ہیلپ لائن: 0300-4800071"
       >
-        <i data-lucide="calendar-plus" class="w-4 h-4 flex-shrink-0"></i>
-        <span>ابھی بک کریں</span>
-      </button>
+        <i data-lucide="phone-call" class="w-4 h-4"></i>
+        <span>فوری کال</span>
+      </a>
 
       <!-- Mobile Share Button -->
       <button 
@@ -2654,15 +2647,6 @@
       >
         <i data-lucide="share-2" class="w-4 h-4 text-amber-400"></i>
       </button>
-
-      <!-- Direct Call Button -->
-      <a 
-        :href="'tel:' + businessPhone" 
-        class="p-2.5 px-3 bg-amber-400 hover:bg-amber-500 text-slate-950 rounded-xl font-black text-xs shadow-md flex items-center justify-center flex-shrink-0 min-h-[44px] min-w-[44px]"
-        title="کمپنی ہیلپ لائن: 0300-4800071"
-      >
-        <i data-lucide="phone-call" class="w-4 h-4"></i>
-      </a>
     </div>
 
     <!-- Mobile B.A.H.Care Brand Sub-Strip -->
