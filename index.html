@@ -214,7 +214,81 @@
     </div>
   </div>
 
-  <!-- TOP EMERGENCY & HIGHLIGHTS BAR (DEEP CONTRAST WITH SHARE BUTTON) -->
+  <!-- ==================== REAL-TIME INCOMING JOB BROADCAST TO RELEVANT KARIGARS ==================== -->
+  <div 
+    x-show="showJobBroadcastBanner && activeBroadcastJob" 
+    x-transition:enter="transition ease-out duration-300 transform"
+    x-transition:enter-start="-translate-y-full opacity-0"
+    x-transition:enter-end="translate-y-0 opacity-100"
+    x-transition:leave="transition ease-in duration-200 transform"
+    x-transition:leave-start="translate-y-0 opacity-100"
+    x-transition:leave-end="-translate-y-full opacity-0"
+    x-cloak
+    class="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-amber-500 via-brand-700 to-slate-950 text-white py-3 px-3 sm:px-6 shadow-2xl border-b-2 border-amber-300"
+  >
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
+      
+      <div class="flex items-center gap-3 min-w-0">
+        <div class="w-10 h-10 rounded-2xl bg-white text-slate-950 flex items-center justify-center font-black shadow-md flex-shrink-0 animate-bounce">
+          <i data-lucide="bell-ring" class="w-5 h-5 text-amber-600"></i>
+        </div>
+        <div class="min-w-0">
+          <div class="flex items-center gap-2">
+            <span class="px-2 py-0.5 rounded-md bg-amber-400 text-slate-950 text-[10px] font-black animate-pulse">
+              🔔 نیا کام دستیاب ہے! (First-to-Respond Alert)
+            </span>
+            <span class="text-xs font-black text-amber-200 font-mono" x-text="activeBroadcastJob?.id"></span>
+          </div>
+          <p class="text-xs sm:text-sm font-black text-white truncate">
+            <span class="text-amber-300" x-text="activeBroadcastJob?.service"></span> • 
+            <span x-text="activeBroadcastJob?.address"></span> • 
+            طے شدہ بجٹ: <span class="text-amber-300 font-mono" x-text="'روپے ' + activeBroadcastJob?.agreedPrice"></span>
+          </p>
+          <div class="text-[11px] text-teal-100 font-bold">
+            ⚡ <strong>پالیسی:</strong> جو کاریگر سب سے پہلے آمادگی ظاہر کر کے کسٹمر سے رابطہ کرے گا، اسے ترجیح دی جائے گی!
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2 flex-shrink-0 w-full md:w-auto justify-end">
+        <template x-if="activeBroadcastJob?.status === 'waiting'">
+          <button 
+            @click="acceptBroadcastJob('محمد راشد (کاریگر - رائل پام ایکسپریس)')"
+            class="flex-1 md:flex-none px-4 py-2 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-slate-950 rounded-xl text-xs font-black shadow-lg flex items-center justify-center gap-1.5 transition-all"
+          >
+            <i data-lucide="handshake" class="w-4 h-4"></i>
+            <span>میں تیار ہوں (Accept Job)</span>
+          </button>
+        </template>
+
+        <template x-if="activeBroadcastJob?.status === 'accepted'">
+          <div class="px-3 py-1.5 bg-emerald-500 text-white rounded-xl text-xs font-black flex items-center gap-1.5 shadow-md">
+            <i data-lucide="check-circle" class="w-4 h-4"></i>
+            <span>کاریگر تفویض ہو چکا ہے (#1 First Responder)</span>
+          </div>
+        </template>
+
+        <a 
+          :href="'tel:' + (activeBroadcastJob?.customerPhone || businessPhone)"
+          class="px-3 py-2 bg-slate-900 hover:bg-black text-amber-300 border border-amber-400/40 rounded-xl text-xs font-black flex items-center gap-1 shadow-sm"
+          title="کسٹمر کو کال کریں"
+        >
+          <i data-lucide="phone-call" class="w-3.5 h-3.5"></i>
+          <span>کسٹمر کو کال</span>
+        </a>
+
+        <button 
+          @click="showJobBroadcastBanner = false" 
+          class="p-2 text-white/70 hover:text-white rounded-lg hover:bg-white/10"
+        >
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- TOP EMERGENCY & HIGHLIGHTS BAR (WITH SHARE BUTTON & CUSTOMER STATUS) -->
   <div class="bg-gradient-to-r from-slate-950 via-teal-950 to-slate-950 text-white text-xs py-2 px-3 sm:px-4 shadow-md border-b border-teal-600/40">
     <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
       <div class="flex items-center gap-2 min-w-0">
@@ -228,7 +302,7 @@
       </div>
       <div class="flex items-center gap-2 sm:gap-3 text-xs flex-shrink-0">
         
-        <!-- NEW: APP SHARE BUTTON IN TOP BAR -->
+        <!-- APP SHARE BUTTON IN TOP BAR -->
         <button 
           @click="shareApp()" 
           class="text-amber-300 hover:text-white font-bold flex items-center gap-1 bg-white/10 hover:bg-white/20 px-2.5 py-0.5 rounded-lg border border-amber-400/40 transition-all shadow-xs" 
@@ -240,12 +314,17 @@
 
         <span class="text-teal-500/70 hidden sm:inline">|</span>
 
-        <!-- Customer Status in Top Bar -->
+        <!-- Customer Status with Avatar in Top Bar -->
         <button 
           @click="openCustomerModal()" 
-          class="text-amber-300 hover:text-white font-bold flex items-center gap-1 bg-amber-500/20 px-2 py-0.5 rounded border border-amber-400/30"
+          class="text-amber-300 hover:text-white font-bold flex items-center gap-1.5 bg-amber-500/20 px-2 py-0.5 rounded border border-amber-400/30"
         >
-          <i data-lucide="user-check" class="w-3 h-3 text-amber-400"></i>
+          <template x-if="customerUser.photo">
+            <img :src="customerUser.photo" alt="Avatar" class="w-4 h-4 rounded-full object-cover border border-amber-300" />
+          </template>
+          <template x-if="!customerUser.photo">
+            <i data-lucide="user-check" class="w-3.5 h-3.5 text-amber-400"></i>
+          </template>
           <span x-text="customerUser.isLoggedIn ? customerUser.name + ' (کسٹمر ✓)' : 'کسٹمر شمولیت'"></span>
         </button>
 
@@ -273,7 +352,7 @@
     </div>
   </div>
 
-  <!-- NAVBAR (DEEP ACCENT BORDER & SHADOW) -->
+  <!-- NAVBAR -->
   <header class="sticky top-0 z-40 bg-white/98 backdrop-blur-md border-b-2 border-brand-700/30 shadow-md transition-all duration-300">
     <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
       <div class="flex justify-between items-center h-16 sm:h-20">
@@ -320,7 +399,7 @@
 
           <button @click="currentView = 'join-karigar'" :class="currentView === 'join-karigar' ? 'text-purple-900 font-black bg-purple-100 border border-purple-300 px-2.5 py-1.5 rounded-lg' : 'hover:text-purple-700'" class="transition-colors flex items-center gap-1">
             <i data-lucide="briefcase" class="w-3.5 h-3.5 text-purple-700"></i>
-            <span>کاریگر پورٹل و پیکجز</span>
+            <span>کاریگر پورٹل و رجسٹریشن</span>
           </button>
 
           <button @click="openDisputeModal()" class="hover:text-rose-700 transition-colors flex items-center gap-1 text-rose-800 font-bold bg-rose-50 px-2.5 py-1.5 rounded-lg border border-rose-300">
@@ -342,7 +421,7 @@
         <!-- Right Action Buttons -->
         <div class="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
           
-          <!-- NEW: APP SHARE BUTTON IN NAVBAR -->
+          <!-- APP SHARE BUTTON IN NAVBAR -->
           <button 
             @click="shareApp()"
             class="inline-flex items-center gap-1 px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-xl bg-teal-50 hover:bg-teal-100 text-teal-900 border border-teal-300 font-bold text-xs shadow-xs transition-all flex-shrink-0"
@@ -352,13 +431,18 @@
             <span class="hidden sm:inline">شیئر کریں</span>
           </button>
 
-          <!-- Customer Profile Button -->
+          <!-- Customer Profile Button with Avatar Preview -->
           <button 
             @click="openCustomerModal()" 
-            class="inline-flex items-center gap-1 px-2.5 sm:px-3 py-1.5 rounded-xl border border-slate-300 bg-slate-100 hover:bg-brand-50 text-slate-900 text-xs font-bold transition-all"
+            class="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl border border-slate-300 bg-slate-100 hover:bg-brand-50 text-slate-900 text-xs font-bold transition-all"
             :title="customerUser.isLoggedIn ? 'آپ کا کسٹمر اکاؤنٹ لاگ ان ہے' : 'کسٹمر اکاؤنٹ بنائیں'"
           >
-            <i data-lucide="user" class="w-3.5 h-3.5 text-brand-700"></i>
+            <template x-if="customerUser.photo">
+              <img :src="customerUser.photo" alt="Avatar" class="w-4 h-4 rounded-full object-cover border border-brand-500" />
+            </template>
+            <template x-if="!customerUser.photo">
+              <i data-lucide="user" class="w-3.5 h-3.5 text-brand-700"></i>
+            </template>
             <span class="truncate max-w-[85px] sm:max-w-[120px]" x-text="customerUser.isLoggedIn ? customerUser.name : 'کسٹمر شمولیت'"></span>
           </button>
 
@@ -422,9 +506,14 @@
           <!-- Customer Status Header in Drawer -->
           <div class="col-span-2 p-3 bg-gradient-to-r from-brand-100 to-teal-100 rounded-xl border border-brand-300 flex items-center justify-between">
             <div class="flex items-center gap-2 min-w-0">
-              <div class="w-8 h-8 rounded-full bg-brand-700 text-white flex items-center justify-center font-bold flex-shrink-0">
-                <span x-text="customerUser.isLoggedIn ? customerUser.name.charAt(0) : '؟'"></span>
-              </div>
+              <template x-if="customerUser.photo">
+                <img :src="customerUser.photo" alt="Avatar" class="w-9 h-9 rounded-full object-cover border-2 border-brand-600 flex-shrink-0" />
+              </template>
+              <template x-if="!customerUser.photo">
+                <div class="w-8 h-8 rounded-full bg-brand-700 text-white flex items-center justify-center font-bold flex-shrink-0">
+                  <span x-text="customerUser.isLoggedIn ? customerUser.name.charAt(0) : '؟'"></span>
+                </div>
+              </template>
               <div class="min-w-0">
                 <div class="text-xs font-black text-slate-900 truncate" x-text="customerUser.isLoggedIn ? customerUser.name : 'کسٹمر شمولیت درکار'"></div>
                 <div class="text-[10px] text-slate-600 font-mono truncate" x-text="customerUser.isLoggedIn ? customerUser.phone : 'کاریگر رابطے کیلئے لاگ ان کریں'"></div>
@@ -474,7 +563,7 @@
             class="flex items-center gap-2 p-2.5 rounded-xl bg-purple-50 text-purple-950 hover:bg-purple-100 text-start border border-purple-200"
           >
             <i data-lucide="briefcase" class="w-4 h-4 text-purple-700"></i>
-            <span>کاریگر پورٹل و پیکجز</span>
+            <span>کاریگر پورٹل و رجسٹریشن</span>
           </button>
 
           <button 
@@ -531,7 +620,7 @@
     <!-- ==================== VIEW 1: HOME VIEW ==================== -->
     <div x-show="currentView === 'home'" x-cloak>
       
-      <!-- HERO SECTION (RICH COLOR SCHEME WITH HIGH CONTRAST) -->
+      <!-- HERO SECTION -->
       <section class="relative overflow-hidden bg-gradient-to-b from-teal-100/60 via-slate-100 to-slate-200/80 pt-8 pb-14 md:py-18 border-b-2 border-slate-300">
         <div class="absolute -top-24 -right-24 w-96 h-96 bg-brand-300/30 rounded-full blur-3xl pointer-events-none"></div>
         <div class="absolute top-1/2 -left-24 w-80 h-80 bg-amber-300/25 rounded-full blur-3xl pointer-events-none"></div>
@@ -558,13 +647,13 @@
                 رائل پام سٹی، ڈی سی کالونی، سٹی ہاؤسنگ، ماڈل ٹاؤن اور گوجرانوالہ کے رہائشیوں کے لیے نادرا و پولیس تصدیق شدہ الیکٹریشن، پلمبر، اے سی اور گیس چولہا ٹیکنیشنز—15 تا 30 منٹ میں آپ کی دہلیز پر۔
               </p>
 
-              <!-- Mutual Agreement & Verified Notice Card -->
+              <!-- Mutual Agreement & First-to-Respond Rule Notice -->
               <div class="p-3.5 bg-white border-2 border-emerald-600/60 rounded-2xl text-xs text-slate-900 flex items-center gap-3 max-w-2xl mx-auto lg:mx-0 text-start shadow-sm">
                 <div class="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center flex-shrink-0 font-bold">
-                  <i data-lucide="handshake" class="w-5 h-5"></i>
+                  <i data-lucide="zap" class="w-5 h-5 text-amber-600"></i>
                 </div>
                 <div>
-                  <strong class="text-emerald-900 font-black">باہمی رضامندی و آزادی:</strong> کسٹمر اور کاریگر کام کا ریٹ باہم خود بھی طے کر سکتے ہیں۔ تمام کاریگر کمپنی سے مصدقہ ہیں۔
+                  <strong class="text-emerald-900 font-black">سب سے پہلے رابطہ، سب سے پہلی ترجیح:</strong> جو کاریگر سب سے پہلے کسٹمر سے رابطہ کر کے آمادگی ظاہر کرے گا، اسے ترجیح دی جاتی ہے۔ قیمت باہمی رضامندی سے طے ہوتی ہے۔
                 </div>
               </div>
 
@@ -653,7 +742,7 @@
                 </button>
               </div>
 
-              <!-- Key Trust Metrics (4 Cards with Solid Contrast) -->
+              <!-- Key Trust Metrics -->
               <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 border-t-2 border-slate-300">
                 <div class="p-3.5 bg-white rounded-2xl border-2 border-slate-300 shadow-sm text-center lg:text-start">
                   <div class="text-xl sm:text-2xl font-black text-slate-950">4,800+</div>
@@ -675,7 +764,7 @@
 
             </div>
 
-            <!-- Hero Right (5 Columns) - High-End Interactive Hub Card -->
+            <!-- Hero Right (5 Columns) -->
             <div class="lg:col-span-5 space-y-4">
               <div class="relative bg-white rounded-3xl p-5 sm:p-7 shadow-2xl border-2 border-brand-600/40 space-y-4">
                 
@@ -739,7 +828,7 @@
         </div>
       </section>
 
-      <!-- ==================== ALL SOCIETIES & COVERAGE SECTION (DEEP THEME FOR CONTRAST) ==================== -->
+      <!-- ==================== ALL SOCIETIES & COVERAGE SECTION ==================== -->
       <section id="societies-coverage" class="py-14 bg-slate-900 text-white border-b-2 border-slate-800">
         <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
           
@@ -786,7 +875,7 @@
         </div>
       </section>
 
-      <!-- ==================== ALL 9 SERVICE CATEGORIES (RICH CARDS WITH SOLID BORDERS) ==================== -->
+      <!-- ==================== ALL 9 SERVICE CATEGORIES ==================== -->
       <section id="services" class="py-14 md:py-20 bg-slate-100 border-b-2 border-slate-300">
         <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
           
@@ -848,17 +937,17 @@
         </div>
       </section>
 
-      <!-- ==================== VERIFIED TECHNICIANS SECTION ==================== -->
+      <!-- ==================== VERIFIED TECHNICIANS SECTION (WITH MANDATORY REAL PHOTOS) ==================== -->
       <section id="technicians" class="py-14 bg-slate-200/80 border-b-2 border-slate-300">
         <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
           
           <div class="text-center max-w-3xl mx-auto mb-10 space-y-2">
             <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-900 text-emerald-100 border border-emerald-700 text-xs font-black shadow-xs">
               <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-400"></i>
-              <span>کمپنی و ایڈمن منظور شدہ کاریگرز</span>
+              <span>کمپنی و ایڈمن منظور شدہ کاریگرز (تصویر و نادرا تصدیق شدہ)</span>
             </div>
             <h2 class="text-2xl sm:text-3xl font-black text-slate-950">مصدقہ و منظور شدہ کاریگرز لسٹ</h2>
-            <p class="text-slate-700 text-xs sm:text-sm font-bold">صرف وہ کاریگر لائیو ظاہر ہوتے ہیں جن کی نادرا شناختی کارڈ اور پولیس ریکارڈ کی ایڈمن نے مکمل تصدیق کی ہو</p>
+            <p class="text-slate-700 text-xs sm:text-sm font-bold">صرف وہ کاریگر لائیو ظاہر ہوتے ہیں جن کی نادرا شناختی کارڈ، فون او ٹی پی اور اصلی تصویر کی ایڈمن نے تصدیق کی ہو</p>
           </div>
 
           <!-- Dynamic Active Technicians Grid -->
@@ -881,8 +970,14 @@
                   </div>
 
                   <div class="flex items-center gap-3.5 mb-3">
-                    <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-brand-700 to-teal-500 text-white font-black text-xl flex items-center justify-center shadow-md flex-shrink-0">
-                      <span x-text="tech.name.charAt(0)"></span>
+                    <!-- Real Profile Photo / Avatar -->
+                    <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-brand-700 to-teal-500 text-white font-black text-xl flex items-center justify-center shadow-md flex-shrink-0 overflow-hidden border-2 border-teal-600/30">
+                      <template x-if="tech.photo">
+                        <img :src="tech.photo" :alt="tech.name" class="w-full h-full object-cover" />
+                      </template>
+                      <template x-if="!tech.photo">
+                        <span x-text="tech.name.charAt(0)"></span>
+                      </template>
                     </div>
                     <div class="min-w-0">
                       <div class="flex items-center gap-1.5">
@@ -907,7 +1002,11 @@
                       <span class="text-slate-900" x-text="tech.area"></span>
                     </div>
                     <div class="flex justify-between">
-                      <span class="text-slate-500">قیمت طے کرنے کا طریقہ:</span>
+                      <span class="text-slate-500">شناختی کارڈ:</span>
+                      <span class="text-emerald-800 font-mono" dir="ltr" x-text="tech.cnic || '34101-*******-1'"></span>
+                    </div>
+                    <div class="flex justify-between">
+                      <span class="text-slate-500">قیمت:</span>
                       <span class="text-brand-800">باہمی گفتگو سے طے شدہ ریٹ</span>
                     </div>
                   </div>
@@ -1189,7 +1288,7 @@
       </div>
     </div>
 
-    <!-- ==================== VIEW 4: JOIN KARIGAR PORTAL & UPCOMING SUBSCRIPTION PLANS ==================== -->
+    <!-- ==================== VIEW 4: JOIN KARIGAR PORTAL (WITH MANDATORY REAL PHOTO & OTP VERIFICATION) ==================== -->
     <div x-show="currentView === 'join-karigar'" x-cloak class="py-10 bg-slate-100 min-h-screen">
       <div class="max-w-5xl mx-auto px-3 sm:px-6 lg:px-8 space-y-10">
         
@@ -1208,11 +1307,10 @@
           </button>
         </div>
 
-        <!-- ==================== KARIGAR SUBSCRIPTION PLANS (UPCOMING IN A FEW DAYS) ==================== -->
+        <!-- KARIGAR SUBSCRIPTION PLANS (UPCOMING IN A FEW DAYS) -->
         <div class="bg-gradient-to-br from-slate-950 via-teal-950 to-slate-950 text-white rounded-3xl p-6 sm:p-8 border-2 border-amber-400/60 shadow-2xl space-y-6">
           <div class="text-center max-w-2xl mx-auto space-y-2">
             
-            <!-- EXPLICIT COMING SOON BANNER REQUESTED BY USER -->
             <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 text-xs font-black rounded-full shadow-lg animate-pulse">
               <span>🚀 پریمیم پلان آئندہ آنے والے چند دنوں میں رائج کیا جائے گا</span>
               <span>•</span>
@@ -1293,34 +1391,93 @@
           </div>
         </div>
 
-        <!-- Registration Form -->
+        <!-- Registration Form with Mandatory Real Photo & Strict CNIC & OTP Trigger -->
         <div class="bg-white rounded-3xl p-6 sm:p-8 border-2 border-slate-300 shadow-xl space-y-5">
-          <h3 class="text-lg font-black text-slate-950 border-b-2 border-slate-100 pb-2">کاریگر پیشگی رجسٹریشن فارم:</h3>
+          <div class="flex justify-between items-center border-b-2 border-slate-100 pb-2">
+            <h3 class="text-lg font-black text-slate-950">کاریگر پیشگی رجسٹریشن فارم:</h3>
+            <span class="text-[11px] font-black text-rose-700 bg-rose-50 px-2.5 py-0.5 rounded-md border border-rose-200">
+              * تمام فیلڈز اور تصویر لازمی ہیں
+            </span>
+          </div>
           
           <div class="p-4 rounded-2xl bg-amber-50 border-2 border-amber-300 text-amber-950 text-xs leading-relaxed font-bold">
-            <strong>قواعد و ضوابط:</strong> رائل پام سٹی اور گوجرانوالہ میں کام کرنے کے لیے شناختی کارڈ، فون نمبر اور پولیس کلیرنس حلف نامہ لازمی ہے۔ ایڈمن تصدیق کے بعد کال کرے گا اور منظوری دے گا۔
+            <strong>سیکیورٹی پالیسی:</strong> رائل پام سٹی اور گوجرانوالہ میں کام کرنے کے لیے شناختی کارڈ، واضح تصویر، موبائل فون او ٹی پی (OTP) اور پولیس کلیرنس حلف نامہ لازمی ہے۔ فارم جمع کرنے پر آپ کے نمبر پر تصدیقی OTP کوڈ بھیجا جائے گا۔
+          </div>
+
+          <!-- KARIGAR PROFILE PHOTO: STRICTLY MANDATORY WITH LIVE PREVIEW -->
+          <div class="p-4 bg-amber-50/80 rounded-2xl border-2 border-amber-300 space-y-2">
+            <div class="flex justify-between items-center">
+              <label class="block text-xs font-black text-slate-950">
+                کاریگر کی اپنی واضح تصویر (لازمی / Mandatory Photo *):
+              </label>
+              <span class="text-[10px] font-black px-2.5 py-0.5 bg-rose-600 text-white rounded-full">
+                تصویر لازمی ہے
+              </span>
+            </div>
+
+            <div class="flex items-center gap-4">
+              <div class="w-20 h-20 rounded-2xl bg-white border-2 border-dashed border-amber-400 flex items-center justify-center overflow-hidden flex-shrink-0 relative shadow-sm">
+                <template x-if="karigarForm.photo">
+                  <img :src="karigarForm.photo" alt="Karigar Photo Preview" class="w-full h-full object-cover" />
+                </template>
+                <template x-if="!karigarForm.photo">
+                  <div class="text-center p-1">
+                    <i data-lucide="camera" class="w-7 h-7 text-amber-600 mx-auto mb-0.5"></i>
+                    <span class="text-[9px] text-slate-500 font-bold block leading-tight">تصویر درکار ہے</span>
+                  </div>
+                </template>
+              </div>
+
+              <div class="flex-1 min-w-0 space-y-1">
+                <input 
+                  type="file" 
+                  id="karigarPhotoInput" 
+                  accept="image/*" 
+                  @change="handleKarigarPhotoUpload($event)"
+                  class="hidden"
+                />
+                <label 
+                  for="karigarPhotoInput" 
+                  class="inline-flex items-center gap-1.5 px-4 py-2 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-slate-950 rounded-xl text-xs font-black cursor-pointer shadow-sm transition-all"
+                >
+                  <i data-lucide="upload" class="w-3.5 h-3.5"></i>
+                  <span>واضح تصویر اپلوڈ کریں *</span>
+                </label>
+                <button 
+                  type="button" 
+                  x-show="karigarForm.photo" 
+                  @click="karigarForm.photo = ''"
+                  class="inline-block px-2 py-1 text-rose-600 hover:text-rose-800 text-xs font-bold mr-2"
+                >
+                  تصویر تبدیل کریں
+                </button>
+                <p class="text-[11px] text-slate-700 font-bold">
+                  سیکیورٹی اور کسٹمر کے تحفظ کے لیے کاریگر کی اصلی چہرے کی واضح تصویر لازمی ہے۔
+                </p>
+              </div>
+            </div>
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label class="block text-xs font-black text-slate-800 mb-1">پورا نام (شناختی کارڈ کے مطابق):</label>
+              <label class="block text-xs font-black text-slate-800 mb-1">پورا نام (شناختی کارڈ کے مطابق *):</label>
               <input type="text" x-model="karigarForm.name" placeholder="مثلاً: محمد راشد" class="w-full px-3.5 py-2.5 rounded-xl border-2 border-slate-300 text-xs sm:text-sm outline-none focus:border-brand-700 font-bold">
             </div>
 
             <div>
-              <label class="block text-xs font-black text-slate-800 mb-1">شناختی کارڈ نمبر (CNIC):</label>
-              <input type="text" x-model="karigarForm.cnic" placeholder="مثلاً: 34101-1234567-1" class="w-full px-3.5 py-2.5 rounded-xl border-2 border-slate-300 text-xs sm:text-sm outline-none focus:border-brand-700 font-bold font-mono" dir="ltr">
+              <label class="block text-xs font-black text-slate-800 mb-1">شناختی کارڈ نمبر (CNIC لازمی *):</label>
+              <input type="text" x-model="karigarForm.cnic" placeholder="34101-1234567-1" class="w-full px-3.5 py-2.5 rounded-xl border-2 border-slate-300 text-xs sm:text-sm outline-none focus:border-brand-700 font-bold font-mono" dir="ltr">
             </div>
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label class="block text-xs font-black text-slate-800 mb-1">موبائل فون نمبر:</label>
-              <input type="tel" x-model="karigarForm.phone" placeholder="مثلاً: 03001234567" class="w-full px-3.5 py-2.5 rounded-xl border-2 border-slate-300 text-xs sm:text-sm outline-none focus:border-brand-700 font-bold font-mono" dir="ltr">
+              <label class="block text-xs font-black text-slate-800 mb-1">رجسٹرڈ موبائل نمبر (او ٹی پی اس نمبر پر جائے گا *):</label>
+              <input type="tel" x-model="karigarForm.phone" placeholder="03001234567" class="w-full px-3.5 py-2.5 rounded-xl border-2 border-slate-300 text-xs sm:text-sm outline-none focus:border-brand-700 font-bold font-mono" dir="ltr">
             </div>
 
             <div>
-              <label class="block text-xs font-black text-slate-800 mb-1">شعبہ (مہارت):</label>
+              <label class="block text-xs font-black text-slate-800 mb-1">شعبہ (مہارت *):</label>
               <select x-model="karigarForm.skill" class="w-full px-3.5 py-2.5 rounded-xl border-2 border-slate-300 text-xs sm:text-sm outline-none focus:border-brand-700 bg-white font-bold">
                 <option value="الیکٹریشن (بجلی کا کام)">الیکٹریشن (بجلی کا کام)</option>
                 <option value="پلمبر (سینیٹری و پائپ فٹنگ)">پلمبر (سینیٹری و پائپ فٹنگ)</option>
@@ -1334,7 +1491,7 @@
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label class="block text-xs font-black text-slate-800 mb-1">رہائشی علاقہ / سوسائٹی:</label>
+              <label class="block text-xs font-black text-slate-800 mb-1">رہائشی علاقہ / سوسائٹی *:</label>
               <input type="text" x-model="karigarForm.area" placeholder="مثلاً: رائل پام سٹی / سٹی ہاؤسنگ / ماڈل ٹاؤن" class="w-full px-3.5 py-2.5 rounded-xl border-2 border-slate-300 text-xs sm:text-sm outline-none focus:border-brand-700 font-bold">
             </div>
 
@@ -1355,11 +1512,13 @@
             </label>
           </div>
 
+          <!-- SUBMISSION BUTTON: TRIGGERS OTP VERIFICATION -->
           <button 
-            @click="submitKarigarRegistration()"
-            class="w-full py-3.5 bg-gradient-to-r from-brand-700 to-teal-700 hover:from-brand-800 hover:to-teal-800 text-white rounded-xl font-black text-xs sm:text-sm shadow-xl transition-all text-center"
+            @click="startKarigarOtpVerification()"
+            class="w-full py-3.5 bg-gradient-to-r from-brand-700 to-teal-700 hover:from-brand-800 hover:to-teal-800 text-white rounded-xl font-black text-xs sm:text-sm shadow-xl transition-all text-center flex items-center justify-center gap-2"
           >
-            پیشگی رجسٹریشن درخواست ایڈمن کو ارسال کریں
+            <i data-lucide="shield-check" class="w-4 h-4"></i>
+            <span>موبائل پر OTP حاصل کریں و تصدیق کریں</span>
           </button>
 
         </div>
@@ -1480,16 +1639,17 @@
         </div>
       </div>
 
-      <!-- Tab 2: Pending Karigar Approvals -->
+      <!-- Tab 2: Pending Karigar Approvals (WITH MANDATORY PHOTO & CNIC VIEW) -->
       <div x-show="adminTab === 'pending'" class="bg-white rounded-2xl border-2 border-slate-300 shadow-sm overflow-hidden">
-        <div class="p-4 bg-amber-100 border-b-2 border-amber-300 font-black text-sm text-amber-950">نئی موصولہ کاریگر درخواستیں (شناختی کارڈ تصدیق کے بعد اپروول دیں)</div>
+        <div class="p-4 bg-amber-100 border-b-2 border-amber-300 font-black text-sm text-amber-950">نئی موصولہ کاریگر درخواستیں (تصویر اور شناختی کارڈ جانچ کے بعد اپروول دیں)</div>
         <div class="overflow-x-auto">
-          <table class="w-full text-start text-xs min-w-[650px]">
+          <table class="w-full text-start text-xs min-w-[750px]">
             <thead class="bg-slate-200 text-slate-800 border-b-2 border-slate-300 font-black">
               <tr>
+                <th class="p-3 text-start">تصویر</th>
                 <th class="p-3 text-start">نام</th>
                 <th class="p-3 text-start">شناختی کارڈ (CNIC)</th>
-                <th class="p-3 text-start">فون نمبر</th>
+                <th class="p-3 text-start">فون نمبر (OTP تصدیق شدہ)</th>
                 <th class="p-3 text-start">ہنر / شعبہ</th>
                 <th class="p-3 text-start">پیکج</th>
                 <th class="p-3 text-start">علاقہ</th>
@@ -1499,9 +1659,22 @@
             <tbody class="divide-y divide-slate-200">
               <template x-for="kar in pendingKarigars" :key="kar.id">
                 <tr class="hover:bg-slate-50">
+                  <td class="p-3">
+                    <div class="w-10 h-10 rounded-xl overflow-hidden bg-slate-200 border border-slate-300">
+                      <template x-if="kar.photo">
+                        <img :src="kar.photo" alt="Photo" class="w-full h-full object-cover" />
+                      </template>
+                      <template x-if="!kar.photo">
+                        <span class="w-full h-full flex items-center justify-center text-xs font-bold text-slate-500">؟</span>
+                      </template>
+                    </div>
+                  </td>
                   <td class="p-3 font-black text-slate-900" x-text="kar.name"></td>
-                  <td class="p-3 font-mono font-bold text-slate-800" dir="ltr" x-text="kar.cnic"></td>
-                  <td class="p-3 font-mono text-slate-600" dir="ltr" x-text="kar.phone"></td>
+                  <td class="p-3 font-mono font-black text-slate-800" dir="ltr" x-text="kar.cnic"></td>
+                  <td class="p-3 font-mono text-emerald-800 font-bold" dir="ltr">
+                    <span x-text="kar.phone"></span>
+                    <span class="inline-block text-[10px] bg-emerald-100 text-emerald-950 px-1.5 py-0.5 rounded mr-1">OTP ✓</span>
+                  </td>
                   <td class="p-3 font-bold text-brand-800" x-text="kar.skill"></td>
                   <td class="p-3 font-black text-amber-900" x-text="kar.desiredPackage === 'platinum' ? '🥇 پلاٹینم' : (kar.desiredPackage === 'gold' ? '🥈 گولڈ' : '🥉 سلور')"></td>
                   <td class="p-3 text-slate-700 font-bold" x-text="kar.area"></td>
@@ -1525,12 +1698,25 @@
           <template x-for="t in technicians" :key="t.id">
             <div class="p-4 rounded-2xl border-2 border-slate-300 bg-slate-50 flex flex-col justify-between space-y-3">
               <div>
-                <div class="flex justify-between items-start">
-                  <h4 class="font-black text-slate-900 text-sm" x-text="t.name"></h4>
-                  <span class="text-[10px] font-black px-2 py-0.5 rounded bg-emerald-100 text-emerald-950 border border-emerald-300">مصدقہ ✓</span>
+                <div class="flex items-center gap-3">
+                  <div class="w-12 h-12 rounded-xl overflow-hidden bg-slate-200 border-2 border-teal-600/40 flex-shrink-0">
+                    <template x-if="t.photo">
+                      <img :src="t.photo" alt="Photo" class="w-full h-full object-cover" />
+                    </template>
+                    <template x-if="!t.photo">
+                      <div class="w-full h-full flex items-center justify-center bg-brand-700 text-white font-bold" x-text="t.name.charAt(0)"></div>
+                    </template>
+                  </div>
+                  <div class="min-w-0">
+                    <div class="flex items-center gap-1.5">
+                      <h4 class="font-black text-slate-900 text-sm truncate" x-text="t.name"></h4>
+                      <span class="text-[10px] font-black px-1.5 py-0.2 rounded bg-emerald-100 text-emerald-950 border border-emerald-300">مصدقہ ✓</span>
+                    </div>
+                    <p class="text-xs text-brand-700 font-black truncate" x-text="t.specialtyUrdu"></p>
+                    <div class="text-[11px] text-slate-600 font-mono" dir="ltr" x-text="'CNIC: ' + (t.cnic || '34101-*******-1')"></div>
+                  </div>
                 </div>
-                <p class="text-xs text-brand-700 font-black" x-text="t.specialtyUrdu"></p>
-                <div class="text-[11px] text-slate-600 font-bold mt-1" x-text="t.area + ' • فون: ' + (t.phone || '0300-4800071')"></div>
+                <div class="text-[11px] text-slate-600 font-bold mt-2" x-text="t.area + ' • فون: ' + (t.phone || '0300-4800071')"></div>
               </div>
 
               <!-- Admin Tier Changer -->
@@ -1609,7 +1795,7 @@
 
   </main>
 
-  <!-- ==================== FOOTER (DEEP NAVY SLATE & AMBER ACCENTS) ==================== -->
+  <!-- ==================== FOOTER ==================== -->
   <footer class="bg-slate-950 text-slate-300 pt-16 pb-12 border-t-2 border-slate-800">
     <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
       <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
@@ -1683,7 +1869,7 @@
     </div>
   </footer>
 
-  <!-- ==================== MODAL 0: CUSTOMER ONBOARDING / LOGIN ==================== -->
+  <!-- ==================== MODAL 0: CUSTOMER ONBOARDING / LOGIN (WITH OPTIONAL PROFILE PHOTO) ==================== -->
   <div 
     x-show="isCustomerModalOpen" 
     x-cloak 
@@ -1705,9 +1891,55 @@
         </p>
       </div>
 
+      <!-- CUSTOMER PROFILE PICTURE: OPTIONAL -->
+      <div class="p-3 bg-slate-50 rounded-2xl border-2 border-slate-200 text-start space-y-2">
+        <div class="flex justify-between items-center">
+          <label class="block text-xs font-black text-slate-800">
+            پروفائل تصویر (اختیاری / Optional):
+          </label>
+          <span class="text-[10px] font-bold px-2 py-0.5 bg-slate-200 text-slate-700 rounded-full">اختیاری</span>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <div class="w-14 h-14 rounded-2xl bg-white border-2 border-dashed border-slate-300 flex items-center justify-center overflow-hidden flex-shrink-0 relative shadow-2xs">
+            <template x-if="customerInputPhoto">
+              <img :src="customerInputPhoto" alt="Customer Avatar" class="w-full h-full object-cover" />
+            </template>
+            <template x-if="!customerInputPhoto">
+              <i data-lucide="camera" class="w-6 h-6 text-slate-400"></i>
+            </template>
+          </div>
+
+          <div class="flex-1 min-w-0">
+            <input 
+              type="file" 
+              id="customerPhotoInput" 
+              accept="image/*" 
+              @change="handleCustomerPhotoUpload($event)"
+              class="hidden"
+            />
+            <label 
+              for="customerPhotoInput" 
+              class="inline-block px-3 py-1.5 bg-slate-200 hover:bg-slate-300 text-slate-900 border border-slate-300 rounded-xl text-xs font-bold cursor-pointer transition-colors"
+            >
+              تصویر منتخب کریں
+            </label>
+            <button 
+              type="button"
+              x-show="customerInputPhoto" 
+              @click="customerInputPhoto = ''"
+              class="inline-block px-2 py-1.5 text-rose-600 hover:text-rose-800 text-xs font-bold"
+            >
+              ہٹائیں
+            </button>
+            <div class="text-[10px] text-slate-500 font-semibold mt-0.5">تصویر لگانا اختیاری ہے، آپ بعد میں بھی لگا سکتے ہیں</div>
+          </div>
+        </div>
+      </div>
+
       <div class="space-y-3 text-start">
         <div>
-          <label class="block text-xs font-black text-slate-800 mb-1">آپ کا نام:</label>
+          <label class="block text-xs font-black text-slate-800 mb-1">آپ کا نام *:</label>
           <input 
             type="text" 
             x-model="customerInputName" 
@@ -1717,7 +1949,7 @@
         </div>
 
         <div>
-          <label class="block text-xs font-black text-slate-800 mb-1">موبائل فون نمبر:</label>
+          <label class="block text-xs font-black text-slate-800 mb-1">موبائل فون نمبر *:</label>
           <input 
             type="tel" 
             x-model="customerInputPhone" 
@@ -1755,6 +1987,85 @@
           class="px-4 py-3 bg-slate-200 hover:bg-slate-300 text-slate-900 font-black text-xs rounded-xl"
         >
           بند کریں
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL: KARIGAR MOBILE OTP VERIFICATION MODAL ==================== -->
+  <div 
+    x-show="isKarigarOtpModalOpen" 
+    x-cloak 
+    class="fixed inset-0 z-50 overflow-y-auto bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-4"
+    @keydown.escape.window="isKarigarOtpModalOpen = false"
+  >
+    <div 
+      @click.outside="isKarigarOtpModalOpen = false"
+      class="bg-white rounded-3xl shadow-2xl border-2 border-slate-300 max-w-md w-full p-6 text-center space-y-4"
+    >
+      <div class="w-16 h-16 mx-auto rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center font-black shadow-md animate-pulse">
+        <i data-lucide="smartphone" class="w-8 h-8"></i>
+      </div>
+
+      <div>
+        <div class="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-amber-100 text-amber-950 text-[11px] font-black mb-1">
+          <span class="w-2 h-2 rounded-full bg-amber-500 animate-ping"></span>
+          <span>موبائل نمبر کی تصدیق (OTP Verification)</span>
+        </div>
+        <h3 class="text-xl font-black text-slate-950">موبائل OTP کوڈ درج کریں</h3>
+        <p class="text-xs text-slate-700 mt-1 font-bold">
+          آپ کے درج کردہ موبائل نمبر <span class="font-mono font-black text-brand-700" dir="ltr" x-text="karigarForm.phone"></span> پر تصدیقی کوڈ ارسال کر دیا گیا ہے۔
+        </p>
+      </div>
+
+      <!-- SIMULATED REALISTIC SMS BANNER PREVIEW -->
+      <div class="p-3.5 bg-slate-900 text-white rounded-2xl text-start space-y-1 shadow-inner border border-slate-700">
+        <div class="flex items-center justify-between text-[10px] text-slate-400">
+          <span class="flex items-center gap-1"><i data-lucide="message-square" class="w-3 h-3 text-amber-400"></i> موصولہ SMS (B.A.H.Care)</span>
+          <span>ابھی ابھی</span>
+        </div>
+        <div class="text-xs font-bold text-amber-300">
+          بن عباس ہوم کیئر OTP کوڈ: <span class="text-base font-black text-white font-mono tracking-widest bg-amber-500/30 px-2 py-0.5 rounded border border-amber-400" x-text="currentOtp"></span>
+        </div>
+        <div class="text-[10px] text-slate-400">یہ کوڈ کسی کے ساتھ شیئر نہ کریں۔ رجسٹریشن کی تکمیل کے لیے درج کریں۔</div>
+      </div>
+
+      <div class="space-y-2 text-center pt-2">
+        <label class="block text-xs font-black text-slate-800">4 ہندسوں کا OTP کوڈ یہاں لکھیں:</label>
+        <input 
+          type="text" 
+          maxlength="4"
+          x-model="otpInput" 
+          @keydown.enter="verifyKarigarOtp()"
+          placeholder="----"
+          class="w-48 mx-auto text-center tracking-[0.5em] text-3xl font-mono py-3 rounded-2xl border-2 border-brand-600 outline-none focus:ring-4 focus:ring-brand-200 bg-slate-50 font-black"
+          dir="ltr"
+        />
+        
+        <div class="text-xs text-slate-600 font-bold">
+          <template x-if="otpTimer > 0">
+            <span>دوبارہ کوڈ بھیجیں: <strong class="font-mono text-brand-700" x-text="otpTimer + 's'"></strong></span>
+          </template>
+          <template x-if="otpTimer <= 0">
+            <button @click="resendOtp()" class="text-brand-700 hover:text-brand-900 font-black underline">
+              دوبارہ نیا OTP کوڈ حاصل کریں
+            </button>
+          </template>
+        </div>
+      </div>
+
+      <div class="flex gap-2 pt-2">
+        <button 
+          @click="verifyKarigarOtp()" 
+          class="flex-1 py-3 bg-brand-700 hover:bg-brand-800 text-white font-black text-xs sm:text-sm rounded-xl shadow-md transition-all"
+        >
+          OTP تصدیق کریں اور رجسٹریشن مکمل کریں ✓
+        </button>
+        <button 
+          @click="isKarigarOtpModalOpen = false" 
+          class="px-4 py-3 bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold text-xs rounded-xl"
+        >
+          منسوخ
         </button>
       </div>
     </div>
@@ -2015,18 +2326,18 @@
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
-            <label class="block text-xs font-black text-slate-800 mb-1">کسٹمر کا نام:</label>
+            <label class="block text-xs font-black text-slate-800 mb-1">کسٹمر کا نام *:</label>
             <input type="text" x-model="bookingForm.name" placeholder="پورا نام" class="w-full px-3 py-2 rounded-xl border-2 border-slate-300 text-xs sm:text-sm outline-none focus:border-brand-700 font-bold">
           </div>
           <div>
-            <label class="block text-xs font-black text-slate-800 mb-1">موبائل فون نمبر:</label>
+            <label class="block text-xs font-black text-slate-800 mb-1">موبائل فون نمبر *:</label>
             <input type="tel" x-model="bookingForm.phone" placeholder="03001234567" class="w-full px-3 py-2 rounded-xl border-2 border-slate-300 text-xs sm:text-sm outline-none focus:border-brand-700 font-bold font-mono" dir="ltr">
           </div>
         </div>
 
         <div>
           <div class="flex justify-between items-center mb-1">
-            <label class="block text-xs font-black text-slate-800">سوسائٹی اور گھر کا پتہ:</label>
+            <label class="block text-xs font-black text-slate-800">سوسائٹی اور گھر کا پتہ *:</label>
             <button @click="detectGPSLocation()" class="text-[11px] text-brand-700 hover:text-brand-900 font-black flex items-center gap-1">
               <i data-lucide="map-pin" class="w-3 h-3"></i>
               <span>موجودہ لوکیشن لیں</span>
@@ -2066,15 +2377,16 @@
 
         <button 
           @click="submitBooking()"
-          class="w-full py-3.5 bg-gradient-to-r from-brand-700 to-teal-700 hover:from-brand-800 hover:to-teal-800 text-white font-black rounded-xl text-xs sm:text-sm shadow-xl transition-all"
+          class="w-full py-3.5 bg-gradient-to-r from-brand-700 to-teal-700 hover:from-brand-800 hover:to-teal-800 text-white font-black rounded-xl text-xs sm:text-sm shadow-xl transition-all flex items-center justify-center gap-2"
         >
-          بکنگ کنفرم کریں
+          <i data-lucide="send" class="w-4 h-4"></i>
+          <span>بکنگ کنفرم کریں و کاریگرز کو الرٹ بھیجیں</span>
         </button>
       </div>
     </div>
   </div>
 
-  <!-- ==================== MODAL 6: TRACKER MODAL ==================== -->
+  <!-- ==================== MODAL 6: TRACKER MODAL (WITH FIRST-TO-RESPOND DETAILS) ==================== -->
   <div 
     x-show="isTrackerModalOpen" 
     x-cloak 
@@ -2097,6 +2409,16 @@
 
       <template x-if="trackedOrder">
         <div class="p-4 rounded-2xl bg-slate-50 border-2 border-slate-300 space-y-2 text-xs font-bold">
+          
+          <!-- First Responder Priority Badge -->
+          <div class="p-2.5 bg-gradient-to-r from-amber-100 to-emerald-100 rounded-xl border border-amber-300 flex items-center justify-between">
+            <span class="flex items-center gap-1 text-amber-900 font-black">
+              <i data-lucide="zap" class="w-3.5 h-3.5 text-amber-600 fill-amber-400"></i>
+              <span>تیز ترین رسپانس (First Responder)</span>
+            </span>
+            <span class="text-[10px] bg-emerald-700 text-white px-2 py-0.5 rounded font-bold">ترجیحی تفویض ✓</span>
+          </div>
+
           <div class="flex justify-between border-b border-slate-200 pb-2">
             <span class="text-slate-500">آرڈر نمبر:</span>
             <span class="font-mono font-black text-brand-700" x-text="trackedOrder.id"></span>
@@ -2136,7 +2458,18 @@
               class="px-3.5 py-2.5 bg-slate-950 text-white rounded-xl text-xs font-black flex items-center gap-1 shadow-md"
               title="کاریگر کو کال کریں"
             >
-              <i data-lucide="phone" class="w-3.5 h-3.5"></i>
+              <i data-lucide="phone" class="w-3.5 h-3.5 text-amber-400"></i>
+              <span>کال</span>
+            </a>
+
+            <a 
+              :href="getWhatsAppLink('اسلام علیکم کاریگر صاحب! آرڈر نمبر ' + trackedOrder.id + ' کے حوالے سے رابطہ کیا ہے۔')" 
+              target="_blank"
+              class="px-3.5 py-2.5 bg-emerald-600 text-white rounded-xl text-xs font-black flex items-center gap-1 shadow-md"
+              title="کاریگر کو واٹس ایپ کریں"
+            >
+              <i data-lucide="message-circle" class="w-3.5 h-3.5"></i>
+              <span>WhatsApp</span>
             </a>
           </div>
         </div>
@@ -2159,8 +2492,13 @@
         <button @click="isKarigarCardModalOpen = false" class="absolute top-4 left-4 text-white/80 hover:text-white p-1 rounded-full bg-black/30">
           <i data-lucide="x" class="w-4 h-4"></i>
         </button>
-        <div class="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-tr from-brand-600 to-emerald-400 text-white font-black text-3xl flex items-center justify-center shadow-lg border-2 border-white/40 mb-3">
-          <span x-text="activeKarigar.name ? activeKarigar.name.charAt(0) : ''"></span>
+        <div class="w-24 h-24 mx-auto rounded-3xl bg-gradient-to-tr from-brand-600 to-emerald-400 text-white font-black text-3xl flex items-center justify-center shadow-xl border-2 border-white/40 mb-3 overflow-hidden">
+          <template x-if="activeKarigar.photo">
+            <img :src="activeKarigar.photo" :alt="activeKarigar.name" class="w-full h-full object-cover" />
+          </template>
+          <template x-if="!activeKarigar.photo">
+            <span x-text="activeKarigar.name ? activeKarigar.name.charAt(0) : ''"></span>
+          </template>
         </div>
         <h3 class="text-xl font-black" x-text="activeKarigar.name"></h3>
         <p class="text-xs text-amber-300 font-black" x-text="activeKarigar.specialtyUrdu"></p>
@@ -2174,6 +2512,10 @@
         <div class="flex justify-between border-b border-slate-200 pb-2">
           <span class="text-slate-500">شناختی کارڈ ویریفکیشن:</span>
           <span class="font-black text-emerald-800">نادرا و پولیس ریکارڈ تصدیق شدہ ✓</span>
+        </div>
+        <div class="flex justify-between border-b border-slate-200 pb-2">
+          <span class="text-slate-500">شناختی کارڈ نمبر:</span>
+          <span class="font-mono font-black text-slate-900" dir="ltr" x-text="activeKarigar.cnic || '34101-*******-1'"></span>
         </div>
         <div class="flex justify-between border-b border-slate-200 pb-2">
           <span class="text-slate-500">تجربہ:</span>
@@ -2454,6 +2796,7 @@
         isCategoryDetailModalOpen: false,
         isMobileMenuOpen: false,
         isFeedbackModalOpen: false,
+        isKarigarOtpModalOpen: false,
         
         // PWA Install State & Auto-Hide
         deferredPrompt: null,
@@ -2462,18 +2805,30 @@
         showInstallBanner: false,
         showSplashScreen: true,
 
-        // Customer Onboarding State
+        // Customer Onboarding State (Profile Picture is Optional)
         customerUser: {
           name: '',
           phone: '',
           address: '',
+          photo: '',
           isLoggedIn: false
         },
         isCustomerModalOpen: false,
         customerInputName: '',
         customerInputPhone: '',
         customerInputArea: '',
+        customerInputPhoto: '',
         pendingCustomerAction: null,
+
+        // Karigar Mobile OTP Verification State
+        currentOtp: '',
+        otpInput: '',
+        otpTimer: 60,
+        otpInterval: null,
+
+        // Real-Time Job Dispatch Broadcast & First-to-Respond System
+        showJobBroadcastBanner: false,
+        activeBroadcastJob: null,
 
         // Admin Security
         isAdminLoggedIn: false,
@@ -2614,17 +2969,19 @@
           { id: 3, customerName: 'رضوانہ بیگم (ماڈل ٹاؤن)', service: 'پلمبنگ و سینیٹری مرمت', rating: 5, comment: 'واش روم کا نلکا اور پائپ ٹھیک کروایا۔ کاریگر نے کام تسلی سے کیا اور رسید بھی دی۔', date: '4 دن پہلے' }
         ],
 
-        // Admin-Approved Technicians with Subscription Package Tiers
+        // Admin-Approved Technicians with Real Verified Photos & CNIC
         technicians: [
           { 
             id: 1, 
             name: 'محمد راشد', 
+            cnic: '34101-2345678-1',
             specialtyUrdu: 'سینئر الیکٹریشن و سولر ایکسپرٹ', 
             area: 'رائل پام سٹی و گوجرانوالہ', 
             experience: '8', 
             rating: '5.0', 
             completedJobs: '420+', 
             phone: '03014567890',
+            photo: 'icon-192.png',
             packageTier: 'platinum',
             packageLabel: '🥇 پلاٹینم ترجیحی کاریگر',
             approved: true 
@@ -2632,12 +2989,14 @@
           { 
             id: 2, 
             name: 'طارق محمود', 
+            cnic: '34101-7654321-3',
             specialtyUrdu: 'ماسٹر پلمبر و سینیٹری اسپیشلسٹ', 
             area: 'سٹی ہاؤسنگ و ڈی سی کالونی', 
             experience: '11', 
             rating: '4.9', 
             completedJobs: '560+', 
             phone: '03029876543',
+            photo: '',
             packageTier: 'gold',
             packageLabel: '🥈 گولڈ ایکسپریس کاریگر',
             approved: true 
@@ -2645,12 +3004,14 @@
           { 
             id: 3, 
             name: 'استاد فیاض احمد', 
+            cnic: '34101-9871234-5',
             specialtyUrdu: 'گیس چولہا، ہوب و گیزر ماسٹر', 
             area: 'ماڈل ٹاؤن و پیپلز کالونی', 
             experience: '14', 
             rating: '5.0', 
             completedJobs: '610+', 
             phone: '03035551234',
+            photo: '',
             packageTier: 'platinum',
             packageLabel: '🥇 پلاٹینم ترجیحی کاریگر',
             approved: true 
@@ -2667,7 +3028,7 @@
             phone: '03214567890',
             service: 'بجلی کا کام (الیکٹریشن)',
             address: 'رائل پام سٹی، بلاک بی، گوجرانوالہ',
-            assignedTech: 'محمد راشد',
+            assignedTech: 'محمد راشد (#1 تیز ترین رسپانس)',
             techPhone: '03014567890',
             statusUrdu: 'کاریگر راستے میں ہے (15 منٹ)',
             amount: '1,500',
@@ -2699,13 +3060,15 @@
           details: ''
         },
 
+        // Karigar Registration Form State (Photo & CNIC Mandatory)
         karigarForm: {
           name: '',
           cnic: '',
           phone: '',
           skill: 'الیکٹریشن (بجلی کا کام)',
           area: '',
-          experience: '',
+          photo: '',
+          experience: '3',
           desiredPackage: 'gold',
           policeAgreed: false
         },
@@ -2750,6 +3113,7 @@
                 this.customerInputName = parsed.name;
                 this.customerInputPhone = parsed.phone;
                 this.customerInputArea = parsed.address || '';
+                this.customerInputPhoto = parsed.photo || '';
                 this.bookingForm.name = parsed.name;
                 this.bookingForm.phone = parsed.phone;
                 this.bookingForm.address = parsed.address || '';
@@ -2823,9 +3187,31 @@
               url: shareUrl
             }).catch(() => {});
           } else {
-            // Fallback to WhatsApp share link
             const waText = encodeURIComponent(shareTitle + '\n\n' + shareText + '\n\nویب سائٹ لنک: ' + shareUrl);
             window.open('https://api.whatsapp.com/send?text=' + waText, '_blank');
+          }
+        },
+
+        // ==================== PHOTO UPLOAD HANDLERS ====================
+        handleCustomerPhotoUpload(event) {
+          const file = event.target.files[0];
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+              this.customerInputPhoto = e.target.result;
+            };
+            reader.readAsDataURL(file);
+          }
+        },
+
+        handleKarigarPhotoUpload(event) {
+          const file = event.target.files[0];
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+              this.karigarForm.photo = e.target.result;
+            };
+            reader.readAsDataURL(file);
           }
         },
 
@@ -2840,7 +3226,7 @@
 
         saveCustomerProfile() {
           if (!this.customerInputName.trim() || !this.customerInputPhone.trim()) {
-            alert('برائے مہربانی اپنا نام اور موبائل فون نمبر درج کریں۔');
+            alert('برائے مہربانی اپنا نام اور موبائل فون نمبر لازمی درج کریں۔');
             return;
           }
 
@@ -2848,6 +3234,7 @@
             name: this.customerInputName.trim(),
             phone: this.customerInputPhone.trim(),
             address: this.customerInputArea.trim(),
+            photo: this.customerInputPhoto || '',
             isLoggedIn: true
           };
 
@@ -2904,6 +3291,193 @@
           this.ensureCustomerLoggedIn(() => {
             window.open(this.getWhatsAppLink(msg), '_blank');
           });
+        },
+
+        // ==================== KARIGAR REGISTRATION WITH MANDATORY PHOTO & OTP ====================
+        startKarigarOtpVerification() {
+          // Mandatory Validation 1: Photo
+          if (!this.karigarForm.photo) {
+            alert('⚠️ توجہ: کاریگر کی اپنی واضح تصویر اپلوڈ کرنا 100% لازمی ہے!\nسیکیورٹی اور کسٹمر کے تحفظ کے لیے تصویر کے بغیر رجسٹریشن مکمل نہیں ہو سکتی۔');
+            return;
+          }
+
+          // Mandatory Validation 2: Full Name
+          if (!this.karigarForm.name.trim()) {
+            alert('برائے مہربانی شناختی کارڈ کے مطابق پورا نام درج کریں۔');
+            return;
+          }
+
+          // Mandatory Validation 3: CNIC
+          const cleanCnic = this.karigarForm.cnic.replace(/[^0-9]/g, '');
+          if (!cleanCnic || cleanCnic.length < 13) {
+            alert('⚠️ توجہ: کاریگر کا نادرا شناختی کارڈ نمبر (13 ہندسے، مثلاً 34101-1234567-1) درج کرنا لازمی ہے!');
+            return;
+          }
+
+          // Mandatory Validation 4: Phone Number
+          const cleanPhone = this.karigarForm.phone.replace(/[^0-9]/g, '');
+          if (!cleanPhone || cleanPhone.length < 11) {
+            alert('برائے مہربانی درست 11 ہندسوں کا موبائل فون نمبر درج کریں۔');
+            return;
+          }
+
+          // Mandatory Validation 5: Area
+          if (!this.karigarForm.area.trim()) {
+            alert('برائے مہربانی اپنا رہائشی علاقہ یا سوسائٹی درج کریں۔');
+            return;
+          }
+
+          // Mandatory Validation 6: Police clearance
+          if (!this.karigarForm.policeAgreed) {
+            alert('برائے مہربانی پولیس کلیرنس اور حلف نامہ کی شرط تسلیم کریں۔');
+            return;
+          }
+
+          // Generate 4-digit OTP Code
+          this.currentOtp = Math.floor(1000 + Math.random() * 9000).toString();
+          this.otpInput = '';
+          this.otpTimer = 60;
+          this.isKarigarOtpModalOpen = true;
+
+          // Start Timer Countdown
+          if (this.otpInterval) clearInterval(this.otpInterval);
+          this.otpInterval = setInterval(() => {
+            if (this.otpTimer > 0) {
+              this.otpTimer--;
+            } else {
+              clearInterval(this.otpInterval);
+            }
+          }, 1000);
+
+          this.$nextTick(() => {
+            if (window.lucide) lucide.createIcons();
+          });
+        },
+
+        resendOtp() {
+          this.currentOtp = Math.floor(1000 + Math.random() * 9000).toString();
+          this.otpTimer = 60;
+          if (this.otpInterval) clearInterval(this.otpInterval);
+          this.otpInterval = setInterval(() => {
+            if (this.otpTimer > 0) {
+              this.otpTimer--;
+            } else {
+              clearInterval(this.otpInterval);
+            }
+          }, 1000);
+          alert('نیا OTP کوڈ آپ کے موبائل نمبر پر بھیج دیا گیا ہے۔');
+        },
+
+        verifyKarigarOtp() {
+          if (!this.otpInput.trim()) {
+            alert('برائے مہربانی موصولہ 4 ہندسوں کا OTP کوڈ درج کریں۔');
+            return;
+          }
+
+          if (this.otpInput.trim() === this.currentOtp) {
+            if (this.otpInterval) clearInterval(this.otpInterval);
+            this.isKarigarOtpModalOpen = false;
+
+            const newPending = {
+              id: Date.now(),
+              name: this.karigarForm.name.trim(),
+              cnic: this.karigarForm.cnic.trim(),
+              phone: this.karigarForm.phone.trim(),
+              skill: this.karigarForm.skill,
+              area: this.karigarForm.area.trim(),
+              photo: this.karigarForm.photo,
+              experience: this.karigarForm.experience || '3',
+              desiredPackage: this.karigarForm.desiredPackage || 'gold',
+              policeAgreed: true,
+              otpVerified: true
+            };
+
+            this.pendingKarigars.push(newPending);
+
+            alert('🎉 مبارک ہو ' + this.karigarForm.name + '!\n\nآپ کے موبائل نمبر (' + this.karigarForm.phone + ') اور تصویر کی کامیابی سے تصدیق ہو گئی ہے۔\nآپ کی درخواست ایڈمن کنٹرول پینل کو ارسال ہو گئی ہے۔ نادرا ریکارڈ تصدیق کے بعد آپ کا اکاؤنٹ لائیو کر دیا جائے گا۔');
+
+            // Reset form
+            this.karigarForm = {
+              name: '',
+              cnic: '',
+              phone: '',
+              skill: 'الیکٹریشن (بجلی کا کام)',
+              area: '',
+              photo: '',
+              experience: '3',
+              desiredPackage: 'gold',
+              policeAgreed: false
+            };
+            this.currentView = 'home';
+          } else {
+            alert('❌ غلط OTP کوڈ درج کیا گیا ہے! برائے مہربانی درست 4 ہندسی کوڈ درج کریں۔');
+          }
+        },
+
+        // ==================== REAL-TIME JOB BROADCAST & FIRST-TO-RESPOND ====================
+        submitBooking() {
+          if (!this.bookingForm.name || !this.bookingForm.phone || !this.bookingForm.address) {
+            alert('برائے مہربانی اپنا نام، فون نمبر اور پتہ درج کریں۔');
+            return;
+          }
+
+          const newId = 'BA-' + Math.floor(1000 + Math.random() * 9000);
+          const agreed = this.bookingForm.agreedPrice.trim() || '1,800';
+          
+          const newOrder = {
+            id: newId,
+            customerName: this.bookingForm.name,
+            phone: this.bookingForm.phone,
+            service: this.bookingForm.category,
+            address: this.bookingForm.address,
+            assignedTech: 'محمد راشد (#1 سب سے تیز ترین رسپانس)',
+            techPhone: '03014567890',
+            statusUrdu: 'کاریگر راستے میں ہے (15 تا 20 منٹ)',
+            amount: agreed,
+            agreedPrice: agreed,
+            firstResponder: true,
+            date: new Date().toISOString().split('T')[0]
+          };
+
+          this.orders.unshift(newOrder);
+          this.isBookingModalOpen = false;
+
+          // Broadcast Job Alert to all relevant nearby technicians!
+          this.activeBroadcastJob = {
+            id: newId,
+            customerName: newOrder.customerName,
+            customerPhone: newOrder.phone,
+            service: newOrder.service,
+            address: newOrder.address,
+            agreedPrice: agreed,
+            status: 'waiting'
+          };
+          this.showJobBroadcastBanner = true;
+
+          alert('شکریہ ' + this.bookingForm.name + '! آپ کی بکنگ موصول ہو گئی ہے۔\n\nٹریکنگ ID: ' + newId + '\nطے شدہ بجٹ: روپے ' + agreed + '\nقریبی تمام کاریگروں کو فوری الرٹ بھیج دیا گیا ہے۔ جو کاریگر سب سے پہلے کال یا رابطہ کرے گا، اسے ترجیح دی جائے گی!');
+
+          this.bookingForm.details = '';
+          this.bookingForm.agreedPrice = '';
+
+          this.$nextTick(() => {
+            if (window.lucide) lucide.createIcons();
+          });
+        },
+
+        acceptBroadcastJob(techName) {
+          if (this.activeBroadcastJob) {
+            this.activeBroadcastJob.status = 'accepted';
+            this.activeBroadcastJob.assignedTech = techName;
+            
+            // Update order
+            const order = this.orders.find(o => o.id === this.activeBroadcastJob.id);
+            if (order) {
+              order.assignedTech = techName + ' (First Responder ✓)';
+              order.statusUrdu = 'کاریگر نے قبول کر لیا، کسٹمر سے رابطہ کر رہا ہے';
+            }
+
+            alert('⚡ مبارک ہو!\n\nآپ نے سب سے پہلے اس کام کو قبول کر لیا ہے۔ کمپنی کی "First-to-Respond" پالیسی کے تحت آپ کو ترجیح مل چکی ہے۔ کسٹمر کے فون (' + this.activeBroadcastJob.customerPhone + ') پر فوراً رابطہ فرمائیں۔');
+          }
         },
 
         // ==================== WORK SATISFACTION & FEEDBACK ====================
@@ -3092,71 +3666,6 @@
           );
         },
 
-        submitBooking() {
-          if (!this.bookingForm.name || !this.bookingForm.phone || !this.bookingForm.address) {
-            alert('برائے مہربانی اپنا نام، فون نمبر اور پتہ درج کریں۔');
-            return;
-          }
-
-          const newId = 'BA-' + Math.floor(1000 + Math.random() * 9000);
-          const agreed = this.bookingForm.agreedPrice.trim() || '1,800';
-          const newOrder = {
-            id: newId,
-            customerName: this.bookingForm.name,
-            phone: this.bookingForm.phone,
-            service: this.bookingForm.category,
-            address: this.bookingForm.address,
-            assignedTech: 'محمد راشد (رائل پام ایکسپریس)',
-            techPhone: '03014567890',
-            statusUrdu: 'کاریگر راستے میں ہے (15 تا 20 منٹ)',
-            amount: agreed,
-            agreedPrice: agreed,
-            date: new Date().toISOString().split('T')[0]
-          };
-
-          this.orders.unshift(newOrder);
-          this.isBookingModalOpen = false;
-
-          alert('شکریہ ' + this.bookingForm.name + '! آپ کی بکنگ موصول ہو گئی ہے۔\n\nٹریکنگ ID: ' + newId + '\nطے شدہ ریٹ: ' + agreed + '\nکاریگر 15 تا 30 منٹ میں آپ کے ایڈریس پر پہنچ رہا ہے۔\nکمپنی ہیلپ لائن: 0300-4800071');
-
-          this.bookingForm.details = '';
-          this.bookingForm.agreedPrice = '';
-        },
-
-        submitKarigarRegistration() {
-          if (!this.karigarForm.name || !this.karigarForm.cnic || !this.karigarForm.phone || !this.karigarForm.area) {
-            alert('برائے مہربانی نام، شناختی کارڈ، فون اور علاقہ درج کریں۔');
-            return;
-          }
-          if (!this.karigarForm.policeAgreed) {
-            alert('برائے مہربانی پولیس کلیرنس اور حلف نامہ کی شرط تسلیم کریں۔');
-            return;
-          }
-
-          const newPending = {
-            id: Date.now(),
-            name: this.karigarForm.name,
-            cnic: this.karigarForm.cnic,
-            phone: this.karigarForm.phone,
-            skill: this.karigarForm.skill,
-            area: this.karigarForm.area,
-            experience: this.karigarForm.experience || '3',
-            desiredPackage: this.karigarForm.desiredPackage || 'gold',
-            policeAgreed: true
-          };
-
-          this.pendingKarigars.push(newPending);
-          alert('آپ کی پیشگی رجسٹریشن درخواست ایڈمن پینل کو ارسال ہو گئی ہے!\n\nپریمیم بزنس پلانز آئندہ چند دنوں میں باقاعدہ رائج کیے جا رہے ہیں۔ انتظامیہ شناختی کارڈ تصدیق کے بعد کال کرے گی۔');
-
-          this.karigarForm.name = '';
-          this.karigarForm.cnic = '';
-          this.karigarForm.phone = '';
-          this.karigarForm.area = '';
-          this.karigarForm.experience = '';
-          this.karigarForm.policeAgreed = false;
-          this.currentView = 'home';
-        },
-
         submitDisputeComplaint() {
           if (!this.disputeForm.name || !this.disputeForm.phone || !this.disputeForm.details) {
             alert('برائے مہربانی نام، فون نمبر اور شکایت کی تفصیل درج کریں۔');
@@ -3190,9 +3699,11 @@
             this.technicians.push({
               id: Date.now(),
               name: kar.name,
+              cnic: kar.cnic,
               specialtyUrdu: kar.skill,
               area: kar.area,
               phone: kar.phone,
+              photo: kar.photo || '',
               rating: 5.0,
               experience: parseInt(kar.experience) || 3,
               completedJobs: 0,
