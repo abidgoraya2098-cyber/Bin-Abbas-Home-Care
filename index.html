@@ -98,14 +98,14 @@
       height: 7px;
     }
     ::-webkit-scrollbar-track {
-      background: #f1f5f9;
+      background: #0f172a;
     }
     ::-webkit-scrollbar-thumb {
       background: #0d9488;
       border-radius: 4px;
     }
     ::-webkit-scrollbar-thumb:hover {
-      background: #0f766e;
+      background: #f59e0b;
     }
 
     /* Flawless Urdu Typography */
@@ -171,7 +171,7 @@
   x-data="homeCareApp()" 
   x-init="initApp()" 
   dir="rtl"
-  class="bg-slate-50 text-slate-800 antialiased selection:bg-brand-500 selection:text-white pb-28 md:pb-0 overflow-x-hidden"
+  class="bg-slate-100 text-slate-900 antialiased selection:bg-brand-600 selection:text-white pb-28 md:pb-0 overflow-x-hidden"
 >
 
   <!-- ==================== INTRO ANIMATED SPLASH SCREEN ==================== -->
@@ -180,7 +180,7 @@
     x-transition:leave="transition-all ease-out duration-500" 
     x-transition:leave-start="opacity-100 scale-100" 
     x-transition:leave-end="opacity-0 scale-105 pointer-events-none"
-    class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-gradient-to-br from-slate-950 via-teal-950 to-emerald-950 text-white"
+    class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-gradient-to-br from-slate-950 via-teal-950 to-slate-950 text-white"
     style="z-index: 9999;"
   >
     <div class="absolute w-80 h-80 bg-emerald-500/25 rounded-full blur-3xl animate-pulse"></div>
@@ -189,7 +189,7 @@
     <div class="relative z-10 flex flex-col items-center text-center p-6 max-w-sm">
       <div class="relative w-28 h-28 mb-4">
         <div class="absolute inset-0 rounded-3xl bg-teal-400/30 animate-ping"></div>
-        <div class="relative w-full h-full rounded-3xl bg-gradient-to-tr from-brand-600 to-emerald-400 p-1.5 shadow-2xl flex items-center justify-center border-2 border-emerald-400/50 shadow-emerald-500/40">
+        <div class="relative w-full h-full rounded-3xl bg-gradient-to-tr from-slate-900 to-teal-900 p-1.5 shadow-2xl flex items-center justify-center border-2 border-emerald-400/50 shadow-emerald-500/40">
           <img src="icon-512.png" alt="B.A.H.Care Logo" class="w-full h-full object-contain rounded-2xl animate-bounce" />
         </div>
       </div>
@@ -214,8 +214,8 @@
     </div>
   </div>
 
-  <!-- TOP EMERGENCY & HIGHLIGHTS BAR -->
-  <div class="bg-gradient-to-r from-emerald-900 via-teal-900 to-slate-900 text-white text-xs py-2 px-3 sm:px-4 shadow-sm border-b border-teal-700/40">
+  <!-- TOP EMERGENCY & HIGHLIGHTS BAR (DEEP CONTRAST WITH SHARE BUTTON) -->
+  <div class="bg-gradient-to-r from-slate-950 via-teal-950 to-slate-950 text-white text-xs py-2 px-3 sm:px-4 shadow-md border-b border-teal-600/40">
     <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
       <div class="flex items-center gap-2 min-w-0">
         <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-black bg-amber-400 text-slate-950 flex-shrink-0 pulse-glow">
@@ -227,6 +227,19 @@
         </span>
       </div>
       <div class="flex items-center gap-2 sm:gap-3 text-xs flex-shrink-0">
+        
+        <!-- NEW: APP SHARE BUTTON IN TOP BAR -->
+        <button 
+          @click="shareApp()" 
+          class="text-amber-300 hover:text-white font-bold flex items-center gap-1 bg-white/10 hover:bg-white/20 px-2.5 py-0.5 rounded-lg border border-amber-400/40 transition-all shadow-xs" 
+          title="ایپ دوستوں اور فیملی کے ساتھ شیئر کریں"
+        >
+          <i data-lucide="share-2" class="w-3.5 h-3.5 text-amber-400"></i>
+          <span>شیئر کریں</span>
+        </button>
+
+        <span class="text-teal-500/70 hidden sm:inline">|</span>
+
         <!-- Customer Status in Top Bar -->
         <button 
           @click="openCustomerModal()" 
@@ -247,7 +260,7 @@
           <span>شکایت سیل</span>
         </button>
         <span class="text-teal-500/70 hidden sm:inline">|</span>
-        <button @click="promptAdminLogin()" class="text-amber-300 hover:text-amber-200 font-bold flex items-center gap-1 bg-black/30 px-2 py-0.5 rounded border border-amber-400/40" title="ایڈمن لاگ ان">
+        <button @click="promptAdminLogin()" class="text-amber-300 hover:text-amber-200 font-bold flex items-center gap-1 bg-black/40 px-2 py-0.5 rounded border border-amber-400/40" title="ایڈمن لاگ ان">
           <i data-lucide="lock" class="w-3 h-3 text-amber-400"></i>
           <span>🔐 ایڈمن</span>
         </button>
@@ -260,82 +273,92 @@
     </div>
   </div>
 
-  <!-- NAVBAR -->
-  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm transition-all duration-300">
+  <!-- NAVBAR (DEEP ACCENT BORDER & SHADOW) -->
+  <header class="sticky top-0 z-40 bg-white/98 backdrop-blur-md border-b-2 border-brand-700/30 shadow-md transition-all duration-300">
     <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
       <div class="flex justify-between items-center h-16 sm:h-20">
         
         <!-- Logo & Branding -->
         <div class="flex items-center gap-2 sm:gap-3 cursor-pointer min-w-0" @click="currentView = 'home'; window.scrollTo({top:0, behavior:'smooth'})">
-          <img src="icon-192.png" alt="B.A.H.Care لوگو" class="w-11 h-11 sm:w-13 sm:h-13 rounded-xl sm:rounded-2xl shadow-md border border-teal-500/20 object-contain hover:scale-105 transition-transform flex-shrink-0" />
+          <img src="icon-192.png" alt="B.A.H.Care لوگو" class="w-11 h-11 sm:w-13 sm:h-13 rounded-xl sm:rounded-2xl shadow-md border-2 border-brand-600/30 object-contain hover:scale-105 transition-transform flex-shrink-0" />
           <div class="min-w-0">
             <div class="flex items-center gap-1.5 sm:gap-2">
               <h1 class="text-base sm:text-xl lg:text-2xl font-black tracking-tight text-slate-900 leading-snug truncate">
-                <span class="text-brand-600">بن عباس</span> ہوم کیئر
+                <span class="text-brand-700">بن عباس</span> ہوم کیئر
               </h1>
-              <span class="font-brand-latin text-[10px] font-black px-1.5 py-0.5 bg-amber-400 text-slate-950 rounded-md tracking-wider flex-shrink-0" dir="ltr">
+              <span class="font-brand-latin text-[10px] font-black px-2 py-0.5 bg-amber-400 text-slate-950 rounded-md tracking-wider flex-shrink-0 shadow-xs" dir="ltr">
                 B.A.H.Care
               </span>
-              <span class="hidden xl:inline-block text-[10px] uppercase font-bold px-2 py-0.5 bg-emerald-100 text-emerald-800 rounded-md flex-shrink-0">
+              <span class="hidden xl:inline-block text-[10px] uppercase font-bold px-2 py-0.5 bg-emerald-100 text-emerald-900 border border-emerald-300 rounded-md flex-shrink-0">
                 🌴 رائل پام سٹی
               </span>
             </div>
-            <p class="hidden sm:block text-xs text-slate-500 font-medium truncate">
+            <p class="hidden sm:block text-xs text-slate-600 font-bold truncate">
               کمپنی ہیلپ لائن: 0300-4800071 • منظور شدہ کاریگرز و براہِ راست باہمی ریٹس
             </p>
           </div>
         </div>
 
         <!-- Desktop Navigation Links -->
-        <nav class="hidden lg:flex items-center gap-2 xl:gap-3 text-xs sm:text-sm font-semibold text-slate-700">
-          <button @click="currentView = 'home'" :class="currentView === 'home' ? 'text-brand-600 font-bold bg-brand-50 px-2.5 py-1 rounded-lg' : 'hover:text-brand-600'" class="transition-colors">ہوم پیج</button>
+        <nav class="hidden lg:flex items-center gap-2 xl:gap-3 text-xs sm:text-sm font-bold text-slate-800">
+          <button @click="currentView = 'home'" :class="currentView === 'home' ? 'text-brand-700 font-black bg-brand-50 border border-brand-200 px-2.5 py-1.5 rounded-lg' : 'hover:text-brand-700'" class="transition-colors">ہوم پیج</button>
           
-          <button @click="openSocietiesModal()" class="hover:text-brand-600 transition-colors flex items-center gap-1 text-emerald-700 font-bold bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200 shadow-xs">
-            <i data-lucide="map-pin" class="w-3.5 h-3.5 text-emerald-600"></i>
+          <button @click="openSocietiesModal()" class="hover:text-brand-700 transition-colors flex items-center gap-1 text-emerald-800 font-bold bg-emerald-50 px-2.5 py-1.5 rounded-lg border border-emerald-300 shadow-xs">
+            <i data-lucide="map-pin" class="w-3.5 h-3.5 text-emerald-700"></i>
             <span>سوسائٹیز</span>
           </button>
 
-          <button @click="currentView = 'market-rates'" :class="currentView === 'market-rates' ? 'text-brand-600 font-bold bg-brand-50 px-2.5 py-1 rounded-lg' : 'hover:text-brand-600'" class="transition-colors flex items-center gap-1">
-            <i data-lucide="shopping-cart" class="w-3.5 h-3.5 text-amber-500"></i>
+          <button @click="currentView = 'market-rates'" :class="currentView === 'market-rates' ? 'text-amber-900 font-black bg-amber-100 border border-amber-300 px-2.5 py-1.5 rounded-lg' : 'hover:text-amber-700'" class="transition-colors flex items-center gap-1">
+            <i data-lucide="shopping-cart" class="w-3.5 h-3.5 text-amber-600"></i>
             <span>سامان کے ریٹس</span>
           </button>
 
-          <button @click="currentView = 'estimator'" :class="currentView === 'estimator' ? 'text-brand-600 font-bold bg-brand-50 px-2.5 py-1 rounded-lg' : 'hover:text-brand-600'" class="transition-colors flex items-center gap-1">
-            <i data-lucide="calculator" class="w-3.5 h-3.5 text-emerald-500"></i>
+          <button @click="currentView = 'estimator'" :class="currentView === 'estimator' ? 'text-teal-900 font-black bg-teal-100 border border-teal-300 px-2.5 py-1.5 rounded-lg' : 'hover:text-teal-700'" class="transition-colors flex items-center gap-1">
+            <i data-lucide="calculator" class="w-3.5 h-3.5 text-teal-700"></i>
             <span>لاگت کیلکولیٹر</span>
           </button>
 
-          <button @click="currentView = 'join-karigar'" :class="currentView === 'join-karigar' ? 'text-amber-700 font-bold bg-amber-50 px-2.5 py-1 rounded-lg' : 'hover:text-amber-600'" class="transition-colors flex items-center gap-1">
-            <i data-lucide="briefcase" class="w-3.5 h-3.5 text-amber-600"></i>
+          <button @click="currentView = 'join-karigar'" :class="currentView === 'join-karigar' ? 'text-purple-900 font-black bg-purple-100 border border-purple-300 px-2.5 py-1.5 rounded-lg' : 'hover:text-purple-700'" class="transition-colors flex items-center gap-1">
+            <i data-lucide="briefcase" class="w-3.5 h-3.5 text-purple-700"></i>
             <span>کاریگر پورٹل و پیکجز</span>
           </button>
 
-          <button @click="openDisputeModal()" class="hover:text-rose-600 transition-colors flex items-center gap-1 text-rose-700 font-bold bg-rose-50 px-2 py-1 rounded-lg border border-rose-200">
+          <button @click="openDisputeModal()" class="hover:text-rose-700 transition-colors flex items-center gap-1 text-rose-800 font-bold bg-rose-50 px-2.5 py-1.5 rounded-lg border border-rose-300">
             <i data-lucide="shield-alert" class="w-3.5 h-3.5 text-rose-600"></i>
             <span>شکایت سیل</span>
           </button>
           
-          <button @click="openTrackerModal()" class="hover:text-brand-600 flex items-center gap-1 text-slate-700 font-semibold">
-            <i data-lucide="search" class="w-3.5 h-3.5 text-brand-600"></i>
+          <button @click="openTrackerModal()" class="hover:text-brand-700 flex items-center gap-1 text-slate-800 font-bold">
+            <i data-lucide="search" class="w-3.5 h-3.5 text-brand-700"></i>
             <span>ٹریکر و فیڈ بیک</span>
           </button>
 
-          <button @click="promptAdminLogin()" class="flex items-center gap-1 text-xs px-2.5 py-1 rounded-lg border border-amber-300 bg-amber-50 text-amber-900 font-bold hover:bg-amber-100 shadow-xs" title="ایڈمن لاگ ان">
-            <i data-lucide="key" class="w-3.5 h-3.5 text-amber-600"></i>
+          <button @click="promptAdminLogin()" class="flex items-center gap-1 text-xs px-2.5 py-1.5 rounded-lg border border-amber-400 bg-amber-50 text-amber-950 font-black hover:bg-amber-100 shadow-xs" title="ایڈمن لاگ ان">
+            <i data-lucide="key" class="w-3.5 h-3.5 text-amber-700"></i>
             <span x-text="isAdminLoggedIn ? 'ایڈمن کنٹرول ✓' : 'ایڈمن'"></span>
           </button>
         </nav>
 
         <!-- Right Action Buttons -->
-        <div class="flex items-center gap-1.5 sm:gap-2.5 flex-shrink-0">
+        <div class="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
           
+          <!-- NEW: APP SHARE BUTTON IN NAVBAR -->
+          <button 
+            @click="shareApp()"
+            class="inline-flex items-center gap-1 px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-xl bg-teal-50 hover:bg-teal-100 text-teal-900 border border-teal-300 font-bold text-xs shadow-xs transition-all flex-shrink-0"
+            title="ایپ دوستوں اور فیملی کے ساتھ شیئر کریں"
+          >
+            <i data-lucide="share-2" class="w-3.5 h-3.5 text-teal-700"></i>
+            <span class="hidden sm:inline">شیئر کریں</span>
+          </button>
+
           <!-- Customer Profile Button -->
           <button 
             @click="openCustomerModal()" 
-            class="inline-flex items-center gap-1 px-2.5 sm:px-3 py-1.5 rounded-xl border border-slate-200 bg-slate-50 hover:bg-brand-50 text-slate-800 text-xs font-bold transition-all"
+            class="inline-flex items-center gap-1 px-2.5 sm:px-3 py-1.5 rounded-xl border border-slate-300 bg-slate-100 hover:bg-brand-50 text-slate-900 text-xs font-bold transition-all"
             :title="customerUser.isLoggedIn ? 'آپ کا کسٹمر اکاؤنٹ لاگ ان ہے' : 'کسٹمر اکاؤنٹ بنائیں'"
           >
-            <i data-lucide="user" class="w-3.5 h-3.5 text-brand-600"></i>
+            <i data-lucide="user" class="w-3.5 h-3.5 text-brand-700"></i>
             <span class="truncate max-w-[85px] sm:max-w-[120px]" x-text="customerUser.isLoggedIn ? customerUser.name : 'کسٹمر شمولیت'"></span>
           </button>
 
@@ -354,7 +377,7 @@
           <!-- Helpline Direct Call -->
           <a 
             :href="'tel:' + businessPhone" 
-            class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-amber-300 font-black text-xs shadow-sm transition-all border border-amber-400/30"
+            class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-950 hover:bg-slate-900 text-amber-300 font-black text-xs shadow-sm transition-all border border-amber-400/40"
             title="کمپنی ہیلپ لائن: 0300-4800071"
           >
             <i data-lucide="phone" class="w-3.5 h-3.5 text-amber-400"></i>
@@ -364,7 +387,7 @@
           <!-- Book Now CTA Button -->
           <button 
             @click="requestBookingDirect()"
-            class="inline-flex items-center justify-center gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl bg-gradient-to-r from-brand-600 to-teal-600 hover:from-brand-700 hover:to-teal-700 text-white font-bold text-xs sm:text-sm shadow-md shadow-brand-600/20 transition-all flex-shrink-0"
+            class="inline-flex items-center justify-center gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl bg-gradient-to-r from-brand-700 to-teal-700 hover:from-brand-800 hover:to-teal-800 text-white font-bold text-xs sm:text-sm shadow-md shadow-brand-700/25 transition-all flex-shrink-0"
           >
             <i data-lucide="calendar-plus" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
             <span>ابھی بک کریں</span>
@@ -373,7 +396,7 @@
           <!-- Mobile Hamburger Menu Button -->
           <button 
             @click="isMobileMenuOpen = !isMobileMenuOpen; $nextTick(() => { if (window.lucide) lucide.createIcons(); })"
-            class="lg:hidden p-2 rounded-xl border border-slate-200 text-slate-700 hover:text-brand-600 hover:bg-slate-50 transition-colors flex-shrink-0"
+            class="lg:hidden p-2 rounded-xl border border-slate-300 text-slate-800 hover:text-brand-700 hover:bg-slate-100 transition-colors flex-shrink-0"
             aria-label="Toggle Navigation Menu"
           >
             <i :data-lucide="isMobileMenuOpen ? 'x' : 'menu'" class="w-5 h-5"></i>
@@ -392,74 +415,83 @@
         x-transition:leave-start="opacity-100 translate-y-0"
         x-transition:leave-end="opacity-0 -translate-y-2"
         x-cloak
-        class="lg:hidden py-3 border-t border-slate-100 bg-white shadow-xl rounded-b-2xl"
+        class="lg:hidden py-3 border-t border-slate-200 bg-white shadow-xl rounded-b-2xl"
       >
         <div class="grid grid-cols-2 gap-2 p-2 text-xs font-bold">
           
           <!-- Customer Status Header in Drawer -->
-          <div class="col-span-2 p-3 bg-gradient-to-r from-brand-50 to-teal-50 rounded-xl border border-brand-200 flex items-center justify-between">
+          <div class="col-span-2 p-3 bg-gradient-to-r from-brand-100 to-teal-100 rounded-xl border border-brand-300 flex items-center justify-between">
             <div class="flex items-center gap-2 min-w-0">
-              <div class="w-8 h-8 rounded-full bg-brand-600 text-white flex items-center justify-center font-bold flex-shrink-0">
+              <div class="w-8 h-8 rounded-full bg-brand-700 text-white flex items-center justify-center font-bold flex-shrink-0">
                 <span x-text="customerUser.isLoggedIn ? customerUser.name.charAt(0) : '؟'"></span>
               </div>
               <div class="min-w-0">
-                <div class="text-xs font-bold text-slate-900 truncate" x-text="customerUser.isLoggedIn ? customerUser.name : 'کسٹمر شمولیت درکار'"></div>
-                <div class="text-[10px] text-slate-500 font-mono truncate" x-text="customerUser.isLoggedIn ? customerUser.phone : 'کاریگر رابطے کیلئے لاگ ان کریں'"></div>
+                <div class="text-xs font-black text-slate-900 truncate" x-text="customerUser.isLoggedIn ? customerUser.name : 'کسٹمر شمولیت درکار'"></div>
+                <div class="text-[10px] text-slate-600 font-mono truncate" x-text="customerUser.isLoggedIn ? customerUser.phone : 'کاریگر رابطے کیلئے لاگ ان کریں'"></div>
               </div>
             </div>
             <button 
               @click="openCustomerModal(); isMobileMenuOpen = false" 
-              class="px-2.5 py-1 bg-brand-600 text-white text-[11px] rounded-lg shadow-xs"
+              class="px-2.5 py-1 bg-brand-700 text-white text-[11px] rounded-lg shadow-xs font-bold"
               x-text="customerUser.isLoggedIn ? 'پروفائل' : 'شمولیت'"
             ></button>
           </div>
 
           <button 
             @click="currentView = 'home'; isMobileMenuOpen = false; window.scrollTo({top:0, behavior:'smooth'})" 
-            class="flex items-center gap-2 p-2.5 rounded-xl bg-slate-50 text-slate-800 hover:bg-brand-50 hover:text-brand-700 text-start"
+            class="flex items-center gap-2 p-2.5 rounded-xl bg-slate-100 text-slate-900 hover:bg-brand-50 hover:text-brand-700 text-start"
           >
-            <i data-lucide="home" class="w-4 h-4 text-brand-600"></i>
+            <i data-lucide="home" class="w-4 h-4 text-brand-700"></i>
             <span>ہوم پیج</span>
           </button>
 
           <button 
             @click="openSocietiesModal(); isMobileMenuOpen = false" 
-            class="flex items-center gap-2 p-2.5 rounded-xl bg-emerald-50 text-emerald-800 hover:bg-emerald-100 text-start"
+            class="flex items-center gap-2 p-2.5 rounded-xl bg-emerald-50 text-emerald-950 hover:bg-emerald-100 text-start border border-emerald-200"
           >
-            <i data-lucide="map-pin" class="w-4 h-4 text-emerald-600"></i>
+            <i data-lucide="map-pin" class="w-4 h-4 text-emerald-700"></i>
             <span>تمام سوسائٹیز</span>
           </button>
 
           <button 
             @click="currentView = 'market-rates'; isMobileMenuOpen = false" 
-            class="flex items-center gap-2 p-2.5 rounded-xl bg-amber-50 text-amber-900 hover:bg-amber-100 text-start"
+            class="flex items-center gap-2 p-2.5 rounded-xl bg-amber-50 text-amber-950 hover:bg-amber-100 text-start border border-amber-200"
           >
-            <i data-lucide="shopping-cart" class="w-4 h-4 text-amber-600"></i>
+            <i data-lucide="shopping-cart" class="w-4 h-4 text-amber-700"></i>
             <span>سامان کے ریٹس</span>
           </button>
 
           <button 
             @click="currentView = 'estimator'; isMobileMenuOpen = false" 
-            class="flex items-center gap-2 p-2.5 rounded-xl bg-teal-50 text-teal-900 hover:bg-teal-100 text-start"
+            class="flex items-center gap-2 p-2.5 rounded-xl bg-teal-50 text-teal-950 hover:bg-teal-100 text-start border border-teal-200"
           >
-            <i data-lucide="calculator" class="w-4 h-4 text-teal-600"></i>
+            <i data-lucide="calculator" class="w-4 h-4 text-teal-700"></i>
             <span>لاگت کیلکولیٹر</span>
           </button>
 
           <button 
             @click="currentView = 'join-karigar'; isMobileMenuOpen = false" 
-            class="flex items-center gap-2 p-2.5 rounded-xl bg-slate-50 text-slate-800 hover:bg-brand-50 hover:text-brand-700 text-start"
+            class="flex items-center gap-2 p-2.5 rounded-xl bg-purple-50 text-purple-950 hover:bg-purple-100 text-start border border-purple-200"
           >
-            <i data-lucide="briefcase" class="w-4 h-4 text-amber-600"></i>
+            <i data-lucide="briefcase" class="w-4 h-4 text-purple-700"></i>
             <span>کاریگر پورٹل و پیکجز</span>
           </button>
 
           <button 
             @click="openDisputeModal(); isMobileMenuOpen = false" 
-            class="flex items-center gap-2 p-2.5 rounded-xl bg-rose-50 text-rose-800 hover:bg-rose-100 text-start"
+            class="flex items-center gap-2 p-2.5 rounded-xl bg-rose-50 text-rose-900 hover:bg-rose-100 text-start border border-rose-200"
           >
             <i data-lucide="shield-alert" class="w-4 h-4 text-rose-600"></i>
             <span>شکایت و انصاف سیل</span>
+          </button>
+
+          <!-- Drawer Share Button -->
+          <button 
+            @click="shareApp(); isMobileMenuOpen = false" 
+            class="col-span-2 flex items-center justify-center gap-2 p-2.5 rounded-xl bg-teal-100 hover:bg-teal-200 text-teal-950 font-black text-center border border-teal-300 shadow-xs"
+          >
+            <i data-lucide="share-2" class="w-4 h-4 text-teal-800"></i>
+            <span>🔗 ایپ دوستوں اور فیملی سے شیئر کریں</span>
           </button>
 
           <!-- Drawer Install Button (AUTO-HIDES ONCE APP IS INSTALLED) -->
@@ -475,7 +507,7 @@
 
           <button 
             @click="promptAdminLogin(); isMobileMenuOpen = false" 
-            class="col-span-2 flex items-center justify-center gap-2 p-2.5 rounded-xl bg-slate-900 text-amber-300 font-black text-center border border-amber-400/40"
+            class="col-span-2 flex items-center justify-center gap-2 p-2.5 rounded-xl bg-slate-950 text-amber-300 font-black text-center border border-amber-400/40"
           >
             <i data-lucide="key" class="w-4 h-4 text-amber-400"></i>
             <span x-text="isAdminLoggedIn ? 'ایڈمن کنٹرول پینل میں داخل ہوں ✓' : '🔐 ایڈمن پینل لاگ ان'"></span>
@@ -483,7 +515,7 @@
 
           <a 
             :href="'tel:' + businessPhone" 
-            class="col-span-2 flex items-center justify-center gap-2 p-2.5 rounded-xl bg-emerald-600 text-white font-black text-center"
+            class="col-span-2 flex items-center justify-center gap-2 p-2.5 rounded-xl bg-emerald-700 text-white font-black text-center shadow-md"
           >
             <i data-lucide="phone-call" class="w-4 h-4"></i>
             <span>کمپنی ہیلپ لائن: 0300-4800071</span>
@@ -499,10 +531,10 @@
     <!-- ==================== VIEW 1: HOME VIEW ==================== -->
     <div x-show="currentView === 'home'" x-cloak>
       
-      <!-- HERO SECTION (BALANCED FOR BOTH COMPUTER AND MOBILE) -->
-      <section class="relative overflow-hidden bg-gradient-to-b from-teal-50/70 via-white to-slate-50 pt-8 pb-12 md:py-16 border-b border-slate-200/60">
-        <div class="absolute -top-24 -right-24 w-96 h-96 bg-brand-200/30 rounded-full blur-3xl pointer-events-none"></div>
-        <div class="absolute top-1/2 -left-24 w-80 h-80 bg-amber-200/20 rounded-full blur-3xl pointer-events-none"></div>
+      <!-- HERO SECTION (RICH COLOR SCHEME WITH HIGH CONTRAST) -->
+      <section class="relative overflow-hidden bg-gradient-to-b from-teal-100/60 via-slate-100 to-slate-200/80 pt-8 pb-14 md:py-18 border-b-2 border-slate-300">
+        <div class="absolute -top-24 -right-24 w-96 h-96 bg-brand-300/30 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute top-1/2 -left-24 w-80 h-80 bg-amber-300/25 rounded-full blur-3xl pointer-events-none"></div>
 
         <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 relative z-10">
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
@@ -510,34 +542,36 @@
             <!-- Hero Left (7 Columns) -->
             <div class="lg:col-span-7 space-y-4 text-center lg:text-start">
               
-              <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-100/90 border border-emerald-200 text-emerald-950 text-xs sm:text-sm font-bold shadow-xs">
-                <span class="w-2.5 h-2.5 rounded-full bg-emerald-600 animate-ping"></span>
+              <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-900 text-emerald-100 text-xs sm:text-sm font-black shadow-md border border-emerald-700">
+                <span class="w-2.5 h-2.5 rounded-full bg-amber-400 animate-ping"></span>
                 <span>🌴 رائل پام سٹی گوجرانوالہ (فلیگ شپ) • منظور شدہ کاریگرز پورٹل</span>
               </div>
 
-              <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-normal break-words">
+              <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-slate-950 tracking-tight leading-normal break-words">
                 گھر کی ہر مرمت و فٹنگ اب
-                <span class="block mt-1 bg-gradient-to-r from-brand-700 via-teal-600 to-emerald-600 bg-clip-text text-transparent">
+                <span class="block mt-1 bg-gradient-to-r from-brand-800 via-teal-700 to-emerald-700 bg-clip-text text-transparent">
                   100% گارنٹی اور تحفظ کے ساتھ
                 </span>
               </h1>
 
-              <p class="text-sm sm:text-base md:text-lg text-slate-600 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-medium">
+              <p class="text-sm sm:text-base md:text-lg text-slate-700 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-bold">
                 رائل پام سٹی، ڈی سی کالونی، سٹی ہاؤسنگ، ماڈل ٹاؤن اور گوجرانوالہ کے رہائشیوں کے لیے نادرا و پولیس تصدیق شدہ الیکٹریشن، پلمبر، اے سی اور گیس چولہا ٹیکنیشنز—15 تا 30 منٹ میں آپ کی دہلیز پر۔
               </p>
 
               <!-- Mutual Agreement & Verified Notice Card -->
-              <div class="p-3 bg-emerald-50/80 border border-emerald-200 rounded-2xl text-xs text-emerald-900 flex items-center gap-2.5 max-w-2xl mx-auto lg:mx-0 text-start">
-                <i data-lucide="handshake" class="w-5 h-5 text-emerald-600 flex-shrink-0"></i>
+              <div class="p-3.5 bg-white border-2 border-emerald-600/60 rounded-2xl text-xs text-slate-900 flex items-center gap-3 max-w-2xl mx-auto lg:mx-0 text-start shadow-sm">
+                <div class="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center flex-shrink-0 font-bold">
+                  <i data-lucide="handshake" class="w-5 h-5"></i>
+                </div>
                 <div>
-                  <strong>باہمی رضامندی و آزادی:</strong> کسٹمر اور کاریگر کام کا ریٹ باہم خود بھی طے کر سکتے ہیں۔ تمام کاریگر کمپنی سے مصدقہ ہیں۔
+                  <strong class="text-emerald-900 font-black">باہمی رضامندی و آزادی:</strong> کسٹمر اور کاریگر کام کا ریٹ باہم خود بھی طے کر سکتے ہیں۔ تمام کاریگر کمپنی سے مصدقہ ہیں۔
                 </div>
               </div>
 
               <!-- Quick Search with Search Suggestions -->
               <div class="pt-1 max-w-2xl mx-auto lg:mx-0">
-                <div class="relative flex items-center bg-white p-1.5 sm:p-2 rounded-2xl shadow-lg border border-slate-200 focus-within:border-brand-500 focus-within:ring-2 focus-within:ring-brand-200 transition-all">
-                  <div class="p-2 text-brand-600">
+                <div class="relative flex items-center bg-white p-1.5 sm:p-2 rounded-2xl shadow-xl border-2 border-brand-600/40 focus-within:border-brand-600 focus-within:ring-2 focus-within:ring-brand-200 transition-all">
+                  <div class="p-2 text-brand-700">
                     <i data-lucide="search" class="w-5 h-5"></i>
                   </div>
                   <input 
@@ -546,26 +580,26 @@
                     @input="scrollToServices()"
                     @keydown.enter="scrollToServices()"
                     placeholder="سروس تلاش کریں (مثلاً پلمبر، اے سی، گیس چولہا، الیکٹریشن، پینٹ)..."
-                    class="w-full px-2 sm:px-3 py-2 bg-transparent text-xs sm:text-sm md:text-base outline-none text-slate-800 placeholder-slate-400 font-medium"
+                    class="w-full px-2 sm:px-3 py-2 bg-transparent text-xs sm:text-sm md:text-base outline-none text-slate-900 placeholder-slate-500 font-bold"
                   />
                   <button 
                     @click="scrollToServices()"
-                    class="px-4 sm:px-6 py-2 sm:py-2.5 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs sm:text-sm font-bold flex-shrink-0 transition-colors shadow-sm"
+                    class="px-4 sm:px-6 py-2 sm:py-2.5 bg-brand-700 hover:bg-brand-800 text-white rounded-xl text-xs sm:text-sm font-black flex-shrink-0 transition-colors shadow-md"
                   >
                     <span>تلاش کریں</span>
                   </button>
                 </div>
               </div>
 
-              <!-- ==================== FAST SOCIETIES SELECTOR ==================== -->
+              <!-- FAST SOCIETIES SELECTOR -->
               <div class="pt-1 max-w-2xl mx-auto lg:mx-0">
-                <div class="p-3.5 bg-gradient-to-r from-emerald-50 via-teal-50 to-emerald-50 rounded-2xl border border-emerald-200/90 shadow-sm space-y-2">
-                  <div class="flex items-center justify-between text-xs font-bold text-slate-800">
+                <div class="p-3.5 bg-white rounded-2xl border-2 border-emerald-500/40 shadow-md space-y-2">
+                  <div class="flex items-center justify-between text-xs font-black text-slate-900">
                     <span class="flex items-center gap-1.5">
-                      <span class="p-1 bg-emerald-600 text-white rounded-md flex-shrink-0"><i data-lucide="map-pin" class="w-3.5 h-3.5"></i></span>
+                      <span class="p-1 bg-emerald-700 text-white rounded-md flex-shrink-0"><i data-lucide="map-pin" class="w-3.5 h-3.5"></i></span>
                       <span>سروس سوسائٹیز (15 تا 30 منٹ ایکسپریس آمد):</span>
                     </span>
-                    <button @click="openSocietiesModal()" class="text-brand-700 hover:text-brand-900 underline text-xs font-bold">
+                    <button @click="openSocietiesModal()" class="text-brand-700 hover:text-brand-900 underline text-xs font-black">
                       تمام سوسائٹیز →
                     </button>
                   </div>
@@ -574,9 +608,9 @@
                     <template x-for="soc in ['🌴 رائل پام سٹی', 'ڈی ایچ اے', 'سٹی ہاؤسنگ', 'ڈی سی کالونی', 'ماڈل ٹاؤن', 'ماسٹر سٹی', 'پیپلز کالونی', 'بحریہ ٹاؤن']" :key="soc">
                       <button 
                         @click="selectSociety(soc)"
-                        class="px-2.5 py-1 bg-white hover:bg-brand-600 hover:text-white border border-emerald-200/80 rounded-lg text-xs font-semibold text-slate-700 transition-all shadow-xs flex items-center gap-1"
+                        class="px-2.5 py-1 bg-slate-100 hover:bg-brand-700 hover:text-white border border-slate-300 rounded-lg text-xs font-bold text-slate-800 transition-all shadow-xs flex items-center gap-1"
                       >
-                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
                         <span x-text="soc"></span>
                       </button>
                     </template>
@@ -588,7 +622,7 @@
               <div class="grid grid-cols-2 sm:flex sm:flex-wrap items-center justify-center lg:justify-start gap-2.5 sm:gap-3 pt-2">
                 <button 
                   @click="requestBookingDirect()" 
-                  class="w-full sm:w-auto flex items-center justify-center gap-2 px-5 sm:px-7 py-3 bg-brand-600 hover:bg-brand-700 text-white rounded-xl font-bold text-xs sm:text-sm shadow-md hover:shadow-lg transition-all text-center"
+                  class="w-full sm:w-auto flex items-center justify-center gap-2 px-5 sm:px-7 py-3 bg-brand-700 hover:bg-brand-800 text-white rounded-xl font-black text-xs sm:text-sm shadow-lg hover:shadow-xl transition-all text-center"
                 >
                   <i data-lucide="check-circle-2" class="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0"></i>
                   <span>فوری کاریگر بک کریں</span>
@@ -604,57 +638,57 @@
 
                 <button 
                   @click="currentView = 'estimator'" 
-                  class="w-full sm:w-auto flex items-center justify-center gap-2 px-4 sm:px-5 py-3 bg-white hover:bg-slate-100 text-slate-800 border border-slate-300 rounded-xl font-bold text-xs sm:text-sm transition-all text-center shadow-xs"
+                  class="w-full sm:w-auto flex items-center justify-center gap-2 px-4 sm:px-5 py-3 bg-white hover:bg-slate-50 text-slate-900 border-2 border-slate-300 rounded-xl font-black text-xs sm:text-sm transition-all text-center shadow-sm"
                 >
-                  <i data-lucide="calculator" class="w-4 h-4 sm:w-5 sm:h-5 text-emerald-600 flex-shrink-0"></i>
+                  <i data-lucide="calculator" class="w-4 h-4 sm:w-5 sm:h-5 text-teal-700 flex-shrink-0"></i>
                   <span>لاگت کیلکولیٹر</span>
                 </button>
 
                 <button 
                   @click="openDisputeModal()" 
-                  class="w-full sm:w-auto flex items-center justify-center gap-2 px-4 sm:px-5 py-3 bg-rose-50 hover:bg-rose-100 text-rose-800 border border-rose-200 rounded-xl font-bold text-xs sm:text-sm transition-all text-center shadow-xs"
+                  class="w-full sm:w-auto flex items-center justify-center gap-2 px-4 sm:px-5 py-3 bg-rose-50 hover:bg-rose-100 text-rose-900 border-2 border-rose-300 rounded-xl font-black text-xs sm:text-sm transition-all text-center shadow-xs"
                 >
                   <i data-lucide="shield-alert" class="w-4 h-4 sm:w-5 sm:h-5 text-rose-600 flex-shrink-0"></i>
                   <span>شکایت سیل</span>
                 </button>
               </div>
 
-              <!-- Key Trust Metrics (4 Cards) -->
-              <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 border-t border-slate-200/80">
-                <div class="p-3 bg-white rounded-2xl border border-slate-200 shadow-xs text-center lg:text-start">
-                  <div class="text-xl sm:text-2xl font-black text-slate-900">4,800+</div>
-                  <div class="text-[11px] text-slate-500 font-semibold">مطمئن گھرانے</div>
+              <!-- Key Trust Metrics (4 Cards with Solid Contrast) -->
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 border-t-2 border-slate-300">
+                <div class="p-3.5 bg-white rounded-2xl border-2 border-slate-300 shadow-sm text-center lg:text-start">
+                  <div class="text-xl sm:text-2xl font-black text-slate-950">4,800+</div>
+                  <div class="text-[11px] text-slate-600 font-bold">مطمئن گھرانے</div>
                 </div>
-                <div class="p-3 bg-white rounded-2xl border border-slate-200 shadow-xs text-center lg:text-start">
-                  <div class="text-xl sm:text-2xl font-black text-brand-600">100%</div>
-                  <div class="text-[11px] text-slate-500 font-semibold">نادرا و پولیس تصدیق</div>
+                <div class="p-3.5 bg-white rounded-2xl border-2 border-slate-300 shadow-sm text-center lg:text-start">
+                  <div class="text-xl sm:text-2xl font-black text-brand-700">100%</div>
+                  <div class="text-[11px] text-slate-600 font-bold">نادرا و پولیس تصدیق</div>
                 </div>
-                <div class="p-3 bg-white rounded-2xl border border-slate-200 shadow-xs text-center lg:text-start">
-                  <div class="text-xl sm:text-2xl font-black text-amber-600">15-30 <span class="text-xs font-normal">منٹ</span></div>
-                  <div class="text-[11px] text-slate-500 font-semibold">آمد (رائل پام سٹی)</div>
+                <div class="p-3.5 bg-white rounded-2xl border-2 border-slate-300 shadow-sm text-center lg:text-start">
+                  <div class="text-xl sm:text-2xl font-black text-amber-600">15-30 <span class="text-xs font-bold">منٹ</span></div>
+                  <div class="text-[11px] text-slate-600 font-bold">آمد (رائل پام سٹی)</div>
                 </div>
-                <div class="p-3 bg-white rounded-2xl border border-slate-200 shadow-xs text-center lg:text-start">
-                  <div class="text-xl sm:text-2xl font-black text-emerald-600">7 دن</div>
-                  <div class="text-[11px] text-slate-500 font-semibold">تسلی بخش وارنٹی</div>
+                <div class="p-3.5 bg-white rounded-2xl border-2 border-slate-300 shadow-sm text-center lg:text-start">
+                  <div class="text-xl sm:text-2xl font-black text-emerald-700">7 دن</div>
+                  <div class="text-[11px] text-slate-600 font-bold">تسلی بخش وارنٹی</div>
                 </div>
               </div>
 
             </div>
 
-            <!-- Hero Right (5 Columns) - Interactive Services Card on Desktop -->
+            <!-- Hero Right (5 Columns) - High-End Interactive Hub Card -->
             <div class="lg:col-span-5 space-y-4">
-              <div class="relative bg-white rounded-3xl p-5 sm:p-7 shadow-2xl border border-slate-200/90 space-y-4">
+              <div class="relative bg-white rounded-3xl p-5 sm:p-7 shadow-2xl border-2 border-brand-600/40 space-y-4">
                 
-                <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+                <div class="flex items-center justify-between pb-3 border-b-2 border-slate-100">
                   <div class="flex items-center gap-2.5">
-                    <img src="icon-192.png" alt="B.A.H.Care" class="w-9 h-9 rounded-xl shadow-xs object-contain" />
+                    <img src="icon-192.png" alt="B.A.H.Care" class="w-10 h-10 rounded-xl shadow-md object-contain border border-teal-500/20" />
                     <div>
-                      <h3 class="font-black text-slate-900 text-sm sm:text-base">فوری سروسز کیٹیگریز</h3>
-                      <p class="text-[11px] text-slate-500">تفصیل اور ریٹس جاننے کے لیے کلک کریں</p>
+                      <h3 class="font-black text-slate-950 text-sm sm:text-base">فوری سروسز کیٹیگریز</h3>
+                      <p class="text-[11px] text-slate-600 font-bold">تفصیل اور ریٹس جاننے کے لیے کلک کریں</p>
                     </div>
                   </div>
-                  <span class="px-2 py-0.5 bg-emerald-100 text-emerald-800 text-[10px] font-black rounded-lg flex items-center gap-1">
-                    <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-600"></i>
+                  <span class="px-2 py-0.5 bg-emerald-100 text-emerald-950 border border-emerald-300 text-[10px] font-black rounded-lg flex items-center gap-1 shadow-xs">
+                    <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-700"></i>
                     وارنٹی شدہ
                   </span>
                 </div>
@@ -664,15 +698,15 @@
                   <template x-for="cat in categories.slice(0, 6)" :key="cat.id">
                     <div 
                       @click="openCategoryDetails(cat)"
-                      class="group p-3 rounded-2xl border border-slate-100 hover:border-brand-500 bg-slate-50 hover:bg-brand-50/60 cursor-pointer transition-all duration-200 transform hover:-translate-y-0.5 shadow-xs"
+                      class="group p-3 rounded-2xl border-2 border-slate-200 hover:border-brand-600 bg-slate-50 hover:bg-brand-50 cursor-pointer transition-all duration-200 transform hover:-translate-y-0.5 shadow-xs"
                     >
                       <div class="flex items-center gap-2.5">
-                        <div class="w-9 h-9 rounded-xl bg-white flex items-center justify-center text-brand-600 shadow-xs group-hover:scale-110 transition-transform flex-shrink-0">
+                        <div class="w-9 h-9 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-brand-700 shadow-xs group-hover:scale-110 group-hover:bg-brand-700 group-hover:text-white transition-all flex-shrink-0">
                           <i :data-lucide="cat.icon" class="w-4 h-4"></i>
                         </div>
                         <div class="min-w-0">
-                          <div class="text-xs font-bold text-slate-800 group-hover:text-brand-700 truncate" x-text="cat.titleUrdu"></div>
-                          <div class="text-[10px] text-slate-500 truncate" x-text="cat.startingPrice"></div>
+                          <div class="text-xs font-black text-slate-900 group-hover:text-brand-800 truncate" x-text="cat.titleUrdu"></div>
+                          <div class="text-[10px] text-slate-600 font-bold truncate" x-text="cat.startingPrice"></div>
                         </div>
                       </div>
                     </div>
@@ -680,19 +714,19 @@
                 </div>
 
                 <!-- 24/7 Hotline Callout in Hero Card -->
-                <div class="p-3.5 rounded-2xl bg-gradient-to-r from-slate-900 to-teal-950 text-white shadow-md flex items-center justify-between gap-3">
+                <div class="p-4 rounded-2xl bg-gradient-to-r from-slate-950 via-teal-950 to-slate-900 text-white shadow-xl flex items-center justify-between gap-3 border border-teal-500/40">
                   <div class="flex items-center gap-2.5 min-w-0">
-                    <div class="w-9 h-9 rounded-xl bg-amber-400 text-slate-950 flex items-center justify-center font-bold flex-shrink-0">
-                      <i data-lucide="phone-call" class="w-4 h-4 animate-bounce"></i>
+                    <div class="w-10 h-10 rounded-xl bg-amber-400 text-slate-950 flex items-center justify-center font-black flex-shrink-0 shadow-md">
+                      <i data-lucide="phone-call" class="w-5 h-5 animate-bounce"></i>
                     </div>
                     <div class="min-w-0">
-                      <div class="text-xs font-bold text-amber-300 truncate">آفیشل کمپنی ہیلپ لائن و سپورٹ</div>
-                      <div class="text-sm font-mono font-black text-white" dir="ltr">0300-4800071</div>
+                      <div class="text-xs font-black text-amber-300 truncate">آفیشل کمپنی ہیلپ لائن و سپورٹ</div>
+                      <div class="text-base font-mono font-black text-white tracking-wider" dir="ltr">0300-4800071</div>
                     </div>
                   </div>
                   <a 
                     :href="'tel:' + businessPhone"
-                    class="px-3 py-1.5 bg-amber-400 hover:bg-amber-500 text-slate-950 text-xs font-black rounded-xl shadow-xs transition-colors flex-shrink-0"
+                    class="px-3.5 py-2 bg-amber-400 hover:bg-amber-500 text-slate-950 text-xs font-black rounded-xl shadow-md transition-colors flex-shrink-0"
                   >
                     کال کریں
                   </a>
@@ -705,34 +739,34 @@
         </div>
       </section>
 
-      <!-- ==================== ALL SOCIETIES & COVERAGE SECTION ==================== -->
-      <section id="societies-coverage" class="py-14 bg-white border-b border-slate-200">
+      <!-- ==================== ALL SOCIETIES & COVERAGE SECTION (DEEP THEME FOR CONTRAST) ==================== -->
+      <section id="societies-coverage" class="py-14 bg-slate-900 text-white border-b-2 border-slate-800">
         <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
           
           <div class="text-center max-w-3xl mx-auto mb-10 space-y-2">
-            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold">
-              <i data-lucide="map-pin" class="w-3.5 h-3.5 text-emerald-600"></i>
+            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-xs font-black">
+              <i data-lucide="map-pin" class="w-3.5 h-3.5 text-emerald-400"></i>
               <span>فوری ایکسپریس کوریج نیٹ ورک</span>
             </div>
-            <h2 class="text-2xl sm:text-3xl font-black text-slate-900">ہمارے سروس کے علاقے اور سوسائٹیز</h2>
-            <p class="text-slate-600 text-xs sm:text-sm">تمام معروف سوسائٹیز میں کمپنی کے منظور شدہ کاریگر کی فوری آمد</p>
+            <h2 class="text-2xl sm:text-3xl md:text-4xl font-black text-white">ہمارے سروس کے علاقے اور سوسائٹیز</h2>
+            <p class="text-slate-300 text-xs sm:text-sm font-semibold">تمام معروف سوسائٹیز میں کمپنی کے منظور شدہ کاریگر کی فوری آمد</p>
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             <template x-for="zone in societyZones" :key="zone.title">
-              <div class="p-5 rounded-3xl bg-slate-50 border border-slate-200 hover:border-brand-500 hover:shadow-lg transition-all flex flex-col justify-between">
+              <div class="p-5 rounded-3xl bg-slate-800/90 border border-slate-700 hover:border-brand-400 hover:shadow-2xl transition-all flex flex-col justify-between">
                 <div>
-                  <div class="flex items-center gap-2.5 mb-3">
-                    <div class="w-9 h-9 rounded-xl bg-brand-100 text-brand-700 flex items-center justify-center font-bold flex-shrink-0">
+                  <div class="flex items-center gap-2.5 mb-3 pb-2 border-b border-slate-700/60">
+                    <div class="w-9 h-9 rounded-xl bg-brand-700/50 text-teal-300 border border-teal-500/30 flex items-center justify-center font-bold flex-shrink-0">
                       <i :data-lucide="zone.icon" class="w-4 h-4"></i>
                     </div>
-                    <h3 class="font-bold text-slate-900 text-sm sm:text-base" x-text="zone.title"></h3>
+                    <h3 class="font-bold text-white text-sm sm:text-base" x-text="zone.title"></h3>
                   </div>
 
-                  <ul class="space-y-1.5 mb-5 text-xs text-slate-600">
+                  <ul class="space-y-2 mb-5 text-xs text-slate-300">
                     <template x-for="s in zone.societies" :key="s">
-                      <li class="flex items-center gap-1.5 cursor-pointer hover:text-brand-700 font-medium" @click="selectSociety(s)">
-                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 flex-shrink-0"></span>
+                      <li class="flex items-center gap-2 cursor-pointer hover:text-amber-300 font-semibold" @click="selectSociety(s)">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 flex-shrink-0"></span>
                         <span x-text="s"></span>
                       </li>
                     </template>
@@ -741,7 +775,7 @@
 
                 <button 
                   @click="openSocietiesModal()"
-                  class="w-full py-2 bg-white hover:bg-brand-600 hover:text-white text-brand-700 border border-slate-200 rounded-xl text-xs font-bold transition-all shadow-xs"
+                  class="w-full py-2 bg-white/10 hover:bg-brand-600 text-white border border-white/20 rounded-xl text-xs font-bold transition-all shadow-xs"
                 >
                   اس زون کے کاریگر دیکھیں
                 </button>
@@ -752,48 +786,48 @@
         </div>
       </section>
 
-      <!-- ==================== ALL 9 SERVICE CATEGORIES (GRID ON DESKTOP) ==================== -->
-      <section id="services" class="py-14 md:py-20 bg-white border-b border-slate-200">
+      <!-- ==================== ALL 9 SERVICE CATEGORIES (RICH CARDS WITH SOLID BORDERS) ==================== -->
+      <section id="services" class="py-14 md:py-20 bg-slate-100 border-b-2 border-slate-300">
         <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
           
           <div class="text-center max-w-3xl mx-auto mb-12 space-y-2">
-            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-100 text-brand-800 text-xs font-bold">
-              <i data-lucide="sparkles" class="w-3.5 h-3.5 text-brand-600"></i>
+            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-100 text-brand-900 border border-brand-300 text-xs font-black">
+              <i data-lucide="sparkles" class="w-3.5 h-3.5 text-brand-700"></i>
               <span>تمام شعبہ جات و خدمات</span>
             </div>
-            <h2 class="text-2xl sm:text-3xl md:text-4xl font-black text-slate-900">گھریلو مرمت اور دیکھ بھال کی مکمل سروسز</h2>
-            <p class="text-slate-600 text-xs sm:text-sm">شفاف قیمتیں، منظور شدہ کاریگر اور 7 دن کی تسلی بخش وارنٹی</p>
+            <h2 class="text-2xl sm:text-3xl md:text-4xl font-black text-slate-950">گھریلو مرمت اور دیکھ بھال کی مکمل سروسز</h2>
+            <p class="text-slate-700 text-xs sm:text-sm font-bold">شفاف قیمتیں، منظور شدہ کاریگر اور 7 دن کی تسلی بخش وارنٹی</p>
           </div>
 
-          <!-- Services 3-Column Balanced Grid -->
+          <!-- Services 3-Column Balanced Grid with Deep Borders -->
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <template x-for="cat in filteredCategories" :key="cat.id">
-              <div class="bg-slate-50 hover:bg-white rounded-3xl p-6 border border-slate-200/90 hover:border-brand-500 hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
+              <div class="bg-white rounded-3xl p-6 border-2 border-slate-300 hover:border-brand-700 hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group shadow-sm">
                 <div>
                   <div class="flex items-center justify-between mb-4">
-                    <div class="w-12 h-12 rounded-2xl bg-white group-hover:bg-brand-600 flex items-center justify-center text-brand-600 group-hover:text-white shadow-xs transition-colors duration-300">
+                    <div class="w-12 h-12 rounded-2xl bg-brand-50 border-2 border-brand-200 group-hover:bg-brand-700 flex items-center justify-center text-brand-700 group-hover:text-white shadow-xs transition-all duration-300">
                       <i :data-lucide="cat.icon" class="w-6 h-6"></i>
                     </div>
-                    <span class="text-xs font-bold px-2.5 py-1 rounded-full bg-brand-100 text-brand-800" x-text="cat.startingPrice"></span>
+                    <span class="text-xs font-black px-3 py-1 rounded-full bg-brand-700 text-white shadow-xs" x-text="cat.startingPrice"></span>
                   </div>
 
-                  <h3 class="text-base sm:text-lg font-bold text-slate-900 group-hover:text-brand-600 transition-colors mb-2" x-text="cat.titleUrdu"></h3>
-                  <p class="text-xs text-slate-500 mb-4 line-clamp-2" x-text="cat.descUrdu"></p>
+                  <h3 class="text-base sm:text-lg font-black text-slate-900 group-hover:text-brand-700 transition-colors mb-2" x-text="cat.titleUrdu"></h3>
+                  <p class="text-xs text-slate-600 mb-4 line-clamp-2 font-bold" x-text="cat.descUrdu"></p>
 
-                  <ul class="space-y-1.5 mb-6 text-xs text-slate-600">
+                  <ul class="space-y-1.5 mb-6 text-xs text-slate-700">
                     <template x-for="task in cat.tasksUrdu.slice(0, 3)" :key="task">
-                      <li class="flex items-center gap-1.5">
-                        <i data-lucide="check" class="w-3.5 h-3.5 text-brand-600 flex-shrink-0"></i>
+                      <li class="flex items-center gap-1.5 font-semibold">
+                        <i data-lucide="check" class="w-3.5 h-3.5 text-brand-700 flex-shrink-0"></i>
                         <span x-text="task"></span>
                       </li>
                     </template>
                   </ul>
                 </div>
 
-                <div class="pt-4 border-t border-slate-200 flex items-center gap-2">
+                <div class="pt-4 border-t-2 border-slate-100 flex items-center gap-2">
                   <button 
                     @click="openCategoryDetails(cat)"
-                    class="flex-1 py-2.5 px-3 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-bold transition-colors flex items-center justify-center gap-1.5 shadow-xs"
+                    class="flex-1 py-2.5 px-3 bg-brand-700 hover:bg-brand-800 text-white rounded-xl text-xs font-black transition-colors flex items-center justify-center gap-1.5 shadow-md"
                   >
                     <i data-lucide="calendar" class="w-3.5 h-3.5"></i>
                     <span>بک کریں و تفصیل دیکھیں</span>
@@ -801,10 +835,10 @@
 
                   <button 
                     @click="initDirectContact('مجھے ' + cat.titleUrdu + ' کے لیے کاریگر چاہیے')"
-                    class="p-2.5 bg-emerald-100 hover:bg-emerald-200 text-emerald-800 rounded-xl transition-colors"
+                    class="p-2.5 bg-emerald-100 hover:bg-emerald-200 text-emerald-900 rounded-xl transition-colors border border-emerald-300"
                     title="رابطہ کریں"
                   >
-                    <i data-lucide="message-circle" class="w-4 h-4"></i>
+                    <i data-lucide="message-circle" class="w-4 h-4 text-emerald-800"></i>
                   </button>
                 </div>
               </div>
@@ -815,50 +849,50 @@
       </section>
 
       <!-- ==================== VERIFIED TECHNICIANS SECTION ==================== -->
-      <section id="technicians" class="py-14 bg-slate-50 border-b border-slate-200">
+      <section id="technicians" class="py-14 bg-slate-200/80 border-b-2 border-slate-300">
         <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
           
           <div class="text-center max-w-3xl mx-auto mb-10 space-y-2">
-            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold">
-              <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-600"></i>
+            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-900 text-emerald-100 border border-emerald-700 text-xs font-black shadow-xs">
+              <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-400"></i>
               <span>کمپنی و ایڈمن منظور شدہ کاریگرز</span>
             </div>
-            <h2 class="text-2xl sm:text-3xl font-black text-slate-900">مصدقہ و منظور شدہ کاریگرز لسٹ</h2>
-            <p class="text-slate-600 text-xs sm:text-sm">صرف وہ کاریگر لائیو ہوتے ہیں جن کی نادرا شناختی کارڈ اور پولیس ریکارڈ کی ایڈمن نے مکمل تصدیق کی ہو</p>
+            <h2 class="text-2xl sm:text-3xl font-black text-slate-950">مصدقہ و منظور شدہ کاریگرز لسٹ</h2>
+            <p class="text-slate-700 text-xs sm:text-sm font-bold">صرف وہ کاریگر لائیو ظاہر ہوتے ہیں جن کی نادرا شناختی کارڈ اور پولیس ریکارڈ کی ایڈمن نے مکمل تصدیق کی ہو</p>
           </div>
 
           <!-- Dynamic Active Technicians Grid -->
           <div class="grid grid-cols-1 md:grid-cols-3 gap-5" x-show="technicians.length > 0">
             <template x-for="tech in technicians" :key="tech.id">
-              <div class="bg-white rounded-3xl p-5 border border-slate-200 shadow-sm hover:shadow-lg transition-all flex flex-col justify-between">
+              <div class="bg-white rounded-3xl p-5 border-2 border-slate-300 shadow-md hover:shadow-2xl transition-all flex flex-col justify-between">
                 <div>
                   
                   <!-- Top Badge: Package & Verified Status -->
                   <div class="flex items-center justify-between gap-2 mb-3">
                     <span 
                       class="px-2 py-0.5 rounded-md text-[10px] font-black"
-                      :class="tech.packageTier === 'platinum' ? 'bg-purple-100 text-purple-900 border border-purple-300' : (tech.packageTier === 'gold' ? 'bg-amber-100 text-amber-900 border border-amber-300' : 'bg-slate-100 text-slate-700')"
+                      :class="tech.packageTier === 'platinum' ? 'bg-purple-100 text-purple-950 border border-purple-400' : (tech.packageTier === 'gold' ? 'bg-amber-100 text-amber-950 border border-amber-400' : 'bg-slate-100 text-slate-800 border border-slate-300')"
                       x-text="tech.packageLabel || '🥇 پلاٹینم ترجیحی کاریگر'"
                     ></span>
-                    <span class="inline-flex items-center gap-1 text-emerald-700 text-[10px] font-bold bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
-                      <i data-lucide="shield-check" class="w-3 h-3 text-emerald-600"></i>
+                    <span class="inline-flex items-center gap-1 text-emerald-900 text-[10px] font-black bg-emerald-100 px-2 py-0.5 rounded border border-emerald-300">
+                      <i data-lucide="shield-check" class="w-3 h-3 text-emerald-700"></i>
                       <span>ایڈمن منظور شدہ ✓</span>
                     </span>
                   </div>
 
                   <div class="flex items-center gap-3.5 mb-3">
-                    <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-brand-600 to-teal-400 text-white font-bold text-xl flex items-center justify-center shadow-md flex-shrink-0">
+                    <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-brand-700 to-teal-500 text-white font-black text-xl flex items-center justify-center shadow-md flex-shrink-0">
                       <span x-text="tech.name.charAt(0)"></span>
                     </div>
                     <div class="min-w-0">
                       <div class="flex items-center gap-1.5">
-                        <h4 class="font-bold text-slate-900 text-sm sm:text-base truncate" x-text="tech.name"></h4>
-                        <i data-lucide="check-circle" class="w-4 h-4 text-emerald-500 fill-emerald-50 flex-shrink-0"></i>
+                        <h4 class="font-black text-slate-950 text-sm sm:text-base truncate" x-text="tech.name"></h4>
+                        <i data-lucide="check-circle" class="w-4 h-4 text-emerald-600 fill-emerald-100 flex-shrink-0"></i>
                       </div>
-                      <p class="text-xs font-semibold text-brand-600 truncate" x-text="tech.specialtyUrdu"></p>
-                      <div class="flex items-center gap-2 mt-1 text-[11px] text-slate-500">
-                        <span class="flex items-center gap-1 text-amber-500 font-bold">
-                          <i data-lucide="star" class="w-3 h-3 fill-amber-400"></i>
+                      <p class="text-xs font-bold text-brand-700 truncate" x-text="tech.specialtyUrdu"></p>
+                      <div class="flex items-center gap-2 mt-1 text-[11px] text-slate-600 font-bold">
+                        <span class="flex items-center gap-1 text-amber-600 font-black">
+                          <i data-lucide="star" class="w-3 h-3 fill-amber-500"></i>
                           <span x-text="tech.rating"></span>
                         </span>
                         <span>•</span>
@@ -867,14 +901,14 @@
                     </div>
                   </div>
 
-                  <div class="p-3 bg-slate-50 rounded-xl border border-slate-100 text-xs text-slate-600 space-y-1 mb-4">
+                  <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs text-slate-700 space-y-1 mb-4 font-bold">
                     <div class="flex justify-between">
-                      <span class="text-slate-400">سروس علاقہ:</span>
-                      <span class="font-bold text-slate-800" x-text="tech.area"></span>
+                      <span class="text-slate-500">سروس علاقہ:</span>
+                      <span class="text-slate-900" x-text="tech.area"></span>
                     </div>
                     <div class="flex justify-between">
-                      <span class="text-slate-400">قیمت طے کرنے کا طریقہ:</span>
-                      <span class="font-semibold text-brand-700">باہمی گفتگو سے طے شدہ ریٹ</span>
+                      <span class="text-slate-500">قیمت طے کرنے کا طریقہ:</span>
+                      <span class="text-brand-800">باہمی گفتگو سے طے شدہ ریٹ</span>
                     </div>
                   </div>
                 </div>
@@ -882,15 +916,15 @@
                 <div class="space-y-2">
                   <button 
                     @click="openKarigarCard(tech)"
-                    class="w-full py-2 bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 rounded-xl text-xs font-bold transition-colors flex items-center justify-center gap-1.5"
+                    class="w-full py-2 bg-amber-50 hover:bg-amber-100 text-amber-950 border border-amber-300 rounded-xl text-xs font-black transition-colors flex items-center justify-center gap-1.5 shadow-xs"
                   >
-                    <i data-lucide="credit-card" class="w-3.5 h-3.5 text-amber-600"></i>
+                    <i data-lucide="credit-card" class="w-3.5 h-3.5 text-amber-700"></i>
                     <span>مصدقہ ڈیجیٹل کارڈ دیکھیں</span>
                   </button>
 
                   <button 
                     @click="connectWithKarigar(tech)"
-                    class="w-full py-2.5 bg-slate-900 hover:bg-brand-600 text-white rounded-xl text-xs font-bold transition-colors flex items-center justify-center gap-1.5 shadow-xs"
+                    class="w-full py-2.5 bg-slate-950 hover:bg-brand-700 text-white rounded-xl text-xs font-black transition-colors flex items-center justify-center gap-1.5 shadow-md"
                   >
                     <i data-lucide="handshake" class="w-3.5 h-3.5 text-amber-300"></i>
                     <span>یہ کاریگر منتخب کریں و ریٹ طے کریں</span>
@@ -904,40 +938,40 @@
       </section>
 
       <!-- ==================== CUSTOMER REVIEWS & FEEDBACK ==================== -->
-      <section class="py-14 bg-white border-b border-slate-200">
+      <section class="py-14 bg-white border-b-2 border-slate-300">
         <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
           
           <div class="text-center max-w-3xl mx-auto mb-10 space-y-2">
-            <div class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-amber-100 text-amber-800 text-xs font-bold">
-              <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-500 text-amber-500"></i>
+            <div class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-amber-100 text-amber-950 border border-amber-300 text-xs font-black">
+              <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-500 text-amber-600"></i>
               <span>4.9 / 5.0 اوسط کسٹمر ریٹنگ</span>
             </div>
-            <h2 class="text-2xl sm:text-3xl font-black text-slate-900">مطمئن کسٹمرز کے حقیقی تاثرات و فیڈ بیک</h2>
-            <p class="text-slate-600 text-xs sm:text-sm">کام کی تسلی اور رقم کی ادائیگی کے بعد کسٹمرز کے براہِ راست ریویوز</p>
+            <h2 class="text-2xl sm:text-3xl font-black text-slate-950">مطمئن کسٹمرز کے حقیقی تاثرات و فیڈ بیک</h2>
+            <p class="text-slate-600 text-xs sm:text-sm font-bold">کام کی تسلی اور رقم کی ادائیگی کے بعد کسٹمرز کے براہِ راست ریویوز</p>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
             <template x-for="rev in customerReviews" :key="rev.id">
-              <div class="p-5 rounded-3xl bg-slate-50 border border-slate-200/80 shadow-xs flex flex-col justify-between">
+              <div class="p-5 rounded-3xl bg-slate-50 border-2 border-slate-200 shadow-sm flex flex-col justify-between">
                 <div>
                   <div class="flex items-center justify-between mb-3">
-                    <div class="flex items-center gap-1 text-amber-400">
+                    <div class="flex items-center gap-1 text-amber-500">
                       <template x-for="i in rev.rating || 5">
                         <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400"></i>
                       </template>
                     </div>
-                    <span class="text-[11px] text-slate-400" x-text="rev.date"></span>
+                    <span class="text-[11px] text-slate-500 font-bold" x-text="rev.date"></span>
                   </div>
-                  <p class="text-xs text-slate-700 leading-relaxed mb-4" x-text="'“' + rev.comment + '”'"></p>
+                  <p class="text-xs text-slate-800 leading-relaxed mb-4 font-bold" x-text="'“' + rev.comment + '”'"></p>
                 </div>
 
                 <div class="pt-3 border-t border-slate-200 flex items-center justify-between text-xs">
                   <div>
-                    <div class="font-bold text-slate-900" x-text="rev.customerName"></div>
-                    <div class="text-slate-500 text-[11px]" x-text="rev.service"></div>
+                    <div class="font-black text-slate-950" x-text="rev.customerName"></div>
+                    <div class="text-slate-600 text-[11px] font-bold" x-text="rev.service"></div>
                   </div>
-                  <span class="text-emerald-700 font-semibold text-[11px] flex items-center gap-1">
-                    <i data-lucide="badge-check" class="w-3.5 h-3.5"></i>
+                  <span class="text-emerald-800 font-black text-[11px] flex items-center gap-1 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                    <i data-lucide="badge-check" class="w-3.5 h-3.5 text-emerald-600"></i>
                     <span>تسلی شدہ ✓</span>
                   </span>
                 </div>
@@ -948,7 +982,7 @@
           <div class="mt-8 text-center">
             <button 
               @click="openFeedbackModal()"
-              class="px-5 py-2.5 bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 rounded-xl text-xs font-black shadow-md hover:shadow-lg transition-all"
+              class="px-6 py-3 bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 rounded-xl text-xs sm:text-sm font-black shadow-lg hover:shadow-xl transition-all"
             >
               ⭐ مکمل شدہ کام کی تسلی و فیڈ بیک درج کریں
             </button>
@@ -960,20 +994,20 @@
     </div>
 
     <!-- ==================== VIEW 2: HARDWARE & MATERIAL MARKET RATES ==================== -->
-    <div x-show="currentView === 'market-rates'" x-cloak class="py-10 bg-slate-50 min-h-screen">
+    <div x-show="currentView === 'market-rates'" x-cloak class="py-10 bg-slate-100 min-h-screen">
       <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
         
-        <div class="flex flex-wrap items-center justify-between gap-4 mb-6 pb-4 border-b border-slate-200">
+        <div class="flex flex-wrap items-center justify-between gap-4 mb-6 pb-4 border-b-2 border-slate-300">
           <div>
-            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 text-amber-800 text-xs font-bold mb-2">
+            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-400 text-slate-950 text-xs font-black mb-2 shadow-xs">
               <i data-lucide="tag" class="w-3.5 h-3.5"></i>
               <span>مارکیٹ ریٹس 2026 (گوجرانوالہ)</span>
             </div>
-            <h2 class="text-2xl sm:text-3xl font-black text-slate-900">گھریلو سامان و میٹریل ریٹ کارڈ</h2>
-            <p class="text-xs sm:text-sm text-slate-600 mt-1">سینیٹری، پینٹ، بجلی اور گیس چولہا سامان کے موجودہ مارکیٹ ریٹس</p>
+            <h2 class="text-2xl sm:text-3xl font-black text-slate-950">گھریلو سامان و میٹریل ریٹ کارڈ</h2>
+            <p class="text-xs sm:text-sm text-slate-700 font-bold mt-1">سینیٹری، پینٹ، بجلی اور گیس چولہا سامان کے موجودہ مارکیٹ ریٹس</p>
           </div>
 
-          <button @click="currentView = 'home'" class="px-4 py-2 bg-white border border-slate-200 text-slate-700 text-xs font-bold rounded-xl hover:bg-slate-100 transition-colors shadow-xs flex items-center gap-1.5">
+          <button @click="currentView = 'home'" class="px-4 py-2 bg-white border-2 border-slate-300 text-slate-900 text-xs font-black rounded-xl hover:bg-slate-50 transition-colors shadow-sm flex items-center gap-1.5">
             <i data-lucide="arrow-right" class="w-4 h-4"></i>
             <span>واپس ہوم پیج</span>
           </button>
@@ -981,35 +1015,35 @@
 
         <!-- Filter tabs for Material Categories -->
         <div class="flex flex-wrap gap-1.5 sm:gap-2 mb-6">
-          <button @click="selectedMaterialCat = 'all'" :class="selectedMaterialCat === 'all' ? 'bg-brand-600 text-white' : 'bg-white text-slate-700 border border-slate-200'" class="px-3.5 py-2 rounded-xl text-xs font-bold shadow-xs">تمام سامان</button>
-          <button @click="selectedMaterialCat = 'sanitary'" :class="selectedMaterialCat === 'sanitary' ? 'bg-brand-600 text-white' : 'bg-white text-slate-700 border border-slate-200'" class="px-3.5 py-2 rounded-xl text-xs font-bold shadow-xs flex items-center gap-1"><i data-lucide="droplets" class="w-3.5 h-3.5"></i><span>سینیٹری و پلمبنگ</span></button>
-          <button @click="selectedMaterialCat = 'paint'" :class="selectedMaterialCat === 'paint' ? 'bg-brand-600 text-white' : 'bg-white text-slate-700 border border-slate-200'" class="px-3.5 py-2 rounded-xl text-xs font-bold shadow-xs flex items-center gap-1"><i data-lucide="paint-brush" class="w-3.5 h-3.5"></i><span>رنگ و پینٹ</span></button>
-          <button @click="selectedMaterialCat = 'electric'" :class="selectedMaterialCat === 'electric' ? 'bg-brand-600 text-white' : 'bg-white text-slate-700 border border-slate-200'" class="px-3.5 py-2 rounded-xl text-xs font-bold shadow-xs flex items-center gap-1"><i data-lucide="zap" class="w-3.5 h-3.5"></i><span>الیکٹرک وائرنگ</span></button>
-          <button @click="selectedMaterialCat = 'gas'" :class="selectedMaterialCat === 'gas' ? 'bg-brand-600 text-white' : 'bg-white text-slate-700 border border-slate-200'" class="px-3.5 py-2 rounded-xl text-xs font-bold shadow-xs flex items-center gap-1"><i data-lucide="flame" class="w-3.5 h-3.5"></i><span>گیس چولہا و کچن</span></button>
+          <button @click="selectedMaterialCat = 'all'" :class="selectedMaterialCat === 'all' ? 'bg-brand-700 text-white' : 'bg-white text-slate-800 border-2 border-slate-300'" class="px-3.5 py-2 rounded-xl text-xs font-black shadow-xs">تمام سامان</button>
+          <button @click="selectedMaterialCat = 'sanitary'" :class="selectedMaterialCat === 'sanitary' ? 'bg-brand-700 text-white' : 'bg-white text-slate-800 border-2 border-slate-300'" class="px-3.5 py-2 rounded-xl text-xs font-black shadow-xs flex items-center gap-1"><i data-lucide="droplets" class="w-3.5 h-3.5"></i><span>سینیٹری و پلمبنگ</span></button>
+          <button @click="selectedMaterialCat = 'paint'" :class="selectedMaterialCat === 'paint' ? 'bg-brand-700 text-white' : 'bg-white text-slate-800 border-2 border-slate-300'" class="px-3.5 py-2 rounded-xl text-xs font-black shadow-xs flex items-center gap-1"><i data-lucide="paint-brush" class="w-3.5 h-3.5"></i><span>رنگ و پینٹ</span></button>
+          <button @click="selectedMaterialCat = 'electric'" :class="selectedMaterialCat === 'electric' ? 'bg-brand-700 text-white' : 'bg-white text-slate-800 border-2 border-slate-300'" class="px-3.5 py-2 rounded-xl text-xs font-black shadow-xs flex items-center gap-1"><i data-lucide="zap" class="w-3.5 h-3.5"></i><span>الیکٹرک وائرنگ</span></button>
+          <button @click="selectedMaterialCat = 'gas'" :class="selectedMaterialCat === 'gas' ? 'bg-brand-700 text-white' : 'bg-white text-slate-800 border-2 border-slate-300'" class="px-3.5 py-2 rounded-xl text-xs font-black shadow-xs flex items-center gap-1"><i data-lucide="flame" class="w-3.5 h-3.5"></i><span>گیس چولہا و کچن</span></button>
         </div>
 
-        <!-- Materials Grid (3 Columns on Desktop) -->
+        <!-- Materials Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           <template x-for="item in filteredMaterials" :key="item.id">
-            <div class="bg-white rounded-3xl p-5 border border-slate-200 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+            <div class="bg-white rounded-3xl p-5 border-2 border-slate-300 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
               <div>
                 <div class="flex justify-between items-start gap-2 mb-2">
-                  <span class="text-[10px] font-bold px-2 py-0.5 rounded-md bg-slate-100 text-slate-700" x-text="item.categoryLabel"></span>
-                  <span class="text-xs font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200" x-text="item.unit"></span>
+                  <span class="text-[10px] font-black px-2.5 py-0.5 rounded-md bg-slate-100 text-slate-800 border border-slate-300" x-text="item.categoryLabel"></span>
+                  <span class="text-xs font-black text-emerald-900 bg-emerald-100 px-2 py-0.5 rounded-md border border-emerald-300" x-text="item.unit"></span>
                 </div>
-                <h4 class="font-bold text-slate-900 text-base mb-1" x-text="item.nameUrdu"></h4>
-                <p class="text-xs text-brand-700 font-bold mb-2" x-text="item.brand"></p>
-                <p class="text-xs text-slate-500 mb-4" x-text="item.description"></p>
+                <h4 class="font-black text-slate-950 text-base mb-1" x-text="item.nameUrdu"></h4>
+                <p class="text-xs text-brand-700 font-black mb-2" x-text="item.brand"></p>
+                <p class="text-xs text-slate-600 mb-4 font-bold" x-text="item.description"></p>
               </div>
 
-              <div class="pt-3 border-t border-slate-100 flex items-center justify-between gap-2">
+              <div class="pt-3 border-t border-slate-200 flex items-center justify-between gap-2">
                 <div>
-                  <div class="text-[10px] text-slate-400 font-semibold">مارکیٹ تخمینہ ریٹ:</div>
-                  <div class="text-base font-black text-slate-900" x-text="item.priceRange"></div>
+                  <div class="text-[10px] text-slate-500 font-bold">مارکیٹ تخمینہ ریٹ:</div>
+                  <div class="text-base font-black text-slate-950" x-text="item.priceRange"></div>
                 </div>
                 <button 
                   @click="initDirectBooking({ details: 'مجھے ' + item.nameUrdu + ' کی خریداری اور فٹنگ کے لیے کاریگر چاہیے' })"
-                  class="px-3 py-2 bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold rounded-xl shadow-xs"
+                  class="px-3 py-2 bg-brand-700 hover:bg-brand-800 text-white text-xs font-black rounded-xl shadow-sm"
                 >
                   فٹنگ کاریگر لیں
                 </button>
@@ -1021,99 +1055,78 @@
       </div>
     </div>
 
-    <!-- ==================== VIEW 3: SMART RENOVATION ESTIMATOR (WIDE 2-COLUMN DESKTOP LAYOUT) ==================== -->
-    <div x-show="currentView === 'estimator'" x-cloak class="py-10 bg-slate-50 min-h-screen">
+    <!-- ==================== VIEW 3: SMART RENOVATION ESTIMATOR ==================== -->
+    <div x-show="currentView === 'estimator'" x-cloak class="py-10 bg-slate-100 min-h-screen">
       <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
         
-        <div class="flex justify-between items-center mb-8 pb-4 border-b border-slate-200">
+        <div class="flex justify-between items-center mb-8 pb-4 border-b-2 border-slate-300">
           <div>
-            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold mb-2">
-              <i data-lucide="calculator" class="w-3.5 h-3.5 text-emerald-600"></i>
+            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-900 text-emerald-100 text-xs font-black mb-2 shadow-xs">
+              <i data-lucide="calculator" class="w-3.5 h-3.5 text-emerald-400"></i>
               <span>Instant Cost & Labor Estimator</span>
             </div>
-            <h2 class="text-2xl sm:text-3xl font-black text-slate-900">گھریلو مرمت و لاگت کیلکولیٹر</h2>
-            <p class="text-xs sm:text-sm text-slate-600">رائل پام سٹی و گوجرانوالہ میں متوقع میٹریل اور کاریگر مزدوری کا تخمینہ</p>
+            <h2 class="text-2xl sm:text-3xl font-black text-slate-950">گھریلو مرمت و لاگت کیلکولیٹر</h2>
+            <p class="text-xs sm:text-sm text-slate-700 font-bold">رائل پام سٹی و گوجرانوالہ میں متوقع میٹریل اور کاریگر مزدوری کا تخمینہ</p>
           </div>
-          <button @click="currentView = 'home'" class="px-4 py-2 bg-white border border-slate-200 text-slate-700 rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-xs hover:bg-slate-100">
+          <button @click="currentView = 'home'" class="px-4 py-2 bg-white border-2 border-slate-300 text-slate-900 rounded-xl text-xs font-black flex items-center gap-1.5 shadow-sm hover:bg-slate-50">
             <i data-lucide="arrow-right" class="w-4 h-4"></i>
             <span>واپس ہوم پیج</span>
           </button>
         </div>
 
-        <!-- 2-Column Wide Desktop Layout: Left Controls (7 cols), Right Sticky Receipt (5 cols) -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
           <!-- Left: Sliders & Controls (7 Cols) -->
-          <div class="lg:col-span-7 bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-lg space-y-6">
-            <h3 class="text-lg font-bold text-slate-900 border-b border-slate-100 pb-3">اپنے کام کی مقدار منتخب کریں:</h3>
+          <div class="lg:col-span-7 bg-white rounded-3xl p-6 sm:p-8 border-2 border-slate-300 shadow-md space-y-6">
+            <h3 class="text-lg font-black text-slate-950 border-b-2 border-slate-100 pb-3">اپنے کام کی مقدار منتخب کریں:</h3>
 
             <div class="space-y-5">
               <!-- Rooms Paint -->
-              <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+              <div class="p-4 rounded-2xl bg-slate-50 border-2 border-slate-200">
                 <div class="flex justify-between items-center mb-2">
-                  <span class="text-xs sm:text-sm font-bold text-slate-800 flex items-center gap-2">
-                    <i data-lucide="paint-brush" class="w-4 h-4 text-brand-600"></i>
+                  <span class="text-xs sm:text-sm font-black text-slate-900 flex items-center gap-2">
+                    <i data-lucide="paint-brush" class="w-4 h-4 text-brand-700"></i>
                     <span>کمروں کی تعداد (پینٹ، ڈسٹیمپر و پٹین):</span>
                   </span>
-                  <span class="text-sm font-black text-brand-700 bg-brand-50 px-2.5 py-0.5 rounded-lg border border-brand-200" x-text="calcRooms + ' کمرے'"></span>
+                  <span class="text-sm font-black text-brand-800 bg-brand-100 px-2.5 py-0.5 rounded-lg border border-brand-300" x-text="calcRooms + ' کمرے'"></span>
                 </div>
-                <input type="range" min="0" max="10" x-model="calcRooms" class="w-full accent-brand-600">
-                <div class="flex justify-between text-[11px] text-slate-400 mt-1">
-                  <span>0 کمرہ</span>
-                  <span>5 کمرے</span>
-                  <span>10 کمرے</span>
-                </div>
+                <input type="range" min="0" max="10" x-model="calcRooms" class="w-full accent-brand-700">
               </div>
 
               <!-- Fans & Lights -->
-              <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+              <div class="p-4 rounded-2xl bg-slate-50 border-2 border-slate-200">
                 <div class="flex justify-between items-center mb-2">
-                  <span class="text-xs sm:text-sm font-bold text-slate-800 flex items-center gap-2">
-                    <i data-lucide="zap" class="w-4 h-4 text-amber-500"></i>
+                  <span class="text-xs sm:text-sm font-black text-slate-900 flex items-center gap-2">
+                    <i data-lucide="zap" class="w-4 h-4 text-amber-600"></i>
                     <span>پنکھے، سوئچ بورڈز و لائٹس پوائنٹس:</span>
                   </span>
-                  <span class="text-sm font-black text-amber-700 bg-amber-50 px-2.5 py-0.5 rounded-lg border border-amber-200" x-text="calcFans + ' پوائنٹس'"></span>
+                  <span class="text-sm font-black text-amber-900 bg-amber-100 px-2.5 py-0.5 rounded-lg border border-amber-300" x-text="calcFans + ' پوائنٹس'"></span>
                 </div>
                 <input type="range" min="0" max="15" x-model="calcFans" class="w-full accent-amber-500">
-                <div class="flex justify-between text-[11px] text-slate-400 mt-1">
-                  <span>0 پوائنٹ</span>
-                  <span>8 پوائنٹس</span>
-                  <span>15 پوائنٹس</span>
-                </div>
               </div>
 
               <!-- Washrooms & Sanitary -->
-              <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+              <div class="p-4 rounded-2xl bg-slate-50 border-2 border-slate-200">
                 <div class="flex justify-between items-center mb-2">
-                  <span class="text-xs sm:text-sm font-bold text-slate-800 flex items-center gap-2">
-                    <i data-lucide="droplets" class="w-4 h-4 text-blue-500"></i>
+                  <span class="text-xs sm:text-sm font-black text-slate-900 flex items-center gap-2">
+                    <i data-lucide="droplets" class="w-4 h-4 text-blue-600"></i>
                     <span>واش رومز (پلمبنگ، نلکے و موٹر پمپ):</span>
                   </span>
-                  <span class="text-sm font-black text-blue-700 bg-blue-50 px-2.5 py-0.5 rounded-lg border border-blue-200" x-text="calcWashrooms + ' واش رومز'"></span>
+                  <span class="text-sm font-black text-blue-900 bg-blue-100 px-2.5 py-0.5 rounded-lg border border-blue-300" x-text="calcWashrooms + ' واش رومز'"></span>
                 </div>
-                <input type="range" min="0" max="6" x-model="calcWashrooms" class="w-full accent-blue-500">
-                <div class="flex justify-between text-[11px] text-slate-400 mt-1">
-                  <span>0</span>
-                  <span>3 واش رومز</span>
-                  <span>6 واش رومز</span>
-                </div>
+                <input type="range" min="0" max="6" x-model="calcWashrooms" class="w-full accent-blue-600">
               </div>
 
               <!-- Gas Stove & Geysers -->
-              <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+              <div class="p-4 rounded-2xl bg-slate-50 border-2 border-slate-200">
                 <div class="flex justify-between items-center mb-2">
-                  <span class="text-xs sm:text-sm font-bold text-slate-800 flex items-center gap-2">
-                    <i data-lucide="flame" class="w-4 h-4 text-rose-500"></i>
+                  <span class="text-xs sm:text-sm font-black text-slate-900 flex items-center gap-2">
+                    <i data-lucide="flame" class="w-4 h-4 text-rose-600"></i>
                     <span>گیس چولہا، ہوب یا گیزر سروس پوائنٹس:</span>
                   </span>
-                  <span class="text-sm font-black text-rose-700 bg-rose-50 px-2.5 py-0.5 rounded-lg border border-rose-200" x-text="calcGasStoves + ' یونٹس'"></span>
+                  <span class="text-sm font-black text-rose-900 bg-rose-100 px-2.5 py-0.5 rounded-lg border border-rose-300" x-text="calcGasStoves + ' یونٹس'"></span>
                 </div>
-                <input type="range" min="0" max="4" x-model="calcGasStoves" class="w-full accent-rose-500">
-                <div class="flex justify-between text-[11px] text-slate-400 mt-1">
-                  <span>0</span>
-                  <span>2 یونٹس</span>
-                  <span>4 یونٹس</span>
-                </div>
+                <input type="range" min="0" max="4" x-model="calcGasStoves" class="w-full accent-rose-600">
               </div>
             </div>
 
@@ -1121,41 +1134,41 @@
 
           <!-- Right: Sticky Live Computerized Calculation Receipt (5 Cols) -->
           <div class="lg:col-span-5 lg:sticky lg:top-24 space-y-4">
-            <div class="bg-gradient-to-br from-slate-900 via-teal-950 to-brand-950 text-white rounded-3xl p-6 sm:p-8 shadow-2xl border border-teal-500/30 space-y-5">
+            <div class="bg-gradient-to-br from-slate-950 via-teal-950 to-slate-950 text-white rounded-3xl p-6 sm:p-8 shadow-2xl border-2 border-teal-500/50 space-y-5">
               
-              <div class="flex items-center justify-between border-b border-white/10 pb-3">
+              <div class="flex items-center justify-between border-b border-white/20 pb-3">
                 <div>
-                  <h4 class="font-bold text-base text-amber-300">متوقع تخمینہ رسید (Cost Summary)</h4>
-                  <p class="text-[11px] text-teal-200">رائل پام سٹی و گوجرانوالہ مارکیٹ ریٹس</p>
+                  <h4 class="font-black text-base text-amber-300">متوقع تخمینہ رسید (Cost Summary)</h4>
+                  <p class="text-[11px] text-teal-200 font-bold">رائل پام سٹی و گوجرانوالہ مارکیٹ ریٹس</p>
                 </div>
-                <span class="text-[10px] px-2 py-0.5 bg-emerald-500/20 text-emerald-300 rounded font-mono border border-emerald-400/30">EST-LIVE</span>
+                <span class="text-[10px] px-2 py-0.5 bg-emerald-500/30 text-emerald-300 rounded font-mono font-bold border border-emerald-400/40">EST-LIVE</span>
               </div>
 
-              <div class="space-y-2.5 text-xs">
+              <div class="space-y-2.5 text-xs font-semibold">
                 <div class="flex justify-between text-slate-300">
                   <span>تخمینہ پینٹ لاگت:</span>
-                  <span class="font-mono text-white font-bold" x-text="'روپے ' + (calcRooms * 6500).toLocaleString()"></span>
+                  <span class="font-mono text-white font-black" x-text="'روپے ' + (calcRooms * 6500).toLocaleString()"></span>
                 </div>
                 <div class="flex justify-between text-slate-300">
                   <span>تخمینہ الیکٹرک وائرنگ:</span>
-                  <span class="font-mono text-white font-bold" x-text="'روپے ' + (calcFans * 600).toLocaleString()"></span>
+                  <span class="font-mono text-white font-black" x-text="'روپے ' + (calcFans * 600).toLocaleString()"></span>
                 </div>
                 <div class="flex justify-between text-slate-300">
                   <span>تخمینہ پلمبنگ و سینیٹری:</span>
-                  <span class="font-mono text-white font-bold" x-text="'روپے ' + (calcWashrooms * 2500).toLocaleString()"></span>
+                  <span class="font-mono text-white font-black" x-text="'روپے ' + (calcWashrooms * 2500).toLocaleString()"></span>
                 </div>
                 <div class="flex justify-between text-slate-300">
                   <span>تخمینہ گیس چولہا و گیزر:</span>
-                  <span class="font-mono text-white font-bold" x-text="'روپے ' + (calcGasStoves * 1800).toLocaleString()"></span>
+                  <span class="font-mono text-white font-black" x-text="'روپے ' + (calcGasStoves * 1800).toLocaleString()"></span>
                 </div>
               </div>
 
-              <div class="pt-3 border-t border-white/10">
-                <div class="text-xs text-amber-300 font-bold mb-1">کل متوقع بجٹ (میٹریل + کاریگر مزدوری):</div>
+              <div class="pt-3 border-t border-white/20">
+                <div class="text-xs text-amber-300 font-black mb-1">کل متوقع بجٹ (میٹریل + کاریگر مزدوری):</div>
                 <div class="text-3xl font-black text-amber-400 font-mono" x-text="'روپے ' + ((calcRooms * 6500) + (calcFans * 600) + (calcWashrooms * 2500) + (calcGasStoves * 1800)).toLocaleString() + '/-'"></div>
               </div>
 
-              <div class="p-3 rounded-xl bg-white/10 backdrop-blur-sm text-[11px] text-teal-100 flex items-center gap-2">
+              <div class="p-3 rounded-xl bg-white/10 backdrop-blur-sm text-[11px] text-teal-100 flex items-center gap-2 font-bold">
                 <i data-lucide="shield-check" class="w-4 h-4 text-emerald-400 flex-shrink-0"></i>
                 <span>قیمت کاریگر سے باہمی گفتگو سے ایڈجسٹ بھی ہو سکتی ہے۔</span>
               </div>
@@ -1176,96 +1189,103 @@
       </div>
     </div>
 
-    <!-- ==================== VIEW 4: JOIN KARIGAR PORTAL & SUBSCRIPTION PLANS ==================== -->
-    <div x-show="currentView === 'join-karigar'" x-cloak class="py-10 bg-slate-50 min-h-screen">
+    <!-- ==================== VIEW 4: JOIN KARIGAR PORTAL & UPCOMING SUBSCRIPTION PLANS ==================== -->
+    <div x-show="currentView === 'join-karigar'" x-cloak class="py-10 bg-slate-100 min-h-screen">
       <div class="max-w-5xl mx-auto px-3 sm:px-6 lg:px-8 space-y-10">
         
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div>
-            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold mb-2">
-              <i data-lucide="user-plus" class="w-3.5 h-3.5 text-emerald-600"></i>
-              <span>کاریگر پورٹل و بزنس ماڈل</span>
+            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-900 text-emerald-100 text-xs font-black mb-2 shadow-xs border border-emerald-700">
+              <i data-lucide="user-plus" class="w-3.5 h-3.5 text-emerald-400"></i>
+              <span>کاریگر پورٹل و پریمیم بزنس ماڈل</span>
             </div>
-            <h2 class="text-2xl sm:text-3xl font-black text-slate-900">کاریگر رجسٹریشن برائے ایڈمن منظوری</h2>
-            <p class="text-xs sm:text-sm text-slate-600">صرف تصدیق شدہ کاریگرز کو کمپنی کے ترجیحی پیکجز کے تحت روزگار اور کام دیا جاتا ہے</p>
+            <h2 class="text-2xl sm:text-3xl font-black text-slate-950">کاریگر رجسٹریشن برائے ایڈمن منظوری</h2>
+            <p class="text-xs sm:text-sm text-slate-700 font-bold">صرف تصدیق شدہ کاریگرز کو کمپنی کے ترجیحی پیکجز کے تحت روزگار اور کام دیا جاتا ہے</p>
           </div>
-          <button @click="currentView = 'home'" class="px-4 py-2 bg-white border border-slate-200 text-slate-700 rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-xs">
+          <button @click="currentView = 'home'" class="px-4 py-2 bg-white border-2 border-slate-300 text-slate-900 rounded-xl text-xs font-black flex items-center gap-1.5 shadow-sm">
             <i data-lucide="arrow-right" class="w-4 h-4"></i>
             <span>واپس ہوم پیج</span>
           </button>
         </div>
 
-        <!-- ==================== NEW: KARIGAR SUBSCRIPTION PLANS (PRIORITY BASED WORK) ==================== -->
-        <div class="bg-gradient-to-br from-slate-900 via-teal-950 to-slate-950 text-white rounded-3xl p-6 sm:p-8 border border-teal-500/30 shadow-2xl space-y-6">
-          <div class="text-center max-w-2xl mx-auto space-y-1">
-            <span class="px-3 py-0.5 bg-amber-400 text-slate-950 text-xs font-black rounded-full">آنے والے وقت کے لیے کمپنی پالیسی</span>
+        <!-- ==================== KARIGAR SUBSCRIPTION PLANS (UPCOMING IN A FEW DAYS) ==================== -->
+        <div class="bg-gradient-to-br from-slate-950 via-teal-950 to-slate-950 text-white rounded-3xl p-6 sm:p-8 border-2 border-amber-400/60 shadow-2xl space-y-6">
+          <div class="text-center max-w-2xl mx-auto space-y-2">
+            
+            <!-- EXPLICIT COMING SOON BANNER REQUESTED BY USER -->
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 text-xs font-black rounded-full shadow-lg animate-pulse">
+              <span>🚀 پریمیم پلان آئندہ آنے والے چند دنوں میں رائج کیا جائے گا</span>
+              <span>•</span>
+              <span>پیشگی رجسٹریشن جاری ہے</span>
+            </div>
+
             <h3 class="text-xl sm:text-2xl font-black text-white">کاریگر ترجیحی بزنس پیکجز (Subscription Plans)</h3>
-            <p class="text-xs text-slate-300">
-              جو کاریگر جتنا اچھا پیکج منتخب کرے گا، کمپنی کے الگورتھم کی جانب سے اسے اتنا زیادہ کام اور کسٹمر لیڈز ترجیحی بنیاد پر دی جائیں گی۔
+            <p class="text-xs sm:text-sm text-slate-300 leading-relaxed font-semibold">
+              پریمیم بزنس پلانز آئندہ آنے والے چند دنوں میں باضابطہ رائج کیے جائیں گے۔ جو کاریگر جتنا اچھا پیکج منتخب کرے گا، کمپنی کے الگورتھم کی جانب سے اسے اتنا زیادہ کام اور ترجیحی کسٹمر کالز دی جائیں گی۔ ابھی رجسٹریشن مفت ہے۔
             </p>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-3 gap-5 pt-2">
             
             <!-- Tier 1: Silver -->
-            <div class="bg-slate-800/80 rounded-2xl p-5 border border-slate-700 flex flex-col justify-between space-y-4">
+            <div class="bg-slate-900/90 rounded-2xl p-5 border-2 border-slate-700 flex flex-col justify-between space-y-4">
               <div>
                 <div class="flex justify-between items-center mb-2">
-                  <span class="text-xs font-bold text-slate-300">🥉 بنیادی لیول</span>
-                  <span class="text-xs font-bold text-slate-400">سلور پیکج</span>
+                  <span class="text-xs font-black text-slate-300">🥉 بنیادی لیول</span>
+                  <span class="text-[10px] font-black px-2 py-0.5 rounded bg-slate-700 text-amber-300">عنقریب رائج ہوگا</span>
                 </div>
                 <div class="text-2xl font-black text-white mb-2">روپے 1,500 <span class="text-xs font-normal text-slate-400">/ ماہانہ</span></div>
-                <p class="text-xs text-slate-400 mb-4">نئے یا پارٹ ٹائم کاریگروں کے لیے روزانہ بنیادی کام۔</p>
-                <ul class="text-xs space-y-2 text-slate-300">
+                <p class="text-xs text-slate-300 mb-4 font-bold">نئے یا پارٹ ٹائم کاریگروں کے لیے روزانہ بنیادی کام۔</p>
+                <ul class="text-xs space-y-2 text-slate-300 font-semibold">
                   <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-brand-400"></i> <span>روزانہ 2 تا 3 کسٹمر لیڈز</span></li>
                   <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-brand-400"></i> <span>معیاری لسٹنگ ایپ پر</span></li>
                   <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-brand-400"></i> <span>کمپنی مصدقہ بیج</span></li>
                 </ul>
               </div>
-              <div class="p-2 bg-slate-900/60 rounded-xl text-[11px] text-center text-slate-400 font-semibold">
-                بنیادی ترجیحی آرڈرز
+              <div class="p-2 bg-slate-800 rounded-xl text-[11px] text-center text-amber-400 font-black border border-slate-700">
+                پیشگی رجسٹریشن اوپن ہے
               </div>
             </div>
 
             <!-- Tier 2: Gold (Most Popular) -->
-            <div class="bg-gradient-to-b from-teal-900/90 to-brand-950 rounded-2xl p-5 border-2 border-amber-400 shadow-xl flex flex-col justify-between space-y-4 relative">
-              <div class="absolute -top-3 right-4 px-2.5 py-0.5 bg-amber-400 text-slate-950 text-[10px] font-black rounded-full">
-                سب سے مقبول
+            <div class="bg-gradient-to-b from-teal-950 to-brand-950 rounded-2xl p-5 border-2 border-amber-400 shadow-xl flex flex-col justify-between space-y-4 relative">
+              <div class="absolute -top-3 right-4 px-2.5 py-0.5 bg-amber-400 text-slate-950 text-[10px] font-black rounded-full shadow-md">
+                سب سے مقبول • عنقریب رائج ہوگا
               </div>
               <div>
                 <div class="flex justify-between items-center mb-2">
-                  <span class="text-xs font-bold text-amber-300">🥈 ترجیحی فاسٹ لیول</span>
-                  <span class="text-xs font-bold text-amber-400">گولڈ پیکج</span>
+                  <span class="text-xs font-black text-amber-300">🥈 ترجیحی فاسٹ لیول</span>
+                  <span class="text-[10px] font-black px-2 py-0.5 rounded bg-amber-400/20 text-amber-300 border border-amber-400/40">چند دنوں میں فعال</span>
                 </div>
                 <div class="text-2xl font-black text-amber-400 mb-2">روپے 3,000 <span class="text-xs font-normal text-slate-300">/ ماہانہ</span></div>
-                <p class="text-xs text-slate-300 mb-4">فل ٹائم کاریگروں کے لیے باقاعدہ روزگار اور زیادہ کام۔</p>
-                <ul class="text-xs space-y-2 text-slate-200">
+                <p class="text-xs text-slate-200 mb-4 font-bold">فل ٹائم کاریگروں کے لیے باقاعدہ روزگار اور زیادہ کام۔</p>
+                <ul class="text-xs space-y-2 text-slate-100 font-semibold">
                   <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-amber-400"></i> <span>روزانہ 5 تا 8 ترجیحی لیڈز</span></li>
                   <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-amber-400"></i> <span>رائل پام سٹی ایکسپریس ٹیگ</span></li>
                   <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-amber-400"></i> <span>کسٹمر سے براہِ راست کال رابطہ</span></li>
                 </ul>
               </div>
-              <div class="p-2 bg-amber-400/20 rounded-xl text-[11px] text-center text-amber-300 font-bold border border-amber-400/30">
-                2x زیادہ روزانہ کام کی ضمانت
+              <div class="p-2 bg-amber-400/20 rounded-xl text-[11px] text-center text-amber-300 font-black border border-amber-400/40">
+                2x زیادہ روزانہ کام کی ترجیح
               </div>
             </div>
 
             <!-- Tier 3: Platinum VIP -->
-            <div class="bg-slate-800/80 rounded-2xl p-5 border border-purple-500/40 flex flex-col justify-between space-y-4">
+            <div class="bg-slate-900/90 rounded-2xl p-5 border-2 border-purple-500/60 flex flex-col justify-between space-y-4">
               <div>
                 <div class="flex justify-between items-center mb-2">
-                  <span class="text-xs font-bold text-purple-300">🥇 سرفہرست وی آئی پی</span>
-                  <span class="text-xs font-bold text-purple-400">پلاٹینم پیکج</span>
+                  <span class="text-xs font-black text-purple-300">🥇 سرفہرست وی آئی پی</span>
+                  <span class="text-[10px] font-black px-2 py-0.5 rounded bg-purple-900/60 text-purple-300 border border-purple-400/40">عنقریب رائج ہوگا</span>
                 </div>
                 <div class="text-2xl font-black text-purple-300 mb-2">روپے 5,000 <span class="text-xs font-normal text-slate-400">/ ماہانہ</span></div>
-                <p class="text-xs text-slate-400 mb-4">سینئر استاد کاریگروں اور ہائی انکم کے لیے۔</p>
-                <ul class="text-xs space-y-2 text-slate-300">
+                <p class="text-xs text-slate-300 mb-4 font-bold">سینئر استاد کاریگروں اور ہائی انکم کے لیے۔</p>
+                <ul class="text-xs space-y-2 text-slate-300 font-semibold">
                   <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-400"></i> <span>سرفہرست #1 لسٹنگ و لامحدود کالز</span></li>
                   <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-400"></i> <span>کمپنی اسپیشل وی آئی پی سرٹیفکیٹ</span></li>
                   <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-400"></i> <span>100% بزنس اور ترجیحی اسائنمنٹ</span></li>
                 </ul>
               </div>
-              <div class="p-2 bg-purple-900/50 rounded-xl text-[11px] text-center text-purple-200 font-bold border border-purple-400/30">
+              <div class="p-2 bg-purple-950/80 rounded-xl text-[11px] text-center text-purple-200 font-black border border-purple-400/40">
                 سرفہرست کاریگر پوزیشن
               </div>
             </div>
@@ -1274,34 +1294,34 @@
         </div>
 
         <!-- Registration Form -->
-        <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-xl space-y-5">
-          <h3 class="text-lg font-bold text-slate-900 border-b border-slate-100 pb-2">کاریگر رجسٹریشن فارم:</h3>
+        <div class="bg-white rounded-3xl p-6 sm:p-8 border-2 border-slate-300 shadow-xl space-y-5">
+          <h3 class="text-lg font-black text-slate-950 border-b-2 border-slate-100 pb-2">کاریگر پیشگی رجسٹریشن فارم:</h3>
           
-          <div class="p-4 rounded-2xl bg-amber-50 border border-amber-200 text-amber-900 text-xs leading-relaxed">
+          <div class="p-4 rounded-2xl bg-amber-50 border-2 border-amber-300 text-amber-950 text-xs leading-relaxed font-bold">
             <strong>قواعد و ضوابط:</strong> رائل پام سٹی اور گوجرانوالہ میں کام کرنے کے لیے شناختی کارڈ، فون نمبر اور پولیس کلیرنس حلف نامہ لازمی ہے۔ ایڈمن تصدیق کے بعد کال کرے گا اور منظوری دے گا۔
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label class="block text-xs font-bold text-slate-700 mb-1">پورا نام (شناختی کارڈ کے مطابق):</label>
-              <input type="text" x-model="karigarForm.name" placeholder="مثلاً: محمد راشد" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs sm:text-sm outline-none focus:border-brand-500">
+              <label class="block text-xs font-black text-slate-800 mb-1">پورا نام (شناختی کارڈ کے مطابق):</label>
+              <input type="text" x-model="karigarForm.name" placeholder="مثلاً: محمد راشد" class="w-full px-3.5 py-2.5 rounded-xl border-2 border-slate-300 text-xs sm:text-sm outline-none focus:border-brand-700 font-bold">
             </div>
 
             <div>
-              <label class="block text-xs font-bold text-slate-700 mb-1">شناختی کارڈ نمبر (CNIC):</label>
-              <input type="text" x-model="karigarForm.cnic" placeholder="مثلاً: 34101-1234567-1" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs sm:text-sm outline-none focus:border-brand-500">
+              <label class="block text-xs font-black text-slate-800 mb-1">شناختی کارڈ نمبر (CNIC):</label>
+              <input type="text" x-model="karigarForm.cnic" placeholder="مثلاً: 34101-1234567-1" class="w-full px-3.5 py-2.5 rounded-xl border-2 border-slate-300 text-xs sm:text-sm outline-none focus:border-brand-700 font-bold font-mono" dir="ltr">
             </div>
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label class="block text-xs font-bold text-slate-700 mb-1">موبائل فون نمبر:</label>
-              <input type="tel" x-model="karigarForm.phone" placeholder="مثلاً: 03001234567" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs sm:text-sm outline-none focus:border-brand-500">
+              <label class="block text-xs font-black text-slate-800 mb-1">موبائل فون نمبر:</label>
+              <input type="tel" x-model="karigarForm.phone" placeholder="مثلاً: 03001234567" class="w-full px-3.5 py-2.5 rounded-xl border-2 border-slate-300 text-xs sm:text-sm outline-none focus:border-brand-700 font-bold font-mono" dir="ltr">
             </div>
 
             <div>
-              <label class="block text-xs font-bold text-slate-700 mb-1">شعبہ (مہارت):</label>
-              <select x-model="karigarForm.skill" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs sm:text-sm outline-none focus:border-brand-500 bg-white">
+              <label class="block text-xs font-black text-slate-800 mb-1">شعبہ (مہارت):</label>
+              <select x-model="karigarForm.skill" class="w-full px-3.5 py-2.5 rounded-xl border-2 border-slate-300 text-xs sm:text-sm outline-none focus:border-brand-700 bg-white font-bold">
                 <option value="الیکٹریشن (بجلی کا کام)">الیکٹریشن (بجلی کا کام)</option>
                 <option value="پلمبر (سینیٹری و پائپ فٹنگ)">پلمبر (سینیٹری و پائپ فٹنگ)</option>
                 <option value="اے سی و فریج ٹیکنیشن">اے سی و فریج ٹیکنیشن</option>
@@ -1314,32 +1334,32 @@
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label class="block text-xs font-bold text-slate-700 mb-1">رہائشی علاقہ / سوسائٹی:</label>
-              <input type="text" x-model="karigarForm.area" placeholder="مثلاً: رائل پام سٹی / سٹی ہاؤسنگ / ماڈل ٹاؤن" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs sm:text-sm outline-none focus:border-brand-500">
+              <label class="block text-xs font-black text-slate-800 mb-1">رہائشی علاقہ / سوسائٹی:</label>
+              <input type="text" x-model="karigarForm.area" placeholder="مثلاً: رائل پام سٹی / سٹی ہاؤسنگ / ماڈل ٹاؤن" class="w-full px-3.5 py-2.5 rounded-xl border-2 border-slate-300 text-xs sm:text-sm outline-none focus:border-brand-700 font-bold">
             </div>
 
             <div>
-              <label class="block text-xs font-bold text-slate-700 mb-1">خواہشمند بزنس پیکج:</label>
-              <select x-model="karigarForm.desiredPackage" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs sm:text-sm outline-none focus:border-brand-500 bg-white">
-                <option value="gold">🥈 گولڈ پیکج (ترجیحی کام و لیڈز - 3,000/ماہ)</option>
-                <option value="platinum">🥇 پلاٹینم وی آئی پی (سرفہرست لسٹنگ - 5,000/ماہ)</option>
-                <option value="silver">🥉 سلور پیکج (بنیادی کام - 1,500/ماہ)</option>
+              <label class="block text-xs font-black text-slate-800 mb-1">خواہشمند بزنس پیکج (عنقریب رائج ہوگا):</label>
+              <select x-model="karigarForm.desiredPackage" class="w-full px-3.5 py-2.5 rounded-xl border-2 border-slate-300 text-xs sm:text-sm outline-none focus:border-brand-700 bg-white font-bold">
+                <option value="gold">🥈 گولڈ پیکج (ترجیحی کام و لیڈز - 3,000/ماہ • عنقریب)</option>
+                <option value="platinum">🥇 پلاٹینم وی آئی پی (سرفہرست لسٹنگ - 5,000/ماہ • عنقریب)</option>
+                <option value="silver">🥉 سلور پیکج (بنیادی کام - 1,500/ماہ • عنقریب)</option>
               </select>
             </div>
           </div>
 
-          <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 flex items-center gap-2">
-            <input type="checkbox" id="policeClearance" x-model="karigarForm.policeAgreed" class="w-4 h-4 text-brand-600 rounded">
-            <label for="policeClearance" class="text-xs text-slate-700 font-semibold cursor-pointer">
+          <div class="p-3.5 bg-slate-50 rounded-xl border-2 border-slate-200 flex items-center gap-2">
+            <input type="checkbox" id="policeClearance" x-model="karigarForm.policeAgreed" class="w-4 h-4 text-brand-700 rounded">
+            <label for="policeClearance" class="text-xs text-slate-900 font-bold cursor-pointer">
               میں حلفاً اقرار کرتا ہوں کہ میرا پولیس ریکارڈ بالکل صاف ہے اور میں ایڈمن ویریفکیشن کے لیے تیار ہوں۔
             </label>
           </div>
 
           <button 
             @click="submitKarigarRegistration()"
-            class="w-full py-3.5 bg-gradient-to-r from-brand-600 to-teal-700 hover:from-brand-700 hover:to-teal-800 text-white rounded-xl font-bold text-xs sm:text-sm shadow-lg transition-all text-center"
+            class="w-full py-3.5 bg-gradient-to-r from-brand-700 to-teal-700 hover:from-brand-800 hover:to-teal-800 text-white rounded-xl font-black text-xs sm:text-sm shadow-xl transition-all text-center"
           >
-            رجسٹریشن درخواست ایڈمن کو ارسال کریں
+            پیشگی رجسٹریشن درخواست ایڈمن کو ارسال کریں
           </button>
 
         </div>
@@ -1350,22 +1370,22 @@
     <!-- ==================== VIEW 5: SECURE ADMIN CONTROL PANEL ==================== -->
     <div x-show="currentView === 'admin'" x-cloak class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-10 min-h-screen">
       
-      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6 p-4 bg-slate-900 text-white rounded-2xl shadow-lg border border-slate-800">
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6 p-4 bg-slate-950 text-white rounded-2xl shadow-xl border-2 border-slate-800">
         <div>
-          <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-bold border border-emerald-500/30 mb-1">
+          <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-black border border-emerald-500/40 mb-1">
             <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
             <span>ایڈمن تصدیق شدہ سیشن</span>
           </div>
           <h2 class="text-xl sm:text-2xl font-black text-white">ایڈمن کنٹرول پینل (رائل پام سٹی و گوجرانوالہ)</h2>
-          <p class="text-xs text-slate-400">بکنگ آرڈرز، کاریگر پیکجز، باہمی فیڈ بیک اور شکایات کا انتظام</p>
+          <p class="text-xs text-slate-300 font-bold">بکنگ آرڈرز، کاریگر پیکجز، باہمی فیڈ بیک اور شکایات کا انتظام</p>
         </div>
 
         <div class="flex items-center gap-2">
-          <button @click="currentView = 'home'" class="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl text-xs font-bold flex items-center gap-1.5 border border-slate-700">
+          <button @click="currentView = 'home'" class="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 border border-slate-700">
             <i data-lucide="home" class="w-4 h-4"></i>
             <span>ویب سائٹ</span>
           </button>
-          <button @click="logoutAdmin()" class="px-3.5 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-xs">
+          <button @click="logoutAdmin()" class="px-3.5 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-md">
             <i data-lucide="log-out" class="w-4 h-4"></i>
             <span>لاگ آؤٹ</span>
           </button>
@@ -1373,42 +1393,42 @@
       </div>
 
       <!-- Admin Tabs -->
-      <div class="flex flex-wrap gap-2 mb-6 border-b border-slate-200 pb-2">
+      <div class="flex flex-wrap gap-2 mb-6 border-b-2 border-slate-300 pb-2">
         <button 
           @click="adminTab = 'orders'"
-          :class="adminTab === 'orders' ? 'bg-brand-600 text-white' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'"
-          class="px-4 py-2 rounded-xl text-xs font-bold transition-all"
+          :class="adminTab === 'orders' ? 'bg-brand-700 text-white' : 'bg-white text-slate-800 hover:bg-slate-200 border border-slate-300'"
+          class="px-4 py-2 rounded-xl text-xs font-black transition-all shadow-xs"
         >
           سروس آرڈرز (<span x-text="orders.length"></span>)
         </button>
         <button 
           @click="adminTab = 'pending'"
-          :class="adminTab === 'pending' ? 'bg-amber-600 text-white' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'"
-          class="px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1"
+          :class="adminTab === 'pending' ? 'bg-amber-600 text-white' : 'bg-white text-slate-800 hover:bg-slate-200 border border-slate-300'"
+          class="px-4 py-2 rounded-xl text-xs font-black transition-all flex items-center gap-1 shadow-xs"
         >
           <i data-lucide="user-check" class="w-3.5 h-3.5"></i>
           <span>منظوری طلب کاریگرز (<span x-text="pendingKarigars.length"></span>)</span>
         </button>
         <button 
           @click="adminTab = 'approved'"
-          :class="adminTab === 'approved' ? 'bg-emerald-600 text-white' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'"
-          class="px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1"
+          :class="adminTab === 'approved' ? 'bg-emerald-700 text-white' : 'bg-white text-slate-800 hover:bg-slate-200 border border-slate-300'"
+          class="px-4 py-2 rounded-xl text-xs font-black transition-all flex items-center gap-1 shadow-xs"
         >
           <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
           <span>لائیو منظور شدہ کاریگرز (<span x-text="technicians.length"></span>)</span>
         </button>
         <button 
           @click="adminTab = 'feedbacks'"
-          :class="adminTab === 'feedbacks' ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'"
-          class="px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1"
+          :class="adminTab === 'feedbacks' ? 'bg-blue-700 text-white' : 'bg-white text-slate-800 hover:bg-slate-200 border border-slate-300'"
+          class="px-4 py-2 rounded-xl text-xs font-black transition-all flex items-center gap-1 shadow-xs"
         >
           <i data-lucide="star" class="w-3.5 h-3.5"></i>
           <span>کسٹمر فیڈ بیک و ادائیگیاں (<span x-text="customerReviews.length"></span>)</span>
         </button>
         <button 
           @click="adminTab = 'disputes'"
-          :class="adminTab === 'disputes' ? 'bg-rose-600 text-white' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'"
-          class="px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1"
+          :class="adminTab === 'disputes' ? 'bg-rose-700 text-white' : 'bg-white text-slate-800 hover:bg-slate-200 border border-slate-300'"
+          class="px-4 py-2 rounded-xl text-xs font-black transition-all flex items-center gap-1 shadow-xs"
         >
           <i data-lucide="shield-alert" class="w-3.5 h-3.5"></i>
           <span>شکایات (<span x-text="disputesList.length"></span>)</span>
@@ -1416,11 +1436,11 @@
       </div>
 
       <!-- Tab 1: Orders Management -->
-      <div x-show="adminTab === 'orders'" class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-        <div class="p-4 bg-slate-50 border-b border-slate-200 font-bold text-sm text-slate-800">تمام موصولہ آرڈرز و طے شدہ ریٹس</div>
+      <div x-show="adminTab === 'orders'" class="bg-white rounded-2xl border-2 border-slate-300 shadow-sm overflow-hidden">
+        <div class="p-4 bg-slate-100 border-b-2 border-slate-300 font-black text-sm text-slate-950">تمام موصولہ آرڈرز و طے شدہ ریٹس</div>
         <div class="overflow-x-auto">
           <table class="w-full text-start text-xs min-w-[600px]">
-            <thead class="bg-slate-100 text-slate-600 border-b border-slate-200">
+            <thead class="bg-slate-200 text-slate-800 border-b-2 border-slate-300 font-black">
               <tr>
                 <th class="p-3 text-start">آرڈر ID</th>
                 <th class="p-3 text-start">کسٹمر</th>
@@ -1431,25 +1451,25 @@
                 <th class="p-3 text-center">ایکشن</th>
               </tr>
             </thead>
-            <tbody class="divide-y divide-slate-100">
+            <tbody class="divide-y divide-slate-200">
               <template x-for="ord in orders" :key="ord.id">
                 <tr class="hover:bg-slate-50">
-                  <td class="p-3 font-mono font-bold text-brand-700" x-text="ord.id"></td>
+                  <td class="p-3 font-mono font-black text-brand-700" x-text="ord.id"></td>
                   <td class="p-3">
-                    <div class="font-bold" x-text="ord.customerName"></div>
-                    <div class="text-slate-400 font-mono" dir="ltr" x-text="ord.phone"></div>
+                    <div class="font-black text-slate-900" x-text="ord.customerName"></div>
+                    <div class="text-slate-500 font-mono font-bold" dir="ltr" x-text="ord.phone"></div>
                   </td>
-                  <td class="p-3 font-semibold" x-text="ord.service"></td>
-                  <td class="p-3 font-bold text-emerald-700" x-text="'روپے ' + (ord.agreedPrice || ord.amount || '1,800')"></td>
-                  <td class="p-3 text-brand-700 font-bold" x-text="ord.assignedTech || 'محمد راشد'"></td>
+                  <td class="p-3 font-bold text-slate-900" x-text="ord.service"></td>
+                  <td class="p-3 font-black text-emerald-800" x-text="'روپے ' + (ord.agreedPrice || ord.amount || '1,800')"></td>
+                  <td class="p-3 text-brand-800 font-black" x-text="ord.assignedTech || 'محمد راشد'"></td>
                   <td class="p-3">
-                    <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800" x-text="ord.statusUrdu"></span>
+                    <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-emerald-100 text-emerald-950 border border-emerald-300" x-text="ord.statusUrdu"></span>
                   </td>
                   <td class="p-3 text-center flex items-center justify-center gap-1">
-                    <button @click="openInvoiceModal(ord)" class="p-1.5 bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white rounded-lg transition-colors" title="انوائس">
+                    <button @click="openInvoiceModal(ord)" class="p-1.5 bg-blue-100 text-blue-800 hover:bg-blue-600 hover:text-white rounded-lg transition-colors border border-blue-300" title="انوائس">
                       <i data-lucide="receipt" class="w-3.5 h-3.5"></i>
                     </button>
-                    <button @click="openFeedbackModalForOrder(ord)" class="p-1.5 bg-amber-50 text-amber-600 hover:bg-amber-600 hover:text-white rounded-lg transition-colors" title="فیڈ بیک درج کریں">
+                    <button @click="openFeedbackModalForOrder(ord)" class="p-1.5 bg-amber-100 text-amber-900 hover:bg-amber-600 hover:text-white rounded-lg transition-colors border border-amber-300" title="فیڈ بیک درج کریں">
                       <i data-lucide="star" class="w-3.5 h-3.5"></i>
                     </button>
                   </td>
@@ -1461,11 +1481,11 @@
       </div>
 
       <!-- Tab 2: Pending Karigar Approvals -->
-      <div x-show="adminTab === 'pending'" class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-        <div class="p-4 bg-amber-50 border-b border-amber-200 font-bold text-sm text-amber-900">نئی موصولہ کاریگر درخواستیں (شناختی کارڈ تصدیق کے بعد اپروول دیں)</div>
+      <div x-show="adminTab === 'pending'" class="bg-white rounded-2xl border-2 border-slate-300 shadow-sm overflow-hidden">
+        <div class="p-4 bg-amber-100 border-b-2 border-amber-300 font-black text-sm text-amber-950">نئی موصولہ کاریگر درخواستیں (شناختی کارڈ تصدیق کے بعد اپروول دیں)</div>
         <div class="overflow-x-auto">
           <table class="w-full text-start text-xs min-w-[650px]">
-            <thead class="bg-slate-100 text-slate-600 border-b border-slate-200">
+            <thead class="bg-slate-200 text-slate-800 border-b-2 border-slate-300 font-black">
               <tr>
                 <th class="p-3 text-start">نام</th>
                 <th class="p-3 text-start">شناختی کارڈ (CNIC)</th>
@@ -1476,19 +1496,19 @@
                 <th class="p-3 text-center">ایڈمن ایکشن</th>
               </tr>
             </thead>
-            <tbody class="divide-y divide-slate-100">
+            <tbody class="divide-y divide-slate-200">
               <template x-for="kar in pendingKarigars" :key="kar.id">
                 <tr class="hover:bg-slate-50">
-                  <td class="p-3 font-bold text-slate-900" x-text="kar.name"></td>
+                  <td class="p-3 font-black text-slate-900" x-text="kar.name"></td>
                   <td class="p-3 font-mono font-bold text-slate-800" dir="ltr" x-text="kar.cnic"></td>
                   <td class="p-3 font-mono text-slate-600" dir="ltr" x-text="kar.phone"></td>
-                  <td class="p-3 font-semibold text-brand-700" x-text="kar.skill"></td>
-                  <td class="p-3 font-bold text-amber-700" x-text="kar.desiredPackage === 'platinum' ? '🥇 پلاٹینم' : (kar.desiredPackage === 'gold' ? '🥈 گولڈ' : '🥉 سلور')"></td>
-                  <td class="p-3 text-slate-600" x-text="kar.area"></td>
+                  <td class="p-3 font-bold text-brand-800" x-text="kar.skill"></td>
+                  <td class="p-3 font-black text-amber-900" x-text="kar.desiredPackage === 'platinum' ? '🥇 پلاٹینم' : (kar.desiredPackage === 'gold' ? '🥈 گولڈ' : '🥉 سلور')"></td>
+                  <td class="p-3 text-slate-700 font-bold" x-text="kar.area"></td>
                   <td class="p-3 text-center">
                     <div class="flex items-center justify-center gap-1.5">
-                      <button @click="approveKarigar(kar.id)" class="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold">منظور کریں ✓</button>
-                      <button @click="rejectKarigar(kar.id)" class="px-2.5 py-1 bg-rose-600 hover:bg-rose-700 text-white rounded-lg text-xs font-bold">مسترد ✗</button>
+                      <button @click="approveKarigar(kar.id)" class="px-2.5 py-1 bg-emerald-700 hover:bg-emerald-800 text-white rounded-lg text-xs font-black">منظور کریں ✓</button>
+                      <button @click="rejectKarigar(kar.id)" class="px-2.5 py-1 bg-rose-700 hover:bg-rose-800 text-white rounded-lg text-xs font-black">مسترد ✗</button>
                     </div>
                   </td>
                 </tr>
@@ -1499,18 +1519,18 @@
       </div>
 
       <!-- Tab 3: Approved Live Technicians with Package Management -->
-      <div x-show="adminTab === 'approved'" class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-        <div class="p-4 bg-emerald-50 border-b border-emerald-200 font-bold text-sm text-emerald-900">منظور شدہ لائیو کاریگرز اور بزنس پیکجز</div>
+      <div x-show="adminTab === 'approved'" class="bg-white rounded-2xl border-2 border-slate-300 shadow-sm overflow-hidden">
+        <div class="p-4 bg-emerald-100 border-b-2 border-emerald-300 font-black text-sm text-emerald-950">منظور شدہ لائیو کاریگرز اور بزنس پیکجز</div>
         <div class="p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           <template x-for="t in technicians" :key="t.id">
-            <div class="p-4 rounded-2xl border border-slate-200 bg-slate-50 flex flex-col justify-between space-y-3">
+            <div class="p-4 rounded-2xl border-2 border-slate-300 bg-slate-50 flex flex-col justify-between space-y-3">
               <div>
                 <div class="flex justify-between items-start">
-                  <h4 class="font-bold text-slate-900 text-sm" x-text="t.name"></h4>
-                  <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-100 text-emerald-800">مصدقہ ✓</span>
+                  <h4 class="font-black text-slate-900 text-sm" x-text="t.name"></h4>
+                  <span class="text-[10px] font-black px-2 py-0.5 rounded bg-emerald-100 text-emerald-950 border border-emerald-300">مصدقہ ✓</span>
                 </div>
-                <p class="text-xs text-brand-600 font-semibold" x-text="t.specialtyUrdu"></p>
-                <div class="text-[11px] text-slate-500 mt-1" x-text="t.area + ' • فون: ' + (t.phone || '0300-4800071')"></div>
+                <p class="text-xs text-brand-700 font-black" x-text="t.specialtyUrdu"></p>
+                <div class="text-[11px] text-slate-600 font-bold mt-1" x-text="t.area + ' • فون: ' + (t.phone || '0300-4800071')"></div>
               </div>
 
               <!-- Admin Tier Changer -->
@@ -1518,14 +1538,14 @@
                 <select 
                   x-model="t.packageTier" 
                   @change="updateKarigarTier(t)" 
-                  class="text-xs font-bold p-1.5 rounded-lg border border-slate-300 bg-white"
+                  class="text-xs font-black p-1.5 rounded-lg border-2 border-slate-300 bg-white"
                 >
                   <option value="platinum">🥇 پلاٹینم وی آئی پی (#1 ترجیح)</option>
                   <option value="gold">🥈 گولڈ ایکسپریس (ترجیحی)</option>
                   <option value="silver">🥉 سلور (بنیادی)</option>
                 </select>
 
-                <button @click="suspendKarigar(t.id)" class="px-2 py-1 bg-rose-100 hover:bg-rose-200 text-rose-800 rounded-lg text-xs font-bold flex-shrink-0">
+                <button @click="suspendKarigar(t.id)" class="px-2 py-1 bg-rose-100 hover:bg-rose-200 text-rose-900 rounded-lg text-xs font-black border border-rose-300 flex-shrink-0">
                   معطل
                 </button>
               </div>
@@ -1535,20 +1555,20 @@
       </div>
 
       <!-- Tab 4: Customer Feedbacks & Verified Payments -->
-      <div x-show="adminTab === 'feedbacks'" class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-        <div class="p-4 bg-blue-50 border-b border-blue-200 font-bold text-sm text-blue-900">کسٹمر ریویوز، کام کی تسلی اور ادا شدہ رقم کا ریکارڈ</div>
-        <div class="divide-y divide-slate-100">
+      <div x-show="adminTab === 'feedbacks'" class="bg-white rounded-2xl border-2 border-slate-300 shadow-sm overflow-hidden">
+        <div class="p-4 bg-blue-100 border-b-2 border-blue-300 font-black text-sm text-blue-950">کسٹمر ریویوز، کام کی تسلی اور ادا شدہ رقم کا ریکارڈ</div>
+        <div class="divide-y divide-slate-200">
           <template x-for="f in customerReviews" :key="f.id">
             <div class="p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
               <div>
                 <div class="flex items-center gap-2 mb-1">
-                  <span class="font-bold text-slate-900 text-sm" x-text="f.customerName"></span>
-                  <span class="text-xs text-amber-500 font-bold" x-text="'★ ' + (f.rating || 5.0)"></span>
-                  <span class="px-2 py-0.5 bg-emerald-100 text-emerald-800 text-[10px] font-bold rounded">رقم ادا شدہ ✓</span>
-                  <span class="text-[11px] text-slate-400" x-text="f.date"></span>
+                  <span class="font-black text-slate-900 text-sm" x-text="f.customerName"></span>
+                  <span class="text-xs text-amber-600 font-black" x-text="'★ ' + (f.rating || 5.0)"></span>
+                  <span class="px-2 py-0.5 bg-emerald-100 text-emerald-950 text-[10px] font-black rounded border border-emerald-300">رقم ادا شدہ ✓</span>
+                  <span class="text-[11px] text-slate-500 font-bold" x-text="f.date"></span>
                 </div>
-                <p class="text-xs text-slate-700" x-text="f.comment"></p>
-                <div class="text-[11px] text-brand-700 font-medium mt-0.5" x-text="'سروس: ' + f.service"></div>
+                <p class="text-xs text-slate-800 font-bold" x-text="f.comment"></p>
+                <div class="text-[11px] text-brand-800 font-black mt-0.5" x-text="'سروس: ' + f.service"></div>
               </div>
             </div>
           </template>
@@ -1556,27 +1576,27 @@
       </div>
 
       <!-- Tab 5: Complaints & Disputes -->
-      <div x-show="adminTab === 'disputes'" class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-        <div class="p-4 bg-rose-50 border-b border-rose-200 font-bold text-sm text-rose-900">موصولہ شکایات و قانونی تنازعات</div>
-        <div class="divide-y divide-slate-100">
+      <div x-show="adminTab === 'disputes'" class="bg-white rounded-2xl border-2 border-slate-300 shadow-sm overflow-hidden">
+        <div class="p-4 bg-rose-100 border-b-2 border-rose-300 font-black text-sm text-rose-950">موصولہ شکایات و قانونی تنازعات</div>
+        <div class="divide-y divide-slate-200">
           <template x-for="d in disputesList" :key="d.id">
             <div class="p-4 hover:bg-slate-50 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
               <div class="space-y-1">
                 <div class="flex items-center gap-2">
-                  <span class="font-mono font-bold text-rose-700 text-xs" x-text="d.id"></span>
-                  <span class="px-2 py-0.5 rounded text-[10px] font-bold" :class="d.type === 'customer' ? 'bg-blue-100 text-blue-800' : 'bg-amber-100 text-amber-800'" x-text="d.type === 'customer' ? 'کسٹمر شکایت' : 'کاریگر شکایت'"></span>
-                  <span class="text-xs font-bold text-slate-900" x-text="d.complainant"></span>
-                  <span class="text-xs font-mono text-slate-500" dir="ltr" x-text="d.phone"></span>
+                  <span class="font-mono font-black text-rose-700 text-xs" x-text="d.id"></span>
+                  <span class="px-2 py-0.5 rounded text-[10px] font-black" :class="d.type === 'customer' ? 'bg-blue-100 text-blue-950' : 'bg-amber-100 text-amber-950'" x-text="d.type === 'customer' ? 'کسٹمر شکایت' : 'کاریگر شکایت'"></span>
+                  <span class="text-xs font-black text-slate-900" x-text="d.complainant"></span>
+                  <span class="text-xs font-mono font-bold text-slate-600" dir="ltr" x-text="d.phone"></span>
                 </div>
-                <div class="text-xs font-bold text-rose-800" x-text="'نوعیت: ' + d.issueType"></div>
-                <p class="text-xs text-slate-600" x-text="d.details"></p>
+                <div class="text-xs font-black text-rose-800" x-text="'نوعیت: ' + d.issueType"></div>
+                <p class="text-xs text-slate-700 font-bold" x-text="d.details"></p>
               </div>
               <div class="flex items-center gap-2">
-                <a :href="'tel:' + d.phone" class="px-3 py-1.5 bg-emerald-600 text-white rounded-lg text-xs font-bold flex items-center gap-1">
+                <a :href="'tel:' + d.phone" class="px-3 py-1.5 bg-emerald-700 text-white rounded-lg text-xs font-black flex items-center gap-1 shadow-sm">
                   <i data-lucide="phone" class="w-3.5 h-3.5"></i>
                   <span>کال کریں</span>
                 </a>
-                <button @click="resolveDispute(d.id)" class="px-3 py-1.5 bg-slate-900 text-white rounded-lg text-xs font-bold">
+                <button @click="resolveDispute(d.id)" class="px-3 py-1.5 bg-slate-950 text-white rounded-lg text-xs font-black shadow-sm">
                   حل شدہ مارک کریں ✓
                 </button>
               </div>
@@ -1589,30 +1609,36 @@
 
   </main>
 
-  <!-- ==================== FOOTER ==================== -->
-  <footer class="bg-slate-900 text-slate-300 pt-16 pb-12 border-t border-slate-800">
+  <!-- ==================== FOOTER (DEEP NAVY SLATE & AMBER ACCENTS) ==================== -->
+  <footer class="bg-slate-950 text-slate-300 pt-16 pb-12 border-t-2 border-slate-800">
     <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
       <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
         
         <!-- About Col -->
         <div class="space-y-4">
           <div class="flex items-center gap-3">
-            <img src="icon-192.png" alt="B.A.H.Care" class="w-11 h-11 rounded-xl shadow-sm border border-teal-500/30 object-contain" />
+            <img src="icon-192.png" alt="B.A.H.Care" class="w-12 h-12 rounded-xl shadow-md border-2 border-teal-500/40 object-contain" />
             <div>
-              <h3 class="text-lg font-bold text-white leading-tight">بن عباس ہوم کیئر</h3>
+              <h3 class="text-lg font-black text-white leading-tight">بن عباس ہوم کیئر</h3>
               <div class="font-brand-latin text-xs text-amber-400 font-black tracking-wider" dir="ltr">B.A.H.Care • Handyman Network</div>
             </div>
           </div>
-          <p class="text-xs text-slate-400 leading-relaxed">
+          <p class="text-xs text-slate-300 leading-relaxed font-semibold">
             رائل پام سٹی، گوجرانوالہ اور قریبی تمام سوسائٹیز میں 15 تا 30 منٹ ہوم سروس، منظور شدہ کاریگر، کسٹمر و کاریگر باہمی ریٹس اور 7 دن کی وارنٹی کا بااعتماد پلیٹ فارم۔
           </p>
+          <div>
+            <button @click="shareApp()" class="px-3.5 py-1.5 bg-teal-800 hover:bg-teal-700 text-white rounded-xl text-xs font-bold flex items-center gap-2 border border-teal-600">
+              <i data-lucide="share-2" class="w-3.5 h-3.5 text-amber-400"></i>
+              <span>ایپ شیئر کریں</span>
+            </button>
+          </div>
         </div>
 
         <!-- Areas Covered -->
         <div>
-          <h4 class="font-bold text-sm text-slate-200 mb-3">سروس کوریج سوسائٹیز</h4>
-          <ul class="space-y-1.5 text-xs text-slate-400">
-            <li class="text-amber-400 font-bold">🌴 رائل پام سٹی (فلیگ شپ 15 منٹ سروس)</li>
+          <h4 class="font-black text-sm text-slate-100 mb-3">سروس کوریج سوسائٹیز</h4>
+          <ul class="space-y-2 text-xs text-slate-300 font-bold">
+            <li class="text-amber-400">🌴 رائل پام سٹی (فلیگ شپ 15 منٹ سروس)</li>
             <li>سٹی ہاؤسنگ و ماسٹر سٹی</li>
             <li>ڈی ایچ اے گوجرانوالہ و ڈی سی کالونی</li>
             <li>ماڈل ٹاؤن، سیٹلائٹ و پیپلز کالونی</li>
@@ -1621,8 +1647,8 @@
 
         <!-- Customer Protection -->
         <div>
-          <h4 class="font-bold text-sm text-slate-200 mb-3">کسٹمر سپورٹ و تحفظ</h4>
-          <ul class="space-y-1.5 text-xs text-slate-400">
+          <h4 class="font-black text-sm text-slate-100 mb-3">کسٹمر سپورٹ و تحفظ</h4>
+          <ul class="space-y-2 text-xs text-slate-300 font-bold">
             <li><button @click="openCustomerModal()" class="text-amber-300 hover:underline">کسٹمر لاگ ان و شمولیت</button></li>
             <li><button @click="openFeedbackModal()" class="text-teal-300 hover:underline">کام کی تسلی و فیڈ بیک فارم</button></li>
             <li><button @click="openDisputeModal()" class="text-rose-300 hover:underline">شکایت و انصاف سیل (Disputes)</button></li>
@@ -1632,21 +1658,21 @@
 
         <!-- Contact & Admin -->
         <div>
-          <h4 class="font-bold text-sm text-slate-200 mb-3">کمپنی ہیلپ لائن و ایڈمن</h4>
-          <p class="text-xs text-slate-400 leading-relaxed mb-3">
-            کمپنی آفیشل ہیلپ لائن: <span class="text-amber-400 font-mono font-bold" dir="ltr">0300-4800071</span><br>
+          <h4 class="font-black text-sm text-slate-100 mb-3">کمپنی ہیلپ لائن و ایڈمن</h4>
+          <p class="text-xs text-slate-300 leading-relaxed mb-3 font-semibold">
+            کمپنی آفیشل ہیلپ لائن: <span class="text-amber-400 font-mono font-black" dir="ltr">0300-4800071</span><br>
             مرکزی دفتر: رائل پام سٹی / جی ٹی روڈ، گوجرانوالہ۔
           </p>
-          <button @click="promptAdminLogin()" class="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-amber-300 rounded-xl text-xs font-bold border border-amber-400/40 shadow-xs">
+          <button @click="promptAdminLogin()" class="px-3.5 py-2 bg-slate-900 hover:bg-slate-800 text-amber-300 rounded-xl text-xs font-black border border-amber-400/50 shadow-md">
             🔐 ایڈمن پینل لاگ ان
           </button>
         </div>
 
       </div>
 
-      <div class="pt-6 border-t border-slate-800 text-center text-xs text-slate-400 space-y-2">
-        <div>© 2026 بن عباس ہوم کیئر (Bin Abbas Home Care • B.A.H.Care) • رائل پام سٹی گوجرانوالہ۔ جملہ حقوق محفوظ ہیں۔</div>
-        <div class="text-amber-400 font-bold flex flex-wrap items-center justify-center gap-1 sm:gap-2">
+      <div class="pt-6 border-t-2 border-slate-800 text-center text-xs text-slate-400 space-y-2">
+        <div class="font-bold">© 2026 بن عباس ہوم کیئر (Bin Abbas Home Care • B.A.H.Care) • رائل پام سٹی گوجرانوالہ۔ جملہ حقوق محفوظ ہیں۔</div>
+        <div class="text-amber-400 font-black flex flex-wrap items-center justify-center gap-1 sm:gap-2">
           <span>ایپ ڈویلپر:</span>
           <span class="text-white">عابد عباس علی گورائیہ</span>
           <span class="text-slate-500">•</span>
@@ -1657,7 +1683,7 @@
     </div>
   </footer>
 
-  <!-- ==================== MODAL 0: CUSTOMER ONBOARDING / LOGIN (REQUIRED BEFORE BOOKING) ==================== -->
+  <!-- ==================== MODAL 0: CUSTOMER ONBOARDING / LOGIN ==================== -->
   <div 
     x-show="isCustomerModalOpen" 
     x-cloak 
@@ -1666,67 +1692,67 @@
   >
     <div 
       @click.outside="isCustomerModalOpen = false"
-      class="bg-white rounded-3xl shadow-2xl border border-slate-200 max-w-md w-full p-6 text-center space-y-4"
+      class="bg-white rounded-3xl shadow-2xl border-2 border-slate-300 max-w-md w-full p-6 text-center space-y-4"
     >
-      <div class="w-14 h-14 mx-auto rounded-2xl bg-brand-100 text-brand-700 flex items-center justify-center font-bold shadow-xs">
+      <div class="w-14 h-14 mx-auto rounded-2xl bg-brand-100 text-brand-700 flex items-center justify-center font-black shadow-xs">
         <i data-lucide="user-check" class="w-7 h-7"></i>
       </div>
 
       <div>
-        <h3 class="text-xl font-black text-slate-900">کسٹمر لاگ ان و شمولیت</h3>
-        <p class="text-xs text-slate-600 mt-1 leading-relaxed">
+        <h3 class="text-xl font-black text-slate-950">کسٹمر لاگ ان و شمولیت</h3>
+        <p class="text-xs text-slate-700 mt-1 leading-relaxed font-bold">
           کاریگر سے براہِ راست رابطہ اور سروس بکنگ کے لیے برائے مہربانی اپنا نام اور موبائل فون نمبر درج فرمائیں۔
         </p>
       </div>
 
       <div class="space-y-3 text-start">
         <div>
-          <label class="block text-xs font-bold text-slate-700 mb-1">آپ کا نام:</label>
+          <label class="block text-xs font-black text-slate-800 mb-1">آپ کا نام:</label>
           <input 
             type="text" 
             x-model="customerInputName" 
             placeholder="مثلاً: احمد رضا"
-            class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 outline-none focus:border-brand-500 text-xs sm:text-sm font-semibold"
+            class="w-full px-3.5 py-2.5 rounded-xl border-2 border-slate-300 outline-none focus:border-brand-700 text-xs sm:text-sm font-black"
           />
         </div>
 
         <div>
-          <label class="block text-xs font-bold text-slate-700 mb-1">موبائل فون نمبر:</label>
+          <label class="block text-xs font-black text-slate-800 mb-1">موبائل فون نمبر:</label>
           <input 
             type="tel" 
             x-model="customerInputPhone" 
             placeholder="مثلاً: 03001234567"
-            class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 outline-none focus:border-brand-500 text-xs sm:text-sm font-semibold font-mono"
+            class="w-full px-3.5 py-2.5 rounded-xl border-2 border-slate-300 outline-none focus:border-brand-700 text-xs sm:text-sm font-black font-mono"
             dir="ltr"
           />
         </div>
 
         <div>
-          <label class="block text-xs font-bold text-slate-700 mb-1">سوسائٹی / رہائشی علاقہ:</label>
+          <label class="block text-xs font-black text-slate-800 mb-1">سوسائٹی / رہائشی علاقہ:</label>
           <input 
             type="text" 
             x-model="customerInputArea" 
             placeholder="مثلاً: رائل پام سٹی / سٹی ہاؤسنگ"
-            class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 outline-none focus:border-brand-500 text-xs sm:text-sm"
+            class="w-full px-3.5 py-2.5 rounded-xl border-2 border-slate-300 outline-none focus:border-brand-700 text-xs sm:text-sm font-bold"
           />
         </div>
       </div>
 
-      <div class="p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-[11px] text-emerald-900 text-start flex items-center gap-2">
-        <i data-lucide="shield-check" class="w-4 h-4 text-emerald-600 flex-shrink-0"></i>
+      <div class="p-3 rounded-xl bg-emerald-50 border border-emerald-300 text-[11px] text-emerald-950 text-start flex items-center gap-2 font-bold">
+        <i data-lucide="shield-check" class="w-4 h-4 text-emerald-700 flex-shrink-0"></i>
         <span>آپ کا ڈیٹا محفوظ ہے اور صرف تصدیق شدہ کاریگر سے رابطے کے لیے استعمال ہوگا۔</span>
       </div>
 
       <div class="flex gap-2 pt-1">
         <button 
           @click="saveCustomerProfile()" 
-          class="flex-1 py-3 bg-gradient-to-r from-brand-600 to-teal-700 hover:from-brand-700 hover:to-teal-800 text-white font-bold text-xs sm:text-sm rounded-xl shadow-md transition-all"
+          class="flex-1 py-3 bg-gradient-to-r from-brand-700 to-teal-700 hover:from-brand-800 hover:to-teal-800 text-white font-black text-xs sm:text-sm rounded-xl shadow-md transition-all"
         >
           شمولیت مکمل کریں و آگے بڑھیں ✓
         </button>
         <button 
           @click="isCustomerModalOpen = false" 
-          class="px-4 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl"
+          class="px-4 py-3 bg-slate-200 hover:bg-slate-300 text-slate-900 font-black text-xs rounded-xl"
         >
           بند کریں
         </button>
@@ -1738,35 +1764,35 @@
   <div 
     x-show="isSocietiesModalOpen" 
     x-cloak 
-    class="fixed inset-0 z-50 overflow-y-auto bg-slate-900/75 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4"
+    class="fixed inset-0 z-50 overflow-y-auto bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4"
     @keydown.escape.window="isSocietiesModalOpen = false"
   >
     <div 
       @click.outside="isSocietiesModalOpen = false"
-      class="bg-white rounded-3xl shadow-2xl border border-slate-200 max-w-2xl w-full max-h-[90vh] flex flex-col overflow-hidden"
+      class="bg-white rounded-3xl shadow-2xl border-2 border-slate-300 max-w-2xl w-full max-h-[90vh] flex flex-col overflow-hidden"
     >
-      <div class="bg-gradient-to-r from-brand-700 to-teal-800 text-white p-5 sm:p-6 relative flex-shrink-0">
-        <button @click="isSocietiesModalOpen = false" class="absolute top-5 left-5 text-white/80 hover:text-white p-1 rounded-full bg-black/10">
+      <div class="bg-gradient-to-r from-brand-800 to-teal-900 text-white p-5 sm:p-6 relative flex-shrink-0">
+        <button @click="isSocietiesModalOpen = false" class="absolute top-5 left-5 text-white/80 hover:text-white p-1 rounded-full bg-black/20">
           <i data-lucide="x" class="w-5 h-5"></i>
         </button>
-        <div class="text-xs font-semibold text-teal-200 uppercase tracking-wider mb-1">سروس کوریج نیٹ ورک</div>
-        <h3 class="text-xl sm:text-2xl font-bold">تمام سوسائٹیز و سروس ایریاز</h3>
-        <p class="text-xs text-teal-100 mt-1">کسی بھی سوسائٹی پر کلک کریں اور فوری کاریگر بک کریں (رائل پام سٹی میں 15 تا 20 منٹ)</p>
+        <div class="text-xs font-bold text-teal-200 uppercase tracking-wider mb-1">سروس کوریج نیٹ ورک</div>
+        <h3 class="text-xl sm:text-2xl font-black">تمام سوسائٹیز و سروس ایریاز</h3>
+        <p class="text-xs text-teal-100 mt-1 font-bold">کسی بھی سوسائٹی پر کلک کریں اور فوری کاریگر بک کریں (رائل پام سٹی میں 15 تا 20 منٹ)</p>
       </div>
 
-      <div class="p-5 sm:p-6 overflow-y-auto space-y-4 flex-1">
+      <div class="p-5 sm:p-6 overflow-y-auto space-y-4 flex-1 bg-slate-50">
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
           <template x-for="zone in societyZones" :key="zone.title">
-            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200">
-              <div class="flex items-center gap-2 font-bold text-slate-900 text-sm mb-2.5">
-                <i :data-lucide="zone.icon" class="w-4 h-4 text-brand-600"></i>
+            <div class="p-4 rounded-2xl bg-white border-2 border-slate-200 shadow-xs">
+              <div class="flex items-center gap-2 font-black text-slate-950 text-sm mb-2.5">
+                <i :data-lucide="zone.icon" class="w-4 h-4 text-brand-700"></i>
                 <span x-text="zone.title"></span>
               </div>
               <div class="flex flex-wrap gap-1.5">
                 <template x-for="s in zone.societies" :key="s">
                   <button 
                     @click="selectSociety(s); isSocietiesModalOpen = false"
-                    class="px-2.5 py-1 bg-white hover:bg-brand-600 hover:text-white border border-slate-200 rounded-lg text-xs font-medium text-slate-700 transition-all shadow-2xs"
+                    class="px-2.5 py-1 bg-slate-100 hover:bg-brand-700 hover:text-white border border-slate-300 rounded-lg text-xs font-bold text-slate-800 transition-all shadow-2xs"
                   >
                     <span x-text="s"></span>
                   </button>
@@ -1783,27 +1809,27 @@
   <div 
     x-show="isCategoryDetailModalOpen" 
     x-cloak 
-    class="fixed inset-0 z-50 overflow-y-auto bg-slate-900/75 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4"
+    class="fixed inset-0 z-50 overflow-y-auto bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4"
     @keydown.escape.window="isCategoryDetailModalOpen = false"
   >
     <div 
       @click.outside="isCategoryDetailModalOpen = false"
-      class="bg-white rounded-3xl shadow-2xl border border-slate-200 max-w-lg w-full max-h-[90vh] flex flex-col overflow-hidden"
+      class="bg-white rounded-3xl shadow-2xl border-2 border-slate-300 max-w-lg w-full max-h-[90vh] flex flex-col overflow-hidden"
     >
-      <div class="bg-gradient-to-r from-brand-700 to-teal-800 text-white p-5 sm:p-6 relative flex-shrink-0">
-        <button @click="isCategoryDetailModalOpen = false" class="absolute top-5 left-5 text-white/80 hover:text-white p-1 rounded-full bg-black/10">
+      <div class="bg-gradient-to-r from-brand-800 to-teal-900 text-white p-5 sm:p-6 relative flex-shrink-0">
+        <button @click="isCategoryDetailModalOpen = false" class="absolute top-5 left-5 text-white/80 hover:text-white p-1 rounded-full bg-black/20">
           <i data-lucide="x" class="w-5 h-5"></i>
         </button>
-        <div class="text-xs font-semibold text-teal-200 uppercase tracking-wider mb-1" x-text="activeCategoryDetail.startingPrice"></div>
-        <h3 class="text-xl sm:text-2xl font-bold" x-text="activeCategoryDetail.titleUrdu"></h3>
-        <p class="text-xs text-teal-100 mt-1" x-text="activeCategoryDetail.descUrdu"></p>
+        <div class="text-xs font-black text-amber-400 uppercase tracking-wider mb-1" x-text="activeCategoryDetail.startingPrice"></div>
+        <h3 class="text-xl sm:text-2xl font-black" x-text="activeCategoryDetail.titleUrdu"></h3>
+        <p class="text-xs text-teal-100 mt-1 font-bold" x-text="activeCategoryDetail.descUrdu"></p>
       </div>
 
-      <div class="p-5 sm:p-6 overflow-y-auto space-y-4 flex-1">
-        <h4 class="font-bold text-sm text-slate-900">شامل سروسز و کام کی تفصیل:</h4>
-        <ul class="space-y-2 text-xs text-slate-700">
+      <div class="p-5 sm:p-6 overflow-y-auto space-y-4 flex-1 bg-slate-50">
+        <h4 class="font-black text-sm text-slate-950">شامل سروسز و کام کی تفصیل:</h4>
+        <ul class="space-y-2 text-xs text-slate-800 font-bold">
           <template x-for="t in (activeCategoryDetail.tasksUrdu || [])" :key="t">
-            <li class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center gap-2">
+            <li class="p-2.5 rounded-xl bg-white border border-slate-300 flex items-center gap-2 shadow-xs">
               <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600 flex-shrink-0"></i>
               <span x-text="t"></span>
             </li>
@@ -1811,10 +1837,10 @@
         </ul>
       </div>
 
-      <div class="p-4 bg-slate-50 border-t border-slate-200 flex justify-between items-center flex-shrink-0">
+      <div class="p-4 bg-white border-t-2 border-slate-200 flex justify-between items-center flex-shrink-0">
         <button 
           @click="selectServiceForBooking(activeCategoryDetail); isCategoryDetailModalOpen = false"
-          class="w-full py-3 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl text-xs sm:text-sm shadow-md"
+          class="w-full py-3 bg-brand-700 hover:bg-brand-800 text-white font-black rounded-xl text-xs sm:text-sm shadow-md"
         >
           اس سروس کے لیے کاریگر لیں و ریٹ طے کریں
         </button>
@@ -1831,15 +1857,15 @@
   >
     <div 
       @click.outside="isAdminLoginModalOpen = false"
-      class="bg-white rounded-3xl shadow-2xl border border-slate-200 max-w-sm w-full p-6 text-center space-y-4"
+      class="bg-white rounded-3xl shadow-2xl border-2 border-slate-300 max-w-sm w-full p-6 text-center space-y-4"
     >
       <div class="w-14 h-14 mx-auto rounded-2xl bg-amber-100 text-amber-900 flex items-center justify-center font-bold shadow-xs">
         <i data-lucide="key" class="w-7 h-7"></i>
       </div>
 
       <div>
-        <h3 class="text-xl font-black text-slate-900">ایڈمن لاگ ان</h3>
-        <p class="text-xs text-slate-500 mt-1">کنٹرول پینل تک رسائی کے لیے خفیہ پاس ورڈ درج کریں</p>
+        <h3 class="text-xl font-black text-slate-950">ایڈمن لاگ ان</h3>
+        <p class="text-xs text-slate-600 font-bold mt-1">کنٹرول پینل تک رسائی کے لیے خفیہ پاس ورڈ درج کریں</p>
       </div>
 
       <div>
@@ -1849,20 +1875,20 @@
           x-model="adminPinInput" 
           @keydown.enter="verifyAdminPin()"
           placeholder="پاس ورڈ درج کریں"
-          class="w-full text-center tracking-widest text-2xl font-mono py-3 rounded-xl border border-slate-300 outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-200"
+          class="w-full text-center tracking-widest text-2xl font-mono py-3 rounded-xl border-2 border-slate-300 outline-none focus:border-brand-700 focus:ring-2 focus:ring-brand-200 font-black"
         />
       </div>
 
       <div class="flex gap-2">
         <button 
           @click="verifyAdminPin()" 
-          class="flex-1 py-3 bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs sm:text-sm rounded-xl shadow-md"
+          class="flex-1 py-3 bg-brand-700 hover:bg-brand-800 text-white font-black text-xs sm:text-sm rounded-xl shadow-md"
         >
           لاگ ان کریں
         </button>
         <button 
           @click="isAdminLoginModalOpen = false" 
-          class="px-4 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl"
+          class="px-4 py-3 bg-slate-200 hover:bg-slate-300 text-slate-900 font-bold text-xs rounded-xl"
         >
           منسوخ
         </button>
@@ -1874,46 +1900,46 @@
   <div 
     x-show="isDisputeModalOpen" 
     x-cloak 
-    class="fixed inset-0 z-50 overflow-y-auto bg-slate-900/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4"
+    class="fixed inset-0 z-50 overflow-y-auto bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4"
     @keydown.escape.window="isDisputeModalOpen = false"
   >
     <div 
       @click.outside="isDisputeModalOpen = false"
-      class="bg-white rounded-3xl shadow-2xl border border-slate-200 max-w-lg w-full max-h-[92vh] flex flex-col overflow-hidden"
+      class="bg-white rounded-3xl shadow-2xl border-2 border-slate-300 max-w-lg w-full max-h-[92vh] flex flex-col overflow-hidden"
     >
-      <div class="bg-gradient-to-r from-rose-800 to-rose-950 text-white p-5 sm:p-6 relative flex-shrink-0">
+      <div class="bg-gradient-to-r from-rose-900 to-slate-950 text-white p-5 sm:p-6 relative flex-shrink-0">
         <button @click="isDisputeModalOpen = false" class="absolute top-5 left-5 text-white/80 hover:text-white p-1 rounded-full bg-black/20">
           <i data-lucide="x" class="w-5 h-5"></i>
         </button>
-        <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-rose-500/30 text-rose-200 text-[10px] font-bold mb-1">
+        <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-rose-500/30 text-rose-200 text-[10px] font-black mb-1">
           <i data-lucide="shield-alert" class="w-3 h-3"></i>
           <span>شکایت و انصاف سیل (Legal Protection)</span>
         </div>
         <h3 class="text-xl sm:text-2xl font-black">شکایت و قانونی تحفظ پورٹل</h3>
-        <p class="text-xs text-rose-100 mt-1">چوری، نقصان، غیر معیاری کام یا ادائیگی کے تنازعات کی رپورٹنگ</p>
+        <p class="text-xs text-rose-100 mt-1 font-bold">چوری، نقصان، غیر معیاری کام یا ادائیگی کے تنازعات کی رپورٹنگ</p>
       </div>
 
-      <div class="p-5 sm:p-6 overflow-y-auto space-y-4 flex-1">
-        <div class="p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-900 text-xs leading-relaxed font-medium">
-          <strong>ہمارا وعدہ:</strong> بن عباس ہوم کیئر مظلوم کسٹمر یا کاریگر کو تنہا نہیں چھوڑے گا۔ شکایت موصول ہوتے ہی 30 منٹ کے اندر انکوائری اور قانونی ازالہ شروع کیا جاتا ہے۔ کمپنی ہیلپ لائن: <span class="font-mono font-bold" dir="ltr">0300-4800071</span>
+      <div class="p-5 sm:p-6 overflow-y-auto space-y-4 flex-1 bg-slate-50">
+        <div class="p-3.5 rounded-xl bg-rose-50 border-2 border-rose-200 text-rose-950 text-xs leading-relaxed font-bold">
+          <strong>ہمارا وعدہ:</strong> بن عباس ہوم کیئر مظلوم کسٹمر یا کاریگر کو تنہا نہیں چھوڑے گا۔ شکایت موصول ہوتے ہی 30 منٹ کے اندر انکوائری اور قانونی ازالہ شروع کیا جاتا ہے۔ کمپنی ہیلپ لائن: <span class="font-mono font-black" dir="ltr">0300-4800071</span>
         </div>
 
         <div>
-          <label class="block text-xs font-bold text-slate-700 mb-1">شکایت کنندہ کی حیثیت:</label>
+          <label class="block text-xs font-black text-slate-800 mb-1">شکایت کنندہ کی حیثیت:</label>
           <div class="grid grid-cols-2 gap-2">
             <button 
               type="button" 
               @click="disputeForm.type = 'customer'" 
-              :class="disputeForm.type === 'customer' ? 'bg-rose-600 text-white' : 'bg-slate-100 text-slate-700'"
-              class="py-2 rounded-xl text-xs font-bold transition-all"
+              :class="disputeForm.type === 'customer' ? 'bg-rose-700 text-white' : 'bg-white text-slate-800 border-2 border-slate-300'"
+              class="py-2 rounded-xl text-xs font-black transition-all"
             >
               میں کسٹمر / صارف ہوں
             </button>
             <button 
               type="button" 
               @click="disputeForm.type = 'karigar'" 
-              :class="disputeForm.type === 'karigar' ? 'bg-rose-600 text-white' : 'bg-slate-100 text-slate-700'"
-              class="py-2 rounded-xl text-xs font-bold transition-all"
+              :class="disputeForm.type === 'karigar' ? 'bg-rose-700 text-white' : 'bg-white text-slate-800 border-2 border-slate-300'"
+              class="py-2 rounded-xl text-xs font-black transition-all"
             >
               میں کاریگر ہوں
             </button>
@@ -1922,18 +1948,18 @@
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">آپ کا نام:</label>
-            <input type="text" x-model="disputeForm.name" placeholder="پورا نام درج کریں" class="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs sm:text-sm outline-none focus:border-rose-500">
+            <label class="block text-xs font-black text-slate-800 mb-1">آپ کا نام:</label>
+            <input type="text" x-model="disputeForm.name" placeholder="پورا نام درج کریں" class="w-full px-3 py-2 rounded-xl border-2 border-slate-300 text-xs sm:text-sm outline-none focus:border-rose-600 font-bold">
           </div>
           <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">موبائل فون نمبر:</label>
-            <input type="tel" x-model="disputeForm.phone" placeholder="03001234567" class="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs sm:text-sm outline-none focus:border-rose-500 font-mono" dir="ltr">
+            <label class="block text-xs font-black text-slate-800 mb-1">موبائل فون نمبر:</label>
+            <input type="tel" x-model="disputeForm.phone" placeholder="03001234567" class="w-full px-3 py-2 rounded-xl border-2 border-slate-300 text-xs sm:text-sm outline-none focus:border-rose-600 font-bold font-mono" dir="ltr">
           </div>
         </div>
 
         <div>
-          <label class="block text-xs font-bold text-slate-700 mb-1">شکایت کی نوعیت:</label>
-          <select x-model="disputeForm.issueType" class="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs sm:text-sm outline-none focus:border-rose-500 bg-white">
+          <label class="block text-xs font-black text-slate-800 mb-1">شکایت کی نوعیت:</label>
+          <select x-model="disputeForm.issueType" class="w-full px-3 py-2 rounded-xl border-2 border-slate-300 text-xs sm:text-sm outline-none focus:border-rose-600 bg-white font-bold">
             <option value="چوری یا سامان کا غائب ہونا">چوری یا سامان کا غائب ہونا</option>
             <option value="سامان یا گھر کی املاک کا نقصان">سامان یا گھر کی املاک کا نقصان</option>
             <option value="کاریگر کی بدتمیزی یا غیر معیاری کام">کاریگر کی بدتمیزی یا غیر معیاری کام</option>
@@ -1942,13 +1968,13 @@
         </div>
 
         <div>
-          <label class="block text-xs font-bold text-slate-700 mb-1">شکایت کی تفصیلی وضاحت:</label>
-          <textarea rows="3" x-model="disputeForm.details" placeholder="واقعہ کی مکمل تفصیل، تاریخ اور متعلقہ کاریگر/کسٹمر کا نام لکھیں..." class="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs sm:text-sm outline-none focus:border-rose-500"></textarea>
+          <label class="block text-xs font-black text-slate-800 mb-1">شکایت کی تفصیلی وضاحت:</label>
+          <textarea rows="3" x-model="disputeForm.details" placeholder="واقعہ کی مکمل تفصیل، تاریخ اور متعلقہ کاریگر/کسٹمر کا نام لکھیں..." class="w-full px-3 py-2 rounded-xl border-2 border-slate-300 text-xs sm:text-sm outline-none focus:border-rose-600 font-bold"></textarea>
         </div>
 
         <button 
           @click="submitDisputeComplaint()"
-          class="w-full py-3 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-xl text-xs sm:text-sm shadow-md transition-all"
+          class="w-full py-3 bg-rose-700 hover:bg-rose-800 text-white font-black rounded-xl text-xs sm:text-sm shadow-md transition-all"
         >
           شکایت باضابطہ درج کروائیں
         </button>
@@ -1960,27 +1986,27 @@
   <div 
     x-show="isBookingModalOpen" 
     x-cloak 
-    class="fixed inset-0 z-50 overflow-y-auto bg-slate-900/75 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4"
+    class="fixed inset-0 z-50 overflow-y-auto bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4"
     @keydown.escape.window="isBookingModalOpen = false"
   >
     <div 
       @click.outside="isBookingModalOpen = false"
-      class="bg-white rounded-3xl shadow-2xl border border-slate-200 max-w-lg w-full max-h-[92vh] flex flex-col overflow-hidden"
+      class="bg-white rounded-3xl shadow-2xl border-2 border-slate-300 max-w-lg w-full max-h-[92vh] flex flex-col overflow-hidden"
     >
-      <div class="bg-gradient-to-r from-brand-700 to-teal-800 text-white p-5 sm:p-6 relative flex-shrink-0">
-        <button @click="isBookingModalOpen = false" class="absolute top-5 left-5 text-white/80 hover:text-white p-1 rounded-full bg-black/10">
+      <div class="bg-gradient-to-r from-brand-800 to-teal-900 text-white p-5 sm:p-6 relative flex-shrink-0">
+        <button @click="isBookingModalOpen = false" class="absolute top-5 left-5 text-white/80 hover:text-white p-1 rounded-full bg-black/20">
           <i data-lucide="x" class="w-5 h-5"></i>
         </button>
-        <div class="text-xs font-semibold text-teal-200 uppercase tracking-wider mb-1">فوری ایکسپریس کاریگر و باہمی ریٹ</div>
-        <h3 class="text-xl sm:text-2xl font-bold">کاریگر بکنگ و قیمت کا تعین</h3>
-        <p class="text-xs text-teal-100 mt-1">رائل پام سٹی و گوجرانوالہ میں کاریگر 15 تا 30 منٹ میں آپ کے گھر حاضر ہوگا</p>
+        <div class="text-xs font-black text-amber-400 uppercase tracking-wider mb-1">فوری ایکسپریس کاریگر و باہمی ریٹ</div>
+        <h3 class="text-xl sm:text-2xl font-black">کاریگر بکنگ و قیمت کا باہمی تعین</h3>
+        <p class="text-xs text-teal-100 mt-1 font-bold">رائل پام سٹی و گوجرانوالہ میں کاریگر 15 تا 30 منٹ میں آپ کے گھر حاضر ہوگا</p>
       </div>
 
-      <div class="p-5 sm:p-6 overflow-y-auto space-y-4 flex-1">
+      <div class="p-5 sm:p-6 overflow-y-auto space-y-4 flex-1 bg-slate-50">
         
         <div>
-          <label class="block text-xs font-bold text-slate-700 mb-1">سروس منتخب کریں:</label>
-          <select x-model="bookingForm.category" class="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs sm:text-sm outline-none focus:border-brand-500 bg-white">
+          <label class="block text-xs font-black text-slate-800 mb-1">سروس منتخب کریں:</label>
+          <select x-model="bookingForm.category" class="w-full px-3 py-2 rounded-xl border-2 border-slate-300 text-xs sm:text-sm outline-none focus:border-brand-700 bg-white font-bold">
             <template x-for="c in categories" :key="c.id">
               <option :value="c.titleUrdu" x-text="c.titleUrdu"></option>
             </template>
@@ -1989,58 +2015,58 @@
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">کسٹمر کا نام:</label>
-            <input type="text" x-model="bookingForm.name" placeholder="پورا نام" class="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs sm:text-sm outline-none focus:border-brand-500">
+            <label class="block text-xs font-black text-slate-800 mb-1">کسٹمر کا نام:</label>
+            <input type="text" x-model="bookingForm.name" placeholder="پورا نام" class="w-full px-3 py-2 rounded-xl border-2 border-slate-300 text-xs sm:text-sm outline-none focus:border-brand-700 font-bold">
           </div>
           <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">موبائل فون نمبر:</label>
-            <input type="tel" x-model="bookingForm.phone" placeholder="03001234567" class="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs sm:text-sm outline-none focus:border-brand-500 font-mono" dir="ltr">
+            <label class="block text-xs font-black text-slate-800 mb-1">موبائل فون نمبر:</label>
+            <input type="tel" x-model="bookingForm.phone" placeholder="03001234567" class="w-full px-3 py-2 rounded-xl border-2 border-slate-300 text-xs sm:text-sm outline-none focus:border-brand-700 font-bold font-mono" dir="ltr">
           </div>
         </div>
 
         <div>
           <div class="flex justify-between items-center mb-1">
-            <label class="block text-xs font-bold text-slate-700">سوسائٹی اور گھر کا پتہ:</label>
-            <button @click="detectGPSLocation()" class="text-[11px] text-brand-600 hover:text-brand-800 font-bold flex items-center gap-1">
+            <label class="block text-xs font-black text-slate-800">سوسائٹی اور گھر کا پتہ:</label>
+            <button @click="detectGPSLocation()" class="text-[11px] text-brand-700 hover:text-brand-900 font-black flex items-center gap-1">
               <i data-lucide="map-pin" class="w-3 h-3"></i>
               <span>موجودہ لوکیشن لیں</span>
             </button>
           </div>
-          <input type="text" x-model="bookingForm.address" placeholder="مثال: رائل پام سٹی، بلاک بی، گلی 4، مکان 12" class="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs sm:text-sm outline-none focus:border-brand-500">
+          <input type="text" x-model="bookingForm.address" placeholder="مثال: رائل پام سٹی، بلاک بی، گلی 4، مکان 12" class="w-full px-3 py-2 rounded-xl border-2 border-slate-300 text-xs sm:text-sm outline-none focus:border-brand-700 font-bold">
         </div>
 
         <!-- MUTUAL PRICE NEGOTIATION / AGREEMENT FIELD -->
-        <div class="p-3 bg-amber-50 rounded-2xl border border-amber-200 space-y-2">
+        <div class="p-3.5 bg-amber-50 rounded-2xl border-2 border-amber-300 space-y-2">
           <div class="flex justify-between items-center text-xs">
-            <span class="font-bold text-amber-900">باہمی طے شدہ قیمت / آپ کا بجٹ:</span>
-            <span class="text-amber-700 font-semibold text-[11px]">معیاری یا خود طے کریں</span>
+            <span class="font-black text-amber-950">باہمی طے شدہ قیمت / آپ کا بجٹ:</span>
+            <span class="text-amber-800 font-bold text-[11px]">معیاری یا خود طے کریں</span>
           </div>
           <div class="relative">
             <input 
               type="text" 
               x-model="bookingForm.agreedPrice" 
               placeholder="مثلاً: روپے 1,500 (یا کاریگر سے کال پر طے کریں)"
-              class="w-full px-3 py-2 rounded-xl border border-amber-300 outline-none focus:border-amber-600 text-xs sm:text-sm bg-white font-bold text-slate-900"
+              class="w-full px-3 py-2.5 rounded-xl border-2 border-amber-400 outline-none focus:border-amber-600 text-xs sm:text-sm bg-white font-black text-slate-950"
             />
           </div>
-          <p class="text-[11px] text-amber-800 leading-normal">
+          <p class="text-[11px] text-amber-900 leading-normal font-bold">
             💡 <strong>آزادی:</strong> کسٹمر اور کاریگر کام کا معائنہ کر کے یا فون پر گفتگو کر کے حتمی ریٹ باہمی رضامندی سے خود بھی طے کر سکتے ہیں۔
           </p>
         </div>
 
         <div>
-          <label class="block text-xs font-bold text-slate-700 mb-1">مسئلہ / کام کی تفصیل:</label>
-          <textarea rows="2" x-model="bookingForm.details" placeholder="مثال: واش روم کا نلکا لیک ہے، اے سی سروس کروانا ہے..." class="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs sm:text-sm outline-none focus:border-brand-500"></textarea>
+          <label class="block text-xs font-black text-slate-800 mb-1">مسئلہ / کام کی تفصیل:</label>
+          <textarea rows="2" x-model="bookingForm.details" placeholder="مثال: واش روم کا نلکا لیک ہے، اے سی سروس کروانا ہے..." class="w-full px-3 py-2 rounded-xl border-2 border-slate-300 text-xs sm:text-sm outline-none focus:border-brand-700 font-bold"></textarea>
         </div>
 
-        <div class="p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-900 flex items-center justify-between">
+        <div class="p-3 rounded-xl bg-emerald-100 border border-emerald-300 text-xs text-emerald-950 flex items-center justify-between font-bold">
           <span>7 دن کی تسلی بخش وارنٹی</span>
-          <span class="font-bold text-brand-700">وارنٹی کارڈ رسید ساتھ ملے گی ✓</span>
+          <span class="font-black text-brand-800">وارنٹی کارڈ رسید ساتھ ملے گی ✓</span>
         </div>
 
         <button 
           @click="submitBooking()"
-          class="w-full py-3.5 bg-gradient-to-r from-brand-600 to-teal-700 hover:from-brand-700 hover:to-teal-800 text-white font-bold rounded-xl text-xs sm:text-sm shadow-lg transition-all"
+          class="w-full py-3.5 bg-gradient-to-r from-brand-700 to-teal-700 hover:from-brand-800 hover:to-teal-800 text-white font-black rounded-xl text-xs sm:text-sm shadow-xl transition-all"
         >
           بکنگ کنفرم کریں
         </button>
@@ -2052,54 +2078,54 @@
   <div 
     x-show="isTrackerModalOpen" 
     x-cloak 
-    class="fixed inset-0 z-50 overflow-y-auto bg-slate-900/75 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4"
+    class="fixed inset-0 z-50 overflow-y-auto bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4"
     @keydown.escape.window="isTrackerModalOpen = false"
   >
     <div 
       @click.outside="isTrackerModalOpen = false"
-      class="bg-white rounded-3xl shadow-2xl border border-slate-200 max-w-md w-full p-6 space-y-4"
+      class="bg-white rounded-3xl shadow-2xl border-2 border-slate-300 max-w-md w-full p-6 space-y-4"
     >
-      <div class="flex justify-between items-center pb-2 border-b border-slate-100">
-        <h3 class="text-lg font-bold text-slate-900">آرڈر ٹریکنگ و لائیو اسٹیٹس</h3>
-        <button @click="isTrackerModalOpen = false" class="text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-5 h-5"></i></button>
+      <div class="flex justify-between items-center pb-2 border-b-2 border-slate-200">
+        <h3 class="text-lg font-black text-slate-950">آرڈر ٹریکنگ و لائیو اسٹیٹس</h3>
+        <button @click="isTrackerModalOpen = false" class="text-slate-500 hover:text-slate-800"><i data-lucide="x" class="w-5 h-5"></i></button>
       </div>
 
       <div class="flex gap-2">
-        <input type="text" x-model="trackingIdInput" placeholder="آرڈر ID درج کریں (مثلاً BA-1001)" class="flex-1 px-3 py-2 rounded-xl border border-slate-200 text-xs sm:text-sm outline-none focus:border-brand-500">
-        <button @click="trackOrder()" class="px-4 py-2 bg-brand-600 text-white rounded-xl text-xs font-bold shadow-xs">ٹریک کریں</button>
+        <input type="text" x-model="trackingIdInput" placeholder="آرڈر ID درج کریں (مثلاً BA-1001)" class="flex-1 px-3 py-2 rounded-xl border-2 border-slate-300 text-xs sm:text-sm outline-none focus:border-brand-700 font-black">
+        <button @click="trackOrder()" class="px-4 py-2 bg-brand-700 hover:bg-brand-800 text-white rounded-xl text-xs font-black shadow-sm">ٹریک کریں</button>
       </div>
 
       <template x-if="trackedOrder">
-        <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2 text-xs">
+        <div class="p-4 rounded-2xl bg-slate-50 border-2 border-slate-300 space-y-2 text-xs font-bold">
           <div class="flex justify-between border-b border-slate-200 pb-2">
-            <span class="text-slate-400">آرڈر نمبر:</span>
-            <span class="font-mono font-bold text-brand-700" x-text="trackedOrder.id"></span>
+            <span class="text-slate-500">آرڈر نمبر:</span>
+            <span class="font-mono font-black text-brand-700" x-text="trackedOrder.id"></span>
           </div>
           <div class="flex justify-between border-b border-slate-200 pb-2">
-            <span class="text-slate-400">کسٹمر:</span>
-            <span class="font-bold text-slate-800" x-text="trackedOrder.customerName"></span>
+            <span class="text-slate-500">کسٹمر:</span>
+            <span class="font-black text-slate-900" x-text="trackedOrder.customerName"></span>
           </div>
           <div class="flex justify-between border-b border-slate-200 pb-2">
-            <span class="text-slate-400">سروس:</span>
-            <span class="font-semibold text-slate-800" x-text="trackedOrder.service"></span>
+            <span class="text-slate-500">سروس:</span>
+            <span class="font-bold text-slate-900" x-text="trackedOrder.service"></span>
           </div>
           <div class="flex justify-between border-b border-slate-200 pb-2">
-            <span class="text-slate-400">نامزد کاریگر:</span>
-            <span class="font-bold text-teal-700" x-text="trackedOrder.assignedTech"></span>
+            <span class="text-slate-500">نامزد کاریگر:</span>
+            <span class="font-black text-teal-800" x-text="trackedOrder.assignedTech"></span>
           </div>
           <div class="flex justify-between border-b border-slate-200 pb-2">
-            <span class="text-slate-400">طے شدہ رقم:</span>
-            <span class="font-bold text-emerald-700" x-text="'روپے ' + (trackedOrder.agreedPrice || trackedOrder.amount || '1,800')"></span>
+            <span class="text-slate-500">طے شدہ رقم:</span>
+            <span class="font-black text-emerald-800" x-text="'روپے ' + (trackedOrder.agreedPrice || trackedOrder.amount || '1,800')"></span>
           </div>
           <div class="flex justify-between pt-1">
-            <span class="text-slate-400">موجودہ اسٹیٹس:</span>
-            <span class="font-bold text-emerald-700" x-text="trackedOrder.statusUrdu"></span>
+            <span class="text-slate-500">موجودہ اسٹیٹس:</span>
+            <span class="font-black text-emerald-800" x-text="trackedOrder.statusUrdu"></span>
           </div>
 
           <div class="pt-3 flex gap-2">
             <button 
               @click="openFeedbackModalForOrder(trackedOrder); isTrackerModalOpen = false"
-              class="flex-1 py-2 bg-amber-500 hover:bg-amber-600 text-slate-950 rounded-xl text-xs font-black shadow-xs flex items-center justify-center gap-1"
+              class="flex-1 py-2.5 bg-amber-500 hover:bg-amber-600 text-slate-950 rounded-xl text-xs font-black shadow-md flex items-center justify-center gap-1"
             >
               <i data-lucide="star" class="w-3.5 h-3.5"></i>
               <span>کام کی تسلی و فیڈ بیک دیں</span>
@@ -2107,7 +2133,7 @@
             
             <a 
               :href="'tel:' + (trackedOrder.techPhone || '03004800071')" 
-              class="px-3 py-2 bg-slate-900 text-white rounded-xl text-xs font-bold flex items-center gap-1"
+              class="px-3.5 py-2.5 bg-slate-950 text-white rounded-xl text-xs font-black flex items-center gap-1 shadow-md"
               title="کاریگر کو کال کریں"
             >
               <i data-lucide="phone" class="w-3.5 h-3.5"></i>
@@ -2122,50 +2148,50 @@
   <div 
     x-show="isKarigarCardModalOpen" 
     x-cloak 
-    class="fixed inset-0 z-50 overflow-y-auto bg-slate-900/75 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4"
+    class="fixed inset-0 z-50 overflow-y-auto bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4"
     @keydown.escape.window="isKarigarCardModalOpen = false"
   >
     <div 
       @click.outside="isKarigarCardModalOpen = false"
-      class="bg-white rounded-3xl shadow-2xl border border-slate-200 max-w-sm w-full overflow-hidden text-center"
+      class="bg-white rounded-3xl shadow-2xl border-2 border-slate-300 max-w-sm w-full overflow-hidden text-center"
     >
-      <div class="bg-gradient-to-tr from-brand-800 via-teal-900 to-slate-900 text-white p-6 relative">
-        <button @click="isKarigarCardModalOpen = false" class="absolute top-4 left-4 text-white/80 hover:text-white p-1 rounded-full bg-black/20">
+      <div class="bg-gradient-to-tr from-slate-950 via-teal-950 to-brand-950 text-white p-6 relative">
+        <button @click="isKarigarCardModalOpen = false" class="absolute top-4 left-4 text-white/80 hover:text-white p-1 rounded-full bg-black/30">
           <i data-lucide="x" class="w-4 h-4"></i>
         </button>
-        <div class="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-tr from-brand-500 to-emerald-400 text-white font-black text-3xl flex items-center justify-center shadow-lg border-2 border-white/30 mb-3">
+        <div class="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-tr from-brand-600 to-emerald-400 text-white font-black text-3xl flex items-center justify-center shadow-lg border-2 border-white/40 mb-3">
           <span x-text="activeKarigar.name ? activeKarigar.name.charAt(0) : ''"></span>
         </div>
-        <h3 class="text-xl font-bold" x-text="activeKarigar.name"></h3>
-        <p class="text-xs text-amber-300 font-bold" x-text="activeKarigar.specialtyUrdu"></p>
-        <span class="inline-flex items-center gap-1 px-2.5 py-0.5 mt-2 rounded-full bg-emerald-500/30 text-emerald-300 text-[10px] font-bold border border-emerald-400/40">
+        <h3 class="text-xl font-black" x-text="activeKarigar.name"></h3>
+        <p class="text-xs text-amber-300 font-black" x-text="activeKarigar.specialtyUrdu"></p>
+        <span class="inline-flex items-center gap-1 px-2.5 py-0.5 mt-2 rounded-full bg-emerald-500/30 text-emerald-300 text-[10px] font-black border border-emerald-400/40">
           <i data-lucide="shield-check" class="w-3 h-3"></i>
           <span>100% ایڈمن منظور شدہ کاریگر</span>
         </span>
       </div>
 
-      <div class="p-5 space-y-2.5 text-xs text-slate-600 text-start">
-        <div class="flex justify-between border-b border-slate-100 pb-2">
-          <span class="text-slate-400">شناختی کارڈ ویریفکیشن:</span>
-          <span class="font-bold text-emerald-700">نادرا و پولیس ریکارڈ تصدیق شدہ ✓</span>
+      <div class="p-5 space-y-2.5 text-xs text-slate-700 text-start font-bold">
+        <div class="flex justify-between border-b border-slate-200 pb-2">
+          <span class="text-slate-500">شناختی کارڈ ویریفکیشن:</span>
+          <span class="font-black text-emerald-800">نادرا و پولیس ریکارڈ تصدیق شدہ ✓</span>
         </div>
-        <div class="flex justify-between border-b border-slate-100 pb-2">
-          <span class="text-slate-400">تجربہ:</span>
-          <span class="font-bold text-slate-800" x-text="activeKarigar.experience + ' سال'"></span>
+        <div class="flex justify-between border-b border-slate-200 pb-2">
+          <span class="text-slate-500">تجربہ:</span>
+          <span class="font-black text-slate-900" x-text="activeKarigar.experience + ' سال'"></span>
         </div>
-        <div class="flex justify-between border-b border-slate-100 pb-2">
-          <span class="text-slate-400">سروس ریجن:</span>
-          <span class="font-bold text-brand-700" x-text="activeKarigar.area"></span>
+        <div class="flex justify-between border-b border-slate-200 pb-2">
+          <span class="text-slate-500">سروس ریجن:</span>
+          <span class="font-black text-brand-800" x-text="activeKarigar.area"></span>
         </div>
         <div class="flex justify-between">
-          <span class="text-slate-400">بزنس پیکج:</span>
-          <span class="font-bold text-amber-800" x-text="activeKarigar.packageLabel || '🥇 پلاٹینم ترجیحی کاریگر'"></span>
+          <span class="text-slate-500">بزنس پیکج:</span>
+          <span class="font-black text-amber-900" x-text="activeKarigar.packageLabel || '🥇 پلاٹینم ترجیحی کاریگر'"></span>
         </div>
 
         <div class="pt-3">
           <button 
             @click="connectWithKarigar(activeKarigar); isKarigarCardModalOpen = false"
-            class="w-full py-2.5 bg-brand-600 hover:bg-brand-700 text-white rounded-xl font-bold text-xs shadow-md flex items-center justify-center gap-2"
+            class="w-full py-3 bg-brand-700 hover:bg-brand-800 text-white rounded-xl font-black text-xs shadow-md flex items-center justify-center gap-2"
           >
             <i data-lucide="handshake" class="w-4 h-4"></i>
             <span>یہ کاریگر منتخب کریں و ریٹ طے کریں</span>
@@ -2179,44 +2205,44 @@
   <div 
     x-show="isInvoiceModalOpen" 
     x-cloak 
-    class="fixed inset-0 z-50 overflow-y-auto bg-slate-900/75 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4"
+    class="fixed inset-0 z-50 overflow-y-auto bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4"
     @keydown.escape.window="isInvoiceModalOpen = false"
   >
     <div 
       @click.outside="isInvoiceModalOpen = false"
-      class="bg-white rounded-3xl shadow-2xl border border-slate-200 max-w-lg w-full overflow-hidden"
+      class="bg-white rounded-3xl shadow-2xl border-2 border-slate-300 max-w-lg w-full overflow-hidden"
     >
       <div id="printableInvoice" class="p-6">
-        <div class="flex justify-between items-center border-b border-slate-200 pb-4 mb-4">
+        <div class="flex justify-between items-center border-b-2 border-slate-300 pb-4 mb-4">
           <div>
-            <h3 class="text-lg font-bold text-brand-700">بن عباس ہوم کیئر</h3>
-            <p class="text-xs text-slate-500">رائل پام سٹی و گوجرانوالہ • B.A.H.Care آفیشل رسید</p>
+            <h3 class="text-lg font-black text-brand-700">بن عباس ہوم کیئر</h3>
+            <p class="text-xs text-slate-600 font-bold">رائل پام سٹی و گوجرانوالہ • B.A.H.Care آفیشل رسید</p>
           </div>
           <div class="text-end text-xs font-mono">
-            <div class="font-bold text-slate-800" x-text="activeInvoice.id"></div>
-            <div class="text-slate-400" x-text="activeInvoice.date"></div>
+            <div class="font-black text-slate-900" x-text="activeInvoice.id"></div>
+            <div class="text-slate-500 font-bold" x-text="activeInvoice.date"></div>
           </div>
         </div>
 
-        <div class="space-y-2 text-xs mb-4">
-          <div class="flex justify-between"><span class="text-slate-500">کسٹمر کا نام:</span><span class="font-bold" x-text="activeInvoice.customerName"></span></div>
-          <div class="flex justify-between"><span class="text-slate-500">پتہ / سوسائٹی:</span><span class="font-semibold text-emerald-800" x-text="activeInvoice.address"></span></div>
-          <div class="flex justify-between"><span class="text-slate-500">سروس:</span><span class="font-bold text-brand-700" x-text="activeInvoice.service"></span></div>
-          <div class="flex justify-between"><span class="text-slate-500">نامزد کاریگر:</span><span class="font-bold text-teal-700" x-text="activeInvoice.assignedTech || 'محمد راشد'"></span></div>
+        <div class="space-y-2 text-xs mb-4 font-bold">
+          <div class="flex justify-between"><span class="text-slate-500">کسٹمر کا نام:</span><span class="font-black text-slate-900" x-text="activeInvoice.customerName"></span></div>
+          <div class="flex justify-between"><span class="text-slate-500">پتہ / سوسائٹی:</span><span class="font-bold text-emerald-900" x-text="activeInvoice.address"></span></div>
+          <div class="flex justify-between"><span class="text-slate-500">سروس:</span><span class="font-black text-brand-800" x-text="activeInvoice.service"></span></div>
+          <div class="flex justify-between"><span class="text-slate-500">نامزد کاریگر:</span><span class="font-black text-teal-800" x-text="activeInvoice.assignedTech || 'محمد راشد'"></span></div>
         </div>
 
-        <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 flex justify-between items-center text-xs font-bold">
+        <div class="p-3.5 bg-slate-100 rounded-xl border-2 border-slate-200 flex justify-between items-center text-xs font-black">
           <span>طے شدہ / ادا شدہ رقم:</span>
-          <span class="text-base text-emerald-700" x-text="'روپے ' + (activeInvoice.agreedPrice || activeInvoice.amount || '1,800')"></span>
+          <span class="text-lg text-emerald-800 font-mono font-black" x-text="'روپے ' + (activeInvoice.agreedPrice || activeInvoice.amount || '1,800')"></span>
         </div>
       </div>
 
-      <div class="p-4 bg-slate-50 border-t border-slate-200 flex justify-end gap-2">
-        <button @click="window.print()" class="px-4 py-2 bg-brand-600 text-white rounded-xl text-xs font-bold flex items-center gap-1.5">
+      <div class="p-4 bg-slate-100 border-t-2 border-slate-200 flex justify-end gap-2">
+        <button @click="window.print()" class="px-4 py-2 bg-brand-700 hover:bg-brand-800 text-white rounded-xl text-xs font-black flex items-center gap-1.5 shadow-sm">
           <i data-lucide="printer" class="w-4 h-4"></i>
           <span>پرنٹ انوائس</span>
         </button>
-        <button @click="isInvoiceModalOpen = false" class="px-4 py-2 bg-slate-200 text-slate-700 rounded-xl text-xs font-bold">
+        <button @click="isInvoiceModalOpen = false" class="px-4 py-2 bg-slate-200 text-slate-800 rounded-xl text-xs font-black">
           بند کریں
         </button>
       </div>
@@ -2227,20 +2253,20 @@
   <div 
     x-show="isFeedbackModalOpen" 
     x-cloak 
-    class="fixed inset-0 z-50 overflow-y-auto bg-slate-900/80 backdrop-blur-md flex items-center justify-center p-3 sm:p-4"
+    class="fixed inset-0 z-50 overflow-y-auto bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-3 sm:p-4"
     @keydown.escape.window="isFeedbackModalOpen = false"
   >
     <div 
       @click.outside="isFeedbackModalOpen = false"
-      class="bg-white rounded-3xl shadow-2xl border border-slate-200 max-w-md w-full p-6 text-center space-y-4"
+      class="bg-white rounded-3xl shadow-2xl border-2 border-slate-300 max-w-md w-full p-6 text-center space-y-4"
     >
       <div class="w-14 h-14 mx-auto rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center font-bold shadow-xs">
         <i data-lucide="star" class="w-7 h-7"></i>
       </div>
 
       <div>
-        <h3 class="text-xl font-black text-slate-900">کام کی تسلی اور فیڈ بیک</h3>
-        <p class="text-xs text-slate-600 mt-1">
+        <h3 class="text-xl font-black text-slate-950">کام کی تسلی اور فیڈ بیک</h3>
+        <p class="text-xs text-slate-700 mt-1 font-bold">
           براہِ کرم تصدیق فرمائیں کہ کاریگر نے کام تسلی بخش کیا ہے اور رقم طے شدہ ادا کر دی گئی ہے۔
         </p>
       </div>
@@ -2261,42 +2287,42 @@
           </button>
         </template>
       </div>
-      <div class="text-xs font-bold text-amber-700" x-text="feedbackForm.rating + ' / 5 اسٹارز ریٹنگ'"></div>
+      <div class="text-xs font-black text-amber-800" x-text="feedbackForm.rating + ' / 5 اسٹارز ریٹنگ'"></div>
 
       <div class="space-y-3 text-start pt-1">
         <!-- Verification Checkbox 1 -->
-        <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 flex items-start gap-2.5">
+        <div class="p-3 bg-slate-50 rounded-xl border-2 border-slate-200 flex items-start gap-2.5">
           <input 
             type="checkbox" 
             id="chkSatisfied" 
             x-model="feedbackForm.workSatisfied" 
-            class="w-4 h-4 mt-0.5 text-brand-600 rounded focus:ring-brand-500"
+            class="w-4 h-4 mt-0.5 text-brand-700 rounded focus:ring-brand-500"
           />
-          <label for="chkSatisfied" class="text-xs font-bold text-slate-800 cursor-pointer">
+          <label for="chkSatisfied" class="text-xs font-black text-slate-900 cursor-pointer">
             کاریگر نے کام میری مکمل تسلی اور مطلوبہ معیار کے مطابق کیا ہے۔
           </label>
         </div>
 
         <!-- Verification Checkbox 2 -->
-        <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 flex items-start gap-2.5">
+        <div class="p-3 bg-slate-50 rounded-xl border-2 border-slate-200 flex items-start gap-2.5">
           <input 
             type="checkbox" 
             id="chkPayment" 
             x-model="feedbackForm.paymentCleared" 
-            class="w-4 h-4 mt-0.5 text-brand-600 rounded focus:ring-brand-500"
+            class="w-4 h-4 mt-0.5 text-brand-700 rounded focus:ring-brand-500"
           />
-          <label for="chkPayment" class="text-xs font-bold text-slate-800 cursor-pointer">
+          <label for="chkPayment" class="text-xs font-black text-slate-900 cursor-pointer">
             میں نے کاریگر کو باہمی طے شدہ رقم مکمل ادا کر دی ہے۔
           </label>
         </div>
 
         <div>
-          <label class="block text-xs font-bold text-slate-700 mb-1">اپنا تفصیلی تاثر و فیڈ بیک لکھیں:</label>
+          <label class="block text-xs font-black text-slate-800 mb-1">اپنا تفصیلی تاثر و فیڈ بیک لکھیں:</label>
           <textarea 
             rows="2" 
             x-model="feedbackForm.comments" 
             placeholder="کاریگر کا رویہ، وقت کی پابندی اور کام کی کوالٹی کیسی لگی؟"
-            class="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs outline-none focus:border-brand-500"
+            class="w-full px-3 py-2 rounded-xl border-2 border-slate-300 text-xs outline-none focus:border-brand-700 font-bold"
           ></textarea>
         </div>
       </div>
@@ -2304,13 +2330,13 @@
       <div class="flex gap-2 pt-1">
         <button 
           @click="submitSatisfactionFeedback()" 
-          class="flex-1 py-3 bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs sm:text-sm rounded-xl shadow-md transition-all"
+          class="flex-1 py-3 bg-brand-700 hover:bg-brand-800 text-white font-black text-xs sm:text-sm rounded-xl shadow-md transition-all"
         >
           فیڈ بیک جمع کروائیں ✓
         </button>
         <button 
           @click="isFeedbackModalOpen = false" 
-          class="px-4 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl"
+          class="px-4 py-3 bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold text-xs rounded-xl"
         >
           منسوخ
         </button>
@@ -2319,27 +2345,40 @@
   </div>
 
   <!-- ==================== MOBILE STICKY BOTTOM BAR WITH B.A.H.Care BRANDING ==================== -->
-  <div class="fixed bottom-2 left-2 right-2 md:hidden z-30 flex flex-col gap-1 bg-white/95 backdrop-blur-md p-2 rounded-2xl border border-slate-200/90 shadow-2xl">
+  <div class="fixed bottom-2 left-2 right-2 md:hidden z-30 flex flex-col gap-1 bg-slate-950/95 backdrop-blur-md p-2 rounded-2xl border-2 border-teal-500/40 shadow-2xl">
     <div class="flex items-center gap-1.5">
+      
+      <!-- Direct WhatsApp Action -->
       <button 
         @click="initDirectContact('اسلام علیکم! مجھے رائل پام سٹی / گوجرانوالہ میں فوری کاریگر کی ضرورت ہے۔')"
-        class="flex-1 py-2.5 px-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold text-xs shadow-md flex items-center justify-center gap-1 truncate text-center"
+        class="flex-1 py-2.5 px-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-black text-xs shadow-md flex items-center justify-center gap-1 truncate text-center"
       >
         <i data-lucide="message-circle" class="w-3.5 h-3.5 flex-shrink-0"></i>
         <span>WhatsApp</span>
       </button>
       
+      <!-- Direct Booking Action -->
       <button 
         @click="requestBookingDirect()"
-        class="flex-1 py-2.5 px-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl font-bold text-xs shadow-md flex items-center justify-center gap-1 truncate text-center"
+        class="flex-1 py-2.5 px-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl font-black text-xs shadow-md flex items-center justify-center gap-1 truncate text-center"
       >
         <i data-lucide="calendar-plus" class="w-3.5 h-3.5 flex-shrink-0"></i>
         <span>کاریگر بک کریں</span>
       </button>
 
+      <!-- Mobile Share Button -->
+      <button 
+        @click="shareApp()" 
+        class="p-2.5 bg-slate-800 hover:bg-slate-700 text-amber-300 rounded-xl font-black text-xs shadow-md flex items-center justify-center flex-shrink-0 border border-amber-400/30"
+        title="شیئر کریں"
+      >
+        <i data-lucide="share-2" class="w-3.5 h-3.5 text-amber-400"></i>
+      </button>
+
+      <!-- Direct Call Button -->
       <a 
         :href="'tel:' + businessPhone" 
-        class="p-2.5 bg-amber-400 hover:bg-amber-500 text-slate-950 rounded-xl font-bold text-xs shadow-md flex items-center justify-center flex-shrink-0"
+        class="p-2.5 bg-amber-400 hover:bg-amber-500 text-slate-950 rounded-xl font-black text-xs shadow-md flex items-center justify-center flex-shrink-0"
         title="کمپنی ہیلپ لائن: 0300-4800071"
       >
         <i data-lucide="phone-call" class="w-3.5 h-3.5"></i>
@@ -2347,13 +2386,13 @@
     </div>
 
     <!-- Mobile B.A.H.Care Brand Sub-Strip -->
-    <div class="flex items-center justify-between px-2 pt-1 border-t border-slate-100 text-[10px] text-slate-500 font-semibold" dir="ltr">
-      <span class="font-brand-latin font-black text-brand-700 tracking-wider flex items-center gap-1">
+    <div class="flex items-center justify-between px-2 pt-1 border-t border-slate-800 text-[10px] text-slate-300 font-bold" dir="ltr">
+      <span class="font-brand-latin font-black text-amber-400 tracking-wider flex items-center gap-1">
         <img src="icon-192.png" alt="Logo" class="w-3.5 h-3.5 rounded object-contain inline" />
         B.A.H.Care
       </span>
-      <span class="text-[9px] text-slate-400 font-urdu" dir="rtl">بن عباس ہوم کیئر • منظور شدہ</span>
-      <span class="text-emerald-600 font-bold">15-30 Min Arrival</span>
+      <span class="text-[9px] text-slate-300 font-urdu" dir="rtl">بن عباس ہوم کیئر • منظور شدہ</span>
+      <span class="text-emerald-400 font-black">15-30 Min Arrival</span>
     </div>
   </div>
 
@@ -2367,18 +2406,18 @@
     x-transition:leave-start="translate-y-0 opacity-100"
     x-transition:leave-end="translate-y-full opacity-0"
     x-cloak
-    class="fixed bottom-20 md:bottom-6 left-3 right-3 md:left-auto md:right-6 md:max-w-md z-40 bg-slate-900/95 text-white rounded-3xl p-4 shadow-2xl border border-teal-500/40 backdrop-blur-md"
+    class="fixed bottom-20 md:bottom-6 left-3 right-3 md:left-auto md:right-6 md:max-w-md z-40 bg-slate-950/98 text-white rounded-3xl p-4 shadow-2xl border-2 border-teal-500/50 backdrop-blur-md"
   >
     <div class="flex items-center gap-3.5">
-      <img src="icon-192.png" alt="B.A.H.Care" class="w-12 h-12 rounded-2xl shadow-md border border-white/20 flex-shrink-0 object-contain" />
+      <img src="icon-192.png" alt="B.A.H.Care" class="w-12 h-12 rounded-2xl shadow-md border-2 border-white/30 flex-shrink-0 object-contain" />
       <div class="flex-1 min-w-0">
         <div class="flex items-center justify-between">
-          <h4 class="font-bold text-sm text-white truncate">بن عباس ہوم کیئر</h4>
+          <h4 class="font-black text-sm text-white truncate">بن عباس ہوم کیئر</h4>
           <button @click="showInstallBanner = false" class="text-slate-400 hover:text-white p-1">
             <i data-lucide="x" class="w-4 h-4"></i>
           </button>
         </div>
-        <p class="text-[11px] text-slate-300 line-clamp-1">گوگل کروم موبائل ایپ ڈاؤن لوڈ کریں (B.A.H.Care)</p>
+        <p class="text-[11px] text-slate-300 line-clamp-1 font-bold">گوگل کروم موبائل ایپ ڈاؤن لوڈ کریں (B.A.H.Care)</p>
         <div class="flex items-center gap-2 mt-2">
           <button 
             @click="installPWA()"
@@ -2718,7 +2757,7 @@
             }
           } catch(e) {}
 
-          // Check if App is already Installed (Standalone mode or cached flag)
+          // Check if App is already Installed
           const isStandalone = window.matchMedia('(display-mode: standalone)').matches || 
                                window.navigator.standalone === true || 
                                localStorage.getItem('bahc_app_installed') === 'true';
@@ -2771,6 +2810,25 @@
           });
         },
 
+        // ==================== APP SHARE FUNCTIONALITY ====================
+        shareApp() {
+          const shareTitle = 'بن عباس ہوم کیئر (B.A.H.Care)';
+          const shareText = '🌴 رائل پام سٹی و گوجرانوالہ میں 15 تا 30 منٹ فوری ہوم سروسز (الیکٹریشن، پلمبر، اے سی، گیس چولہا ریپیر و میٹریل ریٹس)۔ منظور شدہ کاریگر اور باہمی طے شدہ ریٹس!';
+          const shareUrl = window.location.origin;
+
+          if (navigator.share) {
+            navigator.share({
+              title: shareTitle,
+              text: shareText,
+              url: shareUrl
+            }).catch(() => {});
+          } else {
+            // Fallback to WhatsApp share link
+            const waText = encodeURIComponent(shareTitle + '\n\n' + shareText + '\n\nویب سائٹ لنک: ' + shareUrl);
+            window.open('https://api.whatsapp.com/send?text=' + waText, '_blank');
+          }
+        },
+
         // ==================== CUSTOMER ONBOARDING & MEMBERSHIP ====================
         openCustomerModal(callback = null) {
           this.pendingCustomerAction = callback;
@@ -2821,7 +2879,6 @@
           }
         },
 
-        // Direct booking & mutual price initiation
         requestBookingDirect() {
           this.ensureCustomerLoggedIn(() => {
             this.openBookingModal();
@@ -2902,7 +2959,6 @@
           alert('شکریہ ' + customerName + ' صاحب!\n\nآپ کے فیڈ بیک، کام کی تسلی اور رقم ادائیگی کی تصدیق کامیابی سے درج کر لی گئی ہے۔ آپ کا اعتماد ہی ہماری کامیابی ہے۔');
         },
 
-        // Update karigar package tier from admin
         updateKarigarTier(tech) {
           if (tech.packageTier === 'platinum') {
             tech.packageLabel = '🥇 پلاٹینم ترجیحی کاریگر';
@@ -2914,7 +2970,6 @@
           alert('کاریگر "' + tech.name + '" کا بزنس پیکج کامیابی سے اپڈیٹ ہو گیا۔');
         },
 
-        // Admin Login Security
         promptAdminLogin() {
           if (this.isAdminLoggedIn) {
             this.currentView = 'admin';
@@ -2947,7 +3002,6 @@
           alert('ایڈمن سیشن لاگ آؤٹ ہو چکا ہے۔');
         },
 
-        // Category Detail Modal
         openCategoryDetails(cat) {
           this.activeCategoryDetail = cat;
           this.isCategoryDetailModalOpen = true;
@@ -2956,7 +3010,6 @@
           });
         },
 
-        // Links & Modals
         getWhatsAppLink(msg) {
           return 'https://wa.me/923004800071?text=' + encodeURIComponent(msg);
         },
@@ -3093,7 +3146,7 @@
           };
 
           this.pendingKarigars.push(newPending);
-          alert('آپ کی رجسٹریشن درخواست ایڈمن پینل کو ارسال ہو گئی ہے!\n\nانتظامیہ نادرا شناختی کارڈ اور پولیس ریکارڈ کی تصدیق کے بعد کال کرے گی اور آپ کے منتخب کردہ پیکج کے مطابق منظوری دے گی۔');
+          alert('آپ کی پیشگی رجسٹریشن درخواست ایڈمن پینل کو ارسال ہو گئی ہے!\n\nپریمیم بزنس پلانز آئندہ چند دنوں میں باقاعدہ رائج کیے جا رہے ہیں۔ انتظامیہ شناختی کارڈ تصدیق کے بعد کال کرے گی۔');
 
           this.karigarForm.name = '';
           this.karigarForm.cnic = '';
@@ -3183,7 +3236,6 @@
           });
         },
 
-        // PWA Install Handler with auto-hide logic
         installPWA() {
           if (this.deferredPrompt) {
             this.deferredPrompt.prompt();
