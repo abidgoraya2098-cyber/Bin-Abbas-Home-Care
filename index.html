@@ -319,16 +319,15 @@
         <!-- Right Header Action Group (NO OVERLAPPING, NO CLIPPING) -->
         <div class="flex items-center gap-2 sm:gap-2.5 flex-shrink-0">
           
-          <!-- PWA Install Button (AUTO-HIDES ONCE APP IS INSTALLED) -->
+          <!-- PWA Install Button (ALWAYS VISIBLE ON BOTH MOBILE & DESKTOP) -->
           <button 
-            x-show="!isAppInstalled && canInstallApp"
-            x-transition
+            x-show="!isStandaloneMode"
             @click="installPWA()"
-            class="hidden md:inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-slate-950 font-black text-xs shadow-sm transition-all min-h-[42px]"
-            title="Install App on Phone"
+            class="inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-2 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-slate-950 font-black text-xs sm:text-sm shadow-md transition-all min-h-[42px] flex-shrink-0"
+            title="موبائل یا کمپیوٹر پر ایپ انسٹال کریں"
           >
-            <i data-lucide="download" class="w-4 h-4"></i>
-            <span>ایپ انسٹال</span>
+            <i data-lucide="download" class="w-4 h-4 text-slate-950 flex-shrink-0"></i>
+            <span class="whitespace-nowrap">ایپ انسٹال</span>
           </button>
 
 
@@ -358,6 +357,16 @@
       >
         <div class="space-y-3 p-3">
           
+          <!-- Prominent Mobile Drawer Install App Button -->
+          <button 
+            x-show="!isStandaloneMode"
+            @click="installPWA(); isMobileMenuOpen = false" 
+            class="w-full flex items-center justify-center gap-2 p-3 rounded-2xl bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 font-black text-xs sm:text-sm shadow-md min-h-[46px]"
+          >
+            <i data-lucide="download" class="w-4 h-4 flex-shrink-0"></i>
+            <span>📲 موبائل پر ایپ انسٹال کریں</span>
+          </button>
+
           <!-- BALANCED ROW 1 IN MOBILE DRAWER: CUSTOMER & KARIGAR BUTTONS SIDE-BY-SIDE -->
           <div class="grid grid-cols-2 gap-2.5">
             <button 
@@ -2672,8 +2681,9 @@
         
         // PWA Install State & Auto-Hide
         deferredPrompt: null,
-        canInstallApp: false,
+        canInstallApp: true,
         isAppInstalled: false,
+        isStandaloneMode: false,
         showInstallBanner: false,
         showSplashScreen: true,
 
@@ -3041,15 +3051,18 @@
             }
           } catch(e) {}
 
-          // Check if App is already Installed
+          // Check if App is already running as installed Standalone PWA
           const isStandalone = window.matchMedia('(display-mode: standalone)').matches || 
-                               window.navigator.standalone === true || 
-                               localStorage.getItem('bahc_app_installed') === 'true';
+                               window.navigator.standalone === true;
           
+          this.isStandaloneMode = isStandalone;
+          this.isAppInstalled = isStandalone;
+
           if (isStandalone) {
-            this.isAppInstalled = true;
-            this.canInstallApp = false;
             this.showInstallBanner = false;
+            this.canInstallApp = false;
+          } else {
+            this.canInstallApp = true;
           }
 
           // Register Service Worker
@@ -3065,25 +3078,25 @@
           window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             this.deferredPrompt = e;
-            if (!this.isAppInstalled) {
+            if (!this.isStandaloneMode) {
               this.canInstallApp = true;
               this.showInstallBanner = true;
             }
           });
 
-          // PWA appinstalled event: Immediately hide all install buttons!
+          // PWA appinstalled event: Automatically hide install button when installed
           window.addEventListener('appinstalled', () => {
             this.isAppInstalled = true;
+            this.isStandaloneMode = true;
             this.canInstallApp = false;
             this.showInstallBanner = false;
             this.deferredPrompt = null;
-            try { localStorage.setItem('bahc_app_installed', 'true'); } catch(e) {}
             alert('مبارک ہو! بن عباس ہوم کیئر ایپ کامیابی سے انسٹال ہو گئی ہے۔');
           });
 
-          if (!isStandalone && !this.isAppInstalled) {
+          if (!isStandalone) {
             setTimeout(() => {
-              if (!this.isAppInstalled) {
+              if (!this.isStandaloneMode) {
                 this.showInstallBanner = true;
               }
             }, 3000);
@@ -3717,18 +3730,18 @@
             this.deferredPrompt.userChoice.then((choiceResult) => {
               if (choiceResult.outcome === 'accepted') {
                 this.isAppInstalled = true;
+                this.isStandaloneMode = true;
                 this.canInstallApp = false;
                 this.showInstallBanner = false;
-                try { localStorage.setItem('bahc_app_installed', 'true'); } catch(e) {}
               }
               this.deferredPrompt = null;
             });
           } else {
             const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
             if (isIOS) {
-              alert('ایپل / آئی فون پر ایپ ڈاؤن لوڈ کرنے کے لیے: نیچے دیے گئے "Share" بٹن پر ٹیپ کریں اور "Add to Home Screen" منتخب کریں۔');
+              alert('📲 آئی فون (iOS) پر ایپ ڈاؤن لوڈ / انسٹال کرنے کا طریقہ:\n\n1. نیچے سفاری کے شیئر (Share) آئیکون پر ٹیپ کریں۔\n2. لسٹ میں سے "Add to Home Screen" منتخب کریں۔');
             } else {
-              alert('اینڈرائیڈ / کروم پر ایپ ڈاؤن لوڈ کرنے کے لیے: براؤزر کے اوپر دائیں کونے میں تین نقطوں (⋮) پر کلک کریں اور "Install app" یا "Add to Home screen" منتخب کریں۔');
+              alert('📲 اینڈرائیڈ / گوگل کروم پر ایپ ڈاؤن لوڈ / انسٹال کرنے کا طریقہ:\n\n1. اوپر دائیں کونے میں تین نقطوں (⋮) پر کلک کریں۔\n2. "Install app" یا "Add to Home screen" پر کلک کریں۔');
             }
           }
         }
