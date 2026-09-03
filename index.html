@@ -203,89 +203,6 @@
     </div>
   </div>
 
-  <!-- ==================== REAL-TIME INCOMING JOB BROADCAST TO RELEVANT KARIGARS ==================== -->
-  <div 
-    x-show="showJobBroadcastBanner && activeBroadcastJob" 
-    x-transition:enter="transition ease-out duration-300 transform"
-    x-transition:enter-start="-translate-y-4 opacity-0"
-    x-transition:enter-end="translate-y-0 opacity-100"
-    x-transition:leave="transition ease-in duration-200 transform"
-    x-transition:leave-start="translate-y-0 opacity-100"
-    x-transition:leave-end="-translate-y-4 opacity-0"
-    x-cloak
-    class="relative z-30 bg-gradient-to-r from-amber-600 via-slate-900 to-teal-950 text-white py-3 px-3 sm:px-6 shadow-2xl border-b-2 border-amber-400"
-  >
-    <div class="max-w-7xl mx-auto flex flex-col lg:flex-row items-start lg:items-center justify-between gap-3">
-      
-      <!-- Notification Info (NO TRUNCATION, FULL TEXT VISIBLE) -->
-      <div class="flex items-start gap-3 min-w-0 flex-1">
-        <div class="w-10 h-10 rounded-2xl bg-amber-400 text-slate-950 flex items-center justify-center font-black shadow-md flex-shrink-0 mt-0.5">
-          <i data-lucide="bell-ring" class="w-5 h-5 text-slate-950"></i>
-        </div>
-        <div class="space-y-1 min-w-0 flex-1">
-          <div class="flex flex-wrap items-center gap-2">
-            <span class="px-2.5 py-0.5 rounded-md bg-amber-400 text-slate-950 text-xs font-black">
-              🔔 نیا کام دستیاب ہے! (Job Alert)
-            </span>
-            <span class="text-xs font-black text-amber-200 font-mono" x-text="activeBroadcastJob?.id"></span>
-          </div>
-
-          <p class="text-xs sm:text-sm font-black text-white leading-relaxed">
-            سروس: <span class="text-amber-300" x-text="activeBroadcastJob?.service"></span> • 
-            علاقہ: <span class="text-teal-200" x-text="activeBroadcastJob?.address"></span>
-          </p>
-
-          <p class="text-xs text-amber-200 font-bold leading-relaxed">
-            💰 <strong>مزدوری / رقم کا فیصلہ:</strong> کسٹمر اور کاریگر فون کال پر باہمی رضامندی سے طے کر سکتے ہیں (بغیر طے کیے بلانے پر کاریگر صرف معقول و مناسب مزدوری لینے کا پابند ہوگا)۔
-          </p>
-
-          <div class="text-[11px] text-teal-100 font-medium leading-normal">
-            ⚡ <strong>پالیسی:</strong> سب سے پہلے رابطہ کرنے والے کو ترجیح ملے گی۔ ذیادہ مزدوری مانگنے کی صورت میں ایڈمن کو شکایت ہوگی اور کاریگر کا بٹن تنبیہہ کے بعد <strong>"ریڈ زون"</strong> میں چلا جائے گا (بحالی کے لیے 50 کسٹمر اسٹارز درکار ہوں گے)۔
-          </div>
-        </div>
-      </div>
-
-      <!-- Actions: Accept, Call, and PROMINENT CLOSE BUTTON -->
-      <div class="flex flex-wrap items-center gap-2 flex-shrink-0 w-full lg:w-auto justify-end pt-1 lg:pt-0">
-        <template x-if="activeBroadcastJob?.status === 'waiting'">
-          <button 
-            @click="acceptBroadcastJob('محمد راشد (کاریگر - رائل پام ایکسپریس)')"
-            class="flex-1 sm:flex-none px-4 py-2.5 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-slate-950 rounded-xl text-xs font-black shadow-lg flex items-center justify-center gap-1.5 transition-all min-h-[42px]"
-          >
-            <i data-lucide="handshake" class="w-4 h-4"></i>
-            <span>میں تیار ہوں (Accept Job)</span>
-          </button>
-        </template>
-
-        <template x-if="activeBroadcastJob?.status === 'accepted'">
-          <div class="px-3.5 py-2 bg-emerald-500 text-white rounded-xl text-xs font-black flex items-center gap-1.5 shadow-md min-h-[42px]">
-            <i data-lucide="check-circle" class="w-4 h-4"></i>
-            <span>کاریگر تفویض ہو چکا ہے (#1 First Responder)</span>
-          </div>
-        </template>
-
-        <a 
-          :href="'tel:' + (activeBroadcastJob?.customerPhone || businessPhone)"
-          class="px-3.5 py-2.5 bg-slate-900 hover:bg-black text-amber-300 border border-amber-400/50 rounded-xl text-xs font-black flex items-center gap-1.5 shadow-sm min-h-[42px]"
-          title="کسٹمر کو کال کریں"
-        >
-          <i data-lucide="phone-call" class="w-4 h-4"></i>
-          <span>کسٹمر کو کال</span>
-        </a>
-
-        <!-- PROMINENT CLOSE / DISMISS BUTTON -->
-        <button 
-          @click="showJobBroadcastBanner = false" 
-          class="px-3.5 py-2 bg-rose-800/90 hover:bg-rose-900 text-white rounded-xl text-xs font-black flex items-center justify-center gap-1.5 border border-rose-400/50 shadow-md transition-all min-h-[42px]"
-          title="اس نوٹیفکیشن کو بند کریں"
-        >
-          <i data-lucide="x-circle" class="w-4 h-4 text-white"></i>
-          <span>نوٹیفکیشن بند کریں [X]</span>
-        </button>
-      </div>
-
-    </div>
-  </div>
 
   <!-- DECLUTTERED TOP EMERGENCY & HIGHLIGHTS BAR (CLEAN & NON-OVERLAPPING) -->
   <div class="bg-gradient-to-r from-slate-950 via-teal-950 to-slate-950 text-white text-xs py-2 px-3 sm:px-4 shadow-md border-b border-teal-600/40">
@@ -354,7 +271,7 @@
             <img 
               src="icon-192.png" 
               alt="بن عباس ہوم کیئر لوگو" 
-              class="w-14 h-14 sm:w-18 sm:h-18 lg:w-20 lg:h-20 rounded-2xl sm:rounded-3xl shadow-lg border-2 border-brand-600/40 object-contain hover:scale-105 transition-all bg-white p-0.5" 
+              class="w-14 h-14 sm:w-16 sm:h-16 lg:w-18 lg:h-18 rounded-2xl shadow-xl border-2 border-amber-400/40 object-cover hover:scale-105 transition-all bg-slate-950" 
             />
             <span class="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-emerald-500 border-2 border-white"></span>
           </div>
@@ -593,43 +510,6 @@
                   <span>ابھی بک کریں (فوری کاریگر حاصل کریں)</span>
                 </button>
 
-                <!-- ROW 3: CLEAN SECONDARY ACTIONS (MARKET RATES, ESTIMATOR, DISPUTE) -->
-                <div class="flex flex-wrap items-center justify-center lg:justify-start gap-2 pt-1 text-xs">
-                  <button 
-                    @click="currentView = 'market-rates'" 
-                    class="flex items-center gap-1.5 px-3.5 py-2 bg-white hover:bg-slate-50 text-slate-800 border-2 border-slate-300 rounded-xl font-bold shadow-xs min-h-[38px]"
-                  >
-                    <i data-lucide="tag" class="w-3.5 h-3.5 text-amber-600"></i>
-                    <span>سامان کے ریٹس</span>
-                  </button>
-
-                  <button 
-                    @click="currentView = 'estimator'" 
-                    class="flex items-center gap-1.5 px-3.5 py-2 bg-white hover:bg-slate-50 text-slate-800 border-2 border-slate-300 rounded-xl font-bold shadow-xs min-h-[38px]"
-                  >
-                    <i data-lucide="calculator" class="w-3.5 h-3.5 text-teal-700"></i>
-                    <span>لاگت کیلکولیٹر</span>
-                  </button>
-
-                  <button 
-                    @click="openDisputeModal()" 
-                    class="flex items-center gap-1.5 px-3.5 py-2 bg-rose-50 hover:bg-rose-100 text-rose-900 border-2 border-rose-300 rounded-xl font-bold shadow-xs min-h-[38px]"
-                  >
-                    <i data-lucide="shield-alert" class="w-3.5 h-3.5 text-rose-600"></i>
-                    <span>شکایت و تحفظ سیل</span>
-                  </button>
-                </div>
-
-              </div>
-
-              <!-- Mutual Agreement & First-to-Respond Notice -->
-              <div class="p-3.5 bg-white border-2 border-emerald-600/60 rounded-2xl text-xs text-slate-900 flex items-center gap-3 max-w-xl mx-auto lg:mx-0 text-start shadow-sm">
-                <div class="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center flex-shrink-0 font-bold">
-                  <i data-lucide="zap" class="w-5 h-5 text-amber-600"></i>
-                </div>
-                <div>
-                  <strong class="text-emerald-900 font-black">سب سے پہلے رابطہ، سب سے پہلی ترجیح:</strong> جو کاریگر سب سے پہلے کسٹمر سے رابطہ کر کے آمادگی ظاہر کرے گا، اسے ترجیح دی جاتی ہے۔ قیمت باہمی رضامندی سے طے ہوتی ہے۔
-                </div>
               </div>
 
               <!-- Quick Search with Search Suggestions -->
