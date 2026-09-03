@@ -218,13 +218,13 @@
   <div 
     x-show="showJobBroadcastBanner && activeBroadcastJob" 
     x-transition:enter="transition ease-out duration-300 transform"
-    x-transition:enter-start="-translate-y-full opacity-0"
+    x-transition:enter-start="-translate-y-4 opacity-0"
     x-transition:enter-end="translate-y-0 opacity-100"
     x-transition:leave="transition ease-in duration-200 transform"
     x-transition:leave-start="translate-y-0 opacity-100"
-    x-transition:leave-end="-translate-y-full opacity-0"
+    x-transition:leave-end="-translate-y-4 opacity-0"
     x-cloak
-    class="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-amber-500 via-brand-700 to-slate-950 text-white py-3 px-3 sm:px-6 shadow-2xl border-b-2 border-amber-300"
+    class="relative z-30 bg-gradient-to-r from-amber-500 via-brand-700 to-slate-950 text-white py-2.5 px-3 sm:px-6 shadow-xl border-b-2 border-amber-300"
   >
     <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
       
@@ -254,7 +254,7 @@
         <template x-if="activeBroadcastJob?.status === 'waiting'">
           <button 
             @click="acceptBroadcastJob('محمد راشد (کاریگر - رائل پام ایکسپریس)')"
-            class="flex-1 md:flex-none px-4 py-2 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-slate-950 rounded-xl text-xs font-black shadow-lg flex items-center justify-center gap-1.5 transition-all"
+            class="flex-1 md:flex-none px-4 py-2 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-slate-950 rounded-xl text-xs font-black shadow-lg flex items-center justify-center gap-1.5 transition-all min-h-[40px]"
           >
             <i data-lucide="handshake" class="w-4 h-4"></i>
             <span>میں تیار ہوں (Accept Job)</span>
@@ -262,7 +262,7 @@
         </template>
 
         <template x-if="activeBroadcastJob?.status === 'accepted'">
-          <div class="px-3 py-1.5 bg-emerald-500 text-white rounded-xl text-xs font-black flex items-center gap-1.5 shadow-md">
+          <div class="px-3 py-1.5 bg-emerald-500 text-white rounded-xl text-xs font-black flex items-center gap-1.5 shadow-md min-h-[40px]">
             <i data-lucide="check-circle" class="w-4 h-4"></i>
             <span>کاریگر تفویض ہو چکا ہے (#1 First Responder)</span>
           </div>
@@ -270,7 +270,7 @@
 
         <a 
           :href="'tel:' + (activeBroadcastJob?.customerPhone || businessPhone)"
-          class="px-3 py-2 bg-slate-900 hover:bg-black text-amber-300 border border-amber-400/40 rounded-xl text-xs font-black flex items-center gap-1 shadow-sm"
+          class="px-3.5 py-2 bg-slate-900 hover:bg-black text-amber-300 border border-amber-400/40 rounded-xl text-xs font-black flex items-center gap-1 shadow-sm min-h-[40px]"
           title="کسٹمر کو کال کریں"
         >
           <i data-lucide="phone-call" class="w-3.5 h-3.5"></i>
@@ -288,199 +288,150 @@
     </div>
   </div>
 
-  <!-- TOP EMERGENCY & HIGHLIGHTS BAR (WITH SHARE BUTTON & CUSTOMER STATUS) -->
+  <!-- DECLUTTERED TOP EMERGENCY & HIGHLIGHTS BAR (CLEAN & NON-OVERLAPPING) -->
   <div class="bg-gradient-to-r from-slate-950 via-teal-950 to-slate-950 text-white text-xs py-2 px-3 sm:px-4 shadow-md border-b border-teal-600/40">
     <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
+      
+      <!-- Right Status (RTL Leading) -->
       <div class="flex items-center gap-2 min-w-0">
-        <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-black bg-amber-400 text-slate-950 flex-shrink-0 pulse-glow">
+        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-black bg-amber-400 text-slate-950 flex-shrink-0 pulse-glow">
           <i data-lucide="zap" class="w-3 h-3 inline ml-1"></i>
           15-30 منٹ سروس
         </span>
         <span class="font-bold text-teal-100 truncate text-[11px] sm:text-xs">
-          🌴 رائل پام سٹی گوجرانوالہ (فلیگ شپ) • منظور شدہ کاریگرز
+          🌴 رائل پام سٹی گوجرانوالہ (فلیگ شپ) • مصدقہ کاریگرز پورٹل
         </span>
       </div>
+
+      <!-- Left Actions: Only 3 Essential Clean Items (NO CLUTTER, NO OVERLAPPING) -->
       <div class="flex items-center gap-2 sm:gap-3 text-xs flex-shrink-0">
         
-        <!-- APP SHARE BUTTON IN TOP BAR -->
+        <!-- App Share Button (Standalone, Clear, Unobstructed) -->
         <button 
           @click="shareApp()" 
-          class="text-amber-300 hover:text-white font-bold flex items-center gap-1 bg-white/10 hover:bg-white/20 px-2.5 py-0.5 rounded-lg border border-amber-400/40 transition-all shadow-xs" 
+          class="text-amber-300 hover:text-white font-black flex items-center gap-1.5 bg-white/10 hover:bg-white/20 px-3 py-1 rounded-xl border border-amber-400/40 transition-all shadow-xs min-h-[32px]" 
           title="ایپ دوستوں اور فیملی کے ساتھ شیئر کریں"
         >
           <i data-lucide="share-2" class="w-3.5 h-3.5 text-amber-400"></i>
           <span>شیئر کریں</span>
         </button>
 
-        <span class="text-teal-500/70 hidden sm:inline">|</span>
+        <span class="text-teal-600/70 hidden sm:inline">|</span>
 
-        <!-- Customer Status with Avatar in Top Bar -->
+        <!-- Admin Pin Login Button -->
         <button 
-          @click="openCustomerModal()" 
-          class="text-amber-300 hover:text-white font-bold flex items-center gap-1.5 bg-amber-500/20 px-2 py-0.5 rounded border border-amber-400/30"
+          @click="promptAdminLogin()" 
+          class="text-amber-300 hover:text-amber-200 font-black flex items-center gap-1 bg-black/40 px-2.5 py-1 rounded-xl border border-amber-400/40 min-h-[32px]" 
+          title="ایڈمن لاگ ان"
         >
-          <template x-if="customerUser.photo">
-            <img :src="customerUser.photo" alt="Avatar" class="w-4 h-4 rounded-full object-cover border border-amber-300" />
-          </template>
-          <template x-if="!customerUser.photo">
-            <i data-lucide="user-check" class="w-3.5 h-3.5 text-amber-400"></i>
-          </template>
-          <span x-text="customerUser.isLoggedIn ? customerUser.name + ' (کسٹمر ✓)' : 'کسٹمر شمولیت'"></span>
+          <i data-lucide="lock" class="w-3 h-3 text-amber-400"></i>
+          <span x-text="isAdminLoggedIn ? 'ایڈمن کنٹرول ✓' : '🔐 ایڈمن'"></span>
         </button>
 
-        <span class="text-teal-500/70 hidden sm:inline">|</span>
-        <button @click="openSocietiesModal()" class="text-teal-200 hover:text-white font-bold underline flex items-center gap-1">
-          <i data-lucide="map-pin" class="w-3.5 h-3.5 flex-shrink-0"></i>
-          <span>سوسائٹیز</span>
-        </button>
-        <span class="text-teal-500/70 hidden sm:inline">|</span>
-        <button @click="openDisputeModal()" class="text-rose-300 hover:text-rose-200 font-bold underline flex items-center gap-1">
-          <i data-lucide="shield-alert" class="w-3.5 h-3.5 flex-shrink-0 text-rose-400"></i>
-          <span>شکایت سیل</span>
-        </button>
-        <span class="text-teal-500/70 hidden sm:inline">|</span>
-        <button @click="promptAdminLogin()" class="text-amber-300 hover:text-amber-200 font-bold flex items-center gap-1 bg-black/40 px-2 py-0.5 rounded border border-amber-400/40" title="ایڈمن لاگ ان">
-          <i data-lucide="lock" class="w-3 h-3 text-amber-400"></i>
-          <span>🔐 ایڈمن</span>
-        </button>
-        <span class="text-teal-500/70 hidden sm:inline">|</span>
-        <a :href="'tel:' + businessPhone" class="flex items-center gap-1 hover:text-amber-300 transition-colors font-bold text-amber-300" title="کمپنی ہیلپ لائن">
+        <span class="text-teal-600/70 hidden sm:inline">|</span>
+
+        <!-- Company Helpline -->
+        <a 
+          :href="'tel:' + businessPhone" 
+          class="flex items-center gap-1 hover:text-amber-300 transition-colors font-black text-amber-300 min-h-[32px] px-1" 
+          title="کمپنی ہیلپ لائن: 0300-4800071"
+        >
           <i data-lucide="phone-call" class="w-3.5 h-3.5 text-amber-400 flex-shrink-0"></i>
           <span dir="ltr">0300-4800071</span>
         </a>
+
       </div>
     </div>
   </div>
 
-  <!-- NAVBAR -->
+  <!-- NAVBAR (PROMINENT LARGE LOGO & GENEROUS BREATHING ROOM) -->
   <header class="sticky top-0 z-40 bg-white/98 backdrop-blur-md border-b-2 border-brand-700/30 shadow-md transition-all duration-300">
     <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
-      <div class="flex justify-between items-center h-16 sm:h-20">
+      <div class="flex justify-between items-center h-20 sm:h-24 py-2">
         
-        <!-- Logo & Branding -->
-        <div class="flex items-center gap-2 sm:gap-3 cursor-pointer min-w-0" @click="currentView = 'home'; window.scrollTo({top:0, behavior:'smooth'})">
-          <img src="icon-192.png" alt="B.A.H.Care لوگو" class="w-11 h-11 sm:w-13 sm:h-13 rounded-xl sm:rounded-2xl shadow-md border-2 border-brand-600/30 object-contain hover:scale-105 transition-transform flex-shrink-0" />
+        <!-- Logo & Branding: SIGNIFICANTLY ENLARGED 3D LOGO -->
+        <div class="flex items-center gap-3 sm:gap-4 cursor-pointer min-w-0" @click="currentView = 'home'; window.scrollTo({top:0, behavior:'smooth'})">
+          <div class="relative flex-shrink-0">
+            <img 
+              src="icon-192.png" 
+              alt="B.A.H.Care لوگو" 
+              class="w-14 h-14 sm:w-18 sm:h-18 lg:w-20 lg:h-20 rounded-2xl sm:rounded-3xl shadow-lg border-2 border-brand-600/40 object-contain hover:scale-105 transition-all bg-white p-0.5" 
+            />
+            <span class="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-emerald-500 border-2 border-white"></span>
+          </div>
           <div class="min-w-0">
             <div class="flex items-center gap-1.5 sm:gap-2">
-              <h1 class="text-base sm:text-xl lg:text-2xl font-black tracking-tight text-slate-900 leading-snug truncate">
+              <h1 class="text-lg sm:text-2xl lg:text-3xl font-black tracking-tight text-slate-900 leading-snug truncate">
                 <span class="text-brand-700">بن عباس</span> ہوم کیئر
               </h1>
-              <span class="font-brand-latin text-[10px] font-black px-2 py-0.5 bg-amber-400 text-slate-950 rounded-md tracking-wider flex-shrink-0 shadow-xs" dir="ltr">
+              <span class="font-brand-latin text-xs sm:text-sm font-black px-2 py-0.5 bg-amber-400 text-slate-950 rounded-lg tracking-wider flex-shrink-0 shadow-xs" dir="ltr">
                 B.A.H.Care
               </span>
-              <span class="hidden xl:inline-block text-[10px] uppercase font-bold px-2 py-0.5 bg-emerald-100 text-emerald-900 border border-emerald-300 rounded-md flex-shrink-0">
-                🌴 رائل پام سٹی
-              </span>
             </div>
-            <p class="hidden sm:block text-xs text-slate-600 font-bold truncate">
-              کمپنی ہیلپ لائن: 0300-4800071 • منظور شدہ کاریگرز و براہِ راست باہمی ریٹس
+            <p class="hidden sm:block text-xs sm:text-sm text-slate-600 font-bold truncate">
+              🌴 رائل پام سٹی و گوجرانوالہ • منظور شدہ کاریگرز و باہمی ریٹس
             </p>
           </div>
         </div>
 
         <!-- Desktop Navigation Links -->
-        <nav class="hidden lg:flex items-center gap-2 xl:gap-3 text-xs sm:text-sm font-bold text-slate-800">
-          <button @click="currentView = 'home'" :class="currentView === 'home' ? 'text-brand-700 font-black bg-brand-50 border border-brand-200 px-2.5 py-1.5 rounded-lg' : 'hover:text-brand-700'" class="transition-colors">ہوم پیج</button>
+        <nav class="hidden xl:flex items-center gap-2 text-xs sm:text-sm font-bold text-slate-800">
+          <button @click="currentView = 'home'" :class="currentView === 'home' ? 'text-brand-700 font-black bg-brand-50 border border-brand-200 px-3 py-2 rounded-xl' : 'hover:text-brand-700 px-2 py-2'" class="transition-colors">ہوم پیج</button>
           
-          <button @click="openSocietiesModal()" class="hover:text-brand-700 transition-colors flex items-center gap-1 text-emerald-800 font-bold bg-emerald-50 px-2.5 py-1.5 rounded-lg border border-emerald-300 shadow-xs">
-            <i data-lucide="map-pin" class="w-3.5 h-3.5 text-emerald-700"></i>
+          <button @click="openSocietiesModal()" class="hover:text-brand-700 transition-colors flex items-center gap-1.5 text-emerald-800 font-bold bg-emerald-50 px-3 py-2 rounded-xl border border-emerald-300 shadow-xs">
+            <i data-lucide="map-pin" class="w-4 h-4 text-emerald-700"></i>
             <span>سوسائٹیز</span>
           </button>
 
-          <button @click="currentView = 'market-rates'" :class="currentView === 'market-rates' ? 'text-amber-900 font-black bg-amber-100 border border-amber-300 px-2.5 py-1.5 rounded-lg' : 'hover:text-amber-700'" class="transition-colors flex items-center gap-1">
-            <i data-lucide="shopping-cart" class="w-3.5 h-3.5 text-amber-600"></i>
-            <span>سامان کے ریٹس</span>
+          <button @click="currentView = 'market-rates'" :class="currentView === 'market-rates' ? 'text-amber-900 font-black bg-amber-100 border border-amber-300 px-3 py-2 rounded-xl' : 'hover:text-amber-700 px-2 py-2'" class="transition-colors flex items-center gap-1.5">
+            <i data-lucide="shopping-cart" class="w-4 h-4 text-amber-600"></i>
+            <span>سامان ریٹس</span>
           </button>
 
-          <button @click="currentView = 'estimator'" :class="currentView === 'estimator' ? 'text-teal-900 font-black bg-teal-100 border border-teal-300 px-2.5 py-1.5 rounded-lg' : 'hover:text-teal-700'" class="transition-colors flex items-center gap-1">
-            <i data-lucide="calculator" class="w-3.5 h-3.5 text-teal-700"></i>
-            <span>لاگت کیلکولیٹر</span>
+          <button @click="currentView = 'estimator'" :class="currentView === 'estimator' ? 'text-teal-900 font-black bg-teal-100 border border-teal-300 px-3 py-2 rounded-xl' : 'hover:text-teal-700 px-2 py-2'" class="transition-colors flex items-center gap-1.5">
+            <i data-lucide="calculator" class="w-4 h-4 text-teal-700"></i>
+            <span>کیلکولیٹر</span>
           </button>
 
-          <button @click="currentView = 'join-karigar'" :class="currentView === 'join-karigar' ? 'text-purple-900 font-black bg-purple-100 border border-purple-300 px-2.5 py-1.5 rounded-lg' : 'hover:text-purple-700'" class="transition-colors flex items-center gap-1">
-            <i data-lucide="briefcase" class="w-3.5 h-3.5 text-purple-700"></i>
-            <span>کاریگر پورٹل و رجسٹریشن</span>
-          </button>
-
-          <button @click="openDisputeModal()" class="hover:text-rose-700 transition-colors flex items-center gap-1 text-rose-800 font-bold bg-rose-50 px-2.5 py-1.5 rounded-lg border border-rose-300">
-            <i data-lucide="shield-alert" class="w-3.5 h-3.5 text-rose-600"></i>
+          <button @click="openDisputeModal()" class="hover:text-rose-700 transition-colors flex items-center gap-1.5 text-rose-800 font-bold bg-rose-50 px-3 py-2 rounded-xl border border-rose-300">
+            <i data-lucide="shield-alert" class="w-4 h-4 text-rose-600"></i>
             <span>شکایت سیل</span>
           </button>
           
-          <button @click="openTrackerModal()" class="hover:text-brand-700 flex items-center gap-1 text-slate-800 font-bold">
-            <i data-lucide="search" class="w-3.5 h-3.5 text-brand-700"></i>
-            <span>ٹریکر و فیڈ بیک</span>
-          </button>
-
-          <button @click="promptAdminLogin()" class="flex items-center gap-1 text-xs px-2.5 py-1.5 rounded-lg border border-amber-400 bg-amber-50 text-amber-950 font-black hover:bg-amber-100 shadow-xs" title="ایڈمن لاگ ان">
-            <i data-lucide="key" class="w-3.5 h-3.5 text-amber-700"></i>
-            <span x-text="isAdminLoggedIn ? 'ایڈمن کنٹرول ✓' : 'ایڈمن'"></span>
+          <button @click="openTrackerModal()" class="hover:text-brand-700 flex items-center gap-1.5 text-slate-800 font-bold px-2 py-2">
+            <i data-lucide="search" class="w-4 h-4 text-brand-700"></i>
+            <span>ٹریکر</span>
           </button>
         </nav>
 
-        <!-- Right Action Buttons -->
-        <div class="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
+        <!-- Right Header Action Group (NO OVERLAPPING, NO CLIPPING) -->
+        <div class="flex items-center gap-2 sm:gap-2.5 flex-shrink-0">
           
-          <!-- APP SHARE BUTTON IN NAVBAR -->
-          <button 
-            @click="shareApp()"
-            class="inline-flex items-center gap-1 px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-xl bg-teal-50 hover:bg-teal-100 text-teal-900 border border-teal-300 font-bold text-xs shadow-xs transition-all flex-shrink-0"
-            title="ایپ دوستوں اور فیملی کے ساتھ شیئر کریں"
-          >
-            <i data-lucide="share-2" class="w-3.5 h-3.5 text-teal-700"></i>
-            <span class="hidden sm:inline">شیئر کریں</span>
-          </button>
-
-          <!-- Customer Profile Button with Avatar Preview -->
-          <button 
-            @click="openCustomerModal()" 
-            class="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl border border-slate-300 bg-slate-100 hover:bg-brand-50 text-slate-900 text-xs font-bold transition-all"
-            :title="customerUser.isLoggedIn ? 'آپ کا کسٹمر اکاؤنٹ لاگ ان ہے' : 'کسٹمر اکاؤنٹ بنائیں'"
-          >
-            <template x-if="customerUser.photo">
-              <img :src="customerUser.photo" alt="Avatar" class="w-4 h-4 rounded-full object-cover border border-brand-500" />
-            </template>
-            <template x-if="!customerUser.photo">
-              <i data-lucide="user" class="w-3.5 h-3.5 text-brand-700"></i>
-            </template>
-            <span class="truncate max-w-[85px] sm:max-w-[120px]" x-text="customerUser.isLoggedIn ? customerUser.name : 'کسٹمر شمولیت'"></span>
-          </button>
-
           <!-- PWA Install Button (AUTO-HIDES ONCE APP IS INSTALLED) -->
           <button 
             x-show="!isAppInstalled && canInstallApp"
             x-transition
             @click="installPWA()"
-            class="inline-flex items-center gap-1.5 px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-slate-950 font-black text-xs shadow-sm transition-all flex-shrink-0"
+            class="hidden md:inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-slate-950 font-black text-xs shadow-sm transition-all min-h-[42px]"
             title="Install App on Phone"
           >
-            <i data-lucide="download" class="w-3.5 h-3.5"></i>
+            <i data-lucide="download" class="w-4 h-4"></i>
             <span>ایپ انسٹال</span>
           </button>
 
-          <!-- Helpline Direct Call -->
-          <a 
-            :href="'tel:' + businessPhone" 
-            class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-950 hover:bg-slate-900 text-amber-300 font-black text-xs shadow-sm transition-all border border-amber-400/40"
-            title="کمپنی ہیلپ لائن: 0300-4800071"
-          >
-            <i data-lucide="phone" class="w-3.5 h-3.5 text-amber-400"></i>
-            <span dir="ltr">0300-4800071</span>
-          </a>
-
-          <!-- Book Now CTA Button -->
+          <!-- Book Now Quick CTA -->
           <button 
             @click="requestBookingDirect()"
-            class="inline-flex items-center justify-center gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl bg-gradient-to-r from-brand-700 to-teal-700 hover:from-brand-800 hover:to-teal-800 text-white font-bold text-xs sm:text-sm shadow-md shadow-brand-700/25 transition-all flex-shrink-0"
+            class="inline-flex items-center justify-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl bg-gradient-to-r from-brand-700 to-teal-700 hover:from-brand-800 hover:to-teal-800 text-white font-black text-xs sm:text-sm shadow-md transition-all min-h-[42px] whitespace-nowrap"
           >
-            <i data-lucide="calendar-plus" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
+            <i data-lucide="calendar-plus" class="w-4 h-4"></i>
             <span>ابھی بک کریں</span>
           </button>
 
           <!-- Mobile Hamburger Menu Button -->
           <button 
             @click="isMobileMenuOpen = !isMobileMenuOpen; $nextTick(() => { if (window.lucide) lucide.createIcons(); })"
-            class="lg:hidden p-2 rounded-xl border border-slate-300 text-slate-800 hover:text-brand-700 hover:bg-slate-100 transition-colors flex-shrink-0"
+            class="lg:hidden p-2.5 rounded-xl border-2 border-slate-300 text-slate-800 hover:text-brand-700 hover:bg-slate-100 transition-colors flex-shrink-0 min-h-[42px] min-w-[42px] flex items-center justify-center"
             aria-label="Toggle Navigation Menu"
           >
             <i :data-lucide="isMobileMenuOpen ? 'x' : 'menu'" class="w-5 h-5"></i>
@@ -499,116 +450,89 @@
         x-transition:leave-start="opacity-100 translate-y-0"
         x-transition:leave-end="opacity-0 -translate-y-2"
         x-cloak
-        class="lg:hidden py-3 border-t border-slate-200 bg-white shadow-xl rounded-b-2xl"
+        class="lg:hidden py-4 border-t-2 border-slate-200 bg-white shadow-2xl rounded-b-3xl"
       >
-        <div class="grid grid-cols-2 gap-2 p-2 text-xs font-bold">
+        <div class="space-y-3 p-3">
           
-          <!-- Customer Status Header in Drawer -->
-          <div class="col-span-2 p-3 bg-gradient-to-r from-brand-100 to-teal-100 rounded-xl border border-brand-300 flex items-center justify-between">
-            <div class="flex items-center gap-2 min-w-0">
-              <template x-if="customerUser.photo">
-                <img :src="customerUser.photo" alt="Avatar" class="w-9 h-9 rounded-full object-cover border-2 border-brand-600 flex-shrink-0" />
-              </template>
-              <template x-if="!customerUser.photo">
-                <div class="w-8 h-8 rounded-full bg-brand-700 text-white flex items-center justify-center font-bold flex-shrink-0">
-                  <span x-text="customerUser.isLoggedIn ? customerUser.name.charAt(0) : '؟'"></span>
-                </div>
-              </template>
-              <div class="min-w-0">
-                <div class="text-xs font-black text-slate-900 truncate" x-text="customerUser.isLoggedIn ? customerUser.name : 'کسٹمر شمولیت درکار'"></div>
-                <div class="text-[10px] text-slate-600 font-mono truncate" x-text="customerUser.isLoggedIn ? customerUser.phone : 'کاریگر رابطے کیلئے لاگ ان کریں'"></div>
-              </div>
-            </div>
+          <!-- BALANCED ROW 1 IN MOBILE DRAWER: CUSTOMER & KARIGAR BUTTONS SIDE-BY-SIDE -->
+          <div class="grid grid-cols-2 gap-2.5">
             <button 
               @click="openCustomerModal(); isMobileMenuOpen = false" 
-              class="px-2.5 py-1 bg-brand-700 text-white text-[11px] rounded-lg shadow-xs font-bold"
-              x-text="customerUser.isLoggedIn ? 'پروفائل' : 'شمولیت'"
-            ></button>
+              class="flex items-center justify-center gap-2 p-3 rounded-2xl bg-brand-50 hover:bg-brand-100 text-brand-900 border-2 border-brand-500 font-black text-xs text-center shadow-xs min-h-[46px]"
+            >
+              <i data-lucide="user-check" class="w-4 h-4 text-brand-700 flex-shrink-0"></i>
+              <span class="whitespace-nowrap" x-text="customerUser.isLoggedIn ? customerUser.name : 'کسٹمر شمولیت'"></span>
+            </button>
+
+            <button 
+              @click="currentView = 'join-karigar'; isMobileMenuOpen = false; window.scrollTo({top:0, behavior:'smooth'})" 
+              class="flex items-center justify-center gap-2 p-3 rounded-2xl bg-amber-50 hover:bg-amber-100 text-amber-950 border-2 border-amber-500 font-black text-xs text-center shadow-xs min-h-[46px]"
+            >
+              <i data-lucide="briefcase" class="w-4 h-4 text-amber-600 flex-shrink-0"></i>
+              <span class="whitespace-nowrap">کاریگر رجسٹر</span>
+            </button>
           </div>
 
+          <!-- ROW 2: BOOK NOW CTA (UNDERNEATH, FULL WIDTH) -->
           <button 
-            @click="currentView = 'home'; isMobileMenuOpen = false; window.scrollTo({top:0, behavior:'smooth'})" 
-            class="flex items-center gap-2 p-2.5 rounded-xl bg-slate-100 text-slate-900 hover:bg-brand-50 hover:text-brand-700 text-start"
+            @click="requestBookingDirect(); isMobileMenuOpen = false" 
+            class="w-full flex items-center justify-center gap-2.5 p-3.5 rounded-2xl bg-gradient-to-r from-brand-700 to-teal-700 text-white font-black text-sm text-center shadow-md min-h-[48px]"
           >
-            <i data-lucide="home" class="w-4 h-4 text-brand-700"></i>
-            <span>ہوم پیج</span>
+            <i data-lucide="calendar-plus" class="w-5 h-5 flex-shrink-0"></i>
+            <span>ابھی بک کریں (فوری سروس)</span>
           </button>
 
-          <button 
-            @click="openSocietiesModal(); isMobileMenuOpen = false" 
-            class="flex items-center gap-2 p-2.5 rounded-xl bg-emerald-50 text-emerald-950 hover:bg-emerald-100 text-start border border-emerald-200"
-          >
-            <i data-lucide="map-pin" class="w-4 h-4 text-emerald-700"></i>
-            <span>تمام سوسائٹیز</span>
-          </button>
+          <!-- Navigation Links in Drawer -->
+          <div class="grid grid-cols-2 gap-2 pt-2 border-t border-slate-200 text-xs font-bold">
+            <button 
+              @click="currentView = 'home'; isMobileMenuOpen = false; window.scrollTo({top:0, behavior:'smooth'})" 
+              class="flex items-center gap-2 p-2.5 rounded-xl bg-slate-100 text-slate-900 hover:bg-brand-50 min-h-[42px]"
+            >
+              <i data-lucide="home" class="w-4 h-4 text-brand-700"></i>
+              <span>ہوم پیج</span>
+            </button>
 
-          <button 
-            @click="currentView = 'market-rates'; isMobileMenuOpen = false" 
-            class="flex items-center gap-2 p-2.5 rounded-xl bg-amber-50 text-amber-950 hover:bg-amber-100 text-start border border-amber-200"
-          >
-            <i data-lucide="shopping-cart" class="w-4 h-4 text-amber-700"></i>
-            <span>سامان کے ریٹس</span>
-          </button>
+            <button 
+              @click="openSocietiesModal(); isMobileMenuOpen = false" 
+              class="flex items-center gap-2 p-2.5 rounded-xl bg-emerald-50 text-emerald-950 hover:bg-emerald-100 border border-emerald-200 min-h-[42px]"
+            >
+              <i data-lucide="map-pin" class="w-4 h-4 text-emerald-700"></i>
+              <span>سوسائٹیز</span>
+            </button>
 
-          <button 
-            @click="currentView = 'estimator'; isMobileMenuOpen = false" 
-            class="flex items-center gap-2 p-2.5 rounded-xl bg-teal-50 text-teal-950 hover:bg-teal-100 text-start border border-teal-200"
-          >
-            <i data-lucide="calculator" class="w-4 h-4 text-teal-700"></i>
-            <span>لاگت کیلکولیٹر</span>
-          </button>
+            <button 
+              @click="currentView = 'market-rates'; isMobileMenuOpen = false" 
+              class="flex items-center gap-2 p-2.5 rounded-xl bg-amber-50 text-amber-950 hover:bg-amber-100 border border-amber-200 min-h-[42px]"
+            >
+              <i data-lucide="shopping-cart" class="w-4 h-4 text-amber-700"></i>
+              <span>سامان ریٹس</span>
+            </button>
 
-          <button 
-            @click="currentView = 'join-karigar'; isMobileMenuOpen = false" 
-            class="flex items-center gap-2 p-2.5 rounded-xl bg-purple-50 text-purple-950 hover:bg-purple-100 text-start border border-purple-200"
-          >
-            <i data-lucide="briefcase" class="w-4 h-4 text-purple-700"></i>
-            <span>کاریگر پورٹل و رجسٹریشن</span>
-          </button>
+            <button 
+              @click="currentView = 'estimator'; isMobileMenuOpen = false" 
+              class="flex items-center gap-2 p-2.5 rounded-xl bg-teal-50 text-teal-950 hover:bg-teal-100 border border-teal-200 min-h-[42px]"
+            >
+              <i data-lucide="calculator" class="w-4 h-4 text-teal-700"></i>
+              <span>کیلکولیٹر</span>
+            </button>
 
-          <button 
-            @click="openDisputeModal(); isMobileMenuOpen = false" 
-            class="flex items-center gap-2 p-2.5 rounded-xl bg-rose-50 text-rose-900 hover:bg-rose-100 text-start border border-rose-200"
-          >
-            <i data-lucide="shield-alert" class="w-4 h-4 text-rose-600"></i>
-            <span>شکایت و انصاف سیل</span>
-          </button>
+            <button 
+              @click="openDisputeModal(); isMobileMenuOpen = false" 
+              class="flex items-center gap-2 p-2.5 rounded-xl bg-rose-50 text-rose-900 hover:bg-rose-100 border border-rose-200 min-h-[42px]"
+            >
+              <i data-lucide="shield-alert" class="w-4 h-4 text-rose-600"></i>
+              <span>شکایت سیل</span>
+            </button>
 
-          <!-- Drawer Share Button -->
-          <button 
-            @click="shareApp(); isMobileMenuOpen = false" 
-            class="col-span-2 flex items-center justify-center gap-2 p-2.5 rounded-xl bg-teal-100 hover:bg-teal-200 text-teal-950 font-black text-center border border-teal-300 shadow-xs"
-          >
-            <i data-lucide="share-2" class="w-4 h-4 text-teal-800"></i>
-            <span>🔗 ایپ دوستوں اور فیملی سے شیئر کریں</span>
-          </button>
+            <button 
+              @click="shareApp(); isMobileMenuOpen = false" 
+              class="flex items-center gap-2 p-2.5 rounded-xl bg-teal-100 hover:bg-teal-200 text-teal-950 border border-teal-300 min-h-[42px]"
+            >
+              <i data-lucide="share-2" class="w-4 h-4 text-teal-800"></i>
+              <span>شیئر کریں</span>
+            </button>
+          </div>
 
-          <!-- Drawer Install Button (AUTO-HIDES ONCE APP IS INSTALLED) -->
-          <button 
-            x-show="!isAppInstalled && canInstallApp"
-            x-transition
-            @click="installPWA(); isMobileMenuOpen = false" 
-            class="col-span-2 flex items-center justify-center gap-2 p-2.5 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 font-black text-center shadow-sm"
-          >
-            <i data-lucide="download" class="w-4 h-4"></i>
-            <span>📱 موبائل میں ایپ انسٹال کریں (B.A.H.Care App)</span>
-          </button>
-
-          <button 
-            @click="promptAdminLogin(); isMobileMenuOpen = false" 
-            class="col-span-2 flex items-center justify-center gap-2 p-2.5 rounded-xl bg-slate-950 text-amber-300 font-black text-center border border-amber-400/40"
-          >
-            <i data-lucide="key" class="w-4 h-4 text-amber-400"></i>
-            <span x-text="isAdminLoggedIn ? 'ایڈمن کنٹرول پینل میں داخل ہوں ✓' : '🔐 ایڈمن پینل لاگ ان'"></span>
-          </button>
-
-          <a 
-            :href="'tel:' + businessPhone" 
-            class="col-span-2 flex items-center justify-center gap-2 p-2.5 rounded-xl bg-emerald-700 text-white font-black text-center shadow-md"
-          >
-            <i data-lucide="phone-call" class="w-4 h-4"></i>
-            <span>کمپنی ہیلپ لائن: 0300-4800071</span>
-          </a>
         </div>
       </div>
     </div>
@@ -629,7 +553,7 @@
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
             
             <!-- Hero Left (7 Columns) -->
-            <div class="lg:col-span-7 space-y-4 text-center lg:text-start">
+            <div class="lg:col-span-7 space-y-5 text-center lg:text-start">
               
               <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-900 text-emerald-100 text-xs sm:text-sm font-black shadow-md border border-emerald-700">
                 <span class="w-2.5 h-2.5 rounded-full bg-amber-400 animate-ping"></span>
@@ -647,8 +571,72 @@
                 رائل پام سٹی، ڈی سی کالونی، سٹی ہاؤسنگ، ماڈل ٹاؤن اور گوجرانوالہ کے رہائشیوں کے لیے نادرا و پولیس تصدیق شدہ الیکٹریشن، پلمبر، اے سی اور گیس چولہا ٹیکنیشنز—15 تا 30 منٹ میں آپ کی دہلیز پر۔
               </p>
 
-              <!-- Mutual Agreement & First-to-Respond Rule Notice -->
-              <div class="p-3.5 bg-white border-2 border-emerald-600/60 rounded-2xl text-xs text-slate-900 flex items-center gap-3 max-w-2xl mx-auto lg:mx-0 text-start shadow-sm">
+              <!-- ==================== MAIN ACTION BUTTONS REQUESTED BY USER ==================== -->
+              <!-- ROW 1: CUSTOMER JOIN & KARIGAR REGISTER (SIDE-BY-SIDE EQUAL WIDTH) -->
+              <!-- ROW 2: BOOK NOW CTA (UNDERNEATH, PROMINENT & FULL-WIDTH) -->
+              <div class="max-w-xl mx-auto lg:mx-0 space-y-3 pt-2">
+                
+                <!-- ROW 1: EQUAL SIDE-BY-SIDE BUTTONS -->
+                <div class="grid grid-cols-2 gap-3">
+                  <!-- Customer Join Button -->
+                  <button 
+                    @click="openCustomerModal()" 
+                    class="w-full flex items-center justify-center gap-2 px-3 sm:px-5 py-3 sm:py-3.5 bg-brand-50 hover:bg-brand-100 text-brand-900 border-2 border-brand-600 rounded-2xl font-black text-xs sm:text-sm shadow-sm hover:shadow-md transition-all min-h-[50px]"
+                  >
+                    <i data-lucide="user-check" class="w-4 h-4 sm:w-5 sm:h-5 text-brand-700 flex-shrink-0"></i>
+                    <span class="whitespace-nowrap" x-text="customerUser.isLoggedIn ? customerUser.name + ' (کسٹمر)' : 'کسٹمر شمولیت'"></span>
+                  </button>
+
+                  <!-- Karigar Register Button -->
+                  <button 
+                    @click="currentView = 'join-karigar'; window.scrollTo({top:0, behavior:'smooth'})" 
+                    class="w-full flex items-center justify-center gap-2 px-3 sm:px-5 py-3 sm:py-3.5 bg-amber-50 hover:bg-amber-100 text-amber-950 border-2 border-amber-500 rounded-2xl font-black text-xs sm:text-sm shadow-sm hover:shadow-md transition-all min-h-[50px]"
+                  >
+                    <i data-lucide="briefcase" class="w-4 h-4 sm:w-5 sm:h-5 text-amber-600 flex-shrink-0"></i>
+                    <span class="whitespace-nowrap">کاریگر رجسٹر</span>
+                  </button>
+                </div>
+
+                <!-- ROW 2: BOOK NOW BUTTON (UNDERNEATH, FULL-WIDTH, PROMINENT) -->
+                <button 
+                  @click="requestBookingDirect()" 
+                  class="w-full flex items-center justify-center gap-3 px-6 py-3.5 sm:py-4 bg-gradient-to-r from-brand-700 via-teal-700 to-emerald-700 hover:from-brand-800 hover:to-emerald-800 text-white rounded-2xl font-black text-sm sm:text-base shadow-xl hover:shadow-2xl transition-all min-h-[52px]"
+                >
+                  <i data-lucide="calendar-plus" class="w-5 h-5 flex-shrink-0"></i>
+                  <span>ابھی بک کریں (فوری کاریگر حاصل کریں)</span>
+                </button>
+
+                <!-- ROW 3: CLEAN SECONDARY ACTIONS (MARKET RATES, ESTIMATOR, DISPUTE) -->
+                <div class="flex flex-wrap items-center justify-center lg:justify-start gap-2 pt-1 text-xs">
+                  <button 
+                    @click="currentView = 'market-rates'" 
+                    class="flex items-center gap-1.5 px-3.5 py-2 bg-white hover:bg-slate-50 text-slate-800 border-2 border-slate-300 rounded-xl font-bold shadow-xs min-h-[38px]"
+                  >
+                    <i data-lucide="tag" class="w-3.5 h-3.5 text-amber-600"></i>
+                    <span>سامان کے ریٹس</span>
+                  </button>
+
+                  <button 
+                    @click="currentView = 'estimator'" 
+                    class="flex items-center gap-1.5 px-3.5 py-2 bg-white hover:bg-slate-50 text-slate-800 border-2 border-slate-300 rounded-xl font-bold shadow-xs min-h-[38px]"
+                  >
+                    <i data-lucide="calculator" class="w-3.5 h-3.5 text-teal-700"></i>
+                    <span>لاگت کیلکولیٹر</span>
+                  </button>
+
+                  <button 
+                    @click="openDisputeModal()" 
+                    class="flex items-center gap-1.5 px-3.5 py-2 bg-rose-50 hover:bg-rose-100 text-rose-900 border-2 border-rose-300 rounded-xl font-bold shadow-xs min-h-[38px]"
+                  >
+                    <i data-lucide="shield-alert" class="w-3.5 h-3.5 text-rose-600"></i>
+                    <span>شکایت و تحفظ سیل</span>
+                  </button>
+                </div>
+
+              </div>
+
+              <!-- Mutual Agreement & First-to-Respond Notice -->
+              <div class="p-3.5 bg-white border-2 border-emerald-600/60 rounded-2xl text-xs text-slate-900 flex items-center gap-3 max-w-xl mx-auto lg:mx-0 text-start shadow-sm">
                 <div class="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center flex-shrink-0 font-bold">
                   <i data-lucide="zap" class="w-5 h-5 text-amber-600"></i>
                 </div>
@@ -658,7 +646,7 @@
               </div>
 
               <!-- Quick Search with Search Suggestions -->
-              <div class="pt-1 max-w-2xl mx-auto lg:mx-0">
+              <div class="pt-1 max-w-xl mx-auto lg:mx-0">
                 <div class="relative flex items-center bg-white p-1.5 sm:p-2 rounded-2xl shadow-xl border-2 border-brand-600/40 focus-within:border-brand-600 focus-within:ring-2 focus-within:ring-brand-200 transition-all">
                   <div class="p-2 text-brand-700">
                     <i data-lucide="search" class="w-5 h-5"></i>
@@ -669,11 +657,11 @@
                     @input="scrollToServices()"
                     @keydown.enter="scrollToServices()"
                     placeholder="سروس تلاش کریں (مثلاً پلمبر، اے سی، گیس چولہا، الیکٹریشن، پینٹ)..."
-                    class="w-full px-2 sm:px-3 py-2 bg-transparent text-xs sm:text-sm md:text-base outline-none text-slate-900 placeholder-slate-500 font-bold"
+                    class="w-full px-2 sm:px-3 py-2 bg-transparent text-xs sm:text-sm md:text-base outline-none text-slate-950 placeholder-slate-500 font-bold"
                   />
                   <button 
                     @click="scrollToServices()"
-                    class="px-4 sm:px-6 py-2 sm:py-2.5 bg-brand-700 hover:bg-brand-800 text-white rounded-xl text-xs sm:text-sm font-black flex-shrink-0 transition-colors shadow-md"
+                    class="px-4 sm:px-6 py-2.5 bg-brand-700 hover:bg-brand-800 text-white rounded-xl text-xs sm:text-sm font-black flex-shrink-0 transition-colors shadow-md min-h-[42px]"
                   >
                     <span>تلاش کریں</span>
                   </button>
@@ -681,7 +669,7 @@
               </div>
 
               <!-- FAST SOCIETIES SELECTOR -->
-              <div class="pt-1 max-w-2xl mx-auto lg:mx-0">
+              <div class="pt-1 max-w-xl mx-auto lg:mx-0">
                 <div class="p-3.5 bg-white rounded-2xl border-2 border-emerald-500/40 shadow-md space-y-2">
                   <div class="flex items-center justify-between text-xs font-black text-slate-900">
                     <span class="flex items-center gap-1.5">
@@ -705,41 +693,6 @@
                     </template>
                   </div>
                 </div>
-              </div>
-
-              <!-- Quick Action CTAs -->
-              <div class="grid grid-cols-2 sm:flex sm:flex-wrap items-center justify-center lg:justify-start gap-2.5 sm:gap-3 pt-2">
-                <button 
-                  @click="requestBookingDirect()" 
-                  class="w-full sm:w-auto flex items-center justify-center gap-2 px-5 sm:px-7 py-3 bg-brand-700 hover:bg-brand-800 text-white rounded-xl font-black text-xs sm:text-sm shadow-lg hover:shadow-xl transition-all text-center"
-                >
-                  <i data-lucide="check-circle-2" class="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0"></i>
-                  <span>فوری کاریگر بک کریں</span>
-                </button>
-
-                <button 
-                  @click="currentView = 'market-rates'" 
-                  class="w-full sm:w-auto flex items-center justify-center gap-2 px-4 sm:px-6 py-3 bg-amber-500 hover:bg-amber-600 text-slate-950 rounded-xl font-black text-xs sm:text-sm shadow-md hover:shadow-lg transition-all text-center"
-                >
-                  <i data-lucide="tag" class="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0"></i>
-                  <span>سامان کے ریٹس</span>
-                </button>
-
-                <button 
-                  @click="currentView = 'estimator'" 
-                  class="w-full sm:w-auto flex items-center justify-center gap-2 px-4 sm:px-5 py-3 bg-white hover:bg-slate-50 text-slate-900 border-2 border-slate-300 rounded-xl font-black text-xs sm:text-sm transition-all text-center shadow-sm"
-                >
-                  <i data-lucide="calculator" class="w-4 h-4 sm:w-5 sm:h-5 text-teal-700 flex-shrink-0"></i>
-                  <span>لاگت کیلکولیٹر</span>
-                </button>
-
-                <button 
-                  @click="openDisputeModal()" 
-                  class="w-full sm:w-auto flex items-center justify-center gap-2 px-4 sm:px-5 py-3 bg-rose-50 hover:bg-rose-100 text-rose-900 border-2 border-rose-300 rounded-xl font-black text-xs sm:text-sm transition-all text-center shadow-xs"
-                >
-                  <i data-lucide="shield-alert" class="w-4 h-4 sm:w-5 sm:h-5 text-rose-600 flex-shrink-0"></i>
-                  <span>شکایت سیل</span>
-                </button>
               </div>
 
               <!-- Key Trust Metrics -->
@@ -916,18 +869,18 @@
                 <div class="pt-4 border-t-2 border-slate-100 flex items-center gap-2">
                   <button 
                     @click="openCategoryDetails(cat)"
-                    class="flex-1 py-2.5 px-3 bg-brand-700 hover:bg-brand-800 text-white rounded-xl text-xs font-black transition-colors flex items-center justify-center gap-1.5 shadow-md"
+                    class="flex-1 py-3 px-3.5 bg-brand-700 hover:bg-brand-800 text-white rounded-xl text-xs font-black transition-colors flex items-center justify-center gap-2 shadow-md min-h-[44px]"
                   >
-                    <i data-lucide="calendar" class="w-3.5 h-3.5"></i>
+                    <i data-lucide="calendar" class="w-4 h-4 flex-shrink-0"></i>
                     <span>بک کریں و تفصیل دیکھیں</span>
                   </button>
 
                   <button 
                     @click="initDirectContact('مجھے ' + cat.titleUrdu + ' کے لیے کاریگر چاہیے')"
-                    class="p-2.5 bg-emerald-100 hover:bg-emerald-200 text-emerald-900 rounded-xl transition-colors border border-emerald-300"
+                    class="p-3 bg-emerald-100 hover:bg-emerald-200 text-emerald-900 rounded-xl transition-colors border border-emerald-300 min-h-[44px] min-w-[44px] flex items-center justify-center flex-shrink-0"
                     title="رابطہ کریں"
                   >
-                    <i data-lucide="message-circle" class="w-4 h-4 text-emerald-800"></i>
+                    <i data-lucide="message-circle" class="w-5 h-5 text-emerald-800"></i>
                   </button>
                 </div>
               </div>
@@ -1012,20 +965,20 @@
                   </div>
                 </div>
 
-                <div class="space-y-2">
+                <div class="space-y-2 pt-2">
                   <button 
                     @click="openKarigarCard(tech)"
-                    class="w-full py-2 bg-amber-50 hover:bg-amber-100 text-amber-950 border border-amber-300 rounded-xl text-xs font-black transition-colors flex items-center justify-center gap-1.5 shadow-xs"
+                    class="w-full py-2.5 px-3 bg-amber-50 hover:bg-amber-100 text-amber-950 border border-amber-300 rounded-xl text-xs font-black transition-colors flex items-center justify-center gap-2 shadow-xs min-h-[42px]"
                   >
-                    <i data-lucide="credit-card" class="w-3.5 h-3.5 text-amber-700"></i>
+                    <i data-lucide="credit-card" class="w-4 h-4 text-amber-700 flex-shrink-0"></i>
                     <span>مصدقہ ڈیجیٹل کارڈ دیکھیں</span>
                   </button>
 
                   <button 
                     @click="connectWithKarigar(tech)"
-                    class="w-full py-2.5 bg-slate-950 hover:bg-brand-700 text-white rounded-xl text-xs font-black transition-colors flex items-center justify-center gap-1.5 shadow-md"
+                    class="w-full py-3 px-3 bg-slate-950 hover:bg-brand-700 text-white rounded-xl text-xs font-black transition-colors flex items-center justify-center gap-2 shadow-md min-h-[46px]"
                   >
-                    <i data-lucide="handshake" class="w-3.5 h-3.5 text-amber-300"></i>
+                    <i data-lucide="handshake" class="w-4 h-4 text-amber-300 flex-shrink-0"></i>
                     <span>یہ کاریگر منتخب کریں و ریٹ طے کریں</span>
                   </button>
                 </div>
@@ -2693,48 +2646,48 @@
       <!-- Direct WhatsApp Action -->
       <button 
         @click="initDirectContact('اسلام علیکم! مجھے رائل پام سٹی / گوجرانوالہ میں فوری کاریگر کی ضرورت ہے۔')"
-        class="flex-1 py-2.5 px-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-black text-xs shadow-md flex items-center justify-center gap-1 truncate text-center"
+        class="flex-1 py-2.5 px-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-black text-xs shadow-md flex items-center justify-center gap-1 text-center min-h-[44px]"
       >
-        <i data-lucide="message-circle" class="w-3.5 h-3.5 flex-shrink-0"></i>
+        <i data-lucide="message-circle" class="w-4 h-4 flex-shrink-0"></i>
         <span>WhatsApp</span>
       </button>
       
       <!-- Direct Booking Action -->
       <button 
         @click="requestBookingDirect()"
-        class="flex-1 py-2.5 px-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl font-black text-xs shadow-md flex items-center justify-center gap-1 truncate text-center"
+        class="flex-1 py-2.5 px-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl font-black text-xs shadow-md flex items-center justify-center gap-1 text-center min-h-[44px]"
       >
-        <i data-lucide="calendar-plus" class="w-3.5 h-3.5 flex-shrink-0"></i>
-        <span>کاریگر بک کریں</span>
+        <i data-lucide="calendar-plus" class="w-4 h-4 flex-shrink-0"></i>
+        <span>ابھی بک کریں</span>
       </button>
 
       <!-- Mobile Share Button -->
       <button 
         @click="shareApp()" 
-        class="p-2.5 bg-slate-800 hover:bg-slate-700 text-amber-300 rounded-xl font-black text-xs shadow-md flex items-center justify-center flex-shrink-0 border border-amber-400/30"
+        class="p-2.5 px-3 bg-slate-800 hover:bg-slate-700 text-amber-300 rounded-xl font-black text-xs shadow-md flex items-center justify-center flex-shrink-0 border border-amber-400/40 min-h-[44px] min-w-[44px]"
         title="شیئر کریں"
       >
-        <i data-lucide="share-2" class="w-3.5 h-3.5 text-amber-400"></i>
+        <i data-lucide="share-2" class="w-4 h-4 text-amber-400"></i>
       </button>
 
       <!-- Direct Call Button -->
       <a 
         :href="'tel:' + businessPhone" 
-        class="p-2.5 bg-amber-400 hover:bg-amber-500 text-slate-950 rounded-xl font-black text-xs shadow-md flex items-center justify-center flex-shrink-0"
+        class="p-2.5 px-3 bg-amber-400 hover:bg-amber-500 text-slate-950 rounded-xl font-black text-xs shadow-md flex items-center justify-center flex-shrink-0 min-h-[44px] min-w-[44px]"
         title="کمپنی ہیلپ لائن: 0300-4800071"
       >
-        <i data-lucide="phone-call" class="w-3.5 h-3.5"></i>
+        <i data-lucide="phone-call" class="w-4 h-4"></i>
       </a>
     </div>
 
     <!-- Mobile B.A.H.Care Brand Sub-Strip -->
     <div class="flex items-center justify-between px-2 pt-1 border-t border-slate-800 text-[10px] text-slate-300 font-bold" dir="ltr">
       <span class="font-brand-latin font-black text-amber-400 tracking-wider flex items-center gap-1">
-        <img src="icon-192.png" alt="Logo" class="w-3.5 h-3.5 rounded object-contain inline" />
+        <img src="icon-192.png" alt="Logo" class="w-4 h-4 rounded object-contain inline" />
         B.A.H.Care
       </span>
-      <span class="text-[9px] text-slate-300 font-urdu" dir="rtl">بن عباس ہوم کیئر • منظور شدہ</span>
-      <span class="text-emerald-400 font-black">15-30 Min Arrival</span>
+      <span class="text-[10px] text-slate-200 font-urdu" dir="rtl">بن عباس ہوم کیئر • تصدیق شدہ</span>
+      <span class="text-emerald-400 font-black">15-30 Min</span>
     </div>
   </div>
 
