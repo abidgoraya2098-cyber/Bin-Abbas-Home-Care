@@ -2,8 +2,8 @@
 <html lang="ur" dir="rtl" class="scroll-smooth">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>B.A.H.Care | بن عباس ہوم کیئر - رائل پام سٹی و گوجرانوالہ ہوم سروسز و کاریگر پورٹل</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <title>B.A.H.Care | بن عباس ہوم کیئر - رائل پام سٹی و گوجرانوالہ ہوم سروسز و مصدقہ کاریگر پورٹل</title>
   
   <!-- Favicons & Meta -->
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
@@ -77,23 +77,25 @@
       font-display: swap;
     }
 
-    /* 100% Mobile & Desktop Viewport Protection */
+    /* 100% Strict Mobile & Desktop Viewport Zero-Overflow Protection */
     *, *::before, *::after {
       box-sizing: border-box;
     }
     html, body {
-      max-width: 100vw;
+      max-width: 100vw !important;
       overflow-x: hidden !important;
       position: relative;
       width: 100%;
       margin: 0;
       padding: 0;
+      word-break: break-word;
+      overflow-wrap: break-word;
     }
 
     /* Custom Scrollbar */
     ::-webkit-scrollbar {
-      width: 8px;
-      height: 8px;
+      width: 7px;
+      height: 7px;
     }
     ::-webkit-scrollbar-track {
       background: #f1f5f9;
@@ -114,13 +116,15 @@
     }
 
     [dir="rtl"] h1, [dir="rtl"] h2, [dir="rtl"] h3, [dir="rtl"] h4, [dir="rtl"] h5, [dir="rtl"] h6 {
-      line-height: 1.8 !important;
+      line-height: 1.75 !important;
       padding-top: 0.15rem;
       padding-bottom: 0.15rem;
+      word-break: break-word;
     }
 
     [dir="rtl"] p, [dir="rtl"] span, [dir="rtl"] div, [dir="rtl"] button, [dir="rtl"] a, [dir="rtl"] li, [dir="rtl"] td, [dir="rtl"] th, [dir="rtl"] input, [dir="rtl"] select, [dir="rtl"] textarea {
       line-height: 1.85;
+      word-break: break-word;
     }
 
     .font-brand-latin {
@@ -167,7 +171,7 @@
   x-data="homeCareApp()" 
   x-init="initApp()" 
   dir="rtl"
-  class="bg-slate-50 text-slate-800 antialiased selection:bg-brand-500 selection:text-white pb-24 md:pb-0"
+  class="bg-slate-50 text-slate-800 antialiased selection:bg-brand-500 selection:text-white pb-28 md:pb-0 overflow-x-hidden"
 >
 
   <!-- ==================== INTRO ANIMATED SPLASH SCREEN ==================== -->
@@ -219,13 +223,23 @@
           15-30 منٹ سروس
         </span>
         <span class="font-bold text-teal-100 truncate text-[11px] sm:text-xs">
-          🌴 رائل پام سٹی گوجرانوالہ (فلیگ شپ) و تمام سوسائٹیز میں تصدیق شدہ کاریگر
+          🌴 رائل پام سٹی گوجرانوالہ (فلیگ شپ) • منظور شدہ کاریگرز
         </span>
       </div>
       <div class="flex items-center gap-2 sm:gap-3 text-xs flex-shrink-0">
+        <!-- Customer Status in Top Bar -->
+        <button 
+          @click="openCustomerModal()" 
+          class="text-amber-300 hover:text-white font-bold flex items-center gap-1 bg-amber-500/20 px-2 py-0.5 rounded border border-amber-400/30"
+        >
+          <i data-lucide="user-check" class="w-3 h-3 text-amber-400"></i>
+          <span x-text="customerUser.isLoggedIn ? customerUser.name + ' (کسٹمر ✓)' : 'کسٹمر شمولیت'"></span>
+        </button>
+
+        <span class="text-teal-500/70 hidden sm:inline">|</span>
         <button @click="openSocietiesModal()" class="text-teal-200 hover:text-white font-bold underline flex items-center gap-1">
           <i data-lucide="map-pin" class="w-3.5 h-3.5 flex-shrink-0"></i>
-          <span>سوسائٹیز لسٹ</span>
+          <span>سوسائٹیز</span>
         </button>
         <span class="text-teal-500/70 hidden sm:inline">|</span>
         <button @click="openDisputeModal()" class="text-rose-300 hover:text-rose-200 font-bold underline flex items-center gap-1">
@@ -238,7 +252,7 @@
           <span>🔐 ایڈمن</span>
         </button>
         <span class="text-teal-500/70 hidden sm:inline">|</span>
-        <a :href="'tel:' + businessPhone" class="flex items-center gap-1 hover:text-amber-300 transition-colors font-bold text-amber-300">
+        <a :href="'tel:' + businessPhone" class="flex items-center gap-1 hover:text-amber-300 transition-colors font-bold text-amber-300" title="کمپنی ہیلپ لائن">
           <i data-lucide="phone-call" class="w-3.5 h-3.5 text-amber-400 flex-shrink-0"></i>
           <span dir="ltr">0300-4800071</span>
         </a>
@@ -267,7 +281,7 @@
               </span>
             </div>
             <p class="hidden sm:block text-xs text-slate-500 font-medium truncate">
-              ہیلپ لائن: 0300-4800071 • گھریلو مرمت، تزئین و آرائش و میٹریل ریٹس
+              کمپنی ہیلپ لائن: 0300-4800071 • منظور شدہ کاریگرز و براہِ راست باہمی ریٹس
             </p>
           </div>
         </div>
@@ -278,7 +292,7 @@
           
           <button @click="openSocietiesModal()" class="hover:text-brand-600 transition-colors flex items-center gap-1 text-emerald-700 font-bold bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200 shadow-xs">
             <i data-lucide="map-pin" class="w-3.5 h-3.5 text-emerald-600"></i>
-            <span>تمام سوسائٹیز</span>
+            <span>سوسائٹیز</span>
           </button>
 
           <button @click="currentView = 'market-rates'" :class="currentView === 'market-rates' ? 'text-brand-600 font-bold bg-brand-50 px-2.5 py-1 rounded-lg' : 'hover:text-brand-600'" class="transition-colors flex items-center gap-1">
@@ -293,7 +307,7 @@
 
           <button @click="currentView = 'join-karigar'" :class="currentView === 'join-karigar' ? 'text-amber-700 font-bold bg-amber-50 px-2.5 py-1 rounded-lg' : 'hover:text-amber-600'" class="transition-colors flex items-center gap-1">
             <i data-lucide="briefcase" class="w-3.5 h-3.5 text-amber-600"></i>
-            <span>کاریگر پورٹل</span>
+            <span>کاریگر پورٹل و پیکجز</span>
           </button>
 
           <button @click="openDisputeModal()" class="hover:text-rose-600 transition-colors flex items-center gap-1 text-rose-700 font-bold bg-rose-50 px-2 py-1 rounded-lg border border-rose-200">
@@ -303,7 +317,7 @@
           
           <button @click="openTrackerModal()" class="hover:text-brand-600 flex items-center gap-1 text-slate-700 font-semibold">
             <i data-lucide="search" class="w-3.5 h-3.5 text-brand-600"></i>
-            <span>ٹریکر</span>
+            <span>ٹریکر و فیڈ بیک</span>
           </button>
 
           <button @click="promptAdminLogin()" class="flex items-center gap-1 text-xs px-2.5 py-1 rounded-lg border border-amber-300 bg-amber-50 text-amber-900 font-bold hover:bg-amber-100 shadow-xs" title="ایڈمن لاگ ان">
@@ -315,8 +329,20 @@
         <!-- Right Action Buttons -->
         <div class="flex items-center gap-1.5 sm:gap-2.5 flex-shrink-0">
           
-          <!-- PWA Install Button -->
+          <!-- Customer Profile Button -->
           <button 
+            @click="openCustomerModal()" 
+            class="inline-flex items-center gap-1 px-2.5 sm:px-3 py-1.5 rounded-xl border border-slate-200 bg-slate-50 hover:bg-brand-50 text-slate-800 text-xs font-bold transition-all"
+            :title="customerUser.isLoggedIn ? 'آپ کا کسٹمر اکاؤنٹ لاگ ان ہے' : 'کسٹمر اکاؤنٹ بنائیں'"
+          >
+            <i data-lucide="user" class="w-3.5 h-3.5 text-brand-600"></i>
+            <span class="truncate max-w-[85px] sm:max-w-[120px]" x-text="customerUser.isLoggedIn ? customerUser.name : 'کسٹمر شمولیت'"></span>
+          </button>
+
+          <!-- PWA Install Button (AUTO-HIDES ONCE APP IS INSTALLED) -->
+          <button 
+            x-show="!isAppInstalled && canInstallApp"
+            x-transition
             @click="installPWA()"
             class="inline-flex items-center gap-1.5 px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-slate-950 font-black text-xs shadow-sm transition-all flex-shrink-0"
             title="Install App on Phone"
@@ -329,7 +355,7 @@
           <a 
             :href="'tel:' + businessPhone" 
             class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-amber-300 font-black text-xs shadow-sm transition-all border border-amber-400/30"
-            title="Helpline: 0300-4800071"
+            title="کمپنی ہیلپ لائن: 0300-4800071"
           >
             <i data-lucide="phone" class="w-3.5 h-3.5 text-amber-400"></i>
             <span dir="ltr">0300-4800071</span>
@@ -337,7 +363,7 @@
 
           <!-- Book Now CTA Button -->
           <button 
-            @click="openBookingModal()"
+            @click="requestBookingDirect()"
             class="inline-flex items-center justify-center gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl bg-gradient-to-r from-brand-600 to-teal-600 hover:from-brand-700 hover:to-teal-700 text-white font-bold text-xs sm:text-sm shadow-md shadow-brand-600/20 transition-all flex-shrink-0"
           >
             <i data-lucide="calendar-plus" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
@@ -369,6 +395,25 @@
         class="lg:hidden py-3 border-t border-slate-100 bg-white shadow-xl rounded-b-2xl"
       >
         <div class="grid grid-cols-2 gap-2 p-2 text-xs font-bold">
+          
+          <!-- Customer Status Header in Drawer -->
+          <div class="col-span-2 p-3 bg-gradient-to-r from-brand-50 to-teal-50 rounded-xl border border-brand-200 flex items-center justify-between">
+            <div class="flex items-center gap-2 min-w-0">
+              <div class="w-8 h-8 rounded-full bg-brand-600 text-white flex items-center justify-center font-bold flex-shrink-0">
+                <span x-text="customerUser.isLoggedIn ? customerUser.name.charAt(0) : '؟'"></span>
+              </div>
+              <div class="min-w-0">
+                <div class="text-xs font-bold text-slate-900 truncate" x-text="customerUser.isLoggedIn ? customerUser.name : 'کسٹمر شمولیت درکار'"></div>
+                <div class="text-[10px] text-slate-500 font-mono truncate" x-text="customerUser.isLoggedIn ? customerUser.phone : 'کاریگر رابطے کیلئے لاگ ان کریں'"></div>
+              </div>
+            </div>
+            <button 
+              @click="openCustomerModal(); isMobileMenuOpen = false" 
+              class="px-2.5 py-1 bg-brand-600 text-white text-[11px] rounded-lg shadow-xs"
+              x-text="customerUser.isLoggedIn ? 'پروفائل' : 'شمولیت'"
+            ></button>
+          </div>
+
           <button 
             @click="currentView = 'home'; isMobileMenuOpen = false; window.scrollTo({top:0, behavior:'smooth'})" 
             class="flex items-center gap-2 p-2.5 rounded-xl bg-slate-50 text-slate-800 hover:bg-brand-50 hover:text-brand-700 text-start"
@@ -406,7 +451,7 @@
             class="flex items-center gap-2 p-2.5 rounded-xl bg-slate-50 text-slate-800 hover:bg-brand-50 hover:text-brand-700 text-start"
           >
             <i data-lucide="briefcase" class="w-4 h-4 text-amber-600"></i>
-            <span>کاریگر پورٹل</span>
+            <span>کاریگر پورٹل و پیکجز</span>
           </button>
 
           <button 
@@ -417,7 +462,10 @@
             <span>شکایت و انصاف سیل</span>
           </button>
 
+          <!-- Drawer Install Button (AUTO-HIDES ONCE APP IS INSTALLED) -->
           <button 
+            x-show="!isAppInstalled && canInstallApp"
+            x-transition
             @click="installPWA(); isMobileMenuOpen = false" 
             class="col-span-2 flex items-center justify-center gap-2 p-2.5 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 font-black text-center shadow-sm"
           >
@@ -438,7 +486,7 @@
             class="col-span-2 flex items-center justify-center gap-2 p-2.5 rounded-xl bg-emerald-600 text-white font-black text-center"
           >
             <i data-lucide="phone-call" class="w-4 h-4"></i>
-            <span>ہیلپ لائن: 0300-4800071</span>
+            <span>کمپنی ہیلپ لائن: 0300-4800071</span>
           </a>
         </div>
       </div>
@@ -446,7 +494,7 @@
   </header>
 
   <!-- ==================== MAIN CONTENT CONTAINER ==================== -->
-  <main>
+  <main class="w-full overflow-x-hidden">
 
     <!-- ==================== VIEW 1: HOME VIEW ==================== -->
     <div x-show="currentView === 'home'" x-cloak>
@@ -456,7 +504,7 @@
         <div class="absolute -top-24 -right-24 w-96 h-96 bg-brand-200/30 rounded-full blur-3xl pointer-events-none"></div>
         <div class="absolute top-1/2 -left-24 w-80 h-80 bg-amber-200/20 rounded-full blur-3xl pointer-events-none"></div>
 
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 relative z-10">
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
             
             <!-- Hero Left (7 Columns) -->
@@ -464,7 +512,7 @@
               
               <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-100/90 border border-emerald-200 text-emerald-950 text-xs sm:text-sm font-bold shadow-xs">
                 <span class="w-2.5 h-2.5 rounded-full bg-emerald-600 animate-ping"></span>
-                <span>🌴 رائل پام سٹی گوجرانوالہ (فلیگ شپ) • B.A.H.Care مصدقہ نیٹ ورک</span>
+                <span>🌴 رائل پام سٹی گوجرانوالہ (فلیگ شپ) • منظور شدہ کاریگرز پورٹل</span>
               </div>
 
               <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-normal break-words">
@@ -478,8 +526,16 @@
                 رائل پام سٹی، ڈی سی کالونی، سٹی ہاؤسنگ، ماڈل ٹاؤن اور گوجرانوالہ کے رہائشیوں کے لیے نادرا و پولیس تصدیق شدہ الیکٹریشن، پلمبر، اے سی اور گیس چولہا ٹیکنیشنز—15 تا 30 منٹ میں آپ کی دہلیز پر۔
               </p>
 
+              <!-- Mutual Agreement & Verified Notice Card -->
+              <div class="p-3 bg-emerald-50/80 border border-emerald-200 rounded-2xl text-xs text-emerald-900 flex items-center gap-2.5 max-w-2xl mx-auto lg:mx-0 text-start">
+                <i data-lucide="handshake" class="w-5 h-5 text-emerald-600 flex-shrink-0"></i>
+                <div>
+                  <strong>باہمی رضامندی و آزادی:</strong> کسٹمر اور کاریگر کام کا ریٹ باہم خود بھی طے کر سکتے ہیں۔ تمام کاریگر کمپنی سے مصدقہ ہیں۔
+                </div>
+              </div>
+
               <!-- Quick Search with Search Suggestions -->
-              <div class="pt-2 max-w-2xl mx-auto lg:mx-0">
+              <div class="pt-1 max-w-2xl mx-auto lg:mx-0">
                 <div class="relative flex items-center bg-white p-1.5 sm:p-2 rounded-2xl shadow-lg border border-slate-200 focus-within:border-brand-500 focus-within:ring-2 focus-within:ring-brand-200 transition-all">
                   <div class="p-2 text-brand-600">
                     <i data-lucide="search" class="w-5 h-5"></i>
@@ -489,7 +545,7 @@
                     x-model="searchQuery"
                     @input="scrollToServices()"
                     @keydown.enter="scrollToServices()"
-                    placeholder="سروس یا کام تلاش کریں (مثلاً پلمبر، اے سی، گیس چولہا، الیکٹریشن، پینٹ)..."
+                    placeholder="سروس تلاش کریں (مثلاً پلمبر، اے سی، گیس چولہا، الیکٹریشن، پینٹ)..."
                     class="w-full px-2 sm:px-3 py-2 bg-transparent text-xs sm:text-sm md:text-base outline-none text-slate-800 placeholder-slate-400 font-medium"
                   />
                   <button 
@@ -502,15 +558,15 @@
               </div>
 
               <!-- ==================== FAST SOCIETIES SELECTOR ==================== -->
-              <div class="pt-2 max-w-2xl mx-auto lg:mx-0">
+              <div class="pt-1 max-w-2xl mx-auto lg:mx-0">
                 <div class="p-3.5 bg-gradient-to-r from-emerald-50 via-teal-50 to-emerald-50 rounded-2xl border border-emerald-200/90 shadow-sm space-y-2">
                   <div class="flex items-center justify-between text-xs font-bold text-slate-800">
                     <span class="flex items-center gap-1.5">
                       <span class="p-1 bg-emerald-600 text-white rounded-md flex-shrink-0"><i data-lucide="map-pin" class="w-3.5 h-3.5"></i></span>
-                      <span>سروس سوسائٹیز (15 تا 30 منٹ آمد):</span>
+                      <span>سروس سوسائٹیز (15 تا 30 منٹ ایکسپریس آمد):</span>
                     </span>
                     <button @click="openSocietiesModal()" class="text-brand-700 hover:text-brand-900 underline text-xs font-bold">
-                      تمام سوسائٹیز دیکھیں →
+                      تمام سوسائٹیز →
                     </button>
                   </div>
                   
@@ -531,7 +587,7 @@
               <!-- Quick Action CTAs -->
               <div class="grid grid-cols-2 sm:flex sm:flex-wrap items-center justify-center lg:justify-start gap-2.5 sm:gap-3 pt-2">
                 <button 
-                  @click="openBookingModal()" 
+                  @click="requestBookingDirect()" 
                   class="w-full sm:w-auto flex items-center justify-center gap-2 px-5 sm:px-7 py-3 bg-brand-600 hover:bg-brand-700 text-white rounded-xl font-bold text-xs sm:text-sm shadow-md hover:shadow-lg transition-all text-center"
                 >
                   <i data-lucide="check-circle-2" class="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0"></i>
@@ -591,7 +647,7 @@
                 
                 <div class="flex items-center justify-between pb-3 border-b border-slate-100">
                   <div class="flex items-center gap-2.5">
-                    <img src="icon-192.png" alt="B.A.H.Care" class="w-8 h-8 rounded-lg shadow-xs object-contain" />
+                    <img src="icon-192.png" alt="B.A.H.Care" class="w-9 h-9 rounded-xl shadow-xs object-contain" />
                     <div>
                       <h3 class="font-black text-slate-900 text-sm sm:text-base">فوری سروسز کیٹیگریز</h3>
                       <p class="text-[11px] text-slate-500">تفصیل اور ریٹس جاننے کے لیے کلک کریں</p>
@@ -630,7 +686,7 @@
                       <i data-lucide="phone-call" class="w-4 h-4 animate-bounce"></i>
                     </div>
                     <div class="min-w-0">
-                      <div class="text-xs font-bold text-amber-300 truncate">24/7 فوری ایمرجنسی ہیلپ لائن</div>
+                      <div class="text-xs font-bold text-amber-300 truncate">آفیشل کمپنی ہیلپ لائن و سپورٹ</div>
                       <div class="text-sm font-mono font-black text-white" dir="ltr">0300-4800071</div>
                     </div>
                   </div>
@@ -651,7 +707,7 @@
 
       <!-- ==================== ALL SOCIETIES & COVERAGE SECTION ==================== -->
       <section id="societies-coverage" class="py-14 bg-white border-b border-slate-200">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
           
           <div class="text-center max-w-3xl mx-auto mb-10 space-y-2">
             <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold">
@@ -659,7 +715,7 @@
               <span>فوری ایکسپریس کوریج نیٹ ورک</span>
             </div>
             <h2 class="text-2xl sm:text-3xl font-black text-slate-900">ہمارے سروس کے علاقے اور سوسائٹیز</h2>
-            <p class="text-slate-600 text-xs sm:text-sm">تمام معروف سوسائٹیز میں ماہر و تصدیق شدہ کاریگر کی فوری آمد</p>
+            <p class="text-slate-600 text-xs sm:text-sm">تمام معروف سوسائٹیز میں کمپنی کے منظور شدہ کاریگر کی فوری آمد</p>
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
@@ -696,70 +752,9 @@
         </div>
       </section>
 
-      <!-- ==================== SEASONAL DISCOUNT PACKAGES ==================== -->
-      <section id="packages" class="py-14 bg-gradient-to-b from-slate-50 to-teal-50/50 border-b border-slate-200">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
-          <div class="text-center max-w-3xl mx-auto mb-10 space-y-2">
-            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 text-amber-800 text-xs font-bold">
-              <i data-lucide="gift" class="w-3.5 h-3.5 text-amber-600"></i>
-              <span>موسمی خصوصی بچت آفرز (Mega Saver Deals)</span>
-            </div>
-            <h2 class="text-2xl sm:text-3xl font-black text-slate-900">موسمی رعایتی ہوم سروس پیکجز</h2>
-            <p class="text-slate-600 text-xs sm:text-sm">ایک ساتھ متعدد کام کروائیں اور 35% تک کی شاندار بچت حاصل کریں</p>
-          </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <template x-for="pkg in discountPackages" :key="pkg.id">
-              <div class="bg-white rounded-3xl p-6 border-2 border-teal-500/20 hover:border-brand-500 shadow-md hover:shadow-xl transition-all flex flex-col justify-between relative overflow-hidden group">
-                
-                <div class="absolute top-0 right-0 bg-gradient-to-l from-amber-500 to-amber-600 text-slate-950 font-black text-[11px] px-3 py-1 rounded-bl-xl shadow-xs">
-                  <span x-text="pkg.discountBadge"></span>
-                </div>
-
-                <div>
-                  <div class="w-12 h-12 rounded-2xl bg-brand-50 flex items-center justify-center text-brand-600 mb-4 group-hover:scale-110 transition-transform">
-                    <i :data-lucide="pkg.icon" class="w-6 h-6"></i>
-                  </div>
-
-                  <h3 class="text-base sm:text-lg font-bold text-slate-900 mb-1" x-text="pkg.title"></h3>
-                  <p class="text-xs text-slate-500 mb-4" x-text="pkg.desc"></p>
-
-                  <div class="space-y-2 mb-6 text-xs text-slate-600">
-                    <template x-for="item in pkg.items" :key="item">
-                      <div class="flex items-center gap-2">
-                        <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-emerald-600 flex-shrink-0"></i>
-                        <span x-text="item"></span>
-                      </div>
-                    </template>
-                  </div>
-                </div>
-
-                <div class="pt-4 border-t border-slate-100">
-                  <div class="flex items-baseline gap-2 mb-3">
-                    <span class="text-2xl font-black text-brand-700" x-text="pkg.dealPrice"></span>
-                    <span class="text-xs text-slate-400 line-through" x-text="pkg.originalPrice"></span>
-                  </div>
-
-                  <button 
-                    @click="openBookingModal({ details: pkg.title + ' (' + pkg.dealPrice + ')' })"
-                    class="w-full py-2.5 bg-gradient-to-r from-brand-600 to-teal-700 hover:from-brand-700 hover:to-teal-800 text-white rounded-xl text-xs font-bold transition-all shadow-md flex items-center justify-center gap-2"
-                  >
-                    <i data-lucide="calendar-plus" class="w-4 h-4"></i>
-                    <span>یہ پیکج بک کریں</span>
-                  </button>
-                </div>
-
-              </div>
-            </template>
-          </div>
-
-        </div>
-      </section>
-
       <!-- ==================== ALL 9 SERVICE CATEGORIES (GRID ON DESKTOP) ==================== -->
       <section id="services" class="py-14 md:py-20 bg-white border-b border-slate-200">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
           
           <div class="text-center max-w-3xl mx-auto mb-12 space-y-2">
             <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-100 text-brand-800 text-xs font-bold">
@@ -767,7 +762,7 @@
               <span>تمام شعبہ جات و خدمات</span>
             </div>
             <h2 class="text-2xl sm:text-3xl md:text-4xl font-black text-slate-900">گھریلو مرمت اور دیکھ بھال کی مکمل سروسز</h2>
-            <p class="text-slate-600 text-xs sm:text-sm">شفاف قیمتیں، تصدیق شدہ کاریگر اور 7 دن کی تسلی بخش وارنٹی</p>
+            <p class="text-slate-600 text-xs sm:text-sm">شفاف قیمتیں، منظور شدہ کاریگر اور 7 دن کی تسلی بخش وارنٹی</p>
           </div>
 
           <!-- Services 3-Column Balanced Grid -->
@@ -804,14 +799,13 @@
                     <span>بک کریں و تفصیل دیکھیں</span>
                   </button>
 
-                  <a 
-                    :href="getWhatsAppLink('مجھے ' + cat.titleUrdu + ' کے لیے کاریگر چاہیے')"
-                    target="_blank"
+                  <button 
+                    @click="initDirectContact('مجھے ' + cat.titleUrdu + ' کے لیے کاریگر چاہیے')"
                     class="p-2.5 bg-emerald-100 hover:bg-emerald-200 text-emerald-800 rounded-xl transition-colors"
-                    title="WhatsApp"
+                    title="رابطہ کریں"
                   >
                     <i data-lucide="message-circle" class="w-4 h-4"></i>
-                  </a>
+                  </button>
                 </div>
               </div>
             </template>
@@ -822,43 +816,36 @@
 
       <!-- ==================== VERIFIED TECHNICIANS SECTION ==================== -->
       <section id="technicians" class="py-14 bg-slate-50 border-b border-slate-200">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
           
           <div class="text-center max-w-3xl mx-auto mb-10 space-y-2">
             <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold">
               <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-600"></i>
-              <span>ایڈمن کی تصدیق کے بعد لائیو ہونے والے کاریگر</span>
+              <span>کمپنی و ایڈمن منظور شدہ کاریگرز</span>
             </div>
-            <h2 class="text-2xl sm:text-3xl font-black text-slate-900">مصدقہ و منظور شدہ کاریگرز</h2>
-            <p class="text-slate-600 text-xs sm:text-sm">کوئی بھی کاریگر ایڈمن کے پاس نادرا شناختی کارڈ اور پولیس ریکارڈ کی تصدیق کے بغیر لائیو نہیں ہوتا</p>
+            <h2 class="text-2xl sm:text-3xl font-black text-slate-900">مصدقہ و منظور شدہ کاریگرز لسٹ</h2>
+            <p class="text-slate-600 text-xs sm:text-sm">صرف وہ کاریگر لائیو ہوتے ہیں جن کی نادرا شناختی کارڈ اور پولیس ریکارڈ کی ایڈمن نے مکمل تصدیق کی ہو</p>
           </div>
-
-          <!-- Empty State when no technicians approved yet -->
-          <template x-if="technicians.length === 0">
-            <div class="max-w-2xl mx-auto p-8 rounded-3xl bg-white border border-slate-200 shadow-sm text-center space-y-4">
-              <div class="w-16 h-16 mx-auto rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center font-bold text-2xl shadow-xs">
-                <i data-lucide="user-check" class="w-8 h-8"></i>
-              </div>
-              <h3 class="text-lg font-bold text-slate-900">کاریگر رجسٹریشن اور ایڈمن ویریفکیشن کا نظام فعال ہے</h3>
-              <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                تمام فرضی کاریگروں کو ہٹا دیا گیا ہے۔ جب کوئی کاریگر <strong>کاریگر پورٹل</strong> سے درخواست جمع کرواتا ہے، تو ایڈمن انتظامیہ اس کے شناختی کارڈ کی تصدیق کر کے منظوری دیتی ہے جس کے بعد اس کا مصدقہ کارڈ یہاں لائیو ظاہر ہوتا ہے۔
-              </p>
-              <div class="flex flex-wrap justify-center gap-3 pt-2">
-                <button @click="currentView = 'join-karigar'" class="px-5 py-2.5 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-bold shadow-xs">
-                  کاریگر رجسٹریشن فارم پر جائیں
-                </button>
-                <button @click="promptAdminLogin()" class="px-5 py-2.5 bg-slate-900 hover:bg-slate-800 text-amber-300 rounded-xl text-xs font-bold shadow-xs border border-amber-400/30">
-                  🔐 ایڈمن پینل لاگ ان
-                </button>
-              </div>
-            </div>
-          </template>
 
           <!-- Dynamic Active Technicians Grid -->
           <div class="grid grid-cols-1 md:grid-cols-3 gap-5" x-show="technicians.length > 0">
             <template x-for="tech in technicians" :key="tech.id">
               <div class="bg-white rounded-3xl p-5 border border-slate-200 shadow-sm hover:shadow-lg transition-all flex flex-col justify-between">
                 <div>
+                  
+                  <!-- Top Badge: Package & Verified Status -->
+                  <div class="flex items-center justify-between gap-2 mb-3">
+                    <span 
+                      class="px-2 py-0.5 rounded-md text-[10px] font-black"
+                      :class="tech.packageTier === 'platinum' ? 'bg-purple-100 text-purple-900 border border-purple-300' : (tech.packageTier === 'gold' ? 'bg-amber-100 text-amber-900 border border-amber-300' : 'bg-slate-100 text-slate-700')"
+                      x-text="tech.packageLabel || '🥇 پلاٹینم ترجیحی کاریگر'"
+                    ></span>
+                    <span class="inline-flex items-center gap-1 text-emerald-700 text-[10px] font-bold bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                      <i data-lucide="shield-check" class="w-3 h-3 text-emerald-600"></i>
+                      <span>ایڈمن منظور شدہ ✓</span>
+                    </span>
+                  </div>
+
                   <div class="flex items-center gap-3.5 mb-3">
                     <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-brand-600 to-teal-400 text-white font-bold text-xl flex items-center justify-center shadow-md flex-shrink-0">
                       <span x-text="tech.name.charAt(0)"></span>
@@ -886,8 +873,8 @@
                       <span class="font-bold text-slate-800" x-text="tech.area"></span>
                     </div>
                     <div class="flex justify-between">
-                      <span class="text-slate-400">شناختی کارڈ و پولیس ویریفکیشن:</span>
-                      <span class="font-semibold text-emerald-600">تصدیق شدہ ✓</span>
+                      <span class="text-slate-400">قیمت طے کرنے کا طریقہ:</span>
+                      <span class="font-semibold text-brand-700">باہمی گفتگو سے طے شدہ ریٹ</span>
                     </div>
                   </div>
                 </div>
@@ -898,15 +885,15 @@
                     class="w-full py-2 bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 rounded-xl text-xs font-bold transition-colors flex items-center justify-center gap-1.5"
                   >
                     <i data-lucide="credit-card" class="w-3.5 h-3.5 text-amber-600"></i>
-                    <span>ویریفائیڈ ڈیجیٹل کارڈ دیکھیں</span>
+                    <span>مصدقہ ڈیجیٹل کارڈ دیکھیں</span>
                   </button>
 
                   <button 
-                    @click="openBookingModal({ details: tech.name + ' (' + tech.specialtyUrdu + ') کی ضرورت ہے' })"
-                    class="w-full py-2 bg-slate-900 hover:bg-brand-600 text-white rounded-xl text-xs font-bold transition-colors flex items-center justify-center gap-1.5 shadow-xs"
+                    @click="connectWithKarigar(tech)"
+                    class="w-full py-2.5 bg-slate-900 hover:bg-brand-600 text-white rounded-xl text-xs font-bold transition-colors flex items-center justify-center gap-1.5 shadow-xs"
                   >
-                    <i data-lucide="user-check" class="w-3.5 h-3.5"></i>
-                    <span>یہ کاریگر منتخب کریں</span>
+                    <i data-lucide="handshake" class="w-3.5 h-3.5 text-amber-300"></i>
+                    <span>یہ کاریگر منتخب کریں و ریٹ طے کریں</span>
                   </button>
                 </div>
               </div>
@@ -918,15 +905,15 @@
 
       <!-- ==================== CUSTOMER REVIEWS & FEEDBACK ==================== -->
       <section class="py-14 bg-white border-b border-slate-200">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
           
           <div class="text-center max-w-3xl mx-auto mb-10 space-y-2">
             <div class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-amber-100 text-amber-800 text-xs font-bold">
               <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-500 text-amber-500"></i>
               <span>4.9 / 5.0 اوسط کسٹمر ریٹنگ</span>
             </div>
-            <h2 class="text-2xl sm:text-3xl font-black text-slate-900">مطمئن کسٹمرز کے حقیقی تاثرات</h2>
-            <p class="text-slate-600 text-xs sm:text-sm">رائل پام سٹی اور گوجرانوالہ کے رہائشیوں کا بن عباس ہوم کیئر پر مکمل اعتماد</p>
+            <h2 class="text-2xl sm:text-3xl font-black text-slate-900">مطمئن کسٹمرز کے حقیقی تاثرات و فیڈ بیک</h2>
+            <p class="text-slate-600 text-xs sm:text-sm">کام کی تسلی اور رقم کی ادائیگی کے بعد کسٹمرز کے براہِ راست ریویوز</p>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
@@ -935,7 +922,7 @@
                 <div>
                   <div class="flex items-center justify-between mb-3">
                     <div class="flex items-center gap-1 text-amber-400">
-                      <template x-for="i in 5">
+                      <template x-for="i in rev.rating || 5">
                         <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400"></i>
                       </template>
                     </div>
@@ -951,11 +938,20 @@
                   </div>
                   <span class="text-emerald-700 font-semibold text-[11px] flex items-center gap-1">
                     <i data-lucide="badge-check" class="w-3.5 h-3.5"></i>
-                    <span>تصدیق شدہ</span>
+                    <span>تسلی شدہ ✓</span>
                   </span>
                 </div>
               </div>
             </template>
+          </div>
+
+          <div class="mt-8 text-center">
+            <button 
+              @click="openFeedbackModal()"
+              class="px-5 py-2.5 bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 rounded-xl text-xs font-black shadow-md hover:shadow-lg transition-all"
+            >
+              ⭐ مکمل شدہ کام کی تسلی و فیڈ بیک درج کریں
+            </button>
           </div>
 
         </div>
@@ -965,7 +961,7 @@
 
     <!-- ==================== VIEW 2: HARDWARE & MATERIAL MARKET RATES ==================== -->
     <div x-show="currentView === 'market-rates'" x-cloak class="py-10 bg-slate-50 min-h-screen">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
         
         <div class="flex flex-wrap items-center justify-between gap-4 mb-6 pb-4 border-b border-slate-200">
           <div>
@@ -1012,7 +1008,7 @@
                   <div class="text-base font-black text-slate-900" x-text="item.priceRange"></div>
                 </div>
                 <button 
-                  @click="openBookingModal({ details: 'مجھے ' + item.nameUrdu + ' کی خریداری اور فٹنگ کے لیے کاریگر چاہیے' })"
+                  @click="initDirectBooking({ details: 'مجھے ' + item.nameUrdu + ' کی خریداری اور فٹنگ کے لیے کاریگر چاہیے' })"
                   class="px-3 py-2 bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold rounded-xl shadow-xs"
                 >
                   فٹنگ کاریگر لیں
@@ -1027,7 +1023,7 @@
 
     <!-- ==================== VIEW 3: SMART RENOVATION ESTIMATOR (WIDE 2-COLUMN DESKTOP LAYOUT) ==================== -->
     <div x-show="currentView === 'estimator'" x-cloak class="py-10 bg-slate-50 min-h-screen">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
         
         <div class="flex justify-between items-center mb-8 pb-4 border-b border-slate-200">
           <div>
@@ -1161,11 +1157,11 @@
 
               <div class="p-3 rounded-xl bg-white/10 backdrop-blur-sm text-[11px] text-teal-100 flex items-center gap-2">
                 <i data-lucide="shield-check" class="w-4 h-4 text-emerald-400 flex-shrink-0"></i>
-                <span>تمام کام پر 7 دن کی مکمل تسلی بخش وارنٹی لاگو ہوگی۔</span>
+                <span>قیمت کاریگر سے باہمی گفتگو سے ایڈجسٹ بھی ہو سکتی ہے۔</span>
               </div>
 
               <button 
-                @click="openBookingModal({ details: 'لاگت کیلکولیٹر تخمینہ: ' + calcRooms + ' کمرے پینٹ، ' + calcFans + ' پنکھے، ' + calcWashrooms + ' واش رومز، ' + calcGasStoves + ' گیس یونٹس' })"
+                @click="initDirectBooking({ details: 'لاگت کیلکولیٹر تخمینہ: ' + calcRooms + ' کمرے پینٹ، ' + calcFans + ' پنکھے، ' + calcWashrooms + ' واش رومز، ' + calcGasStoves + ' گیس یونٹس' })"
                 class="w-full py-3.5 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-slate-950 font-black rounded-xl text-xs sm:text-sm shadow-xl transition-all text-center flex items-center justify-center gap-2"
               >
                 <i data-lucide="calendar-check" class="w-4 h-4"></i>
@@ -1180,29 +1176,109 @@
       </div>
     </div>
 
-    <!-- ==================== VIEW 4: JOIN KARIGAR PORTAL ==================== -->
+    <!-- ==================== VIEW 4: JOIN KARIGAR PORTAL & SUBSCRIPTION PLANS ==================== -->
     <div x-show="currentView === 'join-karigar'" x-cloak class="py-10 bg-slate-50 min-h-screen">
-      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-5xl mx-auto px-3 sm:px-6 lg:px-8 space-y-10">
         
-        <div class="flex justify-between items-center mb-8">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div>
             <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold mb-2">
               <i data-lucide="user-plus" class="w-3.5 h-3.5 text-emerald-600"></i>
-              <span>کاریگر پورٹل (رائل پام سٹی و گوجرانوالہ)</span>
+              <span>کاریگر پورٹل و بزنس ماڈل</span>
             </div>
             <h2 class="text-2xl sm:text-3xl font-black text-slate-900">کاریگر رجسٹریشن برائے ایڈمن منظوری</h2>
-            <p class="text-xs sm:text-sm text-slate-600">آپ کی درخواست ایڈمن پینل میں جائے گی، جہاں تصدیق کے بعد آپ کا کارڈ لائیو ہوگا</p>
+            <p class="text-xs sm:text-sm text-slate-600">صرف تصدیق شدہ کاریگرز کو کمپنی کے ترجیحی پیکجز کے تحت روزگار اور کام دیا جاتا ہے</p>
           </div>
           <button @click="currentView = 'home'" class="px-4 py-2 bg-white border border-slate-200 text-slate-700 rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-xs">
             <i data-lucide="arrow-right" class="w-4 h-4"></i>
-            <span>واپس</span>
+            <span>واپس ہوم پیج</span>
           </button>
         </div>
 
+        <!-- ==================== NEW: KARIGAR SUBSCRIPTION PLANS (PRIORITY BASED WORK) ==================== -->
+        <div class="bg-gradient-to-br from-slate-900 via-teal-950 to-slate-950 text-white rounded-3xl p-6 sm:p-8 border border-teal-500/30 shadow-2xl space-y-6">
+          <div class="text-center max-w-2xl mx-auto space-y-1">
+            <span class="px-3 py-0.5 bg-amber-400 text-slate-950 text-xs font-black rounded-full">آنے والے وقت کے لیے کمپنی پالیسی</span>
+            <h3 class="text-xl sm:text-2xl font-black text-white">کاریگر ترجیحی بزنس پیکجز (Subscription Plans)</h3>
+            <p class="text-xs text-slate-300">
+              جو کاریگر جتنا اچھا پیکج منتخب کرے گا، کمپنی کے الگورتھم کی جانب سے اسے اتنا زیادہ کام اور کسٹمر لیڈز ترجیحی بنیاد پر دی جائیں گی۔
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-5 pt-2">
+            
+            <!-- Tier 1: Silver -->
+            <div class="bg-slate-800/80 rounded-2xl p-5 border border-slate-700 flex flex-col justify-between space-y-4">
+              <div>
+                <div class="flex justify-between items-center mb-2">
+                  <span class="text-xs font-bold text-slate-300">🥉 بنیادی لیول</span>
+                  <span class="text-xs font-bold text-slate-400">سلور پیکج</span>
+                </div>
+                <div class="text-2xl font-black text-white mb-2">روپے 1,500 <span class="text-xs font-normal text-slate-400">/ ماہانہ</span></div>
+                <p class="text-xs text-slate-400 mb-4">نئے یا پارٹ ٹائم کاریگروں کے لیے روزانہ بنیادی کام۔</p>
+                <ul class="text-xs space-y-2 text-slate-300">
+                  <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-brand-400"></i> <span>روزانہ 2 تا 3 کسٹمر لیڈز</span></li>
+                  <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-brand-400"></i> <span>معیاری لسٹنگ ایپ پر</span></li>
+                  <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-brand-400"></i> <span>کمپنی مصدقہ بیج</span></li>
+                </ul>
+              </div>
+              <div class="p-2 bg-slate-900/60 rounded-xl text-[11px] text-center text-slate-400 font-semibold">
+                بنیادی ترجیحی آرڈرز
+              </div>
+            </div>
+
+            <!-- Tier 2: Gold (Most Popular) -->
+            <div class="bg-gradient-to-b from-teal-900/90 to-brand-950 rounded-2xl p-5 border-2 border-amber-400 shadow-xl flex flex-col justify-between space-y-4 relative">
+              <div class="absolute -top-3 right-4 px-2.5 py-0.5 bg-amber-400 text-slate-950 text-[10px] font-black rounded-full">
+                سب سے مقبول
+              </div>
+              <div>
+                <div class="flex justify-between items-center mb-2">
+                  <span class="text-xs font-bold text-amber-300">🥈 ترجیحی فاسٹ لیول</span>
+                  <span class="text-xs font-bold text-amber-400">گولڈ پیکج</span>
+                </div>
+                <div class="text-2xl font-black text-amber-400 mb-2">روپے 3,000 <span class="text-xs font-normal text-slate-300">/ ماہانہ</span></div>
+                <p class="text-xs text-slate-300 mb-4">فل ٹائم کاریگروں کے لیے باقاعدہ روزگار اور زیادہ کام۔</p>
+                <ul class="text-xs space-y-2 text-slate-200">
+                  <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-amber-400"></i> <span>روزانہ 5 تا 8 ترجیحی لیڈز</span></li>
+                  <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-amber-400"></i> <span>رائل پام سٹی ایکسپریس ٹیگ</span></li>
+                  <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-amber-400"></i> <span>کسٹمر سے براہِ راست کال رابطہ</span></li>
+                </ul>
+              </div>
+              <div class="p-2 bg-amber-400/20 rounded-xl text-[11px] text-center text-amber-300 font-bold border border-amber-400/30">
+                2x زیادہ روزانہ کام کی ضمانت
+              </div>
+            </div>
+
+            <!-- Tier 3: Platinum VIP -->
+            <div class="bg-slate-800/80 rounded-2xl p-5 border border-purple-500/40 flex flex-col justify-between space-y-4">
+              <div>
+                <div class="flex justify-between items-center mb-2">
+                  <span class="text-xs font-bold text-purple-300">🥇 سرفہرست وی آئی پی</span>
+                  <span class="text-xs font-bold text-purple-400">پلاٹینم پیکج</span>
+                </div>
+                <div class="text-2xl font-black text-purple-300 mb-2">روپے 5,000 <span class="text-xs font-normal text-slate-400">/ ماہانہ</span></div>
+                <p class="text-xs text-slate-400 mb-4">سینئر استاد کاریگروں اور ہائی انکم کے لیے۔</p>
+                <ul class="text-xs space-y-2 text-slate-300">
+                  <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-400"></i> <span>سرفہرست #1 لسٹنگ و لامحدود کالز</span></li>
+                  <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-400"></i> <span>کمپنی اسپیشل وی آئی پی سرٹیفکیٹ</span></li>
+                  <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-purple-400"></i> <span>100% بزنس اور ترجیحی اسائنمنٹ</span></li>
+                </ul>
+              </div>
+              <div class="p-2 bg-purple-900/50 rounded-xl text-[11px] text-center text-purple-200 font-bold border border-purple-400/30">
+                سرفہرست کاریگر پوزیشن
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Registration Form -->
         <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-xl space-y-5">
+          <h3 class="text-lg font-bold text-slate-900 border-b border-slate-100 pb-2">کاریگر رجسٹریشن فارم:</h3>
           
           <div class="p-4 rounded-2xl bg-amber-50 border border-amber-200 text-amber-900 text-xs leading-relaxed">
-            <strong>قواعد و ضوابط:</strong> رائل پام سٹی اور گوجرانوالہ میں کام کرنے کے لیے شناختی کارڈ، فون نمبر اور پولیس کلیرنس حلف نامہ لازمی ہے۔ ایڈمن فون پر رابطہ کر کے تصدیق کے بعد اپروول دے گا۔
+            <strong>قواعد و ضوابط:</strong> رائل پام سٹی اور گوجرانوالہ میں کام کرنے کے لیے شناختی کارڈ، فون نمبر اور پولیس کلیرنس حلف نامہ لازمی ہے۔ ایڈمن تصدیق کے بعد کال کرے گا اور منظوری دے گا۔
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -1243,8 +1319,12 @@
             </div>
 
             <div>
-              <label class="block text-xs font-bold text-slate-700 mb-1">کام کا تجربہ (سال):</label>
-              <input type="number" x-model="karigarForm.experience" placeholder="مثلاً: 5" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs sm:text-sm outline-none focus:border-brand-500">
+              <label class="block text-xs font-bold text-slate-700 mb-1">خواہشمند بزنس پیکج:</label>
+              <select x-model="karigarForm.desiredPackage" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs sm:text-sm outline-none focus:border-brand-500 bg-white">
+                <option value="gold">🥈 گولڈ پیکج (ترجیحی کام و لیڈز - 3,000/ماہ)</option>
+                <option value="platinum">🥇 پلاٹینم وی آئی پی (سرفہرست لسٹنگ - 5,000/ماہ)</option>
+                <option value="silver">🥉 سلور پیکج (بنیادی کام - 1,500/ماہ)</option>
+              </select>
             </div>
           </div>
 
@@ -1268,7 +1348,7 @@
     </div>
 
     <!-- ==================== VIEW 5: SECURE ADMIN CONTROL PANEL ==================== -->
-    <div x-show="currentView === 'admin'" x-cloak class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 min-h-screen">
+    <div x-show="currentView === 'admin'" x-cloak class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-10 min-h-screen">
       
       <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6 p-4 bg-slate-900 text-white rounded-2xl shadow-lg border border-slate-800">
         <div>
@@ -1277,7 +1357,7 @@
             <span>ایڈمن تصدیق شدہ سیشن</span>
           </div>
           <h2 class="text-xl sm:text-2xl font-black text-white">ایڈمن کنٹرول پینل (رائل پام سٹی و گوجرانوالہ)</h2>
-          <p class="text-xs text-slate-400">بکنگ آرڈرز، کاریگروں کی منظوری و ویریفکیشن اور شکایات و تنازعات کا حل</p>
+          <p class="text-xs text-slate-400">بکنگ آرڈرز، کاریگر پیکجز، باہمی فیڈ بیک اور شکایات کا انتظام</p>
         </div>
 
         <div class="flex items-center gap-2">
@@ -1293,7 +1373,7 @@
       </div>
 
       <!-- Admin Tabs -->
-      <div class="flex gap-2 mb-6 border-b border-slate-200 pb-2">
+      <div class="flex flex-wrap gap-2 mb-6 border-b border-slate-200 pb-2">
         <button 
           @click="adminTab = 'orders'"
           :class="adminTab === 'orders' ? 'bg-brand-600 text-white' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'"
@@ -1318,29 +1398,37 @@
           <span>لائیو منظور شدہ کاریگرز (<span x-text="technicians.length"></span>)</span>
         </button>
         <button 
+          @click="adminTab = 'feedbacks'"
+          :class="adminTab === 'feedbacks' ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'"
+          class="px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1"
+        >
+          <i data-lucide="star" class="w-3.5 h-3.5"></i>
+          <span>کسٹمر فیڈ بیک و ادائیگیاں (<span x-text="customerReviews.length"></span>)</span>
+        </button>
+        <button 
           @click="adminTab = 'disputes'"
           :class="adminTab === 'disputes' ? 'bg-rose-600 text-white' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'"
           class="px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1"
         >
           <i data-lucide="shield-alert" class="w-3.5 h-3.5"></i>
-          <span>موصولہ شکایات (<span x-text="disputesList.length"></span>)</span>
+          <span>شکایات (<span x-text="disputesList.length"></span>)</span>
         </button>
       </div>
 
       <!-- Tab 1: Orders Management -->
       <div x-show="adminTab === 'orders'" class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-        <div class="p-4 bg-slate-50 border-b border-slate-200 font-bold text-sm text-slate-800">تمام موصولہ آرڈرز</div>
+        <div class="p-4 bg-slate-50 border-b border-slate-200 font-bold text-sm text-slate-800">تمام موصولہ آرڈرز و طے شدہ ریٹس</div>
         <div class="overflow-x-auto">
-          <table class="w-full text-start text-xs">
+          <table class="w-full text-start text-xs min-w-[600px]">
             <thead class="bg-slate-100 text-slate-600 border-b border-slate-200">
               <tr>
                 <th class="p-3 text-start">آرڈر ID</th>
                 <th class="p-3 text-start">کسٹمر</th>
                 <th class="p-3 text-start">سروس</th>
-                <th class="p-3 text-start">پتہ</th>
+                <th class="p-3 text-start">طے شدہ رقم</th>
                 <th class="p-3 text-start">نامزد کاریگر</th>
                 <th class="p-3 text-start">اسٹیٹس</th>
-                <th class="p-3 text-center">انوائس</th>
+                <th class="p-3 text-center">ایکشن</th>
               </tr>
             </thead>
             <tbody class="divide-y divide-slate-100">
@@ -1352,14 +1440,17 @@
                     <div class="text-slate-400 font-mono" dir="ltr" x-text="ord.phone"></div>
                   </td>
                   <td class="p-3 font-semibold" x-text="ord.service"></td>
-                  <td class="p-3 text-slate-600" x-text="ord.address"></td>
+                  <td class="p-3 font-bold text-emerald-700" x-text="'روپے ' + (ord.agreedPrice || ord.amount || '1,800')"></td>
                   <td class="p-3 text-brand-700 font-bold" x-text="ord.assignedTech || 'محمد راشد'"></td>
                   <td class="p-3">
                     <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800" x-text="ord.statusUrdu"></span>
                   </td>
-                  <td class="p-3 text-center">
-                    <button @click="openInvoiceModal(ord)" class="p-1.5 bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white rounded-lg transition-colors">
+                  <td class="p-3 text-center flex items-center justify-center gap-1">
+                    <button @click="openInvoiceModal(ord)" class="p-1.5 bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white rounded-lg transition-colors" title="انوائس">
                       <i data-lucide="receipt" class="w-3.5 h-3.5"></i>
+                    </button>
+                    <button @click="openFeedbackModalForOrder(ord)" class="p-1.5 bg-amber-50 text-amber-600 hover:bg-amber-600 hover:text-white rounded-lg transition-colors" title="فیڈ بیک درج کریں">
+                      <i data-lucide="star" class="w-3.5 h-3.5"></i>
                     </button>
                   </td>
                 </tr>
@@ -1373,15 +1464,15 @@
       <div x-show="adminTab === 'pending'" class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
         <div class="p-4 bg-amber-50 border-b border-amber-200 font-bold text-sm text-amber-900">نئی موصولہ کاریگر درخواستیں (شناختی کارڈ تصدیق کے بعد اپروول دیں)</div>
         <div class="overflow-x-auto">
-          <table class="w-full text-start text-xs">
+          <table class="w-full text-start text-xs min-w-[650px]">
             <thead class="bg-slate-100 text-slate-600 border-b border-slate-200">
               <tr>
                 <th class="p-3 text-start">نام</th>
                 <th class="p-3 text-start">شناختی کارڈ (CNIC)</th>
                 <th class="p-3 text-start">فون نمبر</th>
                 <th class="p-3 text-start">ہنر / شعبہ</th>
+                <th class="p-3 text-start">پیکج</th>
                 <th class="p-3 text-start">علاقہ</th>
-                <th class="p-3 text-start">تجربہ</th>
                 <th class="p-3 text-center">ایڈمن ایکشن</th>
               </tr>
             </thead>
@@ -1392,8 +1483,8 @@
                   <td class="p-3 font-mono font-bold text-slate-800" dir="ltr" x-text="kar.cnic"></td>
                   <td class="p-3 font-mono text-slate-600" dir="ltr" x-text="kar.phone"></td>
                   <td class="p-3 font-semibold text-brand-700" x-text="kar.skill"></td>
+                  <td class="p-3 font-bold text-amber-700" x-text="kar.desiredPackage === 'platinum' ? '🥇 پلاٹینم' : (kar.desiredPackage === 'gold' ? '🥈 گولڈ' : '🥉 سلور')"></td>
                   <td class="p-3 text-slate-600" x-text="kar.area"></td>
-                  <td class="p-3 text-slate-600" x-text="kar.experience + ' سال'"></td>
                   <td class="p-3 text-center">
                     <div class="flex items-center justify-center gap-1.5">
                       <button @click="approveKarigar(kar.id)" class="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold">منظور کریں ✓</button>
@@ -1407,26 +1498,64 @@
         </div>
       </div>
 
-      <!-- Tab 3: Approved Live Technicians -->
+      <!-- Tab 3: Approved Live Technicians with Package Management -->
       <div x-show="adminTab === 'approved'" class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-        <div class="p-4 bg-emerald-50 border-b border-emerald-200 font-bold text-sm text-emerald-900">لائیو منظور شدہ کاریگرز</div>
+        <div class="p-4 bg-emerald-50 border-b border-emerald-200 font-bold text-sm text-emerald-900">منظور شدہ لائیو کاریگرز اور بزنس پیکجز</div>
         <div class="p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           <template x-for="t in technicians" :key="t.id">
-            <div class="p-4 rounded-2xl border border-slate-200 bg-slate-50 flex items-center justify-between">
+            <div class="p-4 rounded-2xl border border-slate-200 bg-slate-50 flex flex-col justify-between space-y-3">
               <div>
-                <h4 class="font-bold text-slate-900 text-sm" x-text="t.name"></h4>
+                <div class="flex justify-between items-start">
+                  <h4 class="font-bold text-slate-900 text-sm" x-text="t.name"></h4>
+                  <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-100 text-emerald-800">مصدقہ ✓</span>
+                </div>
                 <p class="text-xs text-brand-600 font-semibold" x-text="t.specialtyUrdu"></p>
-                <div class="text-[11px] text-slate-500 mt-1" x-text="t.area + ' • ریٹنگ: 5.0'"></div>
+                <div class="text-[11px] text-slate-500 mt-1" x-text="t.area + ' • فون: ' + (t.phone || '0300-4800071')"></div>
               </div>
-              <button @click="suspendKarigar(t.id)" class="px-2.5 py-1 bg-rose-100 hover:bg-rose-200 text-rose-800 rounded-lg text-xs font-bold">
-                معطل کریں
-              </button>
+
+              <!-- Admin Tier Changer -->
+              <div class="pt-2 border-t border-slate-200 flex items-center justify-between gap-2">
+                <select 
+                  x-model="t.packageTier" 
+                  @change="updateKarigarTier(t)" 
+                  class="text-xs font-bold p-1.5 rounded-lg border border-slate-300 bg-white"
+                >
+                  <option value="platinum">🥇 پلاٹینم وی آئی پی (#1 ترجیح)</option>
+                  <option value="gold">🥈 گولڈ ایکسپریس (ترجیحی)</option>
+                  <option value="silver">🥉 سلور (بنیادی)</option>
+                </select>
+
+                <button @click="suspendKarigar(t.id)" class="px-2 py-1 bg-rose-100 hover:bg-rose-200 text-rose-800 rounded-lg text-xs font-bold flex-shrink-0">
+                  معطل
+                </button>
+              </div>
             </div>
           </template>
         </div>
       </div>
 
-      <!-- Tab 4: Complaints & Disputes -->
+      <!-- Tab 4: Customer Feedbacks & Verified Payments -->
+      <div x-show="adminTab === 'feedbacks'" class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+        <div class="p-4 bg-blue-50 border-b border-blue-200 font-bold text-sm text-blue-900">کسٹمر ریویوز، کام کی تسلی اور ادا شدہ رقم کا ریکارڈ</div>
+        <div class="divide-y divide-slate-100">
+          <template x-for="f in customerReviews" :key="f.id">
+            <div class="p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+              <div>
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="font-bold text-slate-900 text-sm" x-text="f.customerName"></span>
+                  <span class="text-xs text-amber-500 font-bold" x-text="'★ ' + (f.rating || 5.0)"></span>
+                  <span class="px-2 py-0.5 bg-emerald-100 text-emerald-800 text-[10px] font-bold rounded">رقم ادا شدہ ✓</span>
+                  <span class="text-[11px] text-slate-400" x-text="f.date"></span>
+                </div>
+                <p class="text-xs text-slate-700" x-text="f.comment"></p>
+                <div class="text-[11px] text-brand-700 font-medium mt-0.5" x-text="'سروس: ' + f.service"></div>
+              </div>
+            </div>
+          </template>
+        </div>
+      </div>
+
+      <!-- Tab 5: Complaints & Disputes -->
       <div x-show="adminTab === 'disputes'" class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
         <div class="p-4 bg-rose-50 border-b border-rose-200 font-bold text-sm text-rose-900">موصولہ شکایات و قانونی تنازعات</div>
         <div class="divide-y divide-slate-100">
@@ -1462,7 +1591,7 @@
 
   <!-- ==================== FOOTER ==================== -->
   <footer class="bg-slate-900 text-slate-300 pt-16 pb-12 border-t border-slate-800">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
       <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
         
         <!-- About Col -->
@@ -1475,7 +1604,7 @@
             </div>
           </div>
           <p class="text-xs text-slate-400 leading-relaxed">
-            رائل پام سٹی، گوجرانوالہ اور قریبی تمام سوسائٹیز میں 15 تا 30 منٹ ہوم سروس، تصدیق شدہ کاریگر، 7 دن کی وارنٹی اور سامان کے مارکیٹ ریٹس کا مصدقہ پلیٹ فارم۔
+            رائل پام سٹی، گوجرانوالہ اور قریبی تمام سوسائٹیز میں 15 تا 30 منٹ ہوم سروس، منظور شدہ کاریگر، کسٹمر و کاریگر باہمی ریٹس اور 7 دن کی وارنٹی کا بااعتماد پلیٹ فارم۔
           </p>
         </div>
 
@@ -1494,18 +1623,19 @@
         <div>
           <h4 class="font-bold text-sm text-slate-200 mb-3">کسٹمر سپورٹ و تحفظ</h4>
           <ul class="space-y-1.5 text-xs text-slate-400">
+            <li><button @click="openCustomerModal()" class="text-amber-300 hover:underline">کسٹمر لاگ ان و شمولیت</button></li>
+            <li><button @click="openFeedbackModal()" class="text-teal-300 hover:underline">کام کی تسلی و فیڈ بیک فارم</button></li>
             <li><button @click="openDisputeModal()" class="text-rose-300 hover:underline">شکایت و انصاف سیل (Disputes)</button></li>
-            <li><button @click="openSocietiesModal()" class="hover:text-white">تمام سوسائٹیز لسٹ</button></li>
             <li><button @click="openTrackerModal()" class="hover:text-white">آرڈر ٹریکنگ</button></li>
-            <li><button @click="currentView = 'join-karigar'" class="hover:text-white">کاریگر پورٹل</button></li>
           </ul>
         </div>
 
         <!-- Contact & Admin -->
         <div>
-          <h4 class="font-bold text-sm text-slate-200 mb-3">ایڈمن و رابطہ</h4>
+          <h4 class="font-bold text-sm text-slate-200 mb-3">کمپنی ہیلپ لائن و ایڈمن</h4>
           <p class="text-xs text-slate-400 leading-relaxed mb-3">
-            مرکزی اسٹیشن و دفتر: رائل پام سٹی / جی ٹی روڈ، گوجرانوالہ۔
+            کمپنی آفیشل ہیلپ لائن: <span class="text-amber-400 font-mono font-bold" dir="ltr">0300-4800071</span><br>
+            مرکزی دفتر: رائل پام سٹی / جی ٹی روڈ، گوجرانوالہ۔
           </p>
           <button @click="promptAdminLogin()" class="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-amber-300 rounded-xl text-xs font-bold border border-amber-400/40 shadow-xs">
             🔐 ایڈمن پینل لاگ ان
@@ -1526,6 +1656,83 @@
       </div>
     </div>
   </footer>
+
+  <!-- ==================== MODAL 0: CUSTOMER ONBOARDING / LOGIN (REQUIRED BEFORE BOOKING) ==================== -->
+  <div 
+    x-show="isCustomerModalOpen" 
+    x-cloak 
+    class="fixed inset-0 z-50 overflow-y-auto bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-3 sm:p-4"
+    @keydown.escape.window="isCustomerModalOpen = false"
+  >
+    <div 
+      @click.outside="isCustomerModalOpen = false"
+      class="bg-white rounded-3xl shadow-2xl border border-slate-200 max-w-md w-full p-6 text-center space-y-4"
+    >
+      <div class="w-14 h-14 mx-auto rounded-2xl bg-brand-100 text-brand-700 flex items-center justify-center font-bold shadow-xs">
+        <i data-lucide="user-check" class="w-7 h-7"></i>
+      </div>
+
+      <div>
+        <h3 class="text-xl font-black text-slate-900">کسٹمر لاگ ان و شمولیت</h3>
+        <p class="text-xs text-slate-600 mt-1 leading-relaxed">
+          کاریگر سے براہِ راست رابطہ اور سروس بکنگ کے لیے برائے مہربانی اپنا نام اور موبائل فون نمبر درج فرمائیں۔
+        </p>
+      </div>
+
+      <div class="space-y-3 text-start">
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">آپ کا نام:</label>
+          <input 
+            type="text" 
+            x-model="customerInputName" 
+            placeholder="مثلاً: احمد رضا"
+            class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 outline-none focus:border-brand-500 text-xs sm:text-sm font-semibold"
+          />
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">موبائل فون نمبر:</label>
+          <input 
+            type="tel" 
+            x-model="customerInputPhone" 
+            placeholder="مثلاً: 03001234567"
+            class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 outline-none focus:border-brand-500 text-xs sm:text-sm font-semibold font-mono"
+            dir="ltr"
+          />
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">سوسائٹی / رہائشی علاقہ:</label>
+          <input 
+            type="text" 
+            x-model="customerInputArea" 
+            placeholder="مثلاً: رائل پام سٹی / سٹی ہاؤسنگ"
+            class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 outline-none focus:border-brand-500 text-xs sm:text-sm"
+          />
+        </div>
+      </div>
+
+      <div class="p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-[11px] text-emerald-900 text-start flex items-center gap-2">
+        <i data-lucide="shield-check" class="w-4 h-4 text-emerald-600 flex-shrink-0"></i>
+        <span>آپ کا ڈیٹا محفوظ ہے اور صرف تصدیق شدہ کاریگر سے رابطے کے لیے استعمال ہوگا۔</span>
+      </div>
+
+      <div class="flex gap-2 pt-1">
+        <button 
+          @click="saveCustomerProfile()" 
+          class="flex-1 py-3 bg-gradient-to-r from-brand-600 to-teal-700 hover:from-brand-700 hover:to-teal-800 text-white font-bold text-xs sm:text-sm rounded-xl shadow-md transition-all"
+        >
+          شمولیت مکمل کریں و آگے بڑھیں ✓
+        </button>
+        <button 
+          @click="isCustomerModalOpen = false" 
+          class="px-4 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl"
+        >
+          بند کریں
+        </button>
+      </div>
+    </div>
+  </div>
 
   <!-- ==================== MODAL 1: COMPLETE MERGED SOCIETIES MODAL ==================== -->
   <div 
@@ -1609,7 +1816,7 @@
           @click="selectServiceForBooking(activeCategoryDetail); isCategoryDetailModalOpen = false"
           class="w-full py-3 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl text-xs sm:text-sm shadow-md"
         >
-          اس سروس کے لیے کاریگر بک کریں
+          اس سروس کے لیے کاریگر لیں و ریٹ طے کریں
         </button>
       </div>
     </div>
@@ -1688,7 +1895,7 @@
 
       <div class="p-5 sm:p-6 overflow-y-auto space-y-4 flex-1">
         <div class="p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-900 text-xs leading-relaxed font-medium">
-          <strong>ہمارا وعدہ:</strong> بن عباس ہوم کیئر مظلوم کسٹمر یا کاریگر کو تنہا نہیں چھوڑے گا۔ شکایت موصول ہوتے ہی 30 منٹ کے اندر انکوائری اور قانونی ازالہ شروع کیا جاتا ہے۔
+          <strong>ہمارا وعدہ:</strong> بن عباس ہوم کیئر مظلوم کسٹمر یا کاریگر کو تنہا نہیں چھوڑے گا۔ شکایت موصول ہوتے ہی 30 منٹ کے اندر انکوائری اور قانونی ازالہ شروع کیا جاتا ہے۔ کمپنی ہیلپ لائن: <span class="font-mono font-bold" dir="ltr">0300-4800071</span>
         </div>
 
         <div>
@@ -1720,7 +1927,7 @@
           </div>
           <div>
             <label class="block text-xs font-bold text-slate-700 mb-1">موبائل فون نمبر:</label>
-            <input type="tel" x-model="disputeForm.phone" placeholder="03001234567" class="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs sm:text-sm outline-none focus:border-rose-500">
+            <input type="tel" x-model="disputeForm.phone" placeholder="03001234567" class="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs sm:text-sm outline-none focus:border-rose-500 font-mono" dir="ltr">
           </div>
         </div>
 
@@ -1749,7 +1956,7 @@
     </div>
   </div>
 
-  <!-- ==================== MODAL 5: BOOKING MODAL ==================== -->
+  <!-- ==================== MODAL 5: BOOKING & MUTUAL PRICE AGREEMENT MODAL ==================== -->
   <div 
     x-show="isBookingModalOpen" 
     x-cloak 
@@ -1764,12 +1971,13 @@
         <button @click="isBookingModalOpen = false" class="absolute top-5 left-5 text-white/80 hover:text-white p-1 rounded-full bg-black/10">
           <i data-lucide="x" class="w-5 h-5"></i>
         </button>
-        <div class="text-xs font-semibold text-teal-200 uppercase tracking-wider mb-1">فوری ایکسپریس کاریگر</div>
-        <h3 class="text-xl sm:text-2xl font-bold">کاریگر بکنگ فارم</h3>
-        <p class="text-xs text-teal-100 mt-1">رائل پام سٹی و گوجرانوالہ میں 15 تا 30 منٹ میں کاریگر آپ کے گھر حاضر ہوگا</p>
+        <div class="text-xs font-semibold text-teal-200 uppercase tracking-wider mb-1">فوری ایکسپریس کاریگر و باہمی ریٹ</div>
+        <h3 class="text-xl sm:text-2xl font-bold">کاریگر بکنگ و قیمت کا تعین</h3>
+        <p class="text-xs text-teal-100 mt-1">رائل پام سٹی و گوجرانوالہ میں کاریگر 15 تا 30 منٹ میں آپ کے گھر حاضر ہوگا</p>
       </div>
 
       <div class="p-5 sm:p-6 overflow-y-auto space-y-4 flex-1">
+        
         <div>
           <label class="block text-xs font-bold text-slate-700 mb-1">سروس منتخب کریں:</label>
           <select x-model="bookingForm.category" class="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs sm:text-sm outline-none focus:border-brand-500 bg-white">
@@ -1781,12 +1989,12 @@
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">آپ کا نام:</label>
+            <label class="block text-xs font-bold text-slate-700 mb-1">کسٹمر کا نام:</label>
             <input type="text" x-model="bookingForm.name" placeholder="پورا نام" class="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs sm:text-sm outline-none focus:border-brand-500">
           </div>
           <div>
             <label class="block text-xs font-bold text-slate-700 mb-1">موبائل فون نمبر:</label>
-            <input type="tel" x-model="bookingForm.phone" placeholder="03001234567" class="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs sm:text-sm outline-none focus:border-brand-500">
+            <input type="tel" x-model="bookingForm.phone" placeholder="03001234567" class="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs sm:text-sm outline-none focus:border-brand-500 font-mono" dir="ltr">
           </div>
         </div>
 
@@ -1799,6 +2007,25 @@
             </button>
           </div>
           <input type="text" x-model="bookingForm.address" placeholder="مثال: رائل پام سٹی، بلاک بی، گلی 4، مکان 12" class="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs sm:text-sm outline-none focus:border-brand-500">
+        </div>
+
+        <!-- MUTUAL PRICE NEGOTIATION / AGREEMENT FIELD -->
+        <div class="p-3 bg-amber-50 rounded-2xl border border-amber-200 space-y-2">
+          <div class="flex justify-between items-center text-xs">
+            <span class="font-bold text-amber-900">باہمی طے شدہ قیمت / آپ کا بجٹ:</span>
+            <span class="text-amber-700 font-semibold text-[11px]">معیاری یا خود طے کریں</span>
+          </div>
+          <div class="relative">
+            <input 
+              type="text" 
+              x-model="bookingForm.agreedPrice" 
+              placeholder="مثلاً: روپے 1,500 (یا کاریگر سے کال پر طے کریں)"
+              class="w-full px-3 py-2 rounded-xl border border-amber-300 outline-none focus:border-amber-600 text-xs sm:text-sm bg-white font-bold text-slate-900"
+            />
+          </div>
+          <p class="text-[11px] text-amber-800 leading-normal">
+            💡 <strong>آزادی:</strong> کسٹمر اور کاریگر کام کا معائنہ کر کے یا فون پر گفتگو کر کے حتمی ریٹ باہمی رضامندی سے خود بھی طے کر سکتے ہیں۔
+          </p>
         </div>
 
         <div>
@@ -1833,7 +2060,7 @@
       class="bg-white rounded-3xl shadow-2xl border border-slate-200 max-w-md w-full p-6 space-y-4"
     >
       <div class="flex justify-between items-center pb-2 border-b border-slate-100">
-        <h3 class="text-lg font-bold text-slate-900">آرڈر ٹریکنگ پورٹل</h3>
+        <h3 class="text-lg font-bold text-slate-900">آرڈر ٹریکنگ و لائیو اسٹیٹس</h3>
         <button @click="isTrackerModalOpen = false" class="text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-5 h-5"></i></button>
       </div>
 
@@ -1860,9 +2087,31 @@
             <span class="text-slate-400">نامزد کاریگر:</span>
             <span class="font-bold text-teal-700" x-text="trackedOrder.assignedTech"></span>
           </div>
+          <div class="flex justify-between border-b border-slate-200 pb-2">
+            <span class="text-slate-400">طے شدہ رقم:</span>
+            <span class="font-bold text-emerald-700" x-text="'روپے ' + (trackedOrder.agreedPrice || trackedOrder.amount || '1,800')"></span>
+          </div>
           <div class="flex justify-between pt-1">
             <span class="text-slate-400">موجودہ اسٹیٹس:</span>
             <span class="font-bold text-emerald-700" x-text="trackedOrder.statusUrdu"></span>
+          </div>
+
+          <div class="pt-3 flex gap-2">
+            <button 
+              @click="openFeedbackModalForOrder(trackedOrder); isTrackerModalOpen = false"
+              class="flex-1 py-2 bg-amber-500 hover:bg-amber-600 text-slate-950 rounded-xl text-xs font-black shadow-xs flex items-center justify-center gap-1"
+            >
+              <i data-lucide="star" class="w-3.5 h-3.5"></i>
+              <span>کام کی تسلی و فیڈ بیک دیں</span>
+            </button>
+            
+            <a 
+              :href="'tel:' + (trackedOrder.techPhone || '03004800071')" 
+              class="px-3 py-2 bg-slate-900 text-white rounded-xl text-xs font-bold flex items-center gap-1"
+              title="کاریگر کو کال کریں"
+            >
+              <i data-lucide="phone" class="w-3.5 h-3.5"></i>
+            </a>
           </div>
         </div>
       </template>
@@ -1891,7 +2140,7 @@
         <p class="text-xs text-amber-300 font-bold" x-text="activeKarigar.specialtyUrdu"></p>
         <span class="inline-flex items-center gap-1 px-2.5 py-0.5 mt-2 rounded-full bg-emerald-500/30 text-emerald-300 text-[10px] font-bold border border-emerald-400/40">
           <i data-lucide="shield-check" class="w-3 h-3"></i>
-          <span>100% ایڈمن مصدقہ کاریگر</span>
+          <span>100% ایڈمن منظور شدہ کاریگر</span>
         </span>
       </div>
 
@@ -1904,9 +2153,23 @@
           <span class="text-slate-400">تجربہ:</span>
           <span class="font-bold text-slate-800" x-text="activeKarigar.experience + ' سال'"></span>
         </div>
-        <div class="flex justify-between">
+        <div class="flex justify-between border-b border-slate-100 pb-2">
           <span class="text-slate-400">سروس ریجن:</span>
           <span class="font-bold text-brand-700" x-text="activeKarigar.area"></span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-slate-400">بزنس پیکج:</span>
+          <span class="font-bold text-amber-800" x-text="activeKarigar.packageLabel || '🥇 پلاٹینم ترجیحی کاریگر'"></span>
+        </div>
+
+        <div class="pt-3">
+          <button 
+            @click="connectWithKarigar(activeKarigar); isKarigarCardModalOpen = false"
+            class="w-full py-2.5 bg-brand-600 hover:bg-brand-700 text-white rounded-xl font-bold text-xs shadow-md flex items-center justify-center gap-2"
+          >
+            <i data-lucide="handshake" class="w-4 h-4"></i>
+            <span>یہ کاریگر منتخب کریں و ریٹ طے کریں</span>
+          </button>
         </div>
       </div>
     </div>
@@ -1939,12 +2202,12 @@
           <div class="flex justify-between"><span class="text-slate-500">کسٹمر کا نام:</span><span class="font-bold" x-text="activeInvoice.customerName"></span></div>
           <div class="flex justify-between"><span class="text-slate-500">پتہ / سوسائٹی:</span><span class="font-semibold text-emerald-800" x-text="activeInvoice.address"></span></div>
           <div class="flex justify-between"><span class="text-slate-500">سروس:</span><span class="font-bold text-brand-700" x-text="activeInvoice.service"></span></div>
-          <div class="flex justify-between"><span class="text-slate-500">مقرر کردہ کاریگر:</span><span class="font-bold text-teal-700" x-text="activeInvoice.assignedTech || 'محمد راشد'"></span></div>
+          <div class="flex justify-between"><span class="text-slate-500">نامزد کاریگر:</span><span class="font-bold text-teal-700" x-text="activeInvoice.assignedTech || 'محمد راشد'"></span></div>
         </div>
 
         <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 flex justify-between items-center text-xs font-bold">
-          <span>کل ادا شدہ رقم:</span>
-          <span class="text-base text-emerald-700" x-text="'روپے ' + (activeInvoice.amount || '1,800')"></span>
+          <span>طے شدہ / ادا شدہ رقم:</span>
+          <span class="text-base text-emerald-700" x-text="'روپے ' + (activeInvoice.agreedPrice || activeInvoice.amount || '1,800')"></span>
         </div>
       </div>
 
@@ -1960,20 +2223,114 @@
     </div>
   </div>
 
+  <!-- ==================== MODAL 9: WORK SATISFACTION & PAYMENT FEEDBACK MODAL ==================== -->
+  <div 
+    x-show="isFeedbackModalOpen" 
+    x-cloak 
+    class="fixed inset-0 z-50 overflow-y-auto bg-slate-900/80 backdrop-blur-md flex items-center justify-center p-3 sm:p-4"
+    @keydown.escape.window="isFeedbackModalOpen = false"
+  >
+    <div 
+      @click.outside="isFeedbackModalOpen = false"
+      class="bg-white rounded-3xl shadow-2xl border border-slate-200 max-w-md w-full p-6 text-center space-y-4"
+    >
+      <div class="w-14 h-14 mx-auto rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center font-bold shadow-xs">
+        <i data-lucide="star" class="w-7 h-7"></i>
+      </div>
+
+      <div>
+        <h3 class="text-xl font-black text-slate-900">کام کی تسلی اور فیڈ بیک</h3>
+        <p class="text-xs text-slate-600 mt-1">
+          براہِ کرم تصدیق فرمائیں کہ کاریگر نے کام تسلی بخش کیا ہے اور رقم طے شدہ ادا کر دی گئی ہے۔
+        </p>
+      </div>
+
+      <!-- Star Rating Selector -->
+      <div class="flex items-center justify-center gap-2 py-1">
+        <template x-for="star in [1, 2, 3, 4, 5]" :key="star">
+          <button 
+            type="button" 
+            @click="feedbackForm.rating = star"
+            class="p-1 hover:scale-125 transition-transform"
+          >
+            <i 
+              data-lucide="star" 
+              class="w-7 h-7"
+              :class="star <= feedbackForm.rating ? 'fill-amber-400 text-amber-500' : 'text-slate-300'"
+            ></i>
+          </button>
+        </template>
+      </div>
+      <div class="text-xs font-bold text-amber-700" x-text="feedbackForm.rating + ' / 5 اسٹارز ریٹنگ'"></div>
+
+      <div class="space-y-3 text-start pt-1">
+        <!-- Verification Checkbox 1 -->
+        <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 flex items-start gap-2.5">
+          <input 
+            type="checkbox" 
+            id="chkSatisfied" 
+            x-model="feedbackForm.workSatisfied" 
+            class="w-4 h-4 mt-0.5 text-brand-600 rounded focus:ring-brand-500"
+          />
+          <label for="chkSatisfied" class="text-xs font-bold text-slate-800 cursor-pointer">
+            کاریگر نے کام میری مکمل تسلی اور مطلوبہ معیار کے مطابق کیا ہے۔
+          </label>
+        </div>
+
+        <!-- Verification Checkbox 2 -->
+        <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 flex items-start gap-2.5">
+          <input 
+            type="checkbox" 
+            id="chkPayment" 
+            x-model="feedbackForm.paymentCleared" 
+            class="w-4 h-4 mt-0.5 text-brand-600 rounded focus:ring-brand-500"
+          />
+          <label for="chkPayment" class="text-xs font-bold text-slate-800 cursor-pointer">
+            میں نے کاریگر کو باہمی طے شدہ رقم مکمل ادا کر دی ہے۔
+          </label>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">اپنا تفصیلی تاثر و فیڈ بیک لکھیں:</label>
+          <textarea 
+            rows="2" 
+            x-model="feedbackForm.comments" 
+            placeholder="کاریگر کا رویہ، وقت کی پابندی اور کام کی کوالٹی کیسی لگی؟"
+            class="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs outline-none focus:border-brand-500"
+          ></textarea>
+        </div>
+      </div>
+
+      <div class="flex gap-2 pt-1">
+        <button 
+          @click="submitSatisfactionFeedback()" 
+          class="flex-1 py-3 bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs sm:text-sm rounded-xl shadow-md transition-all"
+        >
+          فیڈ بیک جمع کروائیں ✓
+        </button>
+        <button 
+          @click="isFeedbackModalOpen = false" 
+          class="px-4 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl"
+        >
+          منسوخ
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- ==================== MOBILE STICKY BOTTOM BAR WITH B.A.H.Care BRANDING ==================== -->
   <div class="fixed bottom-2 left-2 right-2 md:hidden z-30 flex flex-col gap-1 bg-white/95 backdrop-blur-md p-2 rounded-2xl border border-slate-200/90 shadow-2xl">
     <div class="flex items-center gap-1.5">
-      <a 
-        :href="getWhatsAppLink('اسلام علیکم! مجھے رائل پام سٹی / گوجرانوالہ میں فوری کاریگر کی ضرورت ہے۔')" 
-        target="_blank"
+      <button 
+        @click="initDirectContact('اسلام علیکم! مجھے رائل پام سٹی / گوجرانوالہ میں فوری کاریگر کی ضرورت ہے۔')"
         class="flex-1 py-2.5 px-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold text-xs shadow-md flex items-center justify-center gap-1 truncate text-center"
       >
         <i data-lucide="message-circle" class="w-3.5 h-3.5 flex-shrink-0"></i>
         <span>WhatsApp</span>
-      </a>
+      </button>
       
       <button 
-        @click="openBookingModal()"
+        @click="requestBookingDirect()"
         class="flex-1 py-2.5 px-2 bg-brand-600 hover:bg-brand-700 text-white rounded-xl font-bold text-xs shadow-md flex items-center justify-center gap-1 truncate text-center"
       >
         <i data-lucide="calendar-plus" class="w-3.5 h-3.5 flex-shrink-0"></i>
@@ -1983,7 +2340,7 @@
       <a 
         :href="'tel:' + businessPhone" 
         class="p-2.5 bg-amber-400 hover:bg-amber-500 text-slate-950 rounded-xl font-bold text-xs shadow-md flex items-center justify-center flex-shrink-0"
-        title="ہیلپ لائن: 0300-4800071"
+        title="کمپنی ہیلپ لائن: 0300-4800071"
       >
         <i data-lucide="phone-call" class="w-3.5 h-3.5"></i>
       </a>
@@ -1995,14 +2352,14 @@
         <img src="icon-192.png" alt="Logo" class="w-3.5 h-3.5 rounded object-contain inline" />
         B.A.H.Care
       </span>
-      <span class="text-[9px] text-slate-400 font-urdu" dir="rtl">بن عباس ہوم کیئر • تصدیق شدہ</span>
+      <span class="text-[9px] text-slate-400 font-urdu" dir="rtl">بن عباس ہوم کیئر • منظور شدہ</span>
       <span class="text-emerald-600 font-bold">15-30 Min Arrival</span>
     </div>
   </div>
 
-  <!-- CHROME NATIVE INSTALL POPUP BANNER -->
+  <!-- CHROME NATIVE INSTALL POPUP BANNER (AUTO-HIDES ONCE APP IS INSTALLED) -->
   <div 
-    x-show="showInstallBanner" 
+    x-show="!isAppInstalled && showInstallBanner" 
     x-transition:enter="transition ease-out duration-300 transform"
     x-transition:enter-start="translate-y-full opacity-0"
     x-transition:enter-end="translate-y-0 opacity-100"
@@ -2057,12 +2414,27 @@
         isDisputeModalOpen: false,
         isCategoryDetailModalOpen: false,
         isMobileMenuOpen: false,
+        isFeedbackModalOpen: false,
         
-        // PWA Install State
+        // PWA Install State & Auto-Hide
         deferredPrompt: null,
         canInstallApp: false,
+        isAppInstalled: false,
         showInstallBanner: false,
         showSplashScreen: true,
+
+        // Customer Onboarding State
+        customerUser: {
+          name: '',
+          phone: '',
+          address: '',
+          isLoggedIn: false
+        },
+        isCustomerModalOpen: false,
+        customerInputName: '',
+        customerInputPhone: '',
+        customerInputArea: '',
+        pendingCustomerAction: null,
 
         // Admin Security
         isAdminLoggedIn: false,
@@ -2085,6 +2457,16 @@
 
         businessPhone: '+923004800071',
         businessPhoneDisplay: '0300-4800071',
+
+        // Feedback Form State
+        feedbackForm: {
+          orderId: '',
+          techName: '',
+          rating: 5,
+          workSatisfied: true,
+          paymentCleared: true,
+          comments: ''
+        },
 
         // Society Zones
         societyZones: [
@@ -2186,52 +2568,54 @@
           }
         ],
 
-        // Seasonal Discount Packages
-        discountPackages: [
-          {
-            id: 'summer-special',
-            title: 'گرمیوں کی آمد پیکج (Summer Special)',
-            desc: '2 اے سی ماسٹر واش سروس + 4 پنکھوں کی سروس و آئلنگ',
-            originalPrice: 'روپے 3,600',
-            dealPrice: 'روپے 2,750',
-            discountBadge: '25% رعایت',
-            icon: 'sun',
-            items: ['انورٹر اے سی ماسٹر کیمیکل واش', 'گیس لیکیج و ایمپیئر چیک', 'سیلنگ فین واش و کپیسیٹر ٹیسٹ', '7 دن مکمل وارنٹی']
-          },
-          {
-            id: 'sanitary-checkup',
-            title: 'مکمل واش روم سینیٹری و پمپ چیک اپ',
-            desc: 'واٹر موٹر، گیزر و 2 باتھ رومز کے نلکوں کی فٹنگ و لیکیج فالٹ',
-            originalPrice: 'روپے 1,800',
-            dealPrice: 'روپے 1,200',
-            discountBadge: '33% رعایت',
-            icon: 'droplets',
-            items: ['پانی موٹر پمپ پریشر ٹیسٹ', 'گیزر برنر سروس و تھرموسٹیٹ', 'تمام نلکوں و مسلم شاورز لیکیج حل', 'ڈرینیج و سیوریج فلو چیک']
-          },
-          {
-            id: 'gas-safety',
-            title: 'گیس چولہا و کچن سیفٹی پیکج',
-            desc: 'مکمل چولہا سروس، پیلی سے نیلی آگ، نوزل صفائی و پائپ چیک',
-            originalPrice: 'روپے 1,200',
-            dealPrice: 'روپے 799',
-            discountBadge: '35% رعایت',
-            icon: 'flame',
-            items: ['چولہے کے برنرز کی ڈیپ کلیننگ', 'آٹومیٹک پیزو اگنیشن لائیٹر فکس', 'ہائی پریشر گیس لیکیج ٹیسٹ', 'ککنگ رینج و اوون گیس ایڈجسٹمنٹ']
-          }
-        ],
-
-        // Customer Reviews
+        // Customer Reviews & Work Satisfaction Feedbacks
         customerReviews: [
-          { id: 1, customerName: 'چوہدری وسیم (رائل پام سٹی)', service: 'الیکٹریشن و پنکھے فٹنگ', comment: 'محمد راشد صاحب کال کے 20 منٹ میں رائل پام سٹی پہنچ گئے۔ کام انتہائی تسلی بخش تھا اور ڈیجیٹل رسید بھی موقع پر مل گئی۔', date: 'کل' },
-          { id: 2, customerName: 'احتشام الحق (سٹی ہاؤسنگ)', service: 'گیس چولہا و ہوب مرمت', comment: 'چولہے سے کالی آگ آ رہی تھی، 20 منٹ میں برنر صاف کر کے زبردست نیلی آگ بنا دی۔ بہت معقول ریٹ!', date: '2 دن پہلے' },
-          { id: 3, customerName: 'رضوانہ بیگم (ماڈل ٹاؤن)', service: 'پلمبنگ و سینیٹری مرمت', comment: 'واش روم نلکا اور پائپ لیک تھا، پلمبر اپنے ساتھ ماسٹر سینیٹری کا نیا سامان لے کر آیا اور فوری کام مکمل کیا۔', date: '4 دن پہلے' }
+          { id: 1, customerName: 'چوہدری وسیم (رائل پام سٹی)', service: 'الیکٹریشن و پنکھے فٹنگ', rating: 5, comment: 'محمد راشد صاحب کال کے 20 منٹ میں پہنچ گئے۔ کام تسلی بخش تھا اور طے شدہ رقم موقع پر ادا کر دی۔', date: 'کل' },
+          { id: 2, customerName: 'احتشام الحق (سٹی ہاؤسنگ)', service: 'گیس چولہا و ہوب مرمت', rating: 5, comment: 'چولہے سے کالی آگ آ رہی تھی، 20 منٹ میں برنر صاف کر کے زبردست نیلی آگ بنا دی۔ ریٹ بھی مناسب تھا۔', date: '2 دن پہلے' },
+          { id: 3, customerName: 'رضوانہ بیگم (ماڈل ٹاؤن)', service: 'پلمبنگ و سینیٹری مرمت', rating: 5, comment: 'واش روم کا نلکا اور پائپ ٹھیک کروایا۔ کاریگر نے کام تسلی سے کیا اور رسید بھی دی۔', date: '4 دن پہلے' }
         ],
 
-        // Technicians
+        // Admin-Approved Technicians with Subscription Package Tiers
         technicians: [
-          { id: 1, name: 'محمد راشد', specialtyUrdu: 'سینئر الیکٹریشن و سولر ایکسپرٹ', area: 'رائل پام سٹی و گوجرانوالہ', experience: '8', rating: '5.0', completedJobs: '420+', approved: true },
-          { id: 2, name: 'طارق محمود', specialtyUrdu: 'ماسٹر پلمبر و سینیٹری اسپیشلسٹ', area: 'سٹی ہاؤسنگ و ڈی سی کالونی', experience: '11', rating: '4.9', completedJobs: '560+', approved: true },
-          { id: 3, name: 'استاد فیاض احمد', specialtyUrdu: 'گیس چولہا، ہوب و گیزر ماسٹر', area: 'ماڈل ٹاؤن و پیپلز کالونی', experience: '14', rating: '5.0', completedJobs: '610+', approved: true }
+          { 
+            id: 1, 
+            name: 'محمد راشد', 
+            specialtyUrdu: 'سینئر الیکٹریشن و سولر ایکسپرٹ', 
+            area: 'رائل پام سٹی و گوجرانوالہ', 
+            experience: '8', 
+            rating: '5.0', 
+            completedJobs: '420+', 
+            phone: '03014567890',
+            packageTier: 'platinum',
+            packageLabel: '🥇 پلاٹینم ترجیحی کاریگر',
+            approved: true 
+          },
+          { 
+            id: 2, 
+            name: 'طارق محمود', 
+            specialtyUrdu: 'ماسٹر پلمبر و سینیٹری اسپیشلسٹ', 
+            area: 'سٹی ہاؤسنگ و ڈی سی کالونی', 
+            experience: '11', 
+            rating: '4.9', 
+            completedJobs: '560+', 
+            phone: '03029876543',
+            packageTier: 'gold',
+            packageLabel: '🥈 گولڈ ایکسپریس کاریگر',
+            approved: true 
+          },
+          { 
+            id: 3, 
+            name: 'استاد فیاض احمد', 
+            specialtyUrdu: 'گیس چولہا، ہوب و گیزر ماسٹر', 
+            area: 'ماڈل ٹاؤن و پیپلز کالونی', 
+            experience: '14', 
+            rating: '5.0', 
+            completedJobs: '610+', 
+            phone: '03035551234',
+            packageTier: 'platinum',
+            packageLabel: '🥇 پلاٹینم ترجیحی کاریگر',
+            approved: true 
+          }
         ],
 
         pendingKarigars: [],
@@ -2245,8 +2629,10 @@
             service: 'بجلی کا کام (الیکٹریشن)',
             address: 'رائل پام سٹی، بلاک بی، گوجرانوالہ',
             assignedTech: 'محمد راشد',
+            techPhone: '03014567890',
             statusUrdu: 'کاریگر راستے میں ہے (15 منٹ)',
             amount: '1,500',
+            agreedPrice: '1,500',
             date: '2026-09-02'
           }
         ],
@@ -2270,6 +2656,7 @@
           name: '',
           phone: '',
           address: '',
+          agreedPrice: '',
           details: ''
         },
 
@@ -2280,6 +2667,7 @@
           skill: 'الیکٹریشن (بجلی کا کام)',
           area: '',
           experience: '',
+          desiredPackage: 'gold',
           policeAgreed: false
         },
 
@@ -2313,6 +2701,35 @@
             this.showSplashScreen = false;
           }, 1400);
 
+          // Restore saved customer profile from localStorage
+          try {
+            const savedCustomer = localStorage.getItem('bahc_customer_user');
+            if (savedCustomer) {
+              const parsed = JSON.parse(savedCustomer);
+              if (parsed && parsed.name && parsed.phone) {
+                this.customerUser = parsed;
+                this.customerInputName = parsed.name;
+                this.customerInputPhone = parsed.phone;
+                this.customerInputArea = parsed.address || '';
+                this.bookingForm.name = parsed.name;
+                this.bookingForm.phone = parsed.phone;
+                this.bookingForm.address = parsed.address || '';
+              }
+            }
+          } catch(e) {}
+
+          // Check if App is already Installed (Standalone mode or cached flag)
+          const isStandalone = window.matchMedia('(display-mode: standalone)').matches || 
+                               window.navigator.standalone === true || 
+                               localStorage.getItem('bahc_app_installed') === 'true';
+          
+          if (isStandalone) {
+            this.isAppInstalled = true;
+            this.canInstallApp = false;
+            this.showInstallBanner = false;
+          }
+
+          // Register Service Worker
           if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
               navigator.serviceWorker.register('/sw.js').catch((err) => {
@@ -2321,23 +2738,180 @@
             });
           }
 
+          // PWA Install Prompt Listener
           window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             this.deferredPrompt = e;
-            this.canInstallApp = true;
-            this.showInstallBanner = true;
+            if (!this.isAppInstalled) {
+              this.canInstallApp = true;
+              this.showInstallBanner = true;
+            }
           });
 
-          const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
-          if (!isStandalone) {
+          // PWA appinstalled event: Immediately hide all install buttons!
+          window.addEventListener('appinstalled', () => {
+            this.isAppInstalled = true;
+            this.canInstallApp = false;
+            this.showInstallBanner = false;
+            this.deferredPrompt = null;
+            try { localStorage.setItem('bahc_app_installed', 'true'); } catch(e) {}
+            alert('مبارک ہو! بن عباس ہوم کیئر ایپ کامیابی سے انسٹال ہو گئی ہے۔');
+          });
+
+          if (!isStandalone && !this.isAppInstalled) {
             setTimeout(() => {
-              this.showInstallBanner = true;
-            }, 2500);
+              if (!this.isAppInstalled) {
+                this.showInstallBanner = true;
+              }
+            }, 3000);
           }
 
           this.$nextTick(() => {
             if (window.lucide) lucide.createIcons();
           });
+        },
+
+        // ==================== CUSTOMER ONBOARDING & MEMBERSHIP ====================
+        openCustomerModal(callback = null) {
+          this.pendingCustomerAction = callback;
+          this.isCustomerModalOpen = true;
+          this.$nextTick(() => {
+            if (window.lucide) lucide.createIcons();
+          });
+        },
+
+        saveCustomerProfile() {
+          if (!this.customerInputName.trim() || !this.customerInputPhone.trim()) {
+            alert('برائے مہربانی اپنا نام اور موبائل فون نمبر درج کریں۔');
+            return;
+          }
+
+          this.customerUser = {
+            name: this.customerInputName.trim(),
+            phone: this.customerInputPhone.trim(),
+            address: this.customerInputArea.trim(),
+            isLoggedIn: true
+          };
+
+          this.bookingForm.name = this.customerUser.name;
+          this.bookingForm.phone = this.customerUser.phone;
+          if (this.customerUser.address) {
+            this.bookingForm.address = this.customerUser.address;
+          }
+
+          try {
+            localStorage.setItem('bahc_customer_user', JSON.stringify(this.customerUser));
+          } catch(e) {}
+
+          this.isCustomerModalOpen = false;
+          alert('خوش آمدید ' + this.customerUser.name + '! آپ بن عباس ہوم کیئر میں کامیابی سے شامل ہو چکے ہیں۔');
+
+          if (this.pendingCustomerAction && typeof this.pendingCustomerAction === 'function') {
+            const action = this.pendingCustomerAction;
+            this.pendingCustomerAction = null;
+            action();
+          }
+        },
+
+        ensureCustomerLoggedIn(callback) {
+          if (this.customerUser.isLoggedIn && this.customerUser.name && this.customerUser.phone) {
+            callback();
+          } else {
+            this.openCustomerModal(callback);
+          }
+        },
+
+        // Direct booking & mutual price initiation
+        requestBookingDirect() {
+          this.ensureCustomerLoggedIn(() => {
+            this.openBookingModal();
+          });
+        },
+
+        initDirectBooking(opts = {}) {
+          this.ensureCustomerLoggedIn(() => {
+            this.openBookingModal(opts);
+          });
+        },
+
+        connectWithKarigar(tech) {
+          this.ensureCustomerLoggedIn(() => {
+            this.openBookingModal({
+              service: tech.specialtyUrdu,
+              details: 'مطلوبہ کاریگر: ' + tech.name + ' (' + tech.specialtyUrdu + ')\nباہمی قیمت: گفتگو سے طے کریں گے۔'
+            });
+          });
+        },
+
+        initDirectContact(msg) {
+          this.ensureCustomerLoggedIn(() => {
+            window.open(this.getWhatsAppLink(msg), '_blank');
+          });
+        },
+
+        // ==================== WORK SATISFACTION & FEEDBACK ====================
+        openFeedbackModal() {
+          this.feedbackForm.orderId = '';
+          this.feedbackForm.techName = '';
+          this.feedbackForm.rating = 5;
+          this.feedbackForm.workSatisfied = true;
+          this.feedbackForm.paymentCleared = true;
+          this.feedbackForm.comments = '';
+          this.isFeedbackModalOpen = true;
+          this.$nextTick(() => {
+            if (window.lucide) lucide.createIcons();
+          });
+        },
+
+        openFeedbackModalForOrder(order) {
+          this.feedbackForm.orderId = order.id;
+          this.feedbackForm.techName = order.assignedTech || 'محمد راشد';
+          this.feedbackForm.rating = 5;
+          this.feedbackForm.workSatisfied = true;
+          this.feedbackForm.paymentCleared = true;
+          this.feedbackForm.comments = '';
+          this.isFeedbackModalOpen = true;
+          this.$nextTick(() => {
+            if (window.lucide) lucide.createIcons();
+          });
+        },
+
+        submitSatisfactionFeedback() {
+          if (!this.feedbackForm.workSatisfied) {
+            alert('برائے مہربانی پہلے کام کی تسلی کی تصدیق کریں۔ اگر کوئی مسئلہ ہے تو شکایت سیل سے فوری رابطہ فرمائیں۔');
+            return;
+          }
+          if (!this.feedbackForm.paymentCleared) {
+            alert('برائے مہربانی طے شدہ رقم کی ادائیگی کی تصدیق فرمائیں۔');
+            return;
+          }
+
+          const customerName = this.customerUser.isLoggedIn ? this.customerUser.name : 'محترم کسٹمر';
+          const newReview = {
+            id: Date.now(),
+            customerName: customerName + ' (رائل پام سٹی)',
+            service: this.feedbackForm.techName ? ('کاریگر: ' + this.feedbackForm.techName) : 'ہوم سروس',
+            rating: this.feedbackForm.rating,
+            comment: this.feedbackForm.comments || 'کام مکمل تسلی کے مطابق ہوا اور طے شدہ رقم کاریگر کو ادا کر دی گئی۔',
+            date: 'آج'
+          };
+
+          this.customerReviews.unshift(newReview);
+          this.isFeedbackModalOpen = false;
+
+          alert('شکریہ ' + customerName + ' صاحب!\n\nآپ کے فیڈ بیک، کام کی تسلی اور رقم ادائیگی کی تصدیق کامیابی سے درج کر لی گئی ہے۔ آپ کا اعتماد ہی ہماری کامیابی ہے۔');
+        },
+
+        // Update karigar package tier from admin
+        updateKarigarTier(tech) {
+          if (tech.packageTier === 'platinum') {
+            tech.packageLabel = '🥇 پلاٹینم ترجیحی کاریگر';
+          } else if (tech.packageTier === 'gold') {
+            tech.packageLabel = '🥈 گولڈ ایکسپریس کاریگر';
+          } else {
+            tech.packageLabel = '🥉 سلور کاریگر';
+          }
+          alert('کاریگر "' + tech.name + '" کا بزنس پیکج کامیابی سے اپڈیٹ ہو گیا۔');
         },
 
         // Admin Login Security
@@ -2390,6 +2964,13 @@
         openBookingModal(opts = {}) {
           if (opts.service) this.bookingForm.category = opts.service;
           if (opts.details) this.bookingForm.details = opts.details;
+          if (this.customerUser.isLoggedIn) {
+            this.bookingForm.name = this.customerUser.name;
+            this.bookingForm.phone = this.customerUser.phone;
+            if (this.customerUser.address) {
+              this.bookingForm.address = this.customerUser.address;
+            }
+          }
           this.isBookingModalOpen = true;
           this.$nextTick(() => {
             if (window.lucide) lucide.createIcons();
@@ -2432,13 +3013,13 @@
 
         selectSociety(socName) {
           this.bookingForm.address = socName;
-          this.openBookingModal();
+          this.requestBookingDirect();
         },
 
         selectServiceForBooking(category) {
           this.bookingForm.category = category.titleUrdu;
-          this.bookingForm.details = 'مجھے ' + category.titleUrdu + ' کے لیے کاریگر چاہیے';
-          this.openBookingModal();
+          this.bookingForm.details = 'مجھے ' + category.titleUrdu + ' کے لیے کاریگر چاہیے۔ ریٹ باہم طے کریں گے۔';
+          this.requestBookingDirect();
         },
 
         detectGPSLocation() {
@@ -2465,6 +3046,7 @@
           }
 
           const newId = 'BA-' + Math.floor(1000 + Math.random() * 9000);
+          const agreed = this.bookingForm.agreedPrice.trim() || '1,800';
           const newOrder = {
             id: newId,
             customerName: this.bookingForm.name,
@@ -2472,20 +3054,20 @@
             service: this.bookingForm.category,
             address: this.bookingForm.address,
             assignedTech: 'محمد راشد (رائل پام ایکسپریس)',
+            techPhone: '03014567890',
             statusUrdu: 'کاریگر راستے میں ہے (15 تا 20 منٹ)',
-            amount: '1,800',
+            amount: agreed,
+            agreedPrice: agreed,
             date: new Date().toISOString().split('T')[0]
           };
 
           this.orders.unshift(newOrder);
           this.isBookingModalOpen = false;
 
-          alert('شکریہ ' + this.bookingForm.name + '! آپ کی بکنگ کامیابی سے موصول ہو گئی ہے۔\n\nٹریکنگ ID: ' + newId + '\nکاریگر 15 تا 30 منٹ میں آپ کے ایڈریس پر پہنچ رہا ہے۔\nہیلپ لائن: 0300-4800071');
+          alert('شکریہ ' + this.bookingForm.name + '! آپ کی بکنگ موصول ہو گئی ہے۔\n\nٹریکنگ ID: ' + newId + '\nطے شدہ ریٹ: ' + agreed + '\nکاریگر 15 تا 30 منٹ میں آپ کے ایڈریس پر پہنچ رہا ہے۔\nکمپنی ہیلپ لائن: 0300-4800071');
 
-          this.bookingForm.name = '';
-          this.bookingForm.phone = '';
-          this.bookingForm.address = '';
           this.bookingForm.details = '';
+          this.bookingForm.agreedPrice = '';
         },
 
         submitKarigarRegistration() {
@@ -2506,11 +3088,12 @@
             skill: this.karigarForm.skill,
             area: this.karigarForm.area,
             experience: this.karigarForm.experience || '3',
+            desiredPackage: this.karigarForm.desiredPackage || 'gold',
             policeAgreed: true
           };
 
           this.pendingKarigars.push(newPending);
-          alert('آپ کی درخواست ایڈمن پینل کو کامیابی سے ارسال ہو گئی ہے!\n\nایڈمن انتظامیہ آپ کے شناختی کارڈ اور پولیس ریکارڈ کی تصدیق کے بعد کال کرے گی اور منظوری دے گی جس کے بعد آپ کا نام لائیو کاریگر لسٹ میں شامل ہو جائے گا۔');
+          alert('آپ کی رجسٹریشن درخواست ایڈمن پینل کو ارسال ہو گئی ہے!\n\nانتظامیہ نادرا شناختی کارڈ اور پولیس ریکارڈ کی تصدیق کے بعد کال کرے گی اور آپ کے منتخب کردہ پیکج کے مطابق منظوری دے گی۔');
 
           this.karigarForm.name = '';
           this.karigarForm.cnic = '';
@@ -2539,7 +3122,7 @@
           });
 
           this.isDisputeModalOpen = false;
-          alert('آپ کی شکایت رجسٹر ہو گئی ہے!\n\nشکایت ریفرنس نمبر: ' + dispId + '\nہمارا انصاف و قانونی سیل 30 منٹ میں آپ کے فون نمبر (' + this.disputeForm.phone + ') پر رابطہ کرے گا۔\nہیلپ لائن: 0300-4800071');
+          alert('آپ کی شکایت رجسٹر ہو گئی ہے!\n\nشکایت ریفرنس نمبر: ' + dispId + '\nہمارا قانونی سیل 30 منٹ میں آپ کے فون نمبر (' + this.disputeForm.phone + ') پر رابطہ کرے گا۔\nکمپنی ہیلپ لائن: 0300-4800071');
 
           this.disputeForm.name = '';
           this.disputeForm.phone = '';
@@ -2549,18 +3132,23 @@
         approveKarigar(id) {
           const kar = this.pendingKarigars.find(k => k.id === id);
           if (kar) {
+            const pkg = kar.desiredPackage || 'gold';
+            const label = pkg === 'platinum' ? '🥇 پلاٹینم ترجیحی کاریگر' : (pkg === 'gold' ? '🥈 گولڈ ایکسپریس کاریگر' : '🥉 سلور کاریگر');
             this.technicians.push({
               id: Date.now(),
               name: kar.name,
               specialtyUrdu: kar.skill,
               area: kar.area,
+              phone: kar.phone,
               rating: 5.0,
               experience: parseInt(kar.experience) || 3,
               completedJobs: 0,
+              packageTier: pkg,
+              packageLabel: label,
               approved: true
             });
             this.pendingKarigars = this.pendingKarigars.filter(k => k.id !== id);
-            alert('کاریگر "' + kar.name + '" کی درخواست منظور ہو گئی ہے۔ کاریگر اب ویب سائٹ پر لائیو ظاہر ہو گیا ہے!');
+            alert('کاریگر "' + kar.name + '" کی درخواست منظور ہو گئی ہے۔ کاریگر اب ویب سائٹ پر ' + label + ' کے طور پر لائیو ظاہر ہو گیا ہے!');
           }
         },
 
@@ -2571,12 +3159,12 @@
 
         suspendKarigar(id) {
           this.technicians = this.technicians.filter(t => t.id !== id);
-          alert('کاریگر کو کامیابی سے معطل کر دیا گیا ہے۔');
+          alert('کاریگر کو معطل کر دیا گیا ہے۔');
         },
 
         resolveDispute(id) {
           this.disputesList = this.disputesList.filter(d => d.id !== id);
-          alert('شکایت کو کامیابی سے حل شدہ مارک کر دیا گیا ہے!');
+          alert('شکایت کو حل شدہ مارک کر دیا گیا ہے!');
         },
 
         trackOrder() {
@@ -2595,14 +3183,16 @@
           });
         },
 
-        // PWA Install Handler
+        // PWA Install Handler with auto-hide logic
         installPWA() {
           if (this.deferredPrompt) {
             this.deferredPrompt.prompt();
             this.deferredPrompt.userChoice.then((choiceResult) => {
               if (choiceResult.outcome === 'accepted') {
+                this.isAppInstalled = true;
                 this.canInstallApp = false;
                 this.showInstallBanner = false;
+                try { localStorage.setItem('bahc_app_installed', 'true'); } catch(e) {}
               }
               this.deferredPrompt = null;
             });
