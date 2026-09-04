@@ -6,14 +6,14 @@
   <title>B.A.H.Care | بن عباس ہوم کیئر - رائل پام سٹی و گوجرانوالہ ہوم سروسز و مصدقہ کاریگر پورٹل</title>
   
   <!-- Favicons & Meta (CACHE BUSTED FOR FRESH 3D LOGO) -->
-  <link rel="icon" type="image/svg+xml" href="favicon.svg?v=4" />
-  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=4" />
-  <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png?v=4" />
-  <link rel="apple-touch-icon" href="apple-touch-icon.png?v=4" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg?v=5" />
+  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=5" />
+  <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png?v=5" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png?v=5" />
   <meta name="theme-color" content="#0d9488" />
   <meta property="og:title" content="B.A.H.Care | بن عباس ہوم کیئر" />
   <meta property="og:description" content="رائل پام سٹی اور گوجرانوالہ میں 15 تا 30 منٹ ہوم سروس، نادرا و پولیس تصدیق شدہ کاریگر، الیکٹریشن، پلمبر، اے سی اور گیس چولہا ریپیر" />
-  <meta property="og:image" content="icon-512.png?v=4" />
+  <meta property="og:image" content="icon-512.png?v=5" />
 
   <!-- PWA & Mobile Web App Installation -->
   <link rel="manifest" href="manifest.json" />
@@ -167,41 +167,6 @@
   class="min-h-screen bg-slate-100 text-slate-900 flex flex-col selection:bg-brand-500 selection:text-white relative w-full overflow-x-hidden font-urdu"
 >
 
-  <!-- ==================== ELEGANT, LUXURY APP SPLASH SCREEN (CLEAN & NON-JITTERY) ==================== -->
-  <div 
-    x-show="showSplashScreen" 
-    x-transition:leave="transition ease-out duration-400" 
-    x-transition:leave-start="opacity-100" 
-    x-transition:leave-end="opacity-0 pointer-events-none"
-    class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-slate-950 text-white"
-    style="z-index: 9999;"
-  >
-    <div class="relative z-10 flex flex-col items-center text-center p-6 max-w-sm">
-      
-      <!-- Elegant 3D Logo (Stable, High Quality, No Jitter, Fresh 3D Emblem) -->
-      <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-3xl bg-slate-900 p-1.5 shadow-2xl border-2 border-amber-400/50 mb-4 flex items-center justify-center backdrop-blur-sm overflow-hidden">
-        <img src="icon-192.png?v=4" alt="بن عباس ہوم کیئر" class="w-full h-full object-cover rounded-2xl drop-shadow-2xl" />
-      </div>
-
-      <!-- Pure Urdu Brand Title in STRICT SINGLE LINE -->
-      <h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight mb-1 whitespace-nowrap">
-        <span class="text-emerald-400">بن عباس</span> ہوم کیئر
-      </h2>
-
-      <p class="text-xs text-emerald-200 font-semibold mb-5 whitespace-nowrap">
-        🌴 رائل پام سٹی و گوجرانوالہ • بااعتماد ہوم سروسز پورٹل
-      </p>
-
-      <!-- Sleek Smooth Loading Bar -->
-      <div class="w-44 h-1.5 bg-slate-800 rounded-full overflow-hidden mb-3">
-        <div class="h-full bg-gradient-to-r from-amber-400 via-teal-400 to-emerald-400 rounded-full splash-bar"></div>
-      </div>
-
-      <span class="text-xs text-slate-400 font-bold">
-        خوش آمدید... پورٹل لوڈ ہو رہا ہے
-      </span>
-    </div>
-  </div>
 
 
   <!-- DECLUTTERED TOP EMERGENCY & HIGHLIGHTS BAR (CLEAN & NON-OVERLAPPING) -->
@@ -269,7 +234,7 @@
         <div class="flex items-center gap-3 sm:gap-4 cursor-pointer min-w-0" @click="currentView = 'home'; window.scrollTo({top:0, behavior:'smooth'})">
           <div class="relative flex-shrink-0">
             <img 
-              src="icon-192.png?v=4" 
+              src="icon-192.png?v=5" 
               alt="بن عباس ہوم کیئر لوگو" 
               class="w-14 h-14 sm:w-16 sm:h-16 lg:w-18 lg:h-18 rounded-2xl shadow-xl border-2 border-amber-400/40 object-cover hover:scale-105 transition-all bg-slate-950" 
             />
@@ -599,7 +564,9 @@
                 
                 <div class="flex items-center justify-between pb-3 border-b-2 border-slate-100">
                   <div class="flex items-center gap-2.5">
-                    <img src="icon-192.png?v=4" alt="B.A.H.Care" class="w-10 h-10 rounded-xl shadow-md object-cover border border-teal-500/20" />
+                    <div class="w-10 h-10 rounded-xl bg-teal-50 border-2 border-teal-500/30 flex items-center justify-center shadow-xs flex-shrink-0">
+                      <i data-lucide="layout-grid" class="w-5 h-5 text-teal-700"></i>
+                    </div>
                     <div>
                       <h3 class="font-black text-slate-950 text-sm sm:text-base">فوری سروسز کیٹیگریز</h3>
                       <p class="text-[11px] text-slate-600 font-bold">تفصیل اور ریٹس جاننے کے لیے کلک کریں</p>
@@ -2611,7 +2578,6 @@
     <!-- Mobile B.A.H.Care Brand Sub-Strip -->
     <div class="flex items-center justify-between px-2 pt-1 border-t border-slate-800 text-[10px] text-slate-300 font-bold" dir="ltr">
       <span class="font-brand-latin font-black text-amber-400 tracking-wider flex items-center gap-1">
-        <img src="icon-192.png?v=4" alt="Logo" class="w-4 h-4 rounded object-cover inline" />
         B.A.H.Care
       </span>
       <span class="text-[10px] text-slate-200 font-urdu" dir="rtl">بن عباس ہوم کیئر • تصدیق شدہ</span>
@@ -2632,7 +2598,7 @@
     class="fixed bottom-20 md:bottom-6 left-3 right-3 md:left-auto md:right-6 md:max-w-md z-40 bg-slate-950/98 text-white rounded-3xl p-4 shadow-2xl border-2 border-teal-500/50 backdrop-blur-md"
   >
     <div class="flex items-center gap-3.5">
-      <img src="icon-192.png?v=4" alt="B.A.H.Care" class="w-12 h-12 rounded-2xl shadow-md border-2 border-amber-400/40 flex-shrink-0 object-cover" />
+      <img src="icon-192.png?v=5" alt="B.A.H.Care" class="w-12 h-12 rounded-2xl shadow-md border-2 border-amber-400/40 flex-shrink-0 object-cover" />
       <div class="flex-1 min-w-0">
         <div class="flex items-center justify-between">
           <h4 class="font-black text-sm text-white truncate">بن عباس ہوم کیئر</h4>
@@ -2685,7 +2651,7 @@
         isAppInstalled: false,
         isStandaloneMode: false,
         showInstallBanner: false,
-        showSplashScreen: true,
+        showSplashScreen: false,
 
         // Customer Onboarding State (Profile Picture is Optional)
         customerUser: {
@@ -3029,10 +2995,6 @@
 
         // App Initialization
         initApp() {
-          setTimeout(() => {
-            this.showSplashScreen = false;
-          }, 900);
-
           // Restore saved customer profile from localStorage
           try {
             const savedCustomer = localStorage.getItem('bahc_customer_user');
@@ -3065,10 +3027,10 @@
             this.canInstallApp = true;
           }
 
-          // Register Service Worker with cache-busting v4 & auto-update
+          // Register Service Worker with cache-busting v5 & auto-update
           if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-              navigator.serviceWorker.register('/sw.js?v=4').then((reg) => {
+              navigator.serviceWorker.register('/sw.js?v=5').then((reg) => {
                 reg.update();
               }).catch((err) => {
                 console.log('SW registration note:', err);
