@@ -284,6 +284,17 @@
         <!-- Right Header Action Group (NO OVERLAPPING, NO CLIPPING) -->
         <div class="flex items-center gap-2 sm:gap-2.5 flex-shrink-0">
           
+          <!-- Karigar Alert Ringtone Quick Setting Button (Header) -->
+          <button 
+            @click="openKarigarToneModal()"
+            class="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-2 rounded-xl border-2 text-xs font-black transition-all min-h-[42px] flex-shrink-0 shadow-xs"
+            :class="karigarToneSettings.enabled ? 'bg-amber-50 hover:bg-amber-100 text-amber-950 border-amber-400' : 'bg-slate-100 hover:bg-slate-200 text-slate-600 border-slate-300'"
+            title="کاریگر کال و نوٹیفکیشن ٹیون سیٹنگز (آپشنل)"
+          >
+            <i :data-lucide="karigarToneSettings.enabled ? 'bell-ring' : 'bell-off'" class="w-4 h-4 flex-shrink-0" :class="karigarToneSettings.enabled ? 'text-amber-700' : 'text-slate-400'"></i>
+            <span class="hidden md:inline" x-text="karigarToneSettings.enabled ? 'کاریگر ٹیون: آن' : 'کاریگر ٹیون: آف'"></span>
+          </button>
+
           <!-- PWA Install Button (ALWAYS VISIBLE ON BOTH MOBILE & DESKTOP) -->
           <button 
             x-show="!isStandaloneMode"
@@ -358,6 +369,19 @@
           >
             <i data-lucide="calendar-plus" class="w-5 h-5 flex-shrink-0"></i>
             <span>ابھی بک کریں (فوری سروس)</span>
+          </button>
+
+          <!-- Karigar Alert Tune Quick Setting in Drawer -->
+          <button 
+            @click="openKarigarToneModal(); isMobileMenuOpen = false" 
+            class="w-full flex items-center justify-between p-3 rounded-2xl border-2 font-black text-xs sm:text-sm shadow-xs min-h-[46px] transition-all"
+            :class="karigarToneSettings.enabled ? 'bg-amber-50 text-amber-950 border-amber-400' : 'bg-slate-50 text-slate-700 border-slate-300'"
+          >
+            <div class="flex items-center gap-2">
+              <i :data-lucide="karigarToneSettings.enabled ? 'bell-ring' : 'bell-off'" class="w-4 h-4 flex-shrink-0" :class="karigarToneSettings.enabled ? 'text-amber-700' : 'text-slate-400'"></i>
+              <span>کاریگر کال و نوٹیفکیشن ٹیون (آپشنل)</span>
+            </div>
+            <span class="px-2.5 py-0.5 rounded-lg text-[11px] font-black" :class="karigarToneSettings.enabled ? 'bg-emerald-200 text-emerald-950' : 'bg-slate-200 text-slate-700'" x-text="karigarToneSettings.enabled ? 'ٹیون آن ہے ✓' : 'خاموش (آف)'"></span>
           </button>
 
           <!-- Navigation Links in Drawer -->
@@ -879,14 +903,25 @@
                     <span>مصدقہ ڈیجیٹل کارڈ دیکھیں</span>
                   </button>
 
-                  <button 
-                    @click="connectWithKarigar(tech)"
-                    class="w-full py-3 px-3 text-white rounded-xl text-xs font-black transition-colors flex items-center justify-center gap-2 shadow-md min-h-[46px]"
-                    :class="tech.zone === 'red' ? 'bg-rose-700 hover:bg-rose-800' : 'bg-slate-950 hover:bg-brand-700'"
-                  >
-                    <i data-lucide="handshake" class="w-4 h-4 text-amber-300 flex-shrink-0"></i>
-                    <span x-text="tech.zone === 'red' ? 'ریڈ زون کاریگر (باہمی طے شدہ ریٹ پر رابطہ)' : 'یہ کاریگر منتخب کریں و رابطہ کریں'"></span>
-                  </button>
+                  <div class="grid grid-cols-2 gap-2">
+                    <button 
+                      @click="directCallKarigarWithTone(tech)"
+                      class="py-3 px-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-black transition-colors flex items-center justify-center gap-1.5 shadow-md min-h-[46px]"
+                      title="کاریگر کو براہِ راست فون کال ملائیں"
+                    >
+                      <i data-lucide="phone-call" class="w-4 h-4 text-white flex-shrink-0"></i>
+                      <span>فوری کال</span>
+                    </button>
+
+                    <button 
+                      @click="connectWithKarigar(tech)"
+                      class="py-3 px-2 text-white rounded-xl text-xs font-black transition-colors flex items-center justify-center gap-1.5 shadow-md min-h-[46px]"
+                      :class="tech.zone === 'red' ? 'bg-rose-700 hover:bg-rose-800' : 'bg-slate-950 hover:bg-brand-700'"
+                    >
+                      <i data-lucide="handshake" class="w-4 h-4 text-amber-300 flex-shrink-0"></i>
+                      <span x-text="tech.zone === 'red' ? 'ریڈ زون کاریگر' : 'بکنگ و رابطہ'"></span>
+                    </button>
+                  </div>
                 </div>
               </div>
             </template>
@@ -2588,6 +2623,38 @@
                 </div>
               </div>
 
+              <!-- Karigar Alert Tune Quick Control Card in Tracker -->
+              <div class="p-4 rounded-3xl bg-amber-50/90 border-2 border-amber-300 shadow-sm space-y-2.5 text-start">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-2">
+                    <div class="w-9 h-9 rounded-xl bg-amber-400 text-slate-950 flex items-center justify-center font-black shadow-xs">
+                      <i :data-lucide="karigarToneSettings.enabled ? 'bell-ring' : 'bell-off'" class="w-5 h-5 text-slate-950"></i>
+                    </div>
+                    <div>
+                      <h5 class="text-xs font-black text-amber-950">صارف کی کال و نوٹیفکیشن ٹیون (آپشنل)</h5>
+                      <p class="text-[10px] text-amber-800 font-bold">کام کے لیے کال موصول ہونے پر موبائل پر گھنٹی بجے گی</p>
+                    </div>
+                  </div>
+                  <button 
+                    @click="toggleKarigarTone()"
+                    class="px-3 py-1.5 rounded-xl font-black text-xs shadow-xs transition-all flex items-center gap-1 min-h-[36px]"
+                    :class="karigarToneSettings.enabled ? 'bg-emerald-600 hover:bg-emerald-700 text-white' : 'bg-slate-300 hover:bg-slate-400 text-slate-800'"
+                  >
+                    <span x-text="karigarToneSettings.enabled ? '🔔 ٹیون آن ہے' : '🔕 خاموش (آف)'"></span>
+                  </button>
+                </div>
+                <div class="flex items-center justify-between pt-1 border-t border-amber-200 text-xs font-bold">
+                  <button @click="playKarigarTone()" class="text-amber-950 hover:underline font-black flex items-center gap-1 text-[11px]">
+                    <i data-lucide="volume-2" class="w-3.5 h-3.5 text-amber-700"></i>
+                    <span>ٹیون سنیں / چیک کریں (Test)</span>
+                  </button>
+                  <button @click="openKarigarToneModal()" class="text-brand-800 hover:underline font-black flex items-center gap-1 text-[11px]">
+                    <i data-lucide="settings" class="w-3.5 h-3.5"></i>
+                    <span>ٹیون سیٹنگز تبدیل کریں</span>
+                  </button>
+                </div>
+              </div>
+
               <!-- Karigar Live Transit Status Toggles -->
               <div class="p-4 rounded-3xl bg-white border-2 border-slate-200 shadow-sm space-y-2.5">
                 <h5 class="text-xs font-black text-slate-900 flex items-center gap-1.5">
@@ -2724,13 +2791,21 @@
           </div>
         </div>
 
-        <div class="pt-3">
+        <div class="pt-3 grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <button 
+            @click="directCallKarigarWithTone(activeKarigar)"
+            class="py-3 px-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-black text-xs shadow-md flex items-center justify-center gap-2"
+          >
+            <i data-lucide="phone-call" class="w-4 h-4"></i>
+            <span>📞 کاریگر کو کال ملائیں</span>
+          </button>
+
           <button 
             @click="connectWithKarigar(activeKarigar); isKarigarCardModalOpen = false"
-            class="w-full py-3 bg-brand-700 hover:bg-brand-800 text-white rounded-xl font-black text-xs shadow-md flex items-center justify-center gap-2"
+            class="py-3 px-3 bg-brand-700 hover:bg-brand-800 text-white rounded-xl font-black text-xs shadow-md flex items-center justify-center gap-2"
           >
             <i data-lucide="handshake" class="w-4 h-4"></i>
-            <span>یہ کاریگر منتخب کریں و رابطہ کریں</span>
+            <span>یہ کاریگر منتخب کریں</span>
           </button>
         </div>
       </div>
@@ -2880,6 +2955,326 @@
     </div>
   </div>
 
+  <!-- ==================== MODAL 10: KARIGAR NOTIFICATION & CALL ALERT TUNE SETTINGS (آپشنل ٹیون برائے کاریگر) ==================== -->
+  <div 
+    x-show="isKarigarToneModalOpen" 
+    x-cloak 
+    class="fixed inset-0 z-50 overflow-y-auto bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-3 sm:p-4"
+    @keydown.escape.window="isKarigarToneModalOpen = false; stopToneInterval()"
+  >
+    <div 
+      @click.outside="isKarigarToneModalOpen = false; stopToneInterval()"
+      class="bg-white rounded-3xl shadow-2xl border-2 border-slate-300 max-w-md w-full overflow-hidden flex flex-col"
+    >
+      <!-- Header -->
+      <div class="bg-gradient-to-r from-amber-600 via-amber-700 to-amber-800 text-white p-5 sm:p-6 relative flex-shrink-0 text-start">
+        <button @click="isKarigarToneModalOpen = false; stopToneInterval()" class="absolute top-5 left-5 text-white/80 hover:text-white p-1 rounded-full bg-black/20">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+        <div class="flex items-center gap-2 mb-1">
+          <span class="p-1.5 bg-amber-400 text-slate-950 rounded-lg">
+            <i data-lucide="bell-ring" class="w-4 h-4"></i>
+          </span>
+          <span class="text-xs font-black text-amber-200 uppercase tracking-wider">کاریگر سیٹنگز (آپشنل)</span>
+        </div>
+        <h3 class="text-xl sm:text-2xl font-black">صارف کی کال و نوٹیفکیشن ٹیون</h3>
+        <p class="text-xs text-amber-100 mt-1 font-bold leading-relaxed">
+          جب کسٹمر کام کے لیے کال کرے یا نوٹیفکیشن بھیجے تو آپ کے موبائل پر فوری الرٹ گھنٹی بجے گی
+        </p>
+      </div>
+
+      <div class="p-5 sm:p-6 space-y-4 overflow-y-auto max-h-[75vh] bg-slate-50 text-start">
+        
+        <!-- MAIN OPTIONAL TOGGLE -->
+        <div class="p-4 rounded-2xl border-2 transition-all" :class="karigarToneSettings.enabled ? 'bg-amber-50 border-amber-400 shadow-sm' : 'bg-white border-slate-300'">
+          <div class="flex items-center justify-between gap-3">
+            <div>
+              <div class="text-xs sm:text-sm font-black text-slate-950 flex items-center gap-1.5">
+                <i :data-lucide="karigarToneSettings.enabled ? 'volume-2' : 'volume-x'" class="w-4 h-4" :class="karigarToneSettings.enabled ? 'text-amber-700' : 'text-slate-400'"></i>
+                <span>موبائل پر الرٹ ٹیون بجائیں (آپشنل)</span>
+              </div>
+              <p class="text-[11px] text-slate-600 font-bold mt-1">
+                اسے بند رکھنے پر نوٹیفکیشن خاموش (Silent) رہے گا
+              </p>
+            </div>
+            <!-- Custom Switch Button -->
+            <button 
+              type="button"
+              @click="toggleKarigarTone()"
+              class="relative inline-flex h-7 w-13 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none"
+              :class="karigarToneSettings.enabled ? 'bg-emerald-600' : 'bg-slate-300'"
+            >
+              <span 
+                class="pointer-events-none inline-block h-6 w-6 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"
+                :class="karigarToneSettings.enabled ? '-translate-x-6' : 'translate-x-0'"
+              ></span>
+            </button>
+          </div>
+        </div>
+
+        <!-- TONE CHOICES (VISIBLE IF ENABLED) -->
+        <div x-show="karigarToneSettings.enabled" x-transition class="space-y-3">
+          <label class="block text-xs font-black text-slate-800">پسندیدہ الرٹ ٹیون منتخب فرمائیں:</label>
+          
+          <!-- Option 1: Classic Phone Double Ring -->
+          <div 
+            @click="karigarToneSettings.selectedTone = 'ringtone'; saveKarigarToneSettings()"
+            class="p-3.5 rounded-2xl border-2 cursor-pointer transition-all flex items-center justify-between"
+            :class="karigarToneSettings.selectedTone === 'ringtone' ? 'bg-amber-100/90 border-amber-500 shadow-sm' : 'bg-white border-slate-200 hover:border-slate-300'"
+          >
+            <div class="flex items-center gap-3">
+              <input type="radio" name="toneSelect" value="ringtone" x-model="karigarToneSettings.selectedTone" class="text-amber-600 focus:ring-amber-500">
+              <div>
+                <div class="text-xs font-black text-slate-950 flex items-center gap-1.5">
+                  <i data-lucide="phone-call" class="w-3.5 h-3.5 text-amber-700"></i>
+                  <span>کلاسک فون گھنٹی (Double Ring)</span>
+                </div>
+                <div class="text-[10px] text-slate-600 font-bold">شور اور کام کے دوران باآسانی سننے کے لیے</div>
+              </div>
+            </div>
+            <button 
+              type="button"
+              @click.stop="playKarigarTone('ringtone')" 
+              class="px-2.5 py-1.5 bg-amber-200 hover:bg-amber-300 text-amber-950 rounded-xl text-[11px] font-black flex items-center gap-1 shadow-xs"
+              title="ٹیون سنیں"
+            >
+              <i data-lucide="play" class="w-3 h-3"></i>
+              <span>سنیں</span>
+            </button>
+          </div>
+
+          <!-- Option 2: Gentle Melodic Chime -->
+          <div 
+            @click="karigarToneSettings.selectedTone = 'chime'; saveKarigarToneSettings()"
+            class="p-3.5 rounded-2xl border-2 cursor-pointer transition-all flex items-center justify-between"
+            :class="karigarToneSettings.selectedTone === 'chime' ? 'bg-amber-100/90 border-amber-500 shadow-sm' : 'bg-white border-slate-200 hover:border-slate-300'"
+          >
+            <div class="flex items-center gap-3">
+              <input type="radio" name="toneSelect" value="chime" x-model="karigarToneSettings.selectedTone" class="text-amber-600 focus:ring-amber-500">
+              <div>
+                <div class="text-xs font-black text-slate-950 flex items-center gap-1.5">
+                  <i data-lucide="bell" class="w-3.5 h-3.5 text-teal-700"></i>
+                  <span>میلوڈک چائم (Melodic Chime)</span>
+                </div>
+                <div class="text-[10px] text-slate-600 font-bold">نرم، سریلی اور پرسکون الرٹ آواز</div>
+              </div>
+            </div>
+            <button 
+              type="button"
+              @click.stop="playKarigarTone('chime')" 
+              class="px-2.5 py-1.5 bg-amber-200 hover:bg-amber-300 text-amber-950 rounded-xl text-[11px] font-black flex items-center gap-1 shadow-xs"
+              title="ٹیون سنیں"
+            >
+              <i data-lucide="play" class="w-3 h-3"></i>
+              <span>سنیں</span>
+            </button>
+          </div>
+
+          <!-- Option 3: Loud Express Alert -->
+          <div 
+            @click="karigarToneSettings.selectedTone = 'express'; saveKarigarToneSettings()"
+            class="p-3.5 rounded-2xl border-2 cursor-pointer transition-all flex items-center justify-between"
+            :class="karigarToneSettings.selectedTone === 'express' ? 'bg-amber-100/90 border-amber-500 shadow-sm' : 'bg-white border-slate-200 hover:border-slate-300'"
+          >
+            <div class="flex items-center gap-3">
+              <input type="radio" name="toneSelect" value="express" x-model="karigarToneSettings.selectedTone" class="text-amber-600 focus:ring-amber-500">
+              <div>
+                <div class="text-xs font-black text-slate-950 flex items-center gap-1.5">
+                  <i data-lucide="zap" class="w-3.5 h-3.5 text-rose-700"></i>
+                  <span>ایکسپریس الرٹ بیپ (Fast Dispatch)</span>
+                </div>
+                <div class="text-[10px] text-slate-600 font-bold">تیز ایمرجنسی بیپ برائے فوری رسپانس</div>
+              </div>
+            </div>
+            <button 
+              type="button"
+              @click.stop="playKarigarTone('express')" 
+              class="px-2.5 py-1.5 bg-amber-200 hover:bg-amber-300 text-amber-950 rounded-xl text-[11px] font-black flex items-center gap-1 shadow-xs"
+              title="ٹیون سنیں"
+            >
+              <i data-lucide="play" class="w-3 h-3"></i>
+              <span>سنیں</span>
+            </button>
+          </div>
+
+          <!-- Mobile Vibration Checkbox -->
+          <div class="p-3 bg-white rounded-xl border border-slate-200 flex items-center justify-between">
+            <label class="flex items-center gap-2 cursor-pointer select-none">
+              <input type="checkbox" x-model="karigarToneSettings.vibration" @change="saveKarigarToneSettings()" class="w-4 h-4 rounded text-amber-600 focus:ring-amber-500">
+              <span class="text-xs font-black text-slate-900">موبائل وائبریشن (Vibrate) بھی ساتھ آن رکھیں</span>
+            </label>
+            <i data-lucide="smartphone" class="w-4 h-4 text-slate-400"></i>
+          </div>
+
+        </div>
+
+        <!-- HOW IT WORKS INFO BOX -->
+        <div class="p-3 bg-emerald-50 rounded-2xl border border-emerald-300 text-xs text-emerald-950 space-y-1 font-bold">
+          <div class="flex items-center gap-1.5 font-black text-emerald-900">
+            <i data-lucide="info" class="w-4 h-4 text-emerald-700 flex-shrink-0"></i>
+            <span>یہ کیسے کام کرتا ہے؟</span>
+          </div>
+          <p class="text-[11px] text-emerald-900 leading-relaxed">
+            جیسے ہی کوئی صارف آپ کے متعلقہ شعبے میں کام کے لیے کال کرے گا یا بکنگ کروائے گا، آپ کے موبائل پر یہ گھنٹی خودکار طور پر بجے گی تاکہ آپ فوری الرٹ حاصل کر کے کسٹمر سے رابطہ کر سکیں۔
+          </p>
+        </div>
+
+        <!-- BUTTONS -->
+        <div class="space-y-2 pt-1">
+          <button 
+            type="button"
+            @click="testIncomingCallSimulation()"
+            class="w-full py-3 bg-amber-400 hover:bg-amber-500 text-slate-950 font-black rounded-xl text-xs sm:text-sm shadow-md flex items-center justify-center gap-2 transition-all min-h-[44px]"
+          >
+            <i data-lucide="phone-incoming" class="w-4 h-4"></i>
+            <span>صارف کی کال الرٹ کا لائیو ٹیسٹ کریں (Demo Ring)</span>
+          </button>
+
+          <button 
+            type="button"
+            @click="saveKarigarToneSettings(); isKarigarToneModalOpen = false; stopToneInterval()"
+            class="w-full py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-black rounded-xl text-xs shadow-sm flex items-center justify-center gap-2"
+          >
+            <span>سیٹنگز محفوظ ہو گئیں ✓</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL 11: INCOMING CALL & JOB ALERT MODAL (صارف کی طرف سے کال و کام الرٹ) ==================== -->
+  <div 
+    x-show="isIncomingCallModalOpen" 
+    x-cloak 
+    class="fixed inset-0 z-50 overflow-y-auto bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-4"
+    @keydown.escape.window="stopIncomingCallAlert()"
+  >
+    <div 
+      @click.outside="stopIncomingCallAlert()"
+      class="bg-white rounded-3xl shadow-2xl border-4 border-amber-400 max-w-md w-full overflow-hidden flex flex-col text-center"
+    >
+      <!-- Glowing Animated Call Header -->
+      <div class="bg-gradient-to-tr from-slate-950 via-teal-950 to-slate-900 text-white p-6 relative flex flex-col items-center">
+        <button @click="stopIncomingCallAlert()" class="absolute top-4 left-4 text-white/70 hover:text-white p-1 rounded-full bg-white/10" title="بند کریں">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+
+        <!-- Pulsing Ringing Phone Icon -->
+        <div class="relative mb-3">
+          <div class="w-20 h-20 rounded-3xl bg-amber-400 text-slate-950 flex items-center justify-center font-black shadow-2xl animate-bounce">
+            <i data-lucide="phone-incoming" class="w-10 h-10 text-slate-950"></i>
+          </div>
+          <span class="absolute -top-1 -right-1 flex h-4 w-4">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-4 w-4 bg-emerald-500"></span>
+          </span>
+        </div>
+
+        <span class="px-3 py-1 rounded-full bg-amber-400/20 text-amber-300 border border-amber-400/40 text-xs font-black uppercase tracking-wider mb-1">
+          📲 صارف کی طرف سے کام کے لیے کال الرٹ!
+        </span>
+        <h3 class="text-xl sm:text-2xl font-black text-white" x-text="incomingCallAlertJob?.customerName || 'صارف (کسٹمر)'"></h3>
+        <p class="text-xs text-teal-200 font-bold mt-0.5" x-text="incomingCallAlertJob?.address || 'رائل پام سٹی و گوجرانوالہ'"></p>
+
+        <!-- Ringing Tone Status Bar with quick Mute -->
+        <div class="mt-3 flex items-center gap-2">
+          <template x-if="karigarToneSettings.enabled">
+            <div class="flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-emerald-300 text-xs font-black">
+              <i data-lucide="volume-2" class="w-3.5 h-3.5 animate-pulse"></i>
+              <span>موبائل پر ٹیون بج رہی ہے...</span>
+            </div>
+          </template>
+          <template x-if="!karigarToneSettings.enabled">
+            <div class="flex items-center gap-2 px-3 py-1 rounded-full bg-slate-800 text-slate-300 text-xs font-bold border border-slate-700">
+              <i data-lucide="volume-x" class="w-3.5 h-3.5"></i>
+              <span>ٹیون خاموش ہے</span>
+            </div>
+          </template>
+
+          <button 
+            @click="toggleKarigarTone()"
+            class="px-2.5 py-1 bg-white/10 hover:bg-white/20 text-white rounded-full text-[11px] font-bold border border-white/20 transition-colors"
+          >
+            <span x-text="karigarToneSettings.enabled ? '🔕 میوٹ کریں' : '🔔 ٹیون آن کریں'"></span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Call Details Content -->
+      <div class="p-5 sm:p-6 space-y-3.5 bg-slate-50 text-start text-xs font-bold">
+        <div class="p-3.5 rounded-2xl bg-white border border-slate-200 space-y-2 shadow-xs">
+          <div class="flex justify-between items-center border-b border-slate-100 pb-2">
+            <span class="text-slate-500">مطلوبہ شعبہ / سروس:</span>
+            <span class="text-brand-800 font-black text-sm" x-text="incomingCallAlertJob?.service || 'جنرل ہوم سروس'"></span>
+          </div>
+          <div class="flex justify-between items-center border-b border-slate-100 pb-2">
+            <span class="text-slate-500">مقام / سوسائٹی:</span>
+            <span class="text-slate-900 font-black" x-text="incomingCallAlertJob?.address || 'گوجرانوالہ'"></span>
+          </div>
+          <div class="flex justify-between items-center">
+            <span class="text-slate-500">باہمی طے شدہ بجٹ:</span>
+            <span class="text-amber-900 font-black font-mono text-sm" x-text="'روپے ' + (incomingCallAlertJob?.agreedPrice || '1,800')"></span>
+          </div>
+        </div>
+
+        <!-- 300 RS VISIT CHARGES REMINDER -->
+        <div class="p-2.5 bg-amber-50 rounded-xl border border-amber-300 text-[11px] text-amber-950 space-y-1">
+          <div class="flex justify-between items-center font-black">
+            <span>💰 وزٹ چارجز پالیسی:</span>
+            <span class="text-amber-800">300 روپے (معائنہ فیس)</span>
+          </div>
+          <p class="text-[10px] text-amber-900 leading-tight">
+            کام نہ ہونے پر 300 روپے فیس؛ کام طے ہونے پر وزٹ چارجز معاف ہوں گے، صرف طے شدہ مزدوری وصول کی جائے گی۔
+          </p>
+        </div>
+
+        <!-- ACTION BUTTONS -->
+        <div class="space-y-2 pt-1">
+          <!-- Direct Call Button -->
+          <a 
+            :href="'tel:' + (incomingCallAlertJob?.customerPhone || incomingCallAlertJob?.phone || businessPhone)"
+            @click="stopIncomingCallAlert()"
+            class="w-full py-3.5 bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-700 hover:to-teal-800 text-white font-black rounded-xl text-xs sm:text-sm shadow-lg flex items-center justify-center gap-2 min-h-[46px]"
+          >
+            <i data-lucide="phone-call" class="w-4 h-4 text-emerald-200"></i>
+            <span>📞 کسٹمر کو فوری فون ملائیں اور ریٹ طے کریں</span>
+          </a>
+
+          <!-- Accept Job Button -->
+          <button 
+            type="button"
+            @click="acceptBroadcastJob('محمد راشد (کاریگر)'); stopIncomingCallAlert()"
+            class="w-full py-3 bg-amber-400 hover:bg-amber-500 text-slate-950 font-black rounded-xl text-xs shadow-md flex items-center justify-center gap-2 min-h-[42px]"
+          >
+            <i data-lucide="handshake" class="w-4 h-4"></i>
+            <span>⚡ کام قبول کریں (Accept Job)</span>
+          </button>
+
+          <!-- Dismiss -->
+          <div class="flex items-center justify-between pt-1">
+            <button 
+              type="button"
+              @click="openKarigarToneModal(); stopIncomingCallAlert()"
+              class="text-amber-900 hover:underline text-[11px] font-black flex items-center gap-1"
+            >
+              <i data-lucide="settings" class="w-3.5 h-3.5"></i>
+              <span>ٹیون سیٹنگز کھولیں</span>
+            </button>
+            <button 
+              type="button"
+              @click="stopIncomingCallAlert()"
+              class="text-slate-500 hover:text-slate-800 text-[11px] font-bold"
+            >
+              نوٹیفکیشن بند کریں [X]
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
   <!-- ==================== MOBILE STICKY BOTTOM BAR WITH B.A.H.Care BRANDING ==================== -->
   <div class="fixed bottom-2 left-2 right-2 md:hidden z-30 flex flex-col gap-1 bg-slate-950/95 backdrop-blur-md p-2 rounded-2xl border-2 border-teal-500/40 shadow-2xl">
     <div class="flex items-center gap-1.5">
@@ -3015,6 +3410,17 @@
         // Real-Time Job Dispatch Broadcast & First-to-Respond System
         showJobBroadcastBanner: false,
         activeBroadcastJob: null,
+
+        // Karigar Call & Notification Alert Ringtone State (آپشنل ٹیون برائے کاریگر)
+        karigarToneSettings: {
+          enabled: true, // Optional alert ringtone, on by default, can be toggled off anytime
+          selectedTone: 'ringtone', // 'ringtone', 'chime', 'express'
+          vibration: true
+        },
+        isKarigarToneModalOpen: false,
+        isIncomingCallModalOpen: false,
+        incomingCallAlertJob: null,
+        toneInterval: null,
 
         // Admin Security
         isAdminLoggedIn: false,
@@ -3404,6 +3810,17 @@
             }
           } catch(e) {}
 
+          // Restore Karigar alert ringtone settings from localStorage
+          try {
+            const savedTone = localStorage.getItem('bahc_karigar_tone_settings');
+            if (savedTone) {
+              const parsedTone = JSON.parse(savedTone);
+              if (parsedTone && typeof parsedTone.enabled === 'boolean') {
+                this.karigarToneSettings = Object.assign(this.karigarToneSettings, parsedTone);
+              }
+            }
+          } catch(e) {}
+
           // Check if App is already running as installed Standalone PWA
           const isStandalone = window.matchMedia('(display-mode: standalone)').matches || 
                                window.navigator.standalone === true;
@@ -3748,6 +4165,9 @@
           };
           this.showJobBroadcastBanner = true;
 
+          // Trigger Incoming Call & Job Alert for Karigars with Optional Ringtone!
+          this.startIncomingCallAlert(newOrder);
+
           alert('شکریہ ' + this.bookingForm.name + '! آپ کی بکنگ موصول ہو گئی ہے۔\n\nٹریکنگ ID: ' + newId + '\nطے شدہ بجٹ: روپے ' + agreed + '\n\n💰 فکسڈ وزٹ پالیسی: کام نہ کروانے پر 300 روپے معائنہ فیس، کام کروانے پر وزٹ چارجز بالکل معاف۔\n\nقریبی تمام کاریگروں کو فوری الرٹ بھیج دیا گیا ہے۔ جو کاریگر سب سے پہلے کال یا رابطہ کرے گا، اسے ترجیح دی جائے گی!');
 
           this.bookingForm.details = '';
@@ -3770,8 +4190,173 @@
               order.statusUrdu = 'کاریگر نے قبول کر لیا، کسٹمر سے رابطہ کر رہا ہے';
             }
 
+            this.stopIncomingCallAlert();
             alert('⚡ مبارک ہو!\n\nآپ نے سب سے پہلے اس کام کو قبول کر لیا ہے۔ کمپنی کی "First-to-Respond" پالیسی کے تحت آپ کو ترجیح مل چکی ہے۔ کسٹمر کے فون (' + this.activeBroadcastJob.customerPhone + ') پر فوراً رابطہ فرمائیں۔');
           }
+        },
+
+        // ==================== KARIGAR INCOMING CALL & ALERT TUNE METHODS (آپشنل الرٹ ٹیون) ====================
+        openKarigarToneModal() {
+          this.isKarigarToneModalOpen = true;
+          this.$nextTick(() => {
+            if (window.lucide) lucide.createIcons();
+          });
+        },
+
+        toggleKarigarTone() {
+          this.karigarToneSettings.enabled = !this.karigarToneSettings.enabled;
+          this.saveKarigarToneSettings();
+          if (this.karigarToneSettings.enabled) {
+            this.playKarigarTone(this.karigarToneSettings.selectedTone);
+          } else {
+            this.stopToneInterval();
+          }
+        },
+
+        saveKarigarToneSettings() {
+          try {
+            localStorage.setItem('bahc_karigar_tone_settings', JSON.stringify(this.karigarToneSettings));
+          } catch(e) {}
+        },
+
+        playKarigarTone(toneType = null) {
+          const type = toneType || this.karigarToneSettings.selectedTone || 'ringtone';
+
+          try {
+            const AudioCtx = window.AudioContext || window.webkitAudioContext;
+            if (!AudioCtx) return;
+            const ctx = new AudioCtx();
+            if (ctx.state === 'suspended') {
+              ctx.resume();
+            }
+
+            const now = ctx.currentTime;
+
+            if (type === 'ringtone') {
+              // Classic telephone double-ring: 440Hz + 480Hz
+              const playBurst = (startTime) => {
+                [440, 480].forEach(freq => {
+                  const osc = ctx.createOscillator();
+                  const gain = ctx.createGain();
+                  osc.type = 'sine';
+                  osc.frequency.setValueAtTime(freq, startTime);
+                  gain.gain.setValueAtTime(0.22, startTime);
+                  gain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.45);
+                  osc.connect(gain);
+                  gain.connect(ctx.destination);
+                  osc.start(startTime);
+                  osc.stop(startTime + 0.45);
+                });
+              };
+              playBurst(now);
+              playBurst(now + 0.55);
+              playBurst(now + 1.4);
+              playBurst(now + 1.95);
+
+            } else if (type === 'chime') {
+              // Melodic 4-note chime (C5, E5, G5, C6)
+              const notes = [523.25, 659.25, 783.99, 1046.50];
+              notes.forEach((freq, idx) => {
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'triangle';
+                const noteTime = now + (idx * 0.18);
+                osc.frequency.setValueAtTime(freq, noteTime);
+                gain.gain.setValueAtTime(0.28, noteTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, noteTime + 0.55);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start(noteTime);
+                osc.stop(noteTime + 0.55);
+              });
+
+            } else if (type === 'express') {
+              // Fast dispatch alert beeps
+              [880, 1174, 880, 1760].forEach((freq, idx) => {
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'square';
+                const noteTime = now + (idx * 0.14);
+                osc.frequency.setValueAtTime(freq, noteTime);
+                gain.gain.setValueAtTime(0.18, noteTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, noteTime + 0.13);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start(noteTime);
+                osc.stop(noteTime + 0.13);
+              });
+            }
+
+            // Mobile vibration if enabled
+            if ('vibrate' in navigator && this.karigarToneSettings.vibration) {
+              navigator.vibrate([300, 150, 300, 150, 600]);
+            }
+          } catch (e) {
+            console.warn('Audio tone could not play:', e);
+          }
+        },
+
+        startIncomingCallAlert(job) {
+          this.incomingCallAlertJob = job;
+          this.isIncomingCallModalOpen = true;
+
+          this.stopToneInterval();
+          if (this.karigarToneSettings.enabled) {
+            this.playKarigarTone();
+            this.toneInterval = setInterval(() => {
+              if (this.isIncomingCallModalOpen && this.karigarToneSettings.enabled) {
+                this.playKarigarTone();
+              } else {
+                this.stopToneInterval();
+              }
+            }, 2800);
+          }
+
+          this.$nextTick(() => {
+            if (window.lucide) lucide.createIcons();
+          });
+        },
+
+        stopToneInterval() {
+          if (this.toneInterval) {
+            clearInterval(this.toneInterval);
+            this.toneInterval = null;
+          }
+        },
+
+        stopIncomingCallAlert() {
+          this.stopToneInterval();
+          this.isIncomingCallModalOpen = false;
+        },
+
+        testIncomingCallSimulation() {
+          this.startIncomingCallAlert({
+            id: 'DEMO-' + Math.floor(1000 + Math.random() * 9000),
+            customerName: 'حاجی محمد اقبال (رائل پام سٹی)',
+            phone: '0300-1234567',
+            service: 'بجلی و الیکٹرک وائرنگ فالٹ',
+            address: 'رائل پام سٹی، بلاک بی، گلی 5، مکان 22',
+            agreedPrice: '2,000'
+          });
+        },
+
+        directCallKarigarWithTone(tech) {
+          // Trigger incoming call alert with optional ringing tune for technician
+          this.startIncomingCallAlert({
+            id: 'CALL-' + Math.floor(1000 + Math.random() * 9000),
+            customerName: (this.customerUser.isLoggedIn && this.customerUser.name) ? this.customerUser.name : 'محترم صارف (فون کال)',
+            customerPhone: (this.customerUser.isLoggedIn && this.customerUser.phone) ? this.customerUser.phone : '0300-4800071',
+            phone: (this.customerUser.isLoggedIn && this.customerUser.phone) ? this.customerUser.phone : '0300-4800071',
+            service: tech.specialtyUrdu || 'براہِ راست کال برائے کام',
+            address: (this.customerUser.isLoggedIn && this.customerUser.address) ? this.customerUser.address : tech.area,
+            agreedPrice: 'فون کال پر باہمی طے',
+            assignedTech: tech.name
+          });
+
+          // Also launch phone dialer
+          setTimeout(() => {
+            window.location.href = 'tel:' + (tech.phone || this.businessPhone);
+          }, 350);
         },
 
         // ==================== WORK SATISFACTION & FEEDBACK ====================
