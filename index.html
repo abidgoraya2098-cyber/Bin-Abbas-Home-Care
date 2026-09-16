@@ -103,7 +103,7 @@
       background: #f59e0b;
     }
 
-    /* Elegant Urdu Typography with Generous Word Spacing (Zero Overlapping, Zero Sticking) */
+    /* Master Urdu Typography Calibration: Perfect Natural Flow (Zero Sticking, Zero Excessive Gaps) */
     @font-face {
       font-family: 'Jameel Noori Nastaleeq';
       src: local('Jameel Noori Nastaleeq'), local('Jameel Noori Nastaleeq Regular'), local('Urdu Typesetting');
@@ -115,37 +115,89 @@
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       text-rendering: optimizeLegibility;
-      line-height: 2.1 !important;
+      line-height: 1.95 !important;
       letter-spacing: normal !important;
-      word-spacing: 0.28em !important;
+      word-spacing: 0.05em !important;
     }
 
     [dir="rtl"] h1, [dir="rtl"] h2, [dir="rtl"] h3, [dir="rtl"] h4, [dir="rtl"] h5, [dir="rtl"] h6 {
       font-family: 'Jameel Noori Nastaleeq', 'Noto Nastaliq Urdu', 'Noto Sans Arabic', 'Urdu Typesetting', 'Segoe UI', Tahoma, sans-serif !important;
-      line-height: 2.0 !important;
+      line-height: 1.85 !important;
       letter-spacing: normal !important;
-      word-spacing: 0.28em !important;
+      word-spacing: 0.05em !important;
       word-break: normal !important;
       overflow-wrap: break-word;
     }
 
     [dir="rtl"] p, [dir="rtl"] span, [dir="rtl"] div, [dir="rtl"] button, [dir="rtl"] a, [dir="rtl"] li, [dir="rtl"] input, [dir="rtl"] select, [dir="rtl"] textarea {
       letter-spacing: normal !important;
-      word-spacing: 0.24em !important;
+      word-spacing: 0.04em !important;
       word-break: normal;
     }
 
-    /* Buttons, Chips, Badges and Inputs: Crystal Clear Spacing and Zero Squeezing */
-    button, [role="button"], input, select, textarea {
-      word-spacing: 0.20em !important;
+    /* Buttons, Chips, Badges and Inputs: Balanced Spacing */
+    [dir="rtl"] button, [dir="rtl"] [role="button"], [dir="rtl"] input, [dir="rtl"] select, [dir="rtl"] textarea {
+      word-spacing: 0.04em !important;
       letter-spacing: normal !important;
     }
 
-    /* Neutralize tight tracking in RTL to prevent letters/words from merging */
+    /* Neutralize all tracking in RTL to prevent letters or words from breaking / merging */
+    [dir="rtl"] .tracking-tighter,
     [dir="rtl"] .tracking-tight,
-    [dir="rtl"] .tracking-tighter {
+    [dir="rtl"] .tracking-normal,
+    [dir="rtl"] .tracking-wide,
+    [dir="rtl"] .tracking-wider,
+    [dir="rtl"] .tracking-widest {
       letter-spacing: normal !important;
-      word-spacing: 0.28em !important;
+      word-spacing: 0.04em !important;
+    }
+
+    /* CRITICAL FAUX-BOLD NEUTRALIZER FOR RTL / URDU:
+       Google Fonts Noto Nastaliq Urdu provides authentic weights up to 700.
+       Tailwind 'font-black' (900) or 'font-extrabold' (800) triggers synthetic browser
+       outline stroke expansion (faux bold), which dilates curves and causes Urdu letters
+       and adjacent words to smash into each other. Capping RTL bold weights at 700 preserves
+       sharp, authentic Nastaliq calligraphy with zero collision. */
+    [dir="rtl"] .font-black,
+    [dir="rtl"] .font-extrabold {
+      font-weight: 700 !important;
+    }
+    [dir="rtl"] .font-bold {
+      font-weight: 600 !important;
+    }
+    [dir="rtl"] .font-semibold {
+      font-weight: 600 !important;
+    }
+    [dir="rtl"] .font-medium {
+      font-weight: 500 !important;
+    }
+
+    /* Keep Latin / English numbers, OTP boxes, and English branding at full black weight & tracking */
+    [dir="ltr"],
+    [dir="ltr"] *,
+    .font-mono,
+    .font-brand-latin {
+      letter-spacing: initial;
+    }
+    [dir="rtl"] [dir="ltr"] .font-black,
+    [dir="rtl"] .font-mono.font-black,
+    [dir="rtl"] .font-brand-latin.font-black,
+    [dir="ltr"] .font-black,
+    .font-mono.font-black,
+    .font-brand-latin.font-black {
+      font-weight: 900 !important;
+    }
+    [dir="ltr"] .tracking-wider,
+    .font-mono.tracking-wider,
+    .font-brand-latin.tracking-wider {
+      letter-spacing: 0.05em !important;
+    }
+    [dir="ltr"] .tracking-widest,
+    .font-mono.tracking-widest {
+      letter-spacing: 0.1em !important;
+    }
+    .tracking-\[0\.5em\] {
+      letter-spacing: 0.5em !important;
     }
 
     .font-brand-latin {
@@ -2013,7 +2065,7 @@
         <button @click="isSocietiesModalOpen = false" class="absolute top-5 left-5 text-white/80 hover:text-white p-1 rounded-full bg-black/20">
           <i data-lucide="x" class="w-5 h-5"></i>
         </button>
-        <div class="text-xs font-bold text-teal-200 uppercase tracking-wider mb-1">گوجرانوالہ ڈسٹرکٹ سروس کوریج نیٹ ورک</div>
+        <div class="text-xs font-bold text-teal-200 mb-1">گوجرانوالہ ڈسٹرکٹ سروس کوریج نیٹ ورک</div>
         <h3 class="text-xl sm:text-2xl font-black">گوجرانوالہ کی تمام سوسائٹیز و رہائشی زونز</h3>
         <p class="text-xs text-teal-100 mt-1 font-bold">اپنی سوسائٹی منتخب کریں، قریبی ترین کاریگر کا انتخاب کریں (آمد: 15 تا 25 منٹ)</p>
       </div>
@@ -2073,7 +2125,7 @@
         <button @click="isCategoryDetailModalOpen = false" class="absolute top-5 left-5 text-white/80 hover:text-white p-1 rounded-full bg-black/20">
           <i data-lucide="x" class="w-5 h-5"></i>
         </button>
-        <div class="text-xs font-black text-amber-400 uppercase tracking-wider mb-1" x-text="activeCategoryDetail.startingPrice"></div>
+        <div class="text-xs font-black text-amber-400 mb-1" x-text="activeCategoryDetail.startingPrice"></div>
         <h3 class="text-xl sm:text-2xl font-black" x-text="activeCategoryDetail.titleUrdu"></h3>
         <p class="text-xs text-teal-100 mt-1 font-bold" x-text="activeCategoryDetail.descUrdu"></p>
       </div>
@@ -2368,7 +2420,7 @@
         <button @click="isBookingModalOpen = false" class="absolute top-5 left-5 text-white/80 hover:text-white p-1 rounded-full bg-black/20">
           <i data-lucide="x" class="w-5 h-5"></i>
         </button>
-        <div class="text-xs font-black text-amber-400 uppercase tracking-wider mb-1">فوری ایکسپریس کاریگر و باہمی ریٹ</div>
+        <div class="text-xs font-black text-amber-400 mb-1">فوری ایکسپریس کاریگر و باہمی ریٹ</div>
         <h3 class="text-xl sm:text-2xl font-black">کاریگر بکنگ و قیمت کا باہمی تعین</h3>
         <p class="text-xs text-teal-100 mt-1 font-bold">رائل پام سٹی و گوجرانوالہ میں کاریگر 15 تا 30 منٹ میں آپ کے گھر حاضر ہوگا</p>
       </div>
@@ -2503,7 +2555,7 @@
         <button @click="isTrackerModalOpen = false" class="absolute top-5 left-5 text-white/80 hover:text-white p-1 rounded-full bg-black/30">
           <i data-lucide="x" class="w-5 h-5"></i>
         </button>
-        <div class="flex items-center gap-2 text-xs font-black text-amber-300 uppercase tracking-wider mb-1">
+        <div class="flex items-center gap-2 text-xs font-black text-amber-300 mb-1">
           <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
           <span>ریئل ٹائم لائیو لوکیشن و کوریج راڈار</span>
         </div>
@@ -2695,7 +2747,7 @@
                       <i data-lucide="map-pin" class="w-4 h-4"></i>
                     </div>
                     <div>
-                      <div class="text-[10px] text-amber-800 font-black uppercase">کسٹمر کی منزل و مقام:</div>
+                      <div class="text-[10px] text-amber-800 font-black">کسٹمر کی منزل و مقام:</div>
                       <h4 class="font-black text-slate-950 text-sm sm:text-base" x-text="trackedOrder.customerName"></h4>
                     </div>
                   </div>
@@ -3086,7 +3138,7 @@
           <span class="p-1.5 bg-amber-400 text-slate-950 rounded-lg">
             <i data-lucide="bell-ring" class="w-4 h-4"></i>
           </span>
-          <span class="text-xs font-black text-amber-200 uppercase tracking-wider">کاریگر سیٹنگز (آپشنل)</span>
+          <span class="text-xs font-black text-amber-200">کاریگر سیٹنگز (آپشنل)</span>
         </div>
         <h3 class="text-xl sm:text-2xl font-black">صارف کی کال و نوٹیفکیشن ٹیون</h3>
         <p class="text-xs text-amber-100 mt-1 font-bold leading-relaxed">
@@ -3356,7 +3408,7 @@
           </span>
         </div>
 
-        <span class="px-3 py-1 rounded-full bg-amber-400/20 text-amber-300 border border-amber-400/40 text-xs font-black uppercase tracking-wider mb-1">
+        <span class="px-3 py-1 rounded-full bg-amber-400/20 text-amber-300 border border-amber-400/40 text-xs font-black mb-1">
           📲 صارف کی طرف سے کام کے لیے کال الرٹ!
         </span>
         <h3 class="text-xl sm:text-2xl font-black text-white" x-text="incomingCallAlertJob?.customerName || 'صارف (کسٹمر)'"></h3>
